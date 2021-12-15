@@ -1,4 +1,4 @@
-baseurl      = "localhost"
+baseurl      = "https://michaelneuper.com"
 title        = "Michael's Website"
 languageCode = "en-us"
 theme        = "hello-friend-ng"
@@ -22,7 +22,7 @@ paginate     = 10
   # Metadata mostly used in document's head
   description = "My new homepage or blog"
   keywords = "homepage, blog"
-  images = [""]
+  images = ["/content/img/"]
 
 [taxonomies]
     category = "blog"
@@ -32,25 +32,36 @@ paginate     = 10
 [languages]
   [languages.en]
     title = "Hello, I'm Michael"
-    subtitle = "A simple theme for Hugo"
+#    subtitle = "My personal website"
     keywords = ""
     copyright = '<a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC BY-NC 4.0</a>'
     readOtherPosts = "Read other posts"
 
     [languages.en.params.logo]
-      logoText = "Check out my stuff ->"
+      logoText = "Home"
       logoHomeLink = "/"
     # or
     #
     # path = "/img/your-example-logo.svg"
     # alt = "Your example logo alt text"
 
-  # And you can even create generic menu
-  [[menu.main]]
-    identifier = "blog"
-    name       = "Blog"
-    url        = "/posts"
+# Social icons
+  [[params.social]]
+    name = "github"
+    url = "https://github.com/michaelneuper"
 
-[[params.social]]
-  name = "<github>"
-  url = "<https://github.com/michaelneuper>"
+[menu]
+  [[menu.main]]
+    identifier = "posts"
+    name       = "Posts"
+    url        = "/posts/"
+
+  [[menu.main]]
+    identifier = "about"
+    name = "About"
+    url = "/about/"
+
+  [[menu.main]]
+    identifier = "donate"
+    name = "Donate"
+    url = "/donate/"
