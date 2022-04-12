@@ -1,7 +1,7 @@
 baseurl      = "https://michaelneuper.com"
 title        = "Michael's Website"
 languageCode = "en-us"
-theme        = "hello-friend-ng"
+theme        = "hugo-theme-hello-friend-ng"
 paginate     = 10
 
 [params]
