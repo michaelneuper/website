@@ -1,4 +1,4 @@
-baseurl = "https://michaelneuper.com"
+baseurl = "https://michaelneuper.netlify.app"
 enableEmoji = true
 footnotereturnlinkcontents = "↩"
 googleAnalytics = ""
