@@ -2,67 +2,70 @@
 
 /* Dark mode */
 @media (prefers-color-scheme: dark) {
-
   body {
-    background-color: #393e41
+    background-color: #282C34;
   }
 
   blockquote {
-    background: #393e41;
+    background: #2F333D;
   }
 
   a {
-    color: #ebc3db;
+    color: #61AEEF;
   }
 
   header {
-    background: #613DC1;
+    background: #61AEEF;
     border-bottom: 0px;
   }
 
   .article-meta, .menu a {
-    background: #E8DBC5;
-    color: #000;
+    background: #2f333d;
+    color: white;
   }
 
   table {
     margin: auto;
-    border-top: 1px solid #666;
-    border-bottom: 1px solid #666;
+    border-top: 1px solid #ABB2BF;
+    border-bottom: 1px solid #ABB2BF;
   }
-  table thead th { border-bottom: 1px solid #ddd; }
+  table thead th { border-bottom: 1px solid #ABB2BF; }
   th, td { padding: 5px; }
-  tr:nth-child(even) { background: #eee }
+  tr:nth-child(even) { background: #ABB2BF}
 }
 
 
 /* Light mode */
 @media (prefers-color-scheme: light) {
-    blockquote {
-      background: #f9f9f9;
-    }
+  body {
+    background-color: #e8dbc5;
+    color: #3a3f4b;
+  }
+   blockquote {
+     background: #f9f9f9;
+   }
 
-    a {
-      color: #613DC1;
-    }
+   a {
+     color: #2979ff;
+   }
 
-    header {
-      background: #613DC1;
-    }
+   header {
+     background: #2979ff;
+   }
 
-    .article-meta, .menu a {
-      background: #E8DBC5;
-      color: #000;
-    }
+   .article-meta, .menu a {
+     background: #E8DBC5;
+     color: #000;
+   }
 
-    table {
-      margin: auto;
-      border-top: 1px solid #666;
-      border-bottom: 1px solid #666;
-    }
-    table thead th { border-bottom: 1px solid #ddd; }
-    th, td { padding: 5px; }
-    tr:nth-child(even) { background: #eee }
+   table {
+     margin: auto;
+     border-top: 1px solid #666;
+     border-bottom: 1px solid #666;
+   }
+   table thead th { border-bottom: 1px solid #ddd; }
+   th, td { padding: 5px; }
+   tr:nth-child(even) { background: #eee }
 
 }
 
@@ -96,7 +99,7 @@ output:
   text-decoration: none;
   padding: 5px;
   border-radius: 5px;
-  border-style: dotted;
+  border-style: solid;
   border-width: 1px;
   margin-bottom: 20px;
 }
@@ -151,11 +154,19 @@ header .current a {
 
 /* Code Boxes */
 pre {
-  border: 2px solid #EBC3DB;
+  border: 2px solid #56b6c2;
   padding: 1em;
   overflow-x: auto;
 }
-pre code { background: none; }
+
+code {
+  font-family: monospace;
+}
+
+pre code {
+  background: none;
+}
+
 
 /* Images, tables, misc. */
 img, iframe, video {
@@ -181,7 +192,6 @@ main a {
 }
 
 blockquote {
-
   border-left: 5px solid #ccc;
   padding: 3px 1em 3px;
 }
