@@ -46,5 +46,6 @@ post = "/post/:year/:month/:day/:slug/"
 
 [params]
 custom_css = ["css/theme-override.css"]
+favicon = "images/favicon.ico"
 description = ""
 footer = "Copyright © 2022 Michael Neuper | [Source](https://github.com/michaelneuper/website)"
