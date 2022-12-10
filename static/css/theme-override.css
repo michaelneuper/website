@@ -1,86 +1,87 @@
-/* footer { font-size: 90%; } */
+/* Imports*/
+@import url("colors.css");
 
 /* Dark mode */
 @media (prefers-color-scheme: dark) {
   body {
-    background-color: #282c34;
+    background-color: var(--dark-bg);
   }
 
   blockquote {
-    background: #2f333d;
+    background: var(--dark-secondary-bg);
   }
 
   a {
-    color: #61aeef;
+    color: var(--light-blue);
   }
 
   header {
-    background: #61aeef;
+    background: var(--light-blue);
     border-bottom: 0px;
   }
 
   .article-meta,
   .menu a {
-    background: #2f333d;
+    background: var(--dark-secondary-bg);
     color: white;
   }
 
   table {
     margin: auto;
-    border-top: 1px solid #abb2bf;
-    border-bottom: 1px solid #abb2bf;
+    border-top: 1px solid var(--gray);
+    border-bottom: 1px solid var(--gray);
   }
   table thead th {
-    border-bottom: 1px solid #abb2bf;
+    border-bottom: 1px solid var(--gray);
   }
   th,
   td {
     padding: 5px;
   }
   tr:nth-child(even) {
-    background: #abb2bf;
+    background: var(--gray);
   }
 }
 
 /* Light mode */
 @media (prefers-color-scheme: light) {
   body {
-    background-color: #e8dbc5;
-    color: #3a3f4b;
+    background-color: var(--light-bg);
+    color: var(--text);
   }
 
   blockquote {
-    background: #f9f9f9;
+    background: var(--light-secondary-bg);
   }
 
   a {
-    color: #2979ff;
+    color: var(--dark-blue);
   }
 
   header {
-    background: #2979ff;
+    background: var(--dark-blue);
   }
 
   .article-meta,
   .menu a {
-    background: #e8dbc5;
-    color: #000;
+    background: var(--light-secondary-bg);
+    color: black;
   }
 
   table {
     margin: auto;
-    border-top: 1px solid #666;
-    border-bottom: 1px solid #666;
+    border-top: 1px solid var(--brown);
+    border-bottom: 1px solid var(--brown);
   }
   table thead th {
-    border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid var(--light-brown);
   }
   th,
   td {
     padding: 5px;
   }
   tr:nth-child(even) {
-    background: #eee;
+    background: var(--light-brown);
   }
 }
 
@@ -95,16 +96,9 @@ h1 {
   line-height: 1.5em;
 }
 
-/* Table of Contents, if wanted
-Add to yaml:
-output:
-  blogdown::html_page:
-    toc: true
-    */
-
 #TableOfContents,
 #TOC {
-  border: 1px solid #eee;
+  border: 1px solid var(--light-brown);
   border-radius: 5px;
 }
 
@@ -129,6 +123,8 @@ output:
 .article-meta,
 footer {
   text-align: center;
+  font-size: 90%;
+  opacity: 0.5;
 }
 .title {
   font-size: 1.1em;
@@ -171,18 +167,18 @@ header nav {
 }
 
 header a {
-  color: #fff;
+  color: white;
   line-height: 1.75rem;
   padding: 0 0.5rem;
 }
 header a:hover,
 header .current a {
-  color: #fff;
+  color: white;
 }
 
 /* Code Boxes */
 pre {
-  border: 2px solid #56b6c2;
+  border: 2px solid var(--cyan);
   padding: 1em;
   overflow-x: auto;
 }
@@ -221,14 +217,14 @@ main a {
 }
 
 blockquote {
-  border-left: 5px solid #ccc;
+  border-left: 5px solid var(--light-brown);
   padding: 3px 1em 3px;
 }
 
 .content-wrapper {
   padding: 0px 12px 0px 12px;
 }
-#wizard {
+#partywizard {
   min-width: 40px;
   float: right;
   padding: 10px;

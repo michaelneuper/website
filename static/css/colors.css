@@ -1,0 +1,14 @@
+/* colorscheme */
+:root {
+  --dark-bg: #282c34;
+  --dark-secondary-bg: #2f333d;
+  --light-bg: #e8dbc5;
+  --light-secondary-bg: #f9f9f9;
+  --text: #3a3f4b;
+  --dark-blue: #2979ff;
+  --light-blue: #61aeef;
+  --brown: #666;
+  --light-brown: #ddd;
+  --gray: #abb2bf;
+  --cyan: #56b6c2;
+}
