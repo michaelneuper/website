@@ -3,37 +3,44 @@
 /* Dark mode */
 @media (prefers-color-scheme: dark) {
   body {
-    background-color: #282C34;
+    background-color: #282c34;
   }
 
   blockquote {
-    background: #2F333D;
+    background: #2f333d;
   }
 
   a {
-    color: #61AEEF;
+    color: #61aeef;
   }
 
   header {
-    background: #61AEEF;
+    background: #61aeef;
     border-bottom: 0px;
   }
 
-  .article-meta, .menu a {
+  .article-meta,
+  .menu a {
     background: #2f333d;
     color: white;
   }
 
   table {
     margin: auto;
-    border-top: 1px solid #ABB2BF;
-    border-bottom: 1px solid #ABB2BF;
+    border-top: 1px solid #abb2bf;
+    border-bottom: 1px solid #abb2bf;
   }
-  table thead th { border-bottom: 1px solid #ABB2BF; }
-  th, td { padding: 5px; }
-  tr:nth-child(even) { background: #ABB2BF}
+  table thead th {
+    border-bottom: 1px solid #abb2bf;
+  }
+  th,
+  td {
+    padding: 5px;
+  }
+  tr:nth-child(even) {
+    background: #abb2bf;
+  }
 }
-
 
 /* Light mode */
 @media (prefers-color-scheme: light) {
@@ -41,39 +48,46 @@
     background-color: #e8dbc5;
     color: #3a3f4b;
   }
-   blockquote {
-     background: #f9f9f9;
-   }
 
-   a {
-     color: #2979ff;
-   }
+  blockquote {
+    background: #f9f9f9;
+  }
 
-   header {
-     background: #2979ff;
-   }
+  a {
+    color: #2979ff;
+  }
 
-   .article-meta, .menu a {
-     background: #E8DBC5;
-     color: #000;
-   }
+  header {
+    background: #2979ff;
+  }
 
-   table {
-     margin: auto;
-     border-top: 1px solid #666;
-     border-bottom: 1px solid #666;
-   }
-   table thead th { border-bottom: 1px solid #ddd; }
-   th, td { padding: 5px; }
-   tr:nth-child(even) { background: #eee }
+  .article-meta,
+  .menu a {
+    background: #e8dbc5;
+    color: #000;
+  }
 
+  table {
+    margin: auto;
+    border-top: 1px solid #666;
+    border-bottom: 1px solid #666;
+  }
+  table thead th {
+    border-bottom: 1px solid #ddd;
+  }
+  th,
+  td {
+    padding: 5px;
+  }
+  tr:nth-child(even) {
+    background: #eee;
+  }
 }
-
 
 body {
   max-width: 800px;
   margin: auto;
-  padding: .2em;
+  padding: 0.2em;
   line-height: 1.5em;
 }
 
@@ -88,14 +102,18 @@ output:
     toc: true
     */
 
-#TableOfContents, #TOC {
+#TableOfContents,
+#TOC {
   border: 1px solid #eee;
   border-radius: 5px;
 }
 
 /* Header and Footer */
-.menu li { display: inline-block; }
-.article-meta, .menu a {
+.menu li {
+  display: inline-block;
+}
+.article-meta,
+.menu a {
   text-decoration: none;
   padding: 5px;
   border-radius: 5px;
@@ -104,16 +122,26 @@ output:
   margin-bottom: 20px;
 }
 
-.terms { font-size: .9em; }
-.menu, .article-meta, footer { text-align: center; }
-.title { font-size: 1.1em; }
-footer a { text-decoration: none; }
+.terms {
+  font-size: 0.9em;
+}
+.menu,
+.article-meta,
+footer {
+  text-align: center;
+}
+.title {
+  font-size: 1.1em;
+}
+footer a {
+  text-decoration: none;
+}
 
 .pull-left {
-    float: left
+  float: left;
 }
 .pull-right {
-    float: right
+  float: right;
 }
 
 a {
@@ -126,30 +154,30 @@ a:hover {
 
 /* Adjust background at your leisure! */
 header {
-    position: relative;
-    width: 100%;
-    height: 1.75rem;
-    font-size: 1rem;
+  position: relative;
+  width: 100%;
+  height: 1.75rem;
+  font-size: 1rem;
 }
 
 header ul,
 header ol {
-    margin: 0;
-    padding: 0;
-    list-style: none
+  margin: 0;
+  padding: 0;
+  list-style: none;
 }
 header nav {
-    padding: 0 0.5rem
+  padding: 0 0.5rem;
 }
 
 header a {
-    color: #fff;
-    line-height: 1.75rem;
-    padding: 0 0.5rem
+  color: #fff;
+  line-height: 1.75rem;
+  padding: 0 0.5rem;
 }
 header a:hover,
 header .current a {
-    color: #fff
+  color: #fff;
 }
 
 /* Code Boxes */
@@ -167,9 +195,10 @@ pre code {
   background: none;
 }
 
-
 /* Images, tables, misc. */
-img, iframe, video {
+img,
+iframe,
+video {
   max-width: 100%;
   height: auto;
   display: block;
@@ -199,19 +228,9 @@ blockquote {
 .content-wrapper {
   padding: 0px 12px 0px 12px;
 }
-#foxy {
+#wizard {
   min-width: 40px;
   float: right;
   padding: 10px;
   display: block;
-}
-
-/* Small devices, phones */
-@media only screen and (min-width : 480px) {
-  #foxy {
-    min-width: 40px;
-    float: center;
-    padding: 10px 10px 10px 20px;
-    display: block;
-  }
 }
