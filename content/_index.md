@@ -5,13 +5,12 @@ draft: false
 ---
 
 <img
-  align="right"
-  id="wizard"
-  src="/images/partywizard.gif"
-  alt="A wizard">
+align="right"
+id="partywizard"
+src="/images/partywizard.gif"
+alt="Picture of a wizard">
 
 ## Hi, I'm Michael 👋
-
 Welcome to my little piece of the internet.
 Thanks for stopping by!
 
