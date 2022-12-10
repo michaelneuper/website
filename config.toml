@@ -8,44 +8,44 @@ theme = "classic"
 title = "Michael"
 
 [taxonomies]
-   tag = "tags"
-   category = "categories"
+  tag = "tags"
+  category = "categories"
 
 [markup.goldmark.renderer]
-unsafe = true
+  unsafe = true
 
 [markup.highlight]
-anchorLineNos = false
-codeFences = true
-guessSyntax = false
-hl_Lines = ""
-lineAnchors = ""
-lineNoStart = 1
-lineNos = false
-lineNumbersInTable = true
-noClasses = true
-style = "monokai"
-tabWidth = 4
+  anchorLineNos = false
+  codeFences = true
+  guessSyntax = false
+  hl_Lines = ""
+  lineAnchors = ""
+  lineNoStart = 1
+  lineNos = false
+  lineNumbersInTable = true
+  noClasses = true
+  style = "monokai"
+  tabWidth = 2
 
 [permalinks]
-post = "/post/:year/:month/:day/:slug/"
+  post = "/post/:year/:month/:day/:slug/"
 
-  [[menu.main]]
+[[menu.main]]
   name = "Categories"
   url = "/categories/"
   weight = 1
 
-  [[menu.main]]
+[[menu.main]]
   name = "Tags"
   url = "/tags/"
   weight = 2
 
-  [[menu.feed]]
+[[menu.feed]]
   name = "GitHub"
   url = "https://github.com/michaelneuper"
 
 [params]
-custom_css = ["css/theme-override.css"]
-favicon = "images/favicon.ico"
-description = ""
-footer = "Copyright © 2022 Michael Neuper | [Source](https://github.com/michaelneuper/website)"
+  custom_css = ["css/theme-override.css"]
+  favicon = "images/favicon.ico"
+  description = ""
+  footer = "Copyright © 2022 Michael Neuper | [Source](https://github.com/michaelneuper/website)"
