@@ -1,6 +1,6 @@
 /* Imports*/
 @import url("colors.css");
-@import url('https://fonts.googleapis.com/css?family=Fira+Code');
+@import url("https://fonts.googleapis.com/css?family=Fira+Code");
 
 /* Dark mode */
 @media (prefers-color-scheme: dark) {
@@ -19,7 +19,7 @@
   a:visited {
     color: var(--cyan);
   }
-  
+
   a:hover,
   a:focus {
     color: var(--pink);
@@ -72,13 +72,13 @@
   a:visited {
     color: var(--pink);
   }
-  
+
   a:hover,
   a:focus {
     color: var(--cyan);
     opacity: 0.9;
   }
-  
+
   a:active {
     color: var(--pink);
   }
@@ -145,7 +145,7 @@ h1 {
   font-size: 0.9em;
 }
 .article-meta {
-    font-size: 90%;
+  font-size: 90%;
 }
 .menu,
 footer {
