@@ -1,5 +1,6 @@
 /* Imports*/
 @import url("colors.css");
+@import url('https://fonts.googleapis.com/css?family=Fira+Code');
 
 /* Dark mode */
 @media (prefers-color-scheme: dark) {
@@ -13,6 +14,16 @@
 
   a {
     color: var(--light-blue);
+  }
+
+  a:visited {
+    color: var(--cyan);
+  }
+  
+  a:hover,
+  a:focus {
+    color: var(--pink);
+    opacity: 0.9;
   }
 
   header {
@@ -56,6 +67,20 @@
 
   a {
     color: var(--dark-blue);
+  }
+
+  a:visited {
+    color: var(--pink);
+  }
+  
+  a:hover,
+  a:focus {
+    color: var(--cyan);
+    opacity: 0.9;
+  }
+  
+  a:active {
+    color: var(--pink);
   }
 
   header {
@@ -119,12 +144,14 @@ h1 {
 .terms {
   font-size: 0.9em;
 }
+.article-meta {
+    font-size: 90%;
+}
 .menu,
-.article-meta,
 footer {
   text-align: center;
   font-size: 90%;
-  opacity: 0.5;
+  opacity: 0.6;
 }
 .title {
   font-size: 1.1em;
@@ -142,6 +169,7 @@ footer a {
 
 a {
   text-decoration: none;
+  cursor: pointer;
 }
 
 a:hover {
@@ -172,6 +200,7 @@ header a {
   padding: 0 0.5rem;
 }
 header a:hover,
+header a:visited,
 header .current a {
   color: white;
 }
@@ -184,7 +213,7 @@ pre {
 }
 
 code {
-  font-family: monospace;
+  font-family: 'Fira Code', monospace;
 }
 
 pre code {
