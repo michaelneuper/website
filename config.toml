@@ -5,7 +5,6 @@ languageCode = "en-US"
 enableEmoji = true
 footnotereturnlinkcontents = "↩"
 ignoreFiles = ["\\.Rmd$", "_files$", "_cache$"]
-googleAnalytics = ""
 
 [taxonomies]
 category = "categories"
