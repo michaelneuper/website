@@ -2,7 +2,7 @@
 <div class="article-meta">
 <h1><span class="title">{{ .Title | markdownify }}</span></h1>
 {{ with .Params.author }}<h2 class="author">{{ . }}</h2>{{ end }}
-{{ if .Params.date }}<h2 class="date">{{ .Date.Format "02 Jan 2006" }}</h2>{{ end }}
+{{ if .Params.date }}<h2 id= "date" class="date">{{ .Date.Format "02 Jan 2006" }}</h2>{{ end }}
 <p class="terms">
   {{ range $i := (slice "categories" "tags") }}
   {{ with ($.Param $i) }}
@@ -18,7 +18,6 @@
 <div class="content-wrapper">
   <main>
     {{ .Content }}
-    <a href="/"> >> Home</a>
   </main>
 </div>
 {{ partial "footer.html" . }}
