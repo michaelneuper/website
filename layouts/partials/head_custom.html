@@ -17,7 +17,7 @@
       {{ range .Site.Menus.feed }}
       {{ $name := lower .Name}}
       <li class="pull-right">
-        <a href="{{ .URL }}">{{ lower .Name}}</a>
+        <a href="{{ .URL }}">{{ lower .Name }}</a>
       </li>
       {{end}}
 
