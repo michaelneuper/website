@@ -121,6 +121,11 @@ h1 {
   line-height: 1.5em;
 }
 
+h2 {
+    line-height: 0.5em;
+    opacity: 0.7;
+}
+
 #TableOfContents,
 #TOC {
   border: 1px solid var(--light-brown);
@@ -258,4 +263,8 @@ blockquote {
   float: right;
   padding: 10px;
   display: block;
+}
+#gitlogo {
+    min-width: 10px;
+    min-height: 10px;
 }
