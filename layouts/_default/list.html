@@ -8,17 +8,17 @@
   {{ .Content }}
 
   <ul>
-     {{ $pages := .Pages }}
-     {{ if .IsHome }}{{ $pages = first 10 .Site.RegularPages }}{{ end }}
-     {{ range (where $pages "Section" "!=" "") }}
-     <li>
-       <span class="date">{{ .Date.Format "2006 Jan 2" }}</span>
-       <a href="{{ .RelPermalink }}">{{ .Title | markdownify }}</a>
-     </li>
-     {{ end }}
-     {{ if .IsHome }}
-       <a href="/posts/">See All</a>
-     {{ end }}
+    {{ $pages := .Pages }}
+    {{ if .IsHome }}{{ $pages = first 10 .Site.RegularPages }}{{ end }}
+    {{ range (where $pages "Section" "!=" "") }}
+    <li>
+      <span class="date">{{ .Date.Format "2006 Jan 2" }}</span>
+      <a href="{{ .RelPermalink }}">{{ .Title | markdownify }}</a>
+    </li>
+    {{ end }}
     </ul>
+    {{ if .IsHome }}
+      <a href="/posts/">See All</a>
+    {{ end }}
 </div>
 {{ partial "footer.html" . }}
