@@ -20,8 +20,7 @@
     color: var(--cyan);
   }
 
-  a:hover,
-  a:focus {
+  a:hover {
     color: var(--pink);
     opacity: 0.9;
   }
@@ -73,8 +72,7 @@
     color: var(--pink);
   }
 
-  a:hover,
-  a:focus {
+  a:hover {
     color: var(--cyan);
     opacity: 0.9;
   }
@@ -121,7 +119,7 @@ h1 {
   line-height: 1.5em;
 }
 
-h2 {
+h2#date {
     line-height: 0.5em;
     opacity: 0.7;
 }
@@ -263,8 +261,4 @@ blockquote {
   float: right;
   padding: 10px;
   display: block;
-}
-#gitlogo {
-    min-width: 10px;
-    min-height: 10px;
 }
