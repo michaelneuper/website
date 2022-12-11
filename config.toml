@@ -1,15 +1,15 @@
+title = "Michael"
 baseurl = "https://michaelneuper.netlify.app"
+theme = "classic"
+languageCode = "en-US"
 enableEmoji = true
 footnotereturnlinkcontents = "↩"
-googleAnalytics = ""
 ignoreFiles = ["\\.Rmd$", "_files$", "_cache$"]
-languageCode = "en-US"
-theme = "classic"
-title = "Michael"
+googleAnalytics = ""
 
 [taxonomies]
-tag = "tags"
 category = "categories"
+tag = "tags"
 
 [markup.goldmark.renderer]
 unsafe = true
@@ -27,8 +27,8 @@ noClasses = true
 style = "monokai"
 tabWidth = 2
 
-[permalinks]
-post = "/post/:year/:month/:day/:slug/"
+# [permalinks]
+# post = "/post/:year/:month/:day/:slug/"
 
 [[menu.main]]
 name = "Categories"
@@ -41,7 +41,7 @@ url = "/tags/"
 weight = 2
 
 [[menu.feed]]
-name = "GitHub"
+name = "github"
 url = "https://github.com/michaelneuper"
 
 [params]
