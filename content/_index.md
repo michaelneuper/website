@@ -22,4 +22,4 @@ Thanks for stopping by! I hope you enjoy reading my articles and find them usefu
 
 ---
 
-## Posts
+## Recent Posts
