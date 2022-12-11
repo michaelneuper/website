@@ -11,7 +11,6 @@ src="/images/partywizard.gif"
 alt="Picture of a wizard">
 
 ## Hi, I'm Michael 👋
-
 Welcome to my little piece of the internet!
 
 I'm a high school student, proud emacs user, and a proponent of free and open-source software (FOSS). I love tweaking my [dotfiles](https://github.com/michaelneuper/dotfiles) and writing software.
