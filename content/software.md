@@ -1,6 +1,8 @@
 ---
 title: "Programs I Use"
 date: "2021-12-09"
+categories: ['linux']
+tags: ['linux', 'software', 'utilities']
 ---
 
 ### Basic
@@ -39,20 +41,20 @@ Used to use vlc, now I use mpv like all the cool kids.
 [qBittorrent](https://www.qbittorrent.org/).
 
 ### Production
-*Video and audio:*
+**Video and audio:**
 I use [OBS Studio](https://obsproject.com/) to record video and [Kdenlive](https://kdenlive.org/en/) to edit videos.
 
-*Digital Art:*
+**Digital Art:**
 Been getting into digital art lately and have been loving [krita](https://krita.org/en/).
 
-*Writing documents:*
+**Writing documents:**
 Basic documents I write in markdown and more advanced stuff I write in LaTeX and compile to pdf. Emacs is also great for editing LaTeX docs, especially with live-latex-preview.
 
-*Office suite:*
+**Office suite:**
 [LibreOffice](https://www.libreoffice.org/). I pretty much only use an office suite for the spreadsheet program and sometimes the presentation program but I use org-mode in emacs for that now, still looking for a better way to do spreadsheets so I don't need an entire office suite just to make spreadsheets.
 
-*PDF viewer:*
+**PDF viewer:**
 [zathura](https://pwmt.org/projects/zathura/)
 
-*Image modification:*
+**Image modification:**
 [GIMP](https://www.gimp.org/)
