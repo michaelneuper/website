@@ -49,8 +49,9 @@
     padding: 5px;
   }
   tr:nth-child(even) {
-    background: var(--gray);
+    background: var(--dark-bg);
   }
+  
 }
 
 /* Light mode */
@@ -104,7 +105,7 @@
     padding: 5px;
   }
   tr:nth-child(even) {
-    background: var(--light-brown);
+    background: var(--light-bg);
   }
 }
 
@@ -255,6 +256,7 @@ blockquote {
   border-left: 5px solid var(--light-brown);
   padding: 3px 1em 3px;
 }
+
 
 .content-wrapper {
   padding: 0px 12px 0px 12px;
