@@ -5,7 +5,7 @@ categories: ['linux']
 tags: ['linux', 'software', 'utilities']
 ---
 
-### Basic
+## Basic
 **Operating system:**
 I use [arch](https://archlinux.org/), btw.
 
@@ -22,7 +22,7 @@ I use [fish](https://fishshell.com/) as my internactive shell and bash as the sy
 I use a distribution of emacs called [doom-emacs](https://github.com/hlissner/doom-emacs). 
 If I'm just quickly editing someting in the terminal like a config file I'll just use vi/vim, no need to pull up emacs for that.
 
-### Utilities
+## Utilities
 **File manager:**
 I use a file manger less and less nowadays and just do everything from the terminal. 
 If I do need a GUI file manger for some reason I use [Nemo](https://wiki.archlinux.org/title/Nemo).
@@ -40,7 +40,7 @@ Used to use vlc, now I use mpv like all the cool kids.
 **Torrent client:**
 [qBittorrent](https://www.qbittorrent.org/).
 
-### Production
+## Production
 **Video and audio:**
 I use [OBS Studio](https://obsproject.com/) to record video and [Kdenlive](https://kdenlive.org/en/) to edit videos.
 

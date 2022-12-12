@@ -222,6 +222,5 @@ Here are some of the drawbacks of using a window manager instead of a full deskt
 
 - **More complex**: Window managers are typically more complex than full desktop environments, because they require the user to manually configure and manage many of the components of the desktop environment. This can be a challenge for inexperienced users, and it can require more time and effort to set up and maintain a window manager.
 
-Overall, whether to use a window manager or a full desktop environment on Linux depends on your personal preferences and needs. Some users may prefer the lightweight, customizable, and flexible nature of window managers, while others may prefer the user-friendly, integrated, and simple nature of full desktop environments.
-
-# Comparison of popular window managers and desktop environments
+Overall, whether to use a window manager or a full desktop environment on Linux depends on your personal preferences and needs. 
+Some users may prefer the lightweight, customizable, and flexible nature of window managers, while others may prefer the user-friendly, integrated, and simple nature of full desktop environments.
