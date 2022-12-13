@@ -15,7 +15,7 @@
   a {
     color: var(--light-blue);
   }
-
+  
   a:visited {
     color: var(--cyan);
   }
@@ -49,7 +49,7 @@
     padding: 5px;
   }
   tr:nth-child(even) {
-    background: var(--dark-bg);
+    background: var(--dark-secondary-bg);
   }
   
 }
@@ -217,6 +217,7 @@ pre {
   border: 2px solid var(--cyan);
   padding: 1em;
   overflow-x: auto;
+  border-radius: 8px;
 }
 
 code {
