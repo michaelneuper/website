@@ -118,9 +118,8 @@ In progress
 
 # Koreader
 
-|                | **Top Right (_Contents_)** | **Top Left (_Screen_)** | **Bottom Left (_Page_)** | **Bottom Right** | **Verical**       | **Horizontal** |
-|----------------|----------------------------|-------------------------|--------------------------|------------------|-------------------|----------------|
-| **Tap**        | Table of Contents          | Toggle Frontlight       | Go to Previous Location  |                  |                   |                |
-| **Double Tap** | Book Map                   | Toggle Dark Mode        | Bookmark Page            |                  |                   |                |
-| **Hold**       | Page Browser               | Refresh Screen          | Toggle RTL Page Turning  |                  |                   |                |
-| **Swipe**      | Wifi Stats                 | Change Orientation      | Battery Stats            | System Stats     | Change Brightness | Toggle Wifi    |
+|                | **Top Right (_Contents_)** | **Top Left (_Screen_)** | **Bottom Left (_Page_)** |
+|----------------|----------------------------|-------------------------|--------------------------|
+| **Tap**        | Table of Contents          | Toggle Frontlight       | Go to Previous Location  |
+| **Double Tap** | Book Map                   | Toggle Dark Mode        | Bookmark Page            |
+| **Hold**       | Page Browser               | Refresh Screen          | Toggle RTL Page Turning  |
