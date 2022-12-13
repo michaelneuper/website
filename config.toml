@@ -10,6 +10,9 @@ ignoreFiles = ["\\.Rmd$", "_files$", "_cache$"]
 category = "categories"
 tag = "tags"
 
+[outputs]
+home = ["RSS", "HTML"]
+
 [markup.goldmark.renderer]
 unsafe = true
 
@@ -33,6 +36,11 @@ post = "/post/:year/:month/:day/:slug/"
 # name = "Categories"
 # url = "/categories/"
 # weight = 1
+
+[[menu.main]]
+name = "RSS"
+url = "/index.xml"
+weight = 2
 
 [[menu.main]]
 name = "Tags"
