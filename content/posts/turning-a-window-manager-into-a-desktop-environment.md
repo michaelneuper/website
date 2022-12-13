@@ -4,6 +4,8 @@ date: 2022-12-11T21:31:27+02:00
 tags: ["linux", "rice"]
 ---
 
+<!-- TODO add notification daemon-->
+
 # Introduction
 
 If you're a Linux user, you're probably familiar with the concept of window managers and desktop environments.
