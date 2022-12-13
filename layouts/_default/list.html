@@ -9,10 +9,10 @@
 
   <ul>
     {{ $pages := .Pages }}
-    {{ if .IsHome }}{{ $pages = first 10 .Site.RegularPages }}{{ end }}
+    {{ if .IsHome }}{{ $pages = first 5 .Site.RegularPages }}{{ end }}
     {{ range (where $pages "Section" "!=" "") }}
     <li>
-      <span class="date">{{ .Date.Format "2006 Jan 02" }}</span>
+      <span class="date">{{ .Date.Format "2006 Jan 02" }}</span> - 
       <a href="{{ .RelPermalink }}">{{ .Title | markdownify }}</a>
     </li>
     {{ end }}
