@@ -1,8 +1,6 @@
 ---
 title: "Key Bindings"
-date: 2022-12-12T22:15:03+02:00
-categories: []
-tags: []
+# date: 2022-12-12T22:15:03+02:00
 ---
 
 This is an archive of the various key bindings/shortcuts that I use across different software/hardware.
@@ -111,15 +109,19 @@ This is my configuration:
 | **11**        | Increase DPI                                                        |
 | **12**        | Change Profile                                                      |
 
-# Wacom Tablet
-
-<!-- ![Wacom Tablet](/images/wacom-tablet.jpg) -->
-In progress
-
 # Koreader
+
+I use a program called [koreader](https://koreader.rocks/) on my jailbroken Kindle Paperwhite (10th Gen).
+This has a lot more features than the default reader program on the kindle including: epub support, sending books over the network, and way more.
+
+These are some of my shortcuts:
 
 |                | **Top Right (_Contents_)** | **Top Left (_Screen_)** | **Bottom Left (_Page_)** |
 |----------------|----------------------------|-------------------------|--------------------------|
 | **Tap**        | Table of Contents          | Toggle Frontlight       | Go to Previous Location  |
 | **Double Tap** | Book Map                   | Toggle Dark Mode        | Bookmark Page            |
 | **Hold**       | Page Browser               | Refresh Screen          | Toggle RTL Page Turning  |
+
+# Wacom Tablet
+<!-- ![Wacom Tablet](/images/wacom-tablet.jpg) -->
+In progress
