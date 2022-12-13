@@ -26,13 +26,13 @@ noClasses = true
 style = "monokai"
 tabWidth = 2
 
-# [permalinks]
-# post = "/post/:year/:month/:day/:slug/"
+[permalinks]
+post = "/post/:year/:month/:day/:slug/"
 
-[[menu.main]]
-name = "Categories"
-url = "/categories/"
-weight = 1
+# [[menu.main]]
+# name = "Categories"
+# url = "/categories/"
+# weight = 1
 
 [[menu.main]]
 name = "Tags"
