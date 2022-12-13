@@ -67,14 +67,17 @@ Here is my configuration:
 *
 
 [main]
-# Remap modifiers to oneshot keys
+# Make shift key oneshot
 shift = oneshot(shift)
+# Remap capslock to esc when clicked and the nav profile when holded
 capslock = overload(nav, esc)
+# Remap esc to capslock
 esc = capslock
+# Remap right shift to ctrl
 rightshift = rightcontrol
 
 [nav:C]
-# Remap leftcontrol to vim keys
+# Remap left control + vim keys to navigation keys
 h = left
 j = down
 k = up
@@ -110,4 +113,14 @@ This is my configuration:
 
 # Wacom Tablet
 
+<!-- ![Wacom Tablet](/images/wacom-tablet.jpg) -->
+In progress
+
 # Koreader
+
+|                | **Top Right (_Contents_)** | **Top Left (_Screen_)** | **Bottom Left (_Page_)** | **Bottom Right** | **Verical**       | **Horizontal** |
+|----------------|----------------------------|-------------------------|--------------------------|------------------|-------------------|----------------|
+| **Tap**        | Table of Contents          | Toggle Frontlight       | Go to Previous Location  |                  |                   |                |
+| **Double Tap** | Book Map                   | Toggle Dark Mode        | Bookmark Page            |                  |                   |                |
+| **Hold**       | Page Browser               | Refresh Screen          | Toggle RTL Page Turning  |                  |                   |                |
+| **Swipe**      | Wifi Stats                 | Change Orientation      | Battery Stats            | System Stats     | Change Brightness | Toggle Wifi    |
