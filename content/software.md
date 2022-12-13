@@ -1,8 +1,6 @@
 ---
 title: "Programs I Use"
-date: "2021-12-09"
-categories: ['linux']
-tags: ['linux', 'software', 'utilities']
+# date: "2021-12-09"
 ---
 
 ## Basic
