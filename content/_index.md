@@ -24,9 +24,10 @@ Thanks for stopping by! I hope you enjoy reading my articles and find them usefu
 
 ## See
 
-- [Programs I use and recommend](/software/)
-- [Key bindings I use](/keybindings/)
-- [Donate via crypto](/donate/)
+- 🖥️ [Programs I use and recommend](/software/)
+- ⌨️ [Key bindings I use](/keybindings/)
+- 🎁 [Donate via crypto](/donate/)
+- 📧 [Contact me](/contact/)
 
 ---
 
