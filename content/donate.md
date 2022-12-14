@@ -15,9 +15,10 @@ title: "Donate"
 # Bitcoin
 
 ``` yaml
-bc1qusq592rdnzapwvnfg7kva5d9en7m39ekn99ymc
+bc1qmj2nxgwtej69y7d4umqst5fv7s7v4604ml5xzr
 ```
 
-<!-- ![Bitcoin address](https://www.bitcoinqrcodemaker.com/api/?style=bitcoin&address=bc1qusq592rdnzapwvnfg7kva5d9en7m39ekn99ymc "Bitcoin address") -->
+<!-- ![Bitcoin address](https://www.bitcoinqrcodemaker.com/api/?style=bitcoin&amp;address=bc1qmj2nxgwtej69y7d4umqst5fv7s7v4604ml5xzr "Bitcoin address") -->
+
 
 ![Bitcoin Address](/images/bitcoin.png)
