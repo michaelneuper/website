@@ -121,8 +121,13 @@ h1 {
 }
 
 h2#date {
-    line-height: 0.5em;
-    opacity: 0.7;
+  line-height: 0.5em;
+  opacity: 0.7;
+}
+
+span.date {
+  font-family: 'Fira Code', monospace;
+  opacity: 0.7;
 }
 
 #TableOfContents,

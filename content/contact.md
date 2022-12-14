@@ -8,11 +8,11 @@ title: "Contact Me"
 # Digital Contact Information
 
 - **Email**: <a href="mailto: michael@michaelneuper.com">michael@michaelneuper.com</a>
-- GPG key for encrypting mail if you know how, download [here](https://michaelneuper.com/michaelneuper.gpg) or run:
+- **GPG key** for encrypting mail if you know how, download [here](https://michaelneuper.com/michaelneuper.gpg) or run:
     ```
     curl -sL https://michaelneuper.com/michaelneuper.gpg | gpg --import
     ```
-- Fingerprint: 
+- **Fingerprint**: 
     ```
     4E7B F800 0D86 182D F484  5C37 508B CF84 373C 8930
     ```
