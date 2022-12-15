@@ -16,3 +16,9 @@ title: "Contact Me"
     ```
     4E7B F800 0D86 182D F484  5C37 508B CF84 373C 8930
     ```
+
+# Other Platforms I'm On
+
+- 📦 [GitHub](https://github.com/michaelneuper/)
+- 🤓 [LeetCode](https://leetcode.com/michaelneuper/)
+- ♟ [lichess](https://lichess.org/@/chessplayer8754)
