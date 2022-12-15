@@ -125,7 +125,7 @@ h2#date {
   opacity: 0.7;
 }
 
-span.date {
+.date {
   font-family: 'Fira Code', monospace;
   opacity: 0.7;
 }
