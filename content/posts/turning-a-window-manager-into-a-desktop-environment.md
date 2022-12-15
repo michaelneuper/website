@@ -114,13 +114,13 @@ To use nitrogen or feh to set your wallpaper, follow these steps:
 
 6. Add a line to your startup script to set the wallpaper. 
 If you're using nitrogen add: 
-```shell
-nitrogen --restore
-```
-If you're using feh add:
-```shell
-feh --bg-scale /path/to/image.jpg
-```
+    ```shell
+    nitrogen --restore
+    ```
+    If you're using feh add:
+    ```shell
+    feh --bg-scale /path/to/image.jpg
+    ```
 
 ### Bar
 
