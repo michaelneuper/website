@@ -20,4 +20,17 @@
     {{ .Content }}
   </main>
 </div>
+<div class="post-navigation">
+    {{ if .Prev }}
+        <a href="{{ .Prev.Permalink }}" class="previous-post">
+            Previous post: {{ .Prev.Title }}
+        </a>
+    {{ end }}
+    {{ if .Next }}
+        <a href="{{ .Next.Permalink }}" class="next-post">
+            Next post: {{ .Next.Title }}
+        </a>
+    {{ end }}
+</div>
+
 {{ partial "footer.html" . }}
