@@ -18,6 +18,7 @@
 <div class="content-wrapper">
   <main>
     {{ .Content }}
+    {{ if .Type | eq "posts" }}
       <div class="navbuttons">
         {{- with .Prev }}
           <a href="{{ .RelPermalink }}"><div class="prev">Previous:<br>{{ .Title }}</div></a>
@@ -26,6 +27,7 @@
           <a href="{{ .RelPermalink }}"><div class="next">Next:<br>{{ .Title }}</div></a>
         {{ end -}}
       </div>
+    {{ end }}
   </main>
 </div>
 {{ partial "footer.html" . }}
