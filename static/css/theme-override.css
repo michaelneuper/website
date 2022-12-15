@@ -263,7 +263,6 @@ blockquote {
   padding: 3px 1em 3px;
 }
 
-
 .content-wrapper {
   padding: 0px 12px 0px 12px;
   width: 95%;
@@ -275,4 +274,18 @@ blockquote {
   float: right;
   padding: 10px;
   display: block;
+}
+
+/* Next and previous buttons */
+.navbuttons {
+  font-weight: bold;
+}
+
+.prev {
+  text-align: left;
+}
+
+.next {
+  text-align: right;
+  margin-top: -60px;
 }

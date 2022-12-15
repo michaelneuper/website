@@ -18,19 +18,16 @@
 <div class="content-wrapper">
   <main>
     {{ .Content }}
+    {{ if or .Next .Prev -}}
+    <div class="navbuttons">
+      {{- with .Prev }}
+        <a href="{{ .RelPermalink }}"><div class="prev">Previous:<br>{{ .Title }}</div></a>
+      {{ end -}}
+      {{- with .Next -}}
+        <a href="{{ .RelPermalink }}"><div class="next">Next:<br>{{ .Title }}</div></a>
+      {{ end -}}
+      </div>
+    {{ end -}}
   </main>
 </div>
-<div class="post-navigation">
-    {{ if .Prev }}
-        <a href="{{ .Prev.Permalink }}" class="previous-post">
-            Previous post: {{ .Prev.Title }}
-        </a>
-    {{ end }}
-    {{ if .Next }}
-        <a href="{{ .Next.Permalink }}" class="next-post">
-            Next post: {{ .Next.Title }}
-        </a>
-    {{ end }}
-</div>
-
 {{ partial "footer.html" . }}
