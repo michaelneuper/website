@@ -1,6 +1,5 @@
 ---
 title: "Key Bindings"
-# date: 2022-12-12T22:15:03+02:00
 ---
 
 This is an archive of the various key bindings/shortcuts that I use across different software/hardware.
