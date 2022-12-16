@@ -1,7 +1,8 @@
 ---
 title: "Buffer Overflows: Keep Your Code Safe"
 date: 2022-12-14T18:59:28+02:00
-tags: ["hacking"]
+categories: ['article']
+tags: ['hacking']
 draft: false
 ---
 

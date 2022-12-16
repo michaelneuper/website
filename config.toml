@@ -32,20 +32,19 @@ tabWidth = 2
 [permalinks]
 post = "/post/:year/:month/:day/:slug/"
 
-# [[menu.main]]
-# name = "Categories"
-# url = "/categories/"
-# weight = 1
-
 [[menu.main]]
-name = "RSS"
-url = "/index.xml"
-weight = 2
+name = "Categories"
+url = "/categories/"
+weight = 1
 
 [[menu.main]]
 name = "Tags"
 url = "/tags/"
 weight = 2
+
+[[menu.feed]]
+name = "RSS"
+url = "/index.xml"
 
 [[menu.feed]]
 name = "github"
