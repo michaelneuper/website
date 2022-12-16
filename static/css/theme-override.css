@@ -287,5 +287,5 @@ blockquote {
 
 .next {
   text-align: right;
-  margin-top: -60px;
+  /* margin-top: -60px; */
 }
