@@ -9,57 +9,57 @@ This is an archive of the various key bindings/shortcuts that I use across diffe
 ## Window Manager
 
 ### Basic Key Bindings
-| **Key Binding**                              | **Action**            |
-|-----------------------------------|----------------------------------|
-| <kbd>super + enter</kbd>                     | spawm terminal        |
-| <kbd>super + q</kbd>                         | close window          |
-| <kbd>super + space</kbd>                     | show run launcher     |
-| <kbd>super + m</kbd>                         | toggle monocle layout |
-| <kbd>super + {h, j, k, l}</kbd>              | cycle through windows |
-| <kbd>super + shift + {h, j, k, l}</kbd>      | move window           |
-| <kbd>ctrl + alt + {h, j, k, l}</kbd>         | increase window size  |
-| <kbd>ctrl + shift + alt + {h, j, k, l}</kbd> | decrease window size  |
+| **Key Binding**               | **Action**            |
+|-------------------------------|-----------------------|
+| <kbd>s-RET</kbd>              | spawm terminal        |
+| <kbd>s-q</kbd>                | close window          |
+| <kbd>s-SPC</kbd>              | show run launcher     |
+| <kbd>s-m</kbd>                | toggle monocle layout |
+| <kbd>s-{h, j, k, l}</kbd>     | cycle through windows |
+| <kbd>s-S-{h, j, k, l}</kbd>   | move window           |
+| <kbd>C-M-{h, j, k, l}</kbd>   | increase window size  |
+| <kbd>C-S-M-{h, j, k, l}</kbd> | decrease window size  |
 
 ### Window States
 | **Key Binding**   | **State**               |
 |-------------------|-------------------------|
-| <kbd>super + t</kbd>         | tiled        |
-| <kbd>super + shift + t</kbd> | pseudo tiled |
-| <kbd>super + f</kbd>         | floating     |
-| <kbd>super + shift + f</kbd> | fullscreen   |
+| <kbd>s-t</kbd>    | tiled                   |
+| <kbd>s-S-t</kbd>  | pseudo tiled            |
+| <kbd>s-f</kbd>    | floating                |
+| <kbd>s-S-f</kbd>  | fullscreen              |
 
 ### Window Flags
-| **Key Binding**  | **Flag**            |
-|------------------|---------------------|
-| <kbd>super + ctrl + m</kbd> | marked   |
-| <kbd>super + ctrl + x</kbd> | locked   |
-| <kbd>super + ctrl + y</kbd> | sticky   |
-| <kbd>super + ctrl + z</kbd> | private  |
+| **Key Binding**  | **Flag** |
+|------------------|----------|
+| <kbd>s-C-m</kbd> | marked   |
+| <kbd>s-C-x</kbd> | locked   |
+| <kbd>s-C-y</kbd> | sticky   |
+| <kbd>s-C-z</kbd> | private  |
 
 ### Basic Utilities
-| **Key Binding**   | **Action**                                            |
-|-------------------|-------------------------------------------------------|
-| <kbd>super + x</kbd>         | lock the screen                            |
-| <kbd>super + shift + x</kbd> | show powermenu                             |
-| <kbd>prtsc</kbd>             | screenshot entire screen                   |
-| <kbd>super + prtsc</kbd>     | select portion of the screen to screenshot |
+| **Key Binding**    | **Action**                                 |
+|--------------------|--------------------------------------------|
+| <kbd>s-x</kbd>     | lock the screen                            |
+| <kbd>s-S-x</kbd>   | show powermenu                             |
+| <kbd>PRNTSC</kbd>  | screenshot entire screen                   |
+| <kbd>s-PRTSC</kbd> | select portion of the screen to screenshot |
 
 ### Basic Programs
-| **Key Binding**   | **Program**                       |
-|-------------------|-----------------------------------|
-| <kbd>super + w</kbd>         | web browser            |
-| <kbd>super + e</kbd>         | terminal file manager  |
-| <kbd>super + shift + e</kbd> | graphical file manager |
-| <kbd>super + d</kbd>         | doom emacs             |
-| <kbd>super + c</kbd>         | calculator             |
-| <kbd>super + v</kbd>         | vscode                 |
+| **Key Binding**  | **Program**            |
+|------------------|------------------------|
+| <kbd>s-w</kbd>   | web browser            |
+| <kbd>s-e</kbd>   | terminal file manager  |
+| <kbd>s-S-e</kbd> | graphical file manager |
+| <kbd>s-d</kbd>   | doom emacs             |
+| <kbd>s-c</kbd>   | calculator             |
+| <kbd>s-v</kbd>   | vscode                 |
 
 ## Key Remaps
 
 I use a program called [keyd](https://github.com/rvaiya/keyd) to remap some of the keys on my keyboard.
 Here is my configuration:
 
-```toml
+``` shell
 [ids]
 *
 
@@ -70,7 +70,7 @@ shift = oneshot(shift)
 capslock = overload(nav, esc)
 # Remap esc to capslock
 esc = capslock
-# Remap right shift to ctrl
+# Remap right shift to control
 rightshift = rightcontrol
 
 [nav:C]
@@ -92,21 +92,21 @@ This is what the mouse looks like:
 
 This is my configuration:
 
-|              | **Profiles**                                                                            |
-|--------------|----------------------------|------------------------------|-----------------------------|
-| **Button**   |**Profile 1 (Default)**     |**Profile 2 (Runescape)**     |**Profile 3 (Doom)**         |
-| **1**        | <kbd>alt + leftarrow</kbd> | <kbd>space</kbd>             | <kbd>q</kbd> (*weapon*)     |
-| **2**        | <kbd>ctrl</kbd>            | <kbd>shift</kbd>             | <kbd>f</kbd> (*glory kill*) |
-| **3**        | <kbd>esc</kbd>             | <kbd>esc</kbd> (*inventory*) | <kbd>tab</kbd>              |
-| **4**        | <kbd>ctl + c</kbd>         | <kbd>F1</kbd> (*combat*)     | <kbd>r</kbd> (*mod*)        |
-| **5**        | <kbd>ctrl + v</kbd>        | <kbd>F5</kbd> (*prayer*)     | <kbd>g</kbd> (*chainsaw*)   |
-| **6**        | <kbd>ctrl + z</kbd>        | <kbd>F6</kbd> (*spells*)     | <kbd>t</kbd> (*BFG*)        |
-| **7**        | <kbd>super + e</kbd>       | <kbd>F2</kbd> (*skills*)     | <kbd>f</kbd> (*pickup*)     |
-| **8**        | <kbd>super + b</kbd>       | <kbd>F3</kbd> (*quests*)     | <kbd>c</kbd> (*crouch*)     |
-| **9**        | <kbd>alt + F4</kbd>        | <kbd>F4</kbd> (*equip*)      | <kbd>esc</kbd>              |
-| **10**       | Decrease DPI                                                                            |
-| **11**       | Increase DPI                                                                            |
-| **12**       | Change Profile                                                                          |
+|            | **Profiles**            |                              |                             |
+|------------|-------------------------|------------------------------|-----------------------------|
+| **Button** | **Profile 1 (Default)** | **Profile 2 (Runescape)**    | **Profile 3 (Doom)**        |
+| **1**      | <kbd>M-left</kbd>       | <kbd>SPC</kbd>               | <kbd>q</kbd> (*weapon*)     |
+| **2**      | <kbd>C</kbd>            | <kbd>S</kbd>                 | <kbd>f</kbd> (*glory kill*) |
+| **3**      | <kbd>ESC</kbd>          | <kbd>ESC</kbd> (*inventory*) | <kbd>TAB</kbd>              |
+| **4**      | <kbd>C-c</kbd>          | <kbd>F1</kbd> (*combat*)     | <kbd>r</kbd> (*mod*)        |
+| **5**      | <kbd>C-v</kbd>          | <kbd>F5</kbd> (*prayer*)     | <kbd>g</kbd> (*chainsaw*)   |
+| **6**      | <kbd>C-z</kbd>          | <kbd>F6</kbd> (*spells*)     | <kbd>t</kbd> (*BFG*)        |
+| **7**      | <kbd>s-e</kbd>          | <kbd>F2</kbd> (*skills*)     | <kbd>f</kbd> (*pickup*)     |
+| **8**      | <kbd>s-b</kbd>          | <kbd>F3</kbd> (*quests*)     | <kbd>c</kbd> (*crouch*)     |
+| **9**      | <kbd>M-F4</kbd>         | <kbd>F4</kbd> (*equip*)      | <kbd>ESC</kbd>              |
+| **10**     | Decrease DPI            |                              |                             |
+| **11**     | Increase DPI            |                              |                             |
+| **12**     | Change Profile          |                              |                             |
 
 # Koreader
 
