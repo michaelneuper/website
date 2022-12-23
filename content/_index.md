@@ -8,7 +8,7 @@ id="partywizard"
 src="/images/partywizard.gif"
 alt="Picture of a wizard">
 
-## Hi, I'm Michael 👋
+## Hi, I'm Michael :wave:
 
 Welcome to my little piece of the internet!
 
@@ -23,10 +23,11 @@ Thanks for stopping by! I hope you enjoy reading my articles and find them usefu
 
 ## See
 
-- 🖥️ [Programs I use and recommend](/pages/software/)
-- ⌨️ [Key bindings I use](/pages/keybindings/)
-- 🎁 [Donate via crypto](/pages/donate/)
-- 📧 [Contact me](/pages/contact/)
+- :computer: [Programs I use and recommend](/pages/software/)
+- :keyboard: [Key bindings I use](/pages/keybindings/)
+- :books: [Personal library](/pages/library)
+- :gift: [Donate via crypto](/pages/donate/)
+- :e-mail: [Contact me](/pages/contact/)
 
 ---
 
