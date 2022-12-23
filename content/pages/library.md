@@ -14,6 +14,7 @@ I also don't necessarily like all the books I own.
 - Benatar, David - _The Human Predicament: Life Without Illusions_
 - Epicurus - _The Art of Happiness_
 - Hitchens, Christopher - _Letters to a Young Contrarian_
+- Hitchens, Christopher - _Mortality_
 - Hume, David - _A Treatise of Human Nature_
 - Kant, Immanuel - _Critique of Pure Reason_
 - Mill, John Stuart - _Utilitarianism_
@@ -52,7 +53,7 @@ I also don't necessarily like all the books I own.
 # Fiction
  
 - Danielewski, Mark Z. - _House of Leaves_
-- Dick, Philip K. - _Do Androids Dream of Electric Sheep?__
+- Dick, Philip K. - _Do Androids Dream of Electric Sheep?_
 - Jackson, Shirley - _The Haunting of Hill House_
 - Langan, John - _The Fisherman_
 - Nabokov, Vladimir - _Lolita_
@@ -60,7 +61,7 @@ I also don't necessarily like all the books I own.
 
 # Psychology
 
-- Greene, Robert - The 48 Laws of Power
+- Greene, Robert - _The 48 Laws of Power_
 - Kahneman, Daniel - _Thinking, Fast and Slow_
  
 # Other
