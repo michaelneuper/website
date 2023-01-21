@@ -46,7 +46,7 @@ To compile this code, we need a C compiler.
 GCC (GNU Compiler Collection) is a fantastic C compiler and what I will use in this post.
 <!-- , it is the standard C compiler for Unix-like systems like Linux and macOS. -->
 
-To compile the code and generate an executable file called `vuln.o`, you can run the following command:
+To compile the code and generate an executable file called `vuln`, you can run the following command:
 
 ``` shell
 gcc -o vuln vuln.c
