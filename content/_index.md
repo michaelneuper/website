@@ -21,7 +21,7 @@ Thanks for stopping by! I hope you enjoy reading my articles and find them usefu
 
 ---
 
-## See
+## Introduction
 
 - :computer: [Programs I use and recommend](/pages/software/)
 - :keyboard: [Key bindings I use](/pages/keybindings/)
