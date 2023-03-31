@@ -2,7 +2,7 @@
 title: "Unlock the Joy of Reading: Simple Strategies to Read More"
 date: 2023-03-13T20:36:16+02:00
 categories: ['Guides']
-tags: ['reading', 'productivity']
+tags: ['Reading', 'Productivity']
 draft: false
 ---
 
