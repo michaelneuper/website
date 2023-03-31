@@ -1,7 +1,7 @@
 ---
 title: "Enable Monitor Mode on TP-Link TL-WN722N"
 date: 2022-12-16T13:07:05+02:00
-categories: ['guide']
+categories: ['Tutorials']
 tags: ['hacking', 'wifi']
 draft: false
 ---
