@@ -269,10 +269,10 @@ blockquote {
   margin-left: auto;
   margin-right: auto;
 }
-#partywizard {
-  min-width: 40px;
+#logo {
+  min-width: 20px;
   float: right;
-  padding: 10px;
+  padding: 5px;
   display: block;
 }
 
