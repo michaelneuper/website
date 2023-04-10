@@ -2,6 +2,8 @@
 title: "Programs I Use"
 ---
 
+![logo](/images/logo.png)
+
 ## Basic
 **Operating system:**
 I use [arch](https://archlinux.org/), btw.
