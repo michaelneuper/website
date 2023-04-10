@@ -4,9 +4,9 @@ title: "Home"
 
 <img
 align="right"
-id="logo"
-src="/images/logo.png"
-alt="logo">
+id="partywizard"
+src="/images/partywizard.gif"
+alt="Picture of a wizard">
 
 ## Hi, I'm Michael :wave:
 
