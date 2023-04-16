@@ -24,9 +24,9 @@ This is an archive of the various key bindings/shortcuts that I use across diffe
 | **Key Binding**   | **State**               |
 |-------------------|-------------------------|
 | <kbd>s-t</kbd>    | tiled                   |
-| <kbd>s-S-t</kbd>  | pseudo tiled            |
-| <kbd>s-f</kbd>    | floating                |
-| <kbd>s-S-f</kbd>  | fullscreen              |
+| <kbd>s-t</kbd>    | pseudo tiled            |
+| <kbd>s-S-f</kbd>  | floating                |
+| <kbd>s-f</kbd>    | fullscreen              |
 
 ### Window Flags
 | **Key Binding**  | **Flag** |
