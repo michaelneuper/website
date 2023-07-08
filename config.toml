@@ -1,6 +1,6 @@
 title = "Michael"
 baseurl = "https://michaelneuper.com"
-theme = "classic"
+theme = "hugo-classic"
 languageCode = "en-US"
 enableEmoji = true
 footnotereturnlinkcontents = "↩"
