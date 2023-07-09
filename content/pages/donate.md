@@ -2,7 +2,7 @@
 title: "Donate"
 ---
 
-# Monero
+## Monero
 
 ``` yaml
 46wvTaMgm1sX12KghEwkuz7A3XvGdGDrEieiv1REDbU2Uu9rnFwmRBa63b42xd1PZ2PBUFwpm44EGgWaQb6gqHCPQuMz52h
@@ -12,7 +12,7 @@ title: "Donate"
 
 ![Monero Address](/images/monero.png)
 
-# Bitcoin
+## Bitcoin
 
 ``` yaml
 bc1qmj2nxgwtej69y7d4umqst5fv7s7v4604ml5xzr

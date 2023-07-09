@@ -6,7 +6,7 @@ This is a list of the books in my personal library.
 I haven't read every book here, nor do I own all the books I've read or like.
 I also don't necessarily like all the books I own.
 
-# Philosophy
+## Philosophy
  
 - Aristotle - _The Art of Rhetoric_
 - Aurelius, Marcus - _Meditations_
@@ -26,7 +26,7 @@ I also don't necessarily like all the books I own.
 - Schopenhauer, Arthur - _Essays and Aphorisms_
 - Tzu, Sun- _The Art of War_
 
-# Language
+## Language
 
 - Caesar, Julius - _De Bello Civilli (**The Civil War**)_
 - Caesar, Julius - _De Bello Gallico (**The Gallic War**)_
@@ -35,7 +35,7 @@ I also don't necessarily like all the books I own.
 - Ørberg, Hans - _Lingua Latina per se Illustrata_
 - Wheelock, Frederic M. - _Wheelock's Latin_
 
-# General Science
+## General Science
 
 - Bryson, Bill - _A Short History of Nearly Everything_
 - Darwin, Charles - _The Origin of Species_
@@ -43,14 +43,14 @@ I also don't necessarily like all the books I own.
 - Krauss, Lawrence M. - _A Universe from Nothing: Why There Is Something Rather than Nothing_
 - Tyson, Neil deGrasse - _Astrophysics for People in a Hurry_
 
-# Computer Science
+## Computer Science
  
 - Ericson, Jon - _Hacking: The Art of Exploitation_
 - Stallman, Richard M. - _Free Software, Free Society_
 - Ward, Brian - _How Linux Works_
 - Zuboff, Shoshana- _The Age of Surveillance Capitalism_
 
-# Fiction
+## Fiction
  
 - Danielewski, Mark Z. - _House of Leaves_
 - Dick, Philip K. - _Do Androids Dream of Electric Sheep?_
@@ -59,12 +59,12 @@ I also don't necessarily like all the books I own.
 - Nabokov, Vladimir - _Lolita_
 - Orwell, George - _1984_
 
-# Psychology
+## Psychology
 
 - Greene, Robert - _The 48 Laws of Power_
 - Kahneman, Daniel - _Thinking, Fast and Slow_
  
-# Other
+## Other
  
 - Chernev, Irving - _Logical Chess_
 - LaBerge, Stephen - _Exploring the World of Lucid Dreaming_
