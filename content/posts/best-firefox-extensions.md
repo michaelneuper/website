@@ -161,7 +161,7 @@ You can adjust brightness, contrast, sepia filter, dark mode, font settings and 
 ## YouTube
 
 ### [Enhancer for Youtube™](https://addons.mozilla.org/en-US/firefox/addon/enhancer-for-youtube/)
-uilt to get the most out of YouTube, this extension comes packed with all sorts of features that allow you, among other things, to manage ads as you wish, control the playback speed and the volume level with the mouse wheel, automate repetitive tasks such as selecting the appropriate playback quality, configure dozens of keyboard shortcuts to control YouTube like a pro, and much more... 
+Built to get the most out of YouTube, this extension comes packed with all sorts of features that allow you, among other things, to manage ads as you wish, control the playback speed and the volume level with the mouse wheel, automate repetitive tasks such as selecting the appropriate playback quality, configure dozens of keyboard shortcuts to control YouTube like a pro, and much more... 
 Give it a try!
 But be aware that you will never want to use YouTube without it again ;)
 
