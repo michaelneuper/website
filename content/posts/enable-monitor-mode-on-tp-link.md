@@ -6,6 +6,20 @@ tags: ['Networking', 'Hardware']
 draft: false
 ---
 
+<!-- markdown-toc start - Don't edit this section. Run M-x markdown-toc-refresh-toc -->
+**Table of Contents**
+
+- [TP-Link TL-WN722N _v1 vs v2/v3_](#tp-link-tl-wn722n-_v1-vs-v2v3_)
+- [Enabling Monitor Mode](#enabling-monitor-mode)
+    - [v1](#v1)
+    - [v2/v3](#v2v3)
+        - [Upgrade your system](#upgrade-your-system)
+        - [Install headers](#install-headers)
+        - [Change the kernel module](#change-the-kernel-module)
+        - [Enable monitor mode](#enable-monitor-mode)
+
+<!-- markdown-toc end -->
+
 #  TP-Link TL-WN722N _v1 vs v2/v3_
 
 The TP-Link TL-WN722N is a wireless network interface controller (NIC) that allows a computer to connect to a wireless network.

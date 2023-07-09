@@ -6,6 +6,14 @@ tags: ['Security', 'Programming']
 draft: false
 ---
 
+<!-- markdown-toc start - Don't edit this section. Run M-x markdown-toc-refresh-toc -->
+**Table of Contents**
+
+- [Programming a Vulnerable Program](#programming-a-vulnerable-program)
+- [Preventing Buffer Overflow Attacks](#preventing-buffer-overflow-attacks)
+
+<!-- markdown-toc end -->
+
 A buffer overflow attack is a type of cyber attack in which an attacker attempts to write more data to a buffer (a temporary data storage area) in a computer's memory than the buffer is designed to hold. 
 This can cause the buffer to overflow, or exceed its maximum capacity, which can corrupt other parts of the computer's memory and allow the attacker to gain unauthorized access to the system.
 

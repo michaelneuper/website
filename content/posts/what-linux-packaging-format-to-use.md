@@ -6,6 +6,20 @@ tags: ['Linux', 'Package-management']
 draft: false
 ---
 
+<!-- markdown-toc start - Don't edit this section. Run M-x markdown-toc-refresh-toc -->
+**Table of Contents**
+
+- [Introduction](#introduction)
+- [Flatpak](#flatpak)
+- [Snap](#snap)
+- [Deb](#deb)
+- [RPM](#rpm)
+- [AppImage](#appimage)
+- [AUR (Arch User Repository)](#aur-arch-user-repository)
+- [Conclusion](#conclusion)
+
+<!-- markdown-toc end -->
+
 # Introduction
 
 Linux, a widely popular open-source operating system, is known for its versatility and adaptability. 

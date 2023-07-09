@@ -6,6 +6,25 @@ tags: ['Linux', 'Desktop Environment']
 draft: false
 ---
 
+<!-- markdown-toc start - Don't edit this section. Run M-x markdown-toc-refresh-toc -->
+**Table of Contents**
+
+- [Introduction](#introduction)
+- [Turning a window manager into a desktop environment](#turning-a-window-manager-into-a-desktop-environment)
+    - [Window Manager](#window-manager)
+    - [Display Manager](#display-manager)
+    - [Compositor](#compositor)
+    - [Additional Utilities](#additional-utilities)
+        - [Wallpaper Setter](#wallpaper-setter)
+        - [Bar](#bar)
+        - [Application Launcher](#application-launcher)
+        - [System Tray](#system-tray)
+        - [Polkit](#polkit)
+- [Customizing your window manager](#customizing-your-window-manager)
+- [Benefits and drawbacks](#benefits-and-drawbacks)
+
+<!-- markdown-toc end -->
+
 <!-- TODO add notification daemon-->
 
 # Introduction
