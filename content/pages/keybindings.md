@@ -11,7 +11,7 @@ This is an archive of the various key bindings/shortcuts that I use across diffe
 ### Basic Key Bindings
 | **Key Binding**               | **Action**            |
 |-------------------------------|-----------------------|
-| <kbd>s-RET</kbd>              | spawm terminal        |
+| <kbd>s-RET</kbd>              | spawn terminal        |
 | <kbd>s-q</kbd>                | close window          |
 | <kbd>s-SPC</kbd>              | show run launcher     |
 | <kbd>s-m</kbd>                | toggle monocle layout |
