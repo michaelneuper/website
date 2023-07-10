@@ -4,9 +4,9 @@ title: "Home"
 
 <img
 align="right"
-id="partywizard"
-src="/images/partywizard.gif"
-alt="Picture of a wizard">
+id="runescape"
+src="/images/runescape.gif"
+alt="Picture of a runscape guy">
 
 ## Hi, I'm Michael :wave:
 

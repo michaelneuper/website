@@ -231,6 +231,13 @@ blockquote {
   display: block;
 }
 
+#runscape{
+  min-width: 40px;
+  float: right;
+  padding: 10px;
+  display: block;
+}
+
 /* Next and previous buttons */
 .navbuttons {
   font-weight: bold;
