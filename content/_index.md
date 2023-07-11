@@ -2,16 +2,8 @@
 title: "Home"
 ---
 
-<img
-align="right"
-src="/images/badges/emacs.gif"
-alt="GNU sink">
-
-<img
-align="right"
-id="gnu-sink"
-src="/images/badges/sink_animated.gif"
-alt="GNU sink">
+<img align="right" src="/images/badges/emacs.gif">
+<img align="right" src="/images/badges/sink_animated.gif">
 
 ## Hi, I'm Michael :wave:
 
