@@ -2,9 +2,7 @@
 title: "Contact Me"
 ---
 
-![apu band image](/images/apu_band.gif)
-
-## Digital Contact Information
+##  Digital Contact Information
 
 - **Email**: <a href="mailto: michael@michaelneuper.com">michael@michaelneuper.com</a>
 - **GPG key** for encrypting mail if you know how, download [here](https://michaelneuper.com/michaelneuper.gpg) or run:
