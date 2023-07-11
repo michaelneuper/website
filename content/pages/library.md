@@ -7,6 +7,9 @@ I haven't read every book here, nor do I own all the books I've read or like.
 I also don't necessarily like all the books I own.
 
 ## Philosophy
+
+<img align="right" src="/images/books/critique-of-reason.jpg" width="100" height="300">
+<!-- <img align="right" src="/images/books/republic.jpg" width="100" height="150"> -->
  
 - Aristotle - _The Art of Rhetoric_
 - Aurelius, Marcus - _Meditations_
@@ -28,6 +31,8 @@ I also don't necessarily like all the books I own.
 
 ## Language
 
+<img align="right" src="/images/books/lingua-latina.webp" width="100" height="150">
+
 - Caesar, Julius - _De Bello Civilli (**The Civil War**)_
 - Caesar, Julius - _De Bello Gallico (**The Gallic War**)_
 - Lawall, Gilbert - _Ecce Romani_
@@ -37,6 +42,8 @@ I also don't necessarily like all the books I own.
 
 ## General Science
 
+<img align="right" src="/images/books/short-history.JPG" width="100" height="150">
+
 - Bryson, Bill - _A Short History of Nearly Everything_
 - Darwin, Charles - _The Origin of Species_
 - Hawking, Stephen - _A Brief History of Time_
@@ -45,6 +52,8 @@ I also don't necessarily like all the books I own.
 
 ## Computer Science
  
+<img align="right" src="/images/books/how-linux-works.jpg" width="100" height="150">
+
 - Ericson, Jon - _Hacking: The Art of Exploitation_
 - Stallman, Richard M. - _Free Software, Free Society_
 - Ward, Brian - _How Linux Works_
@@ -52,6 +61,8 @@ I also don't necessarily like all the books I own.
 
 ## Fiction
  
+<img align="right" src="/images/books/1984.jpg" width="100" height="150">
+
 - Danielewski, Mark Z. - _House of Leaves_
 - Dick, Philip K. - _Do Androids Dream of Electric Sheep?_
 - Jackson, Shirley - _The Haunting of Hill House_
