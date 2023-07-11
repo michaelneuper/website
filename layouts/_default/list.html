@@ -1,7 +1,7 @@
 {{ partial "header.html" . }}
 
 <div class="content-wrapper">
-{{if not .IsHome }}
+  {{if not .IsHome }}
   <h1>{{ .Title | markdownify }}</h1>
   {{ end }}
 
@@ -16,9 +16,21 @@
       <a href="{{ .RelPermalink }}">{{ .Title | markdownify }}</a>
     </li>
     {{ end }}
-    </ul>
-    {{ if .IsHome }}
-      <a href="/posts/">See All</a>
-    {{ end }}
+  </ul>
+  {{ if .IsHome }}
+    <a href="/posts/">See All</a>
+  {{ end }}
+
+  <!-- <p> -->
+  <!--   <img align="left" src="/images/badges/gnu.gif"> -->
+  <!--   <img align="left" src="/images/badges/javascript.gif"> -->
+  <!--   <img align="left" src="/images/badges/suckless.gif"> -->
+  <!--   <img align="left" src="/images/badges/libreboot.gif"> -->
+  <!--   <img align="left" src="/images/badges/tor.gif"> -->
+  <!--   <img align="left" src="/images/badges/wiby.org.gif"> -->
+  <!--   <img align="left" src="/images/badges/created-with-emacs.jpg"> -->
+  <!-- </p> -->
 </div>
+
+ 
 {{ partial "footer.html" . }}

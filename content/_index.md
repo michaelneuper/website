@@ -4,11 +4,6 @@ title: "Home"
 
 <img
 align="right"
-src="/images/badges/made-with-emacs.png"
-alt="GNU sink">
-
-<img
-align="right"
 src="/images/badges/emacs.gif"
 alt="GNU sink">
 
