@@ -2,7 +2,7 @@
 title: "Programs I Use"
 ---
 
-![logo](/images/logo.png)
+<img align="right" src="/images/logo.png">
 
 ## Basic
 **Operating system:**
