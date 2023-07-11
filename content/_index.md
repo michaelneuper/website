@@ -4,9 +4,19 @@ title: "Home"
 
 <img
 align="right"
-id="runescape"
-src="/images/runescape.gif"
-alt="Picture of a runscape guy">
+src="/images/badges/made-with-emacs.png"
+alt="GNU sink">
+
+<img
+align="right"
+src="/images/badges/emacs.gif"
+alt="GNU sink">
+
+<img
+align="right"
+id="gnu-sink"
+src="/images/badges/sink_animated.gif"
+alt="GNU sink">
 
 ## Hi, I'm Michael :wave:
 
