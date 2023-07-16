@@ -9,51 +9,49 @@ title: "Programs I Use"
 I use [arch](https://archlinux.org/), btw.
 
 **Terminal:**
-I use [alactritty](https://alacritty.org/) as my main terminal. I am thinking of switching to [kitty](https://sw.kovidgoyal.net/kitty/) but the speed of alacritty just can't be beaten.
+[Alactritty](https://alacritty.org/) on desktop and [iTerm2](https://iterm2.com/) on mac.
+Nowadays i mostly use vterm or eshell in emacs.
 
 **Shell:**
-I use [fish](https://fishshell.com/) as my internactive shell and bash as the system shell.
+[fish](https://fishshell.com/) on Linux and zsh on macOS and eshell emacs.
 
 **Window manager:**
-[bspwm](https://github.com/baskerville/bspwm)
+[bspwm](https://github.com/baskerville/bspwm) on Linux and [yabai](https://github.com/koekeishiya/yabai) on macOS.
 
 **Text editor/IDE:**
-I use a distribution of emacs called [doom-emacs](https://github.com/hlissner/doom-emacs). 
-If I'm just quickly editing someting in the terminal like a config file I'll just use vi/vim, no need to pull up emacs for that.
+[GNU Emacs](https://www.gnu.org/software/emacs/) with the [Doom Emacs](https://github.com/hlissner/doom-emacs) configuration framework. 
 
 ## Utilities
 **File manager:**
-I use a file manger less and less nowadays and just do everything from the terminal. 
-If I do need a GUI file manger for some reason I use [Nemo](https://wiki.archlinux.org/title/Nemo).
-I've tried others like PCManFM but Nemo has the best search functionality hands down.
+I do 99% of my file management with dired inside emacs. 
+For the other 1% I'll use the default file manager.
 
 **Web browser:**
 [Firefox](https://www.mozilla.org/en-US/firefox/new/), obviously.
 
 **Mail client:**
-I started to use the built in email client in emacs more but otherwise I use [mailspring](https://getmailspring.com/).
+I started to use [mu4e](https://www.emacswiki.org/emacs/mu4e) in emacs more but otherwise I use [mailspring](https://getmailspring.com/).
 
 **Video player:**
 Used to use vlc, now I use mpv like all the cool kids.
 
 **Torrent client:**
-[qBittorrent](https://www.qbittorrent.org/).
+[qBittorrent](https://www.qbittorrent.org/) on Linux and [Transmission](https://transmissionbt.com/) on macOS.
 
 ## Production
-**Video and audio:**
-I use [OBS Studio](https://obsproject.com/) to record video and [Kdenlive](https://kdenlive.org/en/) to edit videos.
-
 **Digital Art:**
 Been getting into digital art lately and have been loving [krita](https://krita.org/en/).
 
 **Writing documents:**
-Basic documents I write in markdown and more advanced stuff I write in LaTeX and compile to pdf. Emacs is also great for editing LaTeX docs, especially with live-latex-preview.
+I write almost everything [Org Mode](https://orgmode.org/) and I'll export to LaTeX occasionally.
+Professional documents I write directly in [LaTeX](https://www.latex-project.org/).
 
 **Office suite:**
-[LibreOffice](https://www.libreoffice.org/). I pretty much only use an office suite for the spreadsheet program and sometimes the presentation program but I use org-mode in emacs for that now, still looking for a better way to do spreadsheets so I don't need an entire office suite just to make spreadsheets.
+[LibreOffice](https://www.libreoffice.org/).
+Don't really use an office suite since I write documents and slideshows in org mode and LaTeX.
 
 **PDF viewer:**
-[zathura](https://pwmt.org/projects/zathura/)
+I used to use [zathura](https://pwmt.org/projects/zathura/) but now I use pdf-tools inside Emacs.
 
 **Image modification:**
 [GIMP](https://www.gimp.org/)
