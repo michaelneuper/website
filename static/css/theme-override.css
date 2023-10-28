@@ -1,10 +1,130 @@
-/* Imports*/
-@import url("colors.css");
-/* @import url("https://fonts.googleapis.com/css?family=Fira+Code"); */
-/* @import url("https://fonts.googleapis.com/css?family=Ubuntu+Mono"); */
+@import url("solarized.css");
+
+/* Dark mode */
+@media (prefers-color-scheme: dark) {
+  body {
+    background-color: var(--base03);
+    color: var(--base0);
+  }
+
+  blockquote {
+    background: var(--base02);
+  }
+  pre {
+    background-color: var(--base03) !important;
+    color: var(--base0);
+  }
+
+  a {
+    color: var(--blue);
+  }
+  a:visited {
+    color: var(--violet);
+  }
+  a:hover {
+    color: var(--violet);
+  }
+
+  header {
+    background: var(--base03);
+    border-bottom: 0px;
+  }
+  header a {
+    color: var(--base1);
+  }
+  header a:hover,
+  header a:visited,
+  header .current a {
+    color: var(--base1);
+  }
+
+  .article-meta,
+  .menu a {
+    background: var(--base02);
+    color: var(--base1);
+  }
+
+  table {
+    margin: auto;
+    background-color: var(--base03);
+    border-top: 1px solid var(--base0);
+    border-bottom: 1px solid var(--base0);
+  }
+  table thead th {
+    border-bottom: 1px solid var(--base0);
+  }
+  th,
+  td {
+    padding: 5px;
+  }
+  tr:nth-child(even) {
+    background: var(--base02);
+  }
+}
+
+/* Light mode */
+@media (prefers-color-scheme: light) {
+  body {
+    background-color: var(--base3);
+    color: var(--base00);
+  }
+
+  blockquote {
+    background: var(--base3);
+  }
+
+  a {
+    color: var(--blue);
+  }
+  a:visited {
+    color: var(--violet);
+  }
+  a:hover {
+    color: var(--violet);
+  }
+
+  header {
+    background: var(--base3);
+    border-bottom: 0px;
+  }
+  header a {
+    color: var(--base01);
+  }
+  header a:hover,
+  header a:visited,
+  header .current a {
+    color: var(--base01);
+  }
+
+  pre {
+    background-color: var(--base03) !important;
+    color: var(--base0);
+  }
+
+  .article-meta,
+  .menu a {
+    background: var(--base2);
+    color: var(--base00);
+  }
+
+  table {
+    margin: auto;
+    border-top: 1px solid var(--base00);
+    border-bottom: 1px solid var(--base00);
+  }
+  table thead th {
+    border-bottom: 1px solid var(--base00);
+  }
+  th,
+  td {
+    padding: 5px;
+  }
+  tr:nth-child(even) {
+    background: var(--base2);
+  }
+}
 
 body {
-  background-color: var(--dark-bg);
   font-family: sans-serif;
   max-width: 1000px;
   margin: auto;
@@ -12,51 +132,7 @@ body {
   line-height: 1.5em;
 }
 
-blockquote {
-  background: var(--dark-secondary-bg);
-}
-
-a {
-  color: var(--light-blue);
-}
-
-a:visited {
-  color: var(--cyan);
-}
-
-a:hover {
-  color: var(--pink);
-  opacity: 0.9;
-}
-
-header {
-  background: var(--light-blue);
-  border-bottom: 0px;
-}
-
-.article-meta,
-.menu a {
-  background: var(--dark-secondary-bg);
-  color: white;
-}
-
-table {
-  margin: auto;
-  border-top: 1px solid var(--gray);
-  border-bottom: 1px solid var(--gray);
-}
-table thead th {
-  border-bottom: 1px solid var(--gray);
-}
-th,
-td {
-  padding: 5px;
-}
-tr:nth-child(even) {
-  background: var(--dark-secondary-bg);
-}
-
-h1 {
+/* h1 {
   line-height: 1.5em;
   color: #89aaeb;
 }
@@ -71,7 +147,7 @@ h3 {
 
 h4 {
   color: #c3e88d;
-}
+} */
 
 h2#date {
   line-height: 0.5em;
@@ -160,15 +236,10 @@ header nav {
 }
 
 header a {
-  color: white;
   line-height: 1.75rem;
   padding: 0 0.5rem;
 }
-header a:hover,
-header a:visited,
-header .current a {
-  color: white;
-}
+
 
 /* Code Boxes */
 pre {
@@ -231,7 +302,7 @@ blockquote {
   display: block;
 }
 
-#runscape{
+#runscape {
   min-width: 40px;
   float: right;
   padding: 10px;
