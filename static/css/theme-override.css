@@ -132,22 +132,22 @@ body {
   line-height: 1.5em;
 }
 
-/* h1 {
+h1 {
   line-height: 1.5em;
-  color: #89aaeb;
+  color: var(--blue);
 }
 
 h2 {
-  color: #c3e88d;
+  color: var(--cyan);
 }
 
 h3 {
-  color: #c792ea;
+  color: var(--violet);
 }
 
 h4 {
-  color: #c3e88d;
-} */
+  color: var(--green);
+}
 
 h2#date {
   line-height: 0.5em;
@@ -239,7 +239,6 @@ header a {
   line-height: 1.75rem;
   padding: 0 0.5rem;
 }
-
 
 /* Code Boxes */
 pre {
