@@ -1,20 +1,20 @@
 :root {
-    --base03:    #002b36;
-    --base02:    #073642;
-    --base01:    #586e75;
-    --base00:    #657b83;
-    --base0:     #839496;
-    --base1:     #93a1a1;
-    --base2:     #eee8d5;
-    --base3:     #fdf6e3;
-    --yellow:    #b58900;
-    --orange:    #cb4b16;
-    --red:       #dc322f;
-    --magenta:   #d33682;
-    --violet:    #6c71c4;
-    --blue:      #268bd2;
-    --cyan:      #2aa198;
-    --green:     #859900;
+  --base03: #002b36;
+  --base02: #073642;
+  --base01: #586e75;
+  --base00: #657b83;
+  --base0: #839496;
+  --base1: #93a1a1;
+  --base2: #eee8d5;
+  --base3: #fdf6e3;
+  --yellow: #b58900;
+  --orange: #cb4b16;
+  --red: #dc322f;
+  --magenta: #d33682;
+  --violet: #6c71c4;
+  --blue: #268bd2;
+  --cyan: #2aa198;
+  --green: #859900;
 }
 
 /* Dark mode */
@@ -68,6 +68,9 @@
   nav a {
     color: var(--base1) !important;
   }
+  nav a:after {
+    background-color: var(--base0);
+  }
 
   header {
     background: var(--base02);
@@ -108,10 +111,12 @@
     color: var(--base00);
   }
 
-  h1, h2, h3 {
+  h1,
+  h2,
+  h3 {
     color: var(--base01);
   }
-  
+
   #wrapper {
     background-color: var(--base3);
   }
@@ -136,6 +141,10 @@
   }
   a:hover {
     color: var(--violet);
+  }
+
+  nav a:after {
+    background-color: var(--base00);
   }
 
   button.copyButton {
@@ -185,64 +194,83 @@
 }
 
 pre {
-    position: relative;
+  position: relative;
 }
 
 button.copyButton {
-    position: absolute;
-    bottom: 5px;
-    right: 5px;
-    opacity: 0.7;
-    border: none;
-    padding: 5px 10px;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 14px;
-    transition: opacity 0.3s;
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
+  opacity: 0.7;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: opacity 0.3s;
 }
 
 button.copyButton:hover {
-    opacity: 1;
+  opacity: 1;
 }
 
 #wrapper {
-    padding-left: 0;
+  padding-left: 0;
 }
 
 .container {
-    display: flex;
-    flex-wrap: wrap;
+  display: flex;
+  flex-wrap: wrap;
 }
 
 .side-panel {
-    width: 300px;
-    position: fixed;
-    top: 0;
-    height: 100vh;
-    overflow-y: auto;
-    z-index: 1;
+  width: 300px;
+  position: fixed;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+  z-index: 1;
 
-    @media (max-width: 768px) {
-        position: static;
-        width: 100%;
-        height: auto;
-    }
+  @media (max-width: 768px) {
+    position: static;
+    width: 100%;
+    height: auto;
+  }
 }
 
 .main-content {
-    flex: 1;
-    /* max-width: calc(100% - 300px); */
-    max-width: 80%;
-    margin: 0 auto;
-    box-sizing: border-box;
-    padding-left: 300px;
+  flex: 1;
+  /* max-width: calc(100% - 300px); */
+  max-width: 80%;
+  margin: 0 auto;
+  box-sizing: border-box;
+  padding-left: 300px;
 
-    @media (max-width: 768px) {
-        padding-left: 0;
-        margin: 20px;
-    }
+  @media (max-width: 768px) {
+    padding-left: 0;
+    margin: 20px;
+  }
 }
 
-.menus .ul {
-    list-style: none !important;
+nav a {
+  text-decoration: none !important;
+  display: inline-block;
+  position: relative;
+}
+
+nav a:after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  transform: scaleX(0);
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  transform-origin: bottom right;
+  transition: transform 0.25s ease-out;
+}
+
+nav a:hover:after {
+  transform: scaleX(1);
+  transform-origin: bottom left;
 }
