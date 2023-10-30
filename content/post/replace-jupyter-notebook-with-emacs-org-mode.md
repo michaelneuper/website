@@ -6,37 +6,6 @@ tags: ['Emacs', 'Programming']
 draft: false
 ---
 
-<!-- markdown-toc start - Don't edit this section. Run M-x markdown-toc-refresh-toc -->
-**Table of Contents**
-
-- [Introduction](#introduction)
-- [What is Emacs Org Mode?](#what-is-emacs-org-mode)
-- [Why Replace Jupyter Notebook with Emacs Org Mode?](#why-replace-jupyter-notebook-with-emacs-org-mode)
-- [Getting Started with Emacs Org Mode for Literate Programming](#getting-started-with-emacs-org-mode-for-literate-programming)
-    - [Installing Emacs](#installing-emacs)
-    - [Configuring Org Mode](#configuring-org-mode)
-    - [Installing essential packages for data science](#installing-essential-packages-for-data-science)
-    - [Setting up a Python environment in Emacs](#setting-up-a-python-environment-in-emacs)
-    - [Creating and organizing Org files for literate programming](#creating-and-organizing-org-files-for-literate-programming)
-- [Advanced Features of Emacs Org Mode for Data Science](#advanced-features-of-emacs-org-mode-for-data-science)
-    - [Working with multiple languages in a single Org file](#working-with-multiple-languages-in-a-single-org-file)
-    - [Integrating with external tools and libraries](#integrating-with-external-tools-and-libraries)
-    - [Debugging and profiling code within Org Mode](#debugging-and-profiling-code-within-org-mode)
-    - [Customizing code block execution and display options](#customizing-code-block-execution-and-display-options)
-    - [Utilizing Org Mode for project management and collaboration](#utilizing-org-mode-for-project-management-and-collaboration)
-- [Tips and Tricks for Optimizing Your Emacs Org Mode Workflow](#tips-and-tricks-for-optimizing-your-emacs-org-mode-workflow)
-    - [Keyboard shortcuts for Org Mode](#keyboard-shortcuts-for-org-mode)
-    - [Customizing your Emacs theme](#customizing-your-emacs-theme)
-    - [Integrating with other Emacs packages for productivity](#integrating-with-other-emacs-packages-for-productivity)
-    - [Using Org Mode for note-taking and knowledge management](#using-org-mode-for-note-taking-and-knowledge-management)
-- [Transitioning from Jupyter Notebook to Emacs Org Mode](#transitioning-from-jupyter-notebook-to-emacs-org-mode)
-    - [Importing existing Jupyter Notebooks into Org Mode](#importing-existing-jupyter-notebooks-into-org-mode)
-    - [Exporting Org files to Jupyter Notebook format](#exporting-org-files-to-jupyter-notebook-format)
-    - [Overcoming common challenges during the transition](#overcoming-common-challenges-during-the-transition)
-- [Conclusion](#conclusion)
-
-<!-- markdown-toc end -->
-
 # Introduction
 
 The popularity of Jupyter Notebook has surged in recent years as a powerful tool for interactive data analysis and visualization. 

@@ -6,41 +6,6 @@ tags: ['Productivity', 'Privacy']
 draft: false
 ---
 
-<!-- markdown-toc start - Don't edit this section. Run M-x markdown-toc-refresh-toc -->
-**Table of Contents**
-
-- [Productivity](#productivity)
-  - [Tree Style Tab](#tree-style-tab)
-  - [Simple Tab Groups](#simple-tab-groups)
-  - [Firefox Multi-Account Containers](#firefox-multi-account-containers)
-  - [DownThemAll!](#downthemall)
-  - [SingleFile](#singlefile)
-  - [To Google Translate](#to-google-translate)
-- [Privacy](#privacy)
-  - [uBlock Origin](#ublock-origin)
-  - [User-Agent Switcher and Manager](#user-agent-switcher-and-manager)
-  - [Privacy Badger](#privacy-badger)
-  - [ClearURLs](#clearurls)
-  - [LocalCDN](#localcdn)
-  - [Facebook Container](#facebook-container)
-  - [Google Container](#google-container)
-- [Quality of Life](#quality-of-life)
-  - [Auto Tab Discard](#auto-tab-discard)
-  - [I don't care about cookies](#i-dont-care-about-cookies)
-- [Aesthetics](#aesthetics)
-  - [Dark Reader](#dark-reader)
-- [Social Platforms](#social-platforms)
-  - [YouTube](#youtube)
-    - [Enhancer for Youtube™](#enhancer-for-youtube)
-    - [PocketTube](#pockettube)
-    - [Return YouTube Dislike](#return-youtube-dislike)
-    - [SponsorBlock](#sponsorblock)
-  - [Reddit](#reddit)
-    - [Reddit Enhancement Suite](#reddit-enhancement-suite)
-    - [Unreddit](#unreddit)
-
-<!-- markdown-toc end -->
-
 Welcome to my comprehensive guide on the best Firefox extensions to supercharge your browsing experience!
 As one of the most popular web browsers, Firefox offers a remarkable level of flexibility and customization through its vast extension ecosystem.
 These extensions are like small add-ons that can enhance various aspects of your browsing, ranging from productivity and privacy to aesthetics and tailored experiences on platforms like YouTube and Reddit.

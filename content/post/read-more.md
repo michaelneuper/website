@@ -6,16 +6,6 @@ tags: ['Reading', 'Productivity']
 draft: false
 ---
 
-<!-- markdown-toc start - Don't edit this section. Run M-x markdown-toc-refresh-toc -->
-**Table of Contents**
-
-- [Set Small, Achievable Goals](#set-small-achievable-goals)
-- [Focus on the Chapters That Intrigue You](#focus-on-the-chapters-that-intrigue-you)
-- [Embrace the Art of Moving On](#embrace-the-art-of-moving-on)
-- [Read Multiple Books at Once](#read-multiple-books-at-once)
-
-<!-- markdown-toc end -->
-
 In today's fast-paced world, finding time to read can be challenging. 
 However, reading provides numerous benefits, such as boosting mental stimulation, reducing stress, and expanding our knowledge. 
 If you've been struggling to incorporate more reading into your life, don't worry – you're not alone. 

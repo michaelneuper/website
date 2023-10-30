@@ -6,15 +6,6 @@ tags: ['Web Development']
 draft: false
 ---
 
-<!-- markdown-toc start - Don't edit this section. Run M-x markdown-toc-refresh-toc -->
-**Table of Contents**
-
-- [Building The Site](#building-the-site)
-- [Hosting Your Site](#hosting-your-site)
-- [Getting a Custom Domain (Not Free)](#getting-a-custom-domain-not-free)
-
-<!-- markdown-toc end -->
-
 Setting up your own static website can be a great way to showcase your personal brand, portfolio, or business online. 
 In this post, we'll walk through the process of setting up a static website using Hugo as the static site generator and Netlify as the hosting service.
 

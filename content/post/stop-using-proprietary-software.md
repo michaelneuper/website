@@ -6,19 +6,6 @@ tags: ['Open-source', 'Software']
 draft: false
 ---
 
-<!-- markdown-toc start - Don't edit this section. Run M-x markdown-toc-refresh-toc -->
-**Table of Contents**
-
-- [Introduction](#introduction)
-- [The Greed of Corporations](#the-greed-of-corporations)
-- [Lack of Customization and Flexibility](#lack-of-customization-and-flexibility)
-- [The Inevitable Obsolescence](#the-inevitable-obsolescence)
-- [A Breeding Ground for Security Risks](#a-breeding-ground-for-security-risks)
-- [Stifling Collaboration and Knowledge Sharing](#stifling-collaboration-and-knowledge-sharing)
-- [Conclusion](#conclusion)
-
-<!-- markdown-toc end -->
-
 # Introduction
 
 Have you ever found yourself frustrated by the limitations, restrictions, and lack of control you have when using proprietary software? 
