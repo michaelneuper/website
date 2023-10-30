@@ -71,9 +71,15 @@
 
 <body>
   <div id="wrapper">
-    {{ partial "header.html" . }}
-    {{ block "main" . }}{{ end }}
-    {{ partial "footer.html" . }}
+    <div class="container">
+        <div class="side-panel">
+        {{ partial "header.html" . }}
+        </div>
+        <div class="main-content">
+        {{ block "main" . }}{{ end }}
+        {{ partial "footer.html" . }}
+        </div>
+    </div>
   </div>
 
   <!-- custom css -->

@@ -32,6 +32,10 @@
     background-color: var(--base02);
   }
 
+  .side-panel {
+    background-color: var(--base02);
+  }
+
   blockquote {
     background: var(--base02);
   }
@@ -66,7 +70,7 @@
   }
 
   header {
-    background: var(--base03);
+    background: var(--base02);
     border-bottom: 0px;
   }
   h2 a {
@@ -118,6 +122,10 @@
 
   blockquote {
     background: var(--base3);
+  }
+
+  .side-panel {
+    background-color: var(--base2);
   }
 
   a:link {
@@ -195,4 +203,46 @@ button.copyButton {
 
 button.copyButton:hover {
     opacity: 1;
+}
+
+#wrapper {
+    padding-left: 0;
+}
+
+.container {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.side-panel {
+    width: 300px;
+    position: fixed;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
+    z-index: 1;
+
+    @media (max-width: 768px) {
+        position: static;
+        width: 100%;
+        height: auto;
+    }
+}
+
+.main-content {
+    flex: 1;
+    /* max-width: calc(100% - 300px); */
+    max-width: 80%;
+    margin: 0 auto;
+    box-sizing: border-box;
+    padding-left: 300px;
+
+    @media (max-width: 768px) {
+        padding-left: 0;
+        margin: 20px;
+    }
+}
+
+.menus .ul {
+    list-style: none !important;
 }

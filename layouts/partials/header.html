@@ -7,6 +7,17 @@
   </h1>
 
   <nav>
+
+    <!-- <div class="nav-bar-item">
+        <ul>
+          {{ range .Site.Menus.main }}
+          <li>
+            <a class="link" href="{{ .URL | safeURL }}">{{ .Name }}</a>
+          </li>
+          {{ end }}
+        </ul>
+      </div> -->
+
     {{ range .Site.Menus.main }}
     <span class="nav-bar-item">
       <a class="link" href="{{ .URL | safeURL }}">{{ .Name }}</a>

@@ -48,7 +48,7 @@ email = "michael@michaelneuper.com"
 name = "Michael Neuper"
 
 [params]
-title="Hi, I'm Michael"
+title="Michael Neuper"
 description = "Michael's Personal Website"
 footnote = """
 Follow me on <a class=link href=https://github.com/michaelneuper target=_blank rel=noopener>GitHub</a> or
