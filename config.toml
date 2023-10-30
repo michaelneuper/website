@@ -56,7 +56,7 @@ Follow me on <a class=link href=https://github.com/michaelneuper target=_blank r
 """
 keywords = ["michael", "neuper", "linux", "blog", "productivity"]
 customCSS = ["css/styles.css"]
-customJS = []
+customJS = ["js/script.js"]
 dateFormat = "2 January 2006"
 emphasisWithDots = true
 since = "2022"
