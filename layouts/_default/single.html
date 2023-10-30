@@ -1,33 +1,66 @@
-{{ partial "header.html" . }}
-<div class="article-meta">
-<h1><span class="title">{{ .Title | markdownify }}</span></h1>
-{{ with .Params.author }}<h2 class="author">{{ . }}</h2>{{ end }}
-{{ if .Params.date }}<h2 id= "date" class="date">{{ .Date.Format "2 January 2006" }}</h2>{{ end }}
-<p class="terms">
-  {{ range $i := (slice "categories" "tags") }}
-  {{ with ($.Param $i) }}
-  {{ $i | title }}: {{ range $k := . }}<a href="{{ relURL (print "/" $i "/" $k | urlize) }}">{{$k}}</a> {{ end }}
-  {{ end }}
-  {{ end }}
-</p>
-</div>
-
-{{ if .Params.toc }}
-{{ .TableOfContents }}
+{{ define "head" }}
+<link rel="stylesheet" href='{{ "css/single.css" | absURL }}'>
+<link rel="stylesheet" href='{{ "css/sharingbuttons.css" | absURL }}'>
 {{ end }}
-<div class="content-wrapper">
-  <main>
+
+{{ define "main" }}
+<main id="main" class="post">
+  {{ if ne .Section "post"}}
+  <article class="content {{ if .Site.Params.numberedSubtitles }}numbered-subtitles{{ end }}">
     {{ .Content }}
-    {{ if .Type | eq "posts" }}
-      <div class="navbuttons">
-        {{- with .Prev }}
-          <a href="{{ .RelPermalink }}"><div class="prev">Previous:<br>{{ .Title }}</div></a>
-        {{ end -}}
-        {{- with .Next -}}
-          <a href="{{ .RelPermalink }}"><div class="next">Next:<br>{{ .Title }}</div></a>
-        {{ end -}}
-      </div>
+  </article>
+
+  {{ else }}
+  <h1>{{ .Title }}</h1>
+  {{ if ne .Params.tags nil }}
+  <div>
+    {{ range .Params.tags }}
+    <a class="link" href='{{ "tags" | absURL }}/{{ . | urlize }}'>#{{ . }}</a>
     {{ end }}
-  </main>
-</div>
-{{ partial "footer.html" . }}
+  </div>
+  {{ end }}
+  {{ if cond (ne .Params.toc nil) .Params.toc .Site.Params.toc }}
+  {{ if ne .TableOfContents "<nav id=\"TableOfContents\"></nav>" }}
+  <details>
+    <summary>
+      <b>Table of Contents</b>
+    </summary>
+    <div class="toc {{ if .Site.Params.numberedSubtitles }}numbered-subtitles{{ end }}">{{ .TableOfContents }}</div>
+  </details>
+  {{ end }}
+  {{ end }}
+  <article class="content {{ if .Site.Params.numberedSubtitles }}numbered-subtitles{{ end }}">
+    {{ if .Site.Params.emphasisWithDots }}
+    {{ .Content | replaceRE "<strong>(\\p{Han}+?)</strong>" "<strong class=chinese>$1</strong>" | safeHTML }}
+    {{ else }}
+    {{ .Content }}
+    {{ end }}
+  </article>
+  {{ partial "sharingbuttons.html" . }}
+  <div class="paginator">
+    {{ if .PrevInSection }}
+    <a class="link" href="{{ .PrevInSection.Permalink }}">← prev</a>
+    {{ else }}
+    <a></a>
+    {{ end }}
+    {{ if .NextInSection }}
+    <a class="link" href="{{ .NextInSection.Permalink }}">next →</a>
+    {{ else }}
+    <a></a>
+    {{ end }}
+  </div>
+  <div class="comment">
+    <!-- disqus -->
+    {{ template "_internal/disqus.html" . }}
+    <!-- generic engine -->
+    {{ .Site.Params.commentEngine.code | safeHTML }}
+  </div>
+  {{ end }}
+{{ if .Page.Store.Get "hasMermaid" }}
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.esm.min.mjs';
+    mermaid.initialize({ startOnLoad: true });
+  </script>
+{{ end }}
+</main>
+{{ end }}

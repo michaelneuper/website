@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="{{ .Site.LanguageCode }}" style="font-size: {{ .Site.Params.rootFontSize | default "100%" }}">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- author -->
+  <meta name="author" content="{{ .Site.Author.name }}">
+
+  <!-- description -->
+  {{ if .Description }}
+  <meta name="description" content="{{ .Description }}">
+  {{ else if and .IsPage .Summary }}
+  <meta name="description" content="{{ .Summary }}">
+  {{ else }}
+  <meta name="description" content="{{ .Site.Params.description }}">
+  {{ end }}
+
+  <!-- favicon -->
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+
+  <!-- keywords -->
+  {{ if .Keywords }}
+  <meta name="keywords" content="{{ delimit .Keywords " " }} {{ delimit .Site.Params.keywords " " }}">
+  {{ else }}
+  <meta name="keywords" content="{{ delimit .Site.Params.keywords " " }}">
+  {{ end }}
+
+  <!-- math -->
+  {{ if .Site.Params.math }}
+  {{ partial "math.html" . }}
+  {{ end }}
+
+  <!-- buymeacoffee -->
+  {{ .Site.Params.buymeacoffee.code | safeHTML }}
+
+  <!-- opengraph -->
+  {{ template "_internal/opengraph.html" . }}
+
+  <!-- permalink -->
+  <link rel="canonical" href="{{ .Permalink }}">
+
+  <!-- rss -->
+  {{ range .AlternativeOutputFormats -}}
+  {{ printf `
+  <link rel="%s" type="%s" href="%s" title="%s" />` .Rel .MediaType.Type .Permalink $.Site.Title | safeHTML }}
+  {{ end -}}
+
+  <!-- schema -->
+  {{ template "_internal/schema.html" . }}
+
+  <!-- style -->
+  <link media="screen" rel="stylesheet" href='{{ "css/common.css" | absURL }}'>
+  <link media="screen" rel="stylesheet" href='{{ "css/content.css" | absURL }}'>
+
+  <!-- title -->
+  {{ if .IsHome }}
+  <title>{{ .Site.Title }}</title>
+  {{ else }}
+  <title>{{ .Title }} - {{ .Site.Title }}</title>
+  {{ end }}
+
+  <!-- twitter -->
+  {{ template "_internal/twitter_cards.html" . }}
+
+  {{ block "head" . }}{{ end }}
+</head>
+
+<body>
+  <div id="wrapper">
+    {{ partial "header.html" . }}
+    {{ block "main" . }}{{ end }}
+    {{ partial "footer.html" . }}
+  </div>
+
+  <!-- custom css -->
+  {{ range .Site.Params.customCSS }}
+  <link media="screen" rel="stylesheet" href="{{ . | absURL }}" />
+  {{ end }}
+
+  <!-- custom js -->
+  {{ range .Site.Params.customJS }}
+  <script src="{{ . | absURL }}"></script>
+  {{ end }}
+
+  <!-- google analytics -->
+  {{ template "_internal/google_analytics.html" . }}
+
+</body>
+
+</html>
