@@ -59,7 +59,6 @@ customCSS = ["css/styles.css"]
 customJS = ["js/script.js"]
 dateFormat = "2 January 2006"
 emphasisWithDots = true
-since = "2022"
 toc = true
 showWordCount = false
 showReadingTime = true
