@@ -1,0 +1,163 @@
+:root {
+    --base03:    #002b36;
+    --base02:    #073642;
+    --base01:    #586e75;
+    --base00:    #657b83;
+    --base0:     #839496;
+    --base1:     #93a1a1;
+    --base2:     #eee8d5;
+    --base3:     #fdf6e3;
+    --yellow:    #b58900;
+    --orange:    #cb4b16;
+    --red:       #dc322f;
+    --magenta:   #d33682;
+    --violet:    #6c71c4;
+    --blue:      #268bd2;
+    --cyan:      #2aa198;
+    --green:     #859900;
+}
+
+/* Dark mode */
+@media (prefers-color-scheme: dark) {
+  body {
+    background-color: var(--base03);
+    color: var(--base0);
+  }
+
+  #wrapper {
+    background-color: var(--base03);
+  }
+
+  #main .toc {
+    background-color: var(--base02);
+  }
+
+  blockquote {
+    background: var(--base02);
+  }
+
+  .content pre {
+    background-color: var(--base02) !important;
+    color: var(--base0);
+  }
+
+  code {
+    background-color: var(--base02) !important;
+    color: var(--base1) !important;
+  }
+
+  a:link {
+    color: var(--blue);
+  }
+  a:visited {
+    color: var(--violet);
+  }
+  a:hover {
+    color: var(--violet);
+  }
+
+  header {
+    background: var(--base03);
+    border-bottom: 0px;
+  }
+  h2 a {
+    color: var(--base1) !important;
+  }
+  header a:hover,
+  header a:visited,
+  header .current a {
+    color: var(--base1);
+  }
+
+  table {
+    margin: auto;
+    background-color: var(--base03);
+    border-top: 1px solid var(--base0);
+    border-bottom: 1px solid var(--base0);
+  }
+  table thead th {
+    border-bottom: 1px solid var(--base0);
+  }
+  th {
+    background: var(--base02) !important;
+    color: var(--base1) !important;
+  }
+  th,
+  td {
+    padding: 5px;
+  }
+}
+
+/* Light mode */
+@media (prefers-color-scheme: light) {
+  body {
+    background-color: var(--base3);
+    color: var(--base00);
+  }
+
+  h1, h2, h3 {
+    color: var(--base01);
+  }
+  
+  #wrapper {
+    background-color: var(--base3);
+  }
+
+  #main .toc {
+    background-color: var(--base2);
+  }
+
+  blockquote {
+    background: var(--base3);
+  }
+
+  a:link {
+    color: var(--blue);
+  }
+  a:visited {
+    color: var(--violet);
+  }
+  a:hover {
+    color: var(--violet);
+  }
+
+  header {
+    background: var(--base3);
+    border-bottom: 0px;
+  }
+  h2 a {
+    color: var(--base01) !important;
+  }
+  header a:hover,
+  header a:visited,
+  header .current a {
+    color: var(--base01);
+  }
+
+  .content pre {
+    background-color: var(--base2) !important;
+    color: var(--base00);
+  }
+
+  code {
+    background-color: var(--base2) !important;
+    color: var(--base01) !important;
+  }
+
+  table {
+    margin: auto;
+    border-top: 1px solid var(--base00);
+    border-bottom: 1px solid var(--base00);
+  }
+  table thead th {
+    border-bottom: 1px solid var(--base00);
+  }
+  th {
+    background: var(--base2) !important;
+    color: var(--base01) !important;
+  }
+  th,
+  td {
+    padding: 5px;
+  }
+}
