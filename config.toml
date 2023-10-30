@@ -2,24 +2,31 @@ baseURL = "https://michaelneuper.com"
 disqusShortname = ""
 enableGitInfo = false
 enableRobotsTXT = true
-googleAnalytics = "G-0GZRVRLSQV"
+googleAnalytics = "G-BLX24KP7CS"
 hasCJKLanguage = true
 languageCode = "en"
-paginate = 5
+paginate = 3
 rssLimit = 10
 theme = "hugo-texify2"
 title = "Michael's Site"
 
 [[menu.main]]
-identifier = "post"
-name = "Posts"
+identifier = "home"
+name = "Home"
 url = "/"
 weight = 1
+
 [[menu.main]]
-identifier = "pages"
-name = "About"
-url = "/pages/"
+identifier = "post"
+name = "Blog"
+url = "/post/"
 weight = 2
+
+[[menu.main]]
+identifier = "about"
+name = "About"
+url = "/about/"
+weight = 3
 
 [taxonomies]
 tags = "tags"
@@ -30,7 +37,7 @@ defaultMarkdownHandler = "goldmark"
 [markup.goldmark.renderer]
 unsafe= true
 [markup.highlight]
-style = "solarized-light"
+style = "base16-solarized-dark"
 [markup.tableOfContents]
   endLevel = 6
   ordered = false
@@ -41,14 +48,13 @@ email = "michael@michaelneuper.com"
 name = "Michael Neuper"
 
 [params]
-title="Michael's Site"
-description = "TeXify2 - a minimal, latex-style hugo theme for personal blogging"
-images = ['images/logo.png']
+title="Hi, I'm Michael"
+description = "Michael's Personal Website"
 footnote = """
 Follow me on <a class=link href=https://github.com/michaelneuper target=_blank rel=noopener>GitHub</a> or
 <a class=link href=/index.xml>RSS</a>
 """
-keywords = ["hugo", "latex", "theme", "blog", "texify", "texify2", "weastur"]
+keywords = ["michael", "neuper", "linux", "blog", "productivity"]
 customCSS = ["css/styles.css"]
 customJS = []
 dateFormat = "2 January 2006"
@@ -57,18 +63,14 @@ since = "2022"
 toc = true
 showWordCount = false
 showReadingTime = true
-rootFontSize = "100%"
+rootFontSize = "105%"
 math = true
 enableDuckDuckGoSearchBox = false
 numberedSubtitles = true
 
-[params.commentEngine]
-code = """
-"""
-
 [params.buymeacoffee]
 code = """
-<script data-name="BMC-Widget" data-cfasync="false" src="https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js" data-id="weastur" data-description="Support me on Buy me a coffee!" data-message="" data-color="#FF5F5F" data-position="Right" data-x_margin="18" data-y_margin="18"></script>
+<script data-name="BMC-Widget" data-cfasync="false" src="https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js" data-id="michaelneuper" data-description="Like what I do? Buy me a coffee!" data-message="" data-color="#b58900" data-position="Right" data-x_margin="18" data-y_margin="18"></script>
 """
 
 [params.sharingbuttons]
