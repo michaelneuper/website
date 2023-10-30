@@ -61,6 +61,10 @@
     color: var(--violet);
   }
 
+  nav a {
+    color: var(--base1) !important;
+  }
+
   header {
     background: var(--base03);
     border-bottom: 0px;
