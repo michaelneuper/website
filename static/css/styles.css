@@ -110,10 +110,22 @@ main.grid-container {
   }
 }
 
+#main {
+  max-width: 1000px;
+}
+
 #main .toc {
   background-color: var(--background-secondary);
-  color: var(--text-secondary)
-  /* TODO fix border */
+  border: 1px dashed var(--text-secondary);
+}
+
+#TableOfContents a {
+  text-decoration: none;
+  color: var(--text);
+}
+
+.numbered-subtitles {
+  color: var(--text) !important;
 }
 
 .index {
@@ -166,7 +178,7 @@ main.grid-container {
 }
 
 a {
-  text-decoration: none;
+  text-decoration: none !important;
 }
 
 a:link {
@@ -262,12 +274,22 @@ button.copyButton:hover {
   }
 }
 
+.post-title {
+  text-align: center;
+}
+
+.publish-date {
+  color: var(--text-secondary);
+  font-size: large;
+  padding-top: 10px;
+}
+
 ::selection {
-    background-color: var(--background-secondary);
-    color: var(--text-emphasized);
+  background-color: var(--background-secondary);
+  color: var(--text-emphasized);
 }
 
 ::-moz-selection {
-    background-color: var(--background-secondary);
-    color: var(--text-emphasized);
+  background-color: var(--background-secondary);
+  color: var(--text-emphasized);
 }

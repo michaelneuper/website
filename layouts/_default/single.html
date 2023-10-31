@@ -11,12 +11,17 @@
   </article>
 
   {{ else }}
-  <h1>{{ .Title }}</h1>
+  <h1 class="post-title">
+    {{ .Title }}
+    <div class="publish-date">{{ .PublishDate.Format .Site.Params.dateFormat }}</div>
+  </h1>
+
   {{ if ne .Params.tags nil }}
   <div>
     {{ range .Params.tags }}
     <a class="link" href='{{ "tags" | absURL }}/{{ . | urlize }}'>#{{ . }}</a>
     {{ end }}
+    <br></br>
   </div>
   {{ end }}
   {{ if cond (ne .Params.toc nil) .Params.toc .Site.Params.toc }}
