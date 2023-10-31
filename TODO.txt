@@ -1,0 +1,4 @@
+- Change dotted TOC border
+- Change toc entried color in light mode
+- Fix padding on posts
+- Organise css
