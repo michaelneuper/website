@@ -9,7 +9,7 @@ draft: false
 Setting up your own static website can be a great way to showcase your personal brand, portfolio, or business online. 
 In this post, we'll walk through the process of setting up a static website using Hugo as the static site generator and Netlify as the hosting service.
 
-# Building The Site
+## Building The Site
 
 First, let's talk about what a static website is and why it's a good choice for many people. 
 A static website is a website that is built using only HTML, CSS, and JavaScript files. 
@@ -53,7 +53,7 @@ To get started with Hugo, you'll need to download and install Hugo on your compu
     ```
     Hugo will build a local version of your site that you can view by going to `http://localhost:1313/` inside your browser. Hugo will also automatically show any changes you make to the site, no need to rerun the command or refresh the page.
 
-# Hosting Your Site
+## Hosting Your Site
 
 Hosting a static website refers to the process of making a website accessible to the internet by storing its files on a web server. 
 A static website is one that contains static content, meaning that the content does not change unless manually updated by the website owner. 
@@ -77,16 +77,16 @@ To host a Hugo site on Netlify, you need to follow these steps:
 2. On you local machine, navigate to the root directory of you Hugo site and run the following commands to create a new repository and push it to GitHub:
 
     ``` shell
-    # Add all files in the Hugo site to the Git repository
+    ## Add all files in the Hugo site to the Git repository
     $ git add .
 
-    # Commit the changes to the repository
+    ## Commit the changes to the repository
     $ git commit -m "Initial commit of Hugo site"
 
-    # Add the GitHub repository as a remote to your local Git repository
+    ## Add the GitHub repository as a remote to your local Git repository
     $ git remote add origin <GitHub repository URL>
 
-    # Push the Hugo site to the GitHub repository
+    ## Push the Hugo site to the GitHub repository
     $ git push -u origin master
     ```
 
@@ -100,7 +100,7 @@ To host a Hugo site on Netlify, you need to follow these steps:
 
 That's it! Your Hugo site is now hosted on Netlify and available to the world.
 
-# Getting a Custom Domain (Not Free)
+## Getting a Custom Domain (Not Free)
 
 Setting up a custom domain for your website involves purchasing a domain name and configuring it to point to your website's files on the web server. 
 A domain name is the unique address that users can type in their web browser to access your website, such as www.google.com.

@@ -8,7 +8,7 @@ draft: false
 
 <!-- TODO add notification daemon-->
 
-# Introduction
+## Introduction
 
 If you're a Linux user, you're probably familiar with the concept of window managers and desktop environments.
 These programs are responsible for managing the appearance and functionality of your desktop, providing the tools and features that you need to interact with your operating system.
@@ -22,14 +22,14 @@ We'll also discuss the benefits and drawbacks of using a window manager as a des
 
 So let's dive in and learn more about the fascinating world of window managers and desktop environments!
 
-# Turning a window manager into a desktop environment
+## Turning a window manager into a desktop environment
 
 If you want to turn a window manager into a desktop environment, the first thing you need to do is install the necessary components. 
 This typically includes the window manager itself, a display manager, and additional utilities and applications.
 
 Let's explore some of these components:
 
-## Window Manager
+### Window Manager
 
 A window manager is a program that manages the placement and appearance of windows on a computer's desktop.
 It is responsible for providing the "frame" around each window, allowing the user to move, resize, and minimize windows. 
@@ -61,7 +61,7 @@ Some of the pros and cons of using different window managers are as follows:
 
 - **xmonad**: xmonad is a tiling window manager that is written in the Haskell programming language. It is highly configurable and customizable, and it provides a number of advanced features, such as support for multiple workspaces and automatic tiling. Some of the pros of using xmonad are its advanced tiling capabilities, its support for multiple workspaces, and its high level of configurability. Some of the cons are its steep learning curve, its lack of a built-in panel or application launcher, and its reliance on external utilities for certain features.
 
-## Display Manager
+### Display Manager
 
 A display manager is a program that manages the login and display of the desktop environment on a computer. 
 It is responsible for providing the login screen, allowing the user to enter their username and password, and then starting the desktop environment and managing its display.
@@ -75,7 +75,7 @@ When you install a desktop environment on your computer, it typically includes a
 However, you can also choose to install and use a different display manager if you prefer. 
 For example, if you are using the Xfce desktop environment, you could choose to use LightDM instead of the default XDM display manager.
 
-## Compositor
+### Compositor
 
 A compositor is a program that is responsible for combining the outputs of multiple applications and displaying them on the screen.
 It is typically used to provide advanced graphical effects, such as transparency, animations, and 3D transformations.
@@ -95,9 +95,9 @@ To choose a compositor, you can consider the following factors:
 
 3. **Compatibility**: Some compositors are compatible with only certain window managers or desktop environments. If you are using a specific window manager or desktop environment, make sure the compositor you choose is compatible with it.
 
-## Additional Utilities
+### Additional Utilities
 
-### Wallpaper Setter
+#### Wallpaper Setter
 
 You can use a program such as nitrogen or feh to set your wallpaper.
 Nitrogen and feh are two popular programs that allow you to browse and select an image to use as your wallpaper, and then set it as the background for your desktop.
@@ -124,7 +124,7 @@ If you're using nitrogen add:
     feh --bg-scale /path/to/image.jpg
     ```
 
-### Bar
+#### Bar
 
 A bar on Linux is a program that displays information on the desktop, such as the current time and date, the system load, and the status of various system services. 
 A bar is typically used in conjunction with a window manager or desktop environment, and it provides a convenient way to access important information without needing to open a separate application.
@@ -147,7 +147,7 @@ To choose a bar, you can consider the following factors:
 
 3. **Customization**: Some bars are highly customizable, allowing you to change the appearance and behaviour of the bar to suit your preferences. If you want a bar that you can tailor to your specific needs, choose a bar that provides a high degree of customization. Polybar is a popular choice.
 
-### Application Launcher
+#### Application Launcher
 
 An application launcher is a program that allows you to quickly search for and launch applications on your Linux system. 
 An application launcher typically provides a search bar or a menu that allows you to enter the name of the application you want to launch, and it displays a list of matching applications that you can select from.
@@ -160,7 +160,7 @@ Some popular application launchers include rofi, dmenu, and albert.
 
 4. **Albert** is a fast and efficient application launcher that uses a customizable keyboard shortcut to launch applications and perform other actions.
 
-### System Tray
+#### System Tray
 
 A system tray (also known as a notification area) is a part of the graphical user interface (GUI) on Linux (and other operating systems) that displays icons for system and application notifications. 
 The system tray is typically located at the bottom or side of the screen, and it provides a convenient way for applications to display important information and notifications without disrupting the user's work.
@@ -168,7 +168,7 @@ The system tray is typically located at the bottom or side of the screen, and it
 For example, the system tray might display an icon for a network manager application, which shows the current network status and allows the user to manage their network connections. 
 It might also display an icon for a battery manager application, which shows the current battery level and allows the user to manage their power settings.
 
-### Polkit
+#### Polkit
 
 Polkit (formerly known as PolicyKit) is a framework for defining and managing administrative policies on Linux. 
 It provides a mechanism for controlling access to system-wide privileges, and it allows users to perform privileged tasks without needing to log in as the root user.
@@ -180,7 +180,7 @@ The libpolkit library provides a convenient interface for developers to integrat
 
 See [the arch wiki](https://wiki.archlinux.org/title/Polkit) for more information.
 
-# Customizing your window manager
+## Customizing your window manager
 
 Most window managers on Linux allow for customization to some extent. 
 Customizing your window manager can allow you to tailor the appearance and behaviour of your desktop environment to suit your preferences and needs.
@@ -202,7 +202,7 @@ To customize your window manager, you will need to edit the appropriate configur
 The exact steps for doing this will depend on the specific window manager you are using. 
 You can find instructions for customizing your window manager in the documentation or online forums for your window manager.
 
-# Benefits and drawbacks
+## Benefits and drawbacks
 
 There are both benefits and drawbacks to using a window manager instead of a full desktop environment on Linux.
 

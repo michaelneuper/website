@@ -11,7 +11,7 @@ This can cause the buffer to overflow, or exceed its maximum capacity, which can
 
 In this post we will explore more about how a buffer overflow attack works and how to prevent it.
 
-# Programming a Vulnerable Program
+## Programming a Vulnerable Program
 
 Buffer overflows are a common security vulnerability in computer programs, especially those written in the C programming language. 
 In C, buffers are often used to store strings of characters, such as user input or file contents. 
@@ -68,7 +68,7 @@ To use gdb to debug the vuln program, you can use the following steps:
     
 7. When the program reaches the `strcpy()` function, you can see that the buffer overflows if the input string is longer than 8 characters.
 
-# Preventing Buffer Overflow Attacks
+## Preventing Buffer Overflow Attacks
 
 To prevent buffer overflow attacks, it is important to carefully design and implement your code to avoid such vulnerabilities. Here are some best practices to follow:
 
