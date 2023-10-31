@@ -261,3 +261,13 @@ button.copyButton:hover {
     margin: 20px;
   }
 }
+
+::selection {
+    background-color: var(--background-secondary);
+    color: var(--text-emphasized);
+}
+
+::-moz-selection {
+    background-color: var(--background-secondary);
+    color: var(--text-emphasized);
+}
