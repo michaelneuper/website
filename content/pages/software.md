@@ -10,7 +10,7 @@ I use [arch](https://archlinux.org/), btw.
 
 **Terminal:**
 [Alactritty](https://alacritty.org/) on desktop and [iTerm2](https://iterm2.com/) on mac.
-Nowadays i mostly use vterm or eshell in emacs.
+Nowadays I mostly use vterm or eshell in emacs.
 
 **Shell:**
 [fish](https://fishshell.com/) on Linux and zsh on macOS and eshell emacs.
