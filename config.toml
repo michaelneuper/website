@@ -6,7 +6,6 @@ enableRobotsTXT = true
 googleAnalytics = "G-BLX24KP7CS"
 hasCJKLanguage = true
 languageCode = "en"
-paginate = 3
 rssLimit = 10
 theme = "hugo-texify2"
 title = "Michael's Site"

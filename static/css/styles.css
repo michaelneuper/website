@@ -49,6 +49,7 @@ table {
   border-bottom: 1px solid var(--text-emphasized);
   border-collapse: collapse;
   border: none;
+  border-radius: .25rem;
   margin-top: 0;
   margin-bottom: 0;
 }
@@ -73,6 +74,7 @@ blockquote {
 
 pre {
   position: relative;
+  border-radius: .25rem;
 }
 
 .content pre {
@@ -117,6 +119,7 @@ main.grid-container {
 #main .toc {
   background-color: var(--background-secondary);
   border: 1px dashed var(--text-secondary);
+  border-radius: .25rem;
 }
 
 #TableOfContents a {
@@ -175,6 +178,7 @@ main.grid-container {
   margin: 10px 5px;
   margin-left: -5px;
   border: 2px solid;
+  border-radius: .25rem;
 }
 
 a {
@@ -250,7 +254,7 @@ button.copyButton {
   opacity: 0.7;
   border: none;
   padding: 5px 10px;
-  border-radius: 5px;
+  border-radius: .25rem;
   cursor: pointer;
   font-size: 14px;
   transition: opacity 0.3s;
