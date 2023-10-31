@@ -2,10 +2,7 @@
 title: "Home"
 ---
 
-<img align="right" src="/images/badges/emacs.gif">
-<img align="right" src="/images/badges/sink_animated.gif">
-
-## Hi, I'm Michael :wave:
+## Hi, I'm Michael
 
 Welcome to my little piece of the internet!
 
@@ -20,12 +17,8 @@ Thanks for stopping by! I hope you enjoy reading my articles and find them usefu
 
 ## Introduction
 
-- :computer: [Programs I use and recommend](/pages/software/)
-- :keyboard: [Key bindings I use](/pages/keybindings/)
-- :books: [Personal library](/pages/library)
-- :gift: [Donate via crypto](/pages/donate/)
-- :e-mail: [Contact me](/pages/contact/)
-
----
-
-## Recent Posts
+- [Programs I use and recommend](/pages/software/)
+- [Key bindings I use](/pages/keybindings/)
+- [Personal library](/pages/library)
+- [Donate via crypto](/pages/donate/)
+- [Contact me](/pages/contact/)
