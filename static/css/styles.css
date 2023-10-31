@@ -68,9 +68,6 @@
     background-color: var(--base0);
   }
 
-  header {
-    background: var(--base02);
-  }
   h2 a {
     color: var(--base1) !important;
   }
@@ -96,6 +93,19 @@
   th,
   td {
     padding: 5px;
+  }
+
+  .nav-list {
+    border-color: var(--base01);
+  }
+
+  .sidebar ul li a {
+    color: var(--base0);
+  }
+
+  .sidebar ul li a:hover {
+    color: var(--base1);
+    background-color: var(--base02);
   }
 }
 
@@ -181,6 +191,31 @@
   td {
     padding: 5px;
   }
+
+  .nav-list {
+    border-color: var(--base1);
+  }
+
+  .sidebar ul li a {
+    color: var(--base00);
+  }
+
+  .sidebar ul li a:hover {
+    color: var(--base01);
+    background-color: var(--base2);
+  }
+}
+
+hr {
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+table {
+  border-collapse: collapse;
+  border: none;
+  margin-top: 0;
+  margin-bottom: 0;
 }
 
 pre {
@@ -249,7 +284,7 @@ nav a:hover:after {
   padding: 10px 15px;
   margin: 10px 5px;
   margin-left: -5px;
-  border: 2px solid white;
+  border: 2px solid;
 }
 
 .grid-container {
@@ -271,19 +306,31 @@ main {
 
 .sidebar {
   flex: 1;
+  padding-top: 20px;
 }
 
-/* Responsive layout for smaller screens */
 @media (max-width: 767px) {
   .grid-container {
-    grid-template-columns: 1fr; /* Set one column for smaller screens */
+    grid-template-columns: 1fr;
   }
 
   .sidebar {
-    order: 1; /* Move the sidebar above content */
+    order: 1;
   }
 
   .index {
     padding-left: 30px;
   }
+}
+
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+}
+
+.sidebar ul li a {
+  text-decoration: none;
+  display: block;
+  padding: 2px 12px;
+  transition: color 0.3s, background-color 0.3s;
 }

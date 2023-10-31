@@ -5,7 +5,6 @@
 {{ define "main" }}
 <main class="grid-container">
     <div id="content" class="index">
-        <!-- Content goes here -->
         {{ with .Site.GetPage "_index.md" }}
             {{ .Content }}
         {{ end }}
