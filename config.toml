@@ -1,5 +1,6 @@
 baseURL = "https://michaelneuper.com"
 disqusShortname = ""
+enableEmoji = true
 enableGitInfo = false
 enableRobotsTXT = true
 googleAnalytics = "G-BLX24KP7CS"
@@ -11,21 +12,21 @@ theme = "hugo-texify2"
 title = "Michael's Site"
 
 [[menu.main]]
-identifier = "home"
-name = "Home"
-url = "/"
-weight = 1
-
-[[menu.main]]
 identifier = "post"
 name = "Blog"
 url = "/post/"
+weight = 1
+
+[[menu.main]]
+identifier = "rss"
+name = "RSS"
+url = "/index.xml"
 weight = 2
 
 [[menu.main]]
-identifier = "about"
-name = "About"
-url = "/about/"
+identifier = "github"
+name = "GitHub"
+url = "https://github.com/michaelneuper"
 weight = 3
 
 [taxonomies]
@@ -51,8 +52,8 @@ name = "Michael Neuper"
 title="Michael Neuper"
 description = "Michael's Personal Website"
 footnote = """
-Follow me on <a class=link href=https://github.com/michaelneuper target=_blank rel=noopener>GitHub</a> or
-<a class=link href=/index.xml>RSS</a>
+<!-- Follow me on <a class=link href=https://github.com/michaelneuper target=_blank rel=noopener>GitHub</a> or
+<a class=link href=/index.xml>RSS</a> -->
 """
 keywords = ["michael", "neuper", "linux", "blog", "productivity"]
 customCSS = ["css/styles.css"]
