@@ -1,0 +1,147 @@
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #002b36;
+    --background-secondary: #073642;
+    --text: #839496;
+    --text-secondary: #586e75;
+    --text-emphasized: #93a1a1;
+  }
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --background: #fdf6e3;
+    --background-secondary: #eee8d5;
+    --text: #657b83;
+    --text-secondary: #93a1a1;
+    --text-emphasized: #586e75;
+  }
+}
+
+:root {
+  --yellow: #b58900;
+  --orange: #cb4b16;
+  --red: #dc322f;
+  --magenta: #d33682;
+  --violet: #6c71c4;
+  --blue: #268bd2;
+  --cyan: #2aa198;
+  --green: #859900;
+}
+
+body {
+  background-color: var(--background);
+  color: var(--text);
+}
+
+hr {
+  background-color: var(--text-secondary);
+}
+
+#wrapper {
+  background-color: var(--background);
+}
+
+#main {
+  .toc {
+    background-color: var(--background-secondary);
+  }
+}
+
+blockquote {
+  background: var(--background-secondary);
+}
+
+.content {
+  pre {
+    background-color: var(--background-secondary) !important;
+    color: var(--text);
+  }
+}
+
+code {
+  background-color: var(--background) !important;
+  color: var(--text-emphasized) !important;
+}
+
+button.copyButton {
+  background-color: var(--background);
+  color: var(--text-secondary);
+}
+
+a {
+  &:link {
+    color: var(--blue);
+  }
+  &:visited {
+    color: var(--violet);
+  }
+  &:hover {
+    color: var(--violet);
+  }
+}
+
+nav {
+  a {
+    color: var(--text-emphasized) !important;
+    &:after {
+      background-color: var(--text);
+    }
+  }
+}
+
+h2 {
+  a {
+    color: var(--text-emphasized) !important;
+  }
+  &.header {
+    a {
+      &:hover,
+      &:visited,
+      &.current {
+        color: var(--text-emphasized);
+      }
+    }
+  }
+}
+
+time {
+  color: var(--text-secondary);
+}
+
+table {
+  margin: auto;
+  background-color: var(--background);
+  border-top: 1px solid var(--text);
+  border-bottom: 1px solid var(--text);
+  thead {
+    th {
+      border-bottom: 1px solid var(--text);
+    }
+  }
+  th {
+    background: var(--background-secondary) !important;
+    color: var(--text-emphasized) !important;
+  }
+  td {
+    padding: 5px;
+  }
+}
+
+.nav-list {
+  border-color: var(--text-secondary);
+}
+
+.sidebar {
+  ul {
+    li {
+      a {
+        color: var(--text);
+        &:hover {
+          color: var(--text-emphasized);
+          background-color: var(--background-secondary);
+        }
+      }
+    }
+  }
+}
