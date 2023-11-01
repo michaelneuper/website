@@ -28,6 +28,12 @@ name = "GitHub"
 url = "https://github.com/michaelneuper"
 weight = 3
 
+[[menu.main]]
+identifier = "contact"
+name = "Contact"
+url = "/pages/contact/"
+weight = 4
+
 [taxonomies]
 tags = "tags"
 categories = "categories"
@@ -37,7 +43,7 @@ defaultMarkdownHandler = "goldmark"
 [markup.goldmark.renderer]
 unsafe= true
 [markup.highlight]
-style = "base16-solarized-dark"
+noClasses = false
 [markup.tableOfContents]
   endLevel = 6
   ordered = false
@@ -55,7 +61,7 @@ footnote = """
 <a class=link href=/index.xml>RSS</a> -->
 """
 keywords = ["michael", "neuper", "linux", "blog", "productivity"]
-customCSS = ["css/styles.css"]
+customCSS = ["css/styles.css", "css/syntax.css"]
 customJS = ["js/script.js"]
 dateFormat = "2 January 2006"
 emphasisWithDots = true
