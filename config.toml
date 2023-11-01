@@ -74,7 +74,7 @@ numberedSubtitles = true
 
 [params.commentEngine]
 code = """
-<script async src="https://giscus.app/client.js"
+<script src="https://giscus.app/client.js"
         data-repo="michaelneuper/website"
         data-repo-id="R_kgDOIjPNaQ"
         data-category="General"
@@ -94,7 +94,7 @@ code = """
 
 [params.buymeacoffee]
 code = """
-<script data-name="BMC-Widget" 
+<script async data-name="BMC-Widget" 
         data-cfasync="true" 
         src="https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js" 
         data-id="michaelneuper" 
