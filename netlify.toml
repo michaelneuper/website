@@ -12,3 +12,9 @@ command = """\
   export PATH=/opt/build/repo/dart-sass:$PATH && \
   hugo --gc --minify \
   """
+
+[[headers]]
+for = "/*"
+[headers.values]
+Cache-Control = "max-age=3600"
+X-Content-Type-Options = "nosniff"
