@@ -11,9 +11,9 @@ theme = "hugo-texify2"
 title = "Michael's Site"
 
 [[menu.main]]
-identifier = "post"
+identifier = "posts"
 name = "Blog"
-url = "/post/"
+url = "/posts/"
 weight = 1
 
 [[menu.main]]
