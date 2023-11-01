@@ -74,7 +74,7 @@ numberedSubtitles = true
 
 [params.commentEngine]
 code = """
-<script src="https://giscus.app/client.js"
+<script async src="https://giscus.app/client.js"
         data-repo="michaelneuper/website"
         data-repo-id="R_kgDOIjPNaQ"
         data-category="General"
