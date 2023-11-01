@@ -9,7 +9,7 @@ function addCopyButton() {
             const textToCopy = codeBlock.innerText.trim();
             copyToClipboard(textToCopy);
         });
-        codeBlock.appendChild(copyButton);
+        codeBlock.before(copyButton);
     });
 }
 
