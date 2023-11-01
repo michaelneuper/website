@@ -45,8 +45,8 @@ hr {
 table {
   margin: auto;
   background-color: var(--background);
-  border-top: 1px solid var(--text-emphasized);
-  border-bottom: 1px solid var(--text-emphasized);
+  border-top: 1px solid var(--text);
+  border-bottom: 1px solid var(--text);
   border-collapse: collapse;
   border: none;
   border-radius: 0.25rem;
@@ -138,7 +138,6 @@ main.grid-container {
 #main :target {
   background-color: var(--background-secondary);
   color: var(--text-emphasized);
-  border-color: red;
   border-radius: 0.25em;
   padding-left: 20px;
   padding-top: 10px;
@@ -179,13 +178,13 @@ main.grid-container {
   text-decoration: none;
   display: block;
   padding: 2px 12px;
-  color: var(--text-emphasized);
+  color: var(--text);
 
   transition: color 0.3s, background-color 0.3s;
 }
 
 .sidebar ul li a:hover {
-  color: var(--base1);
+  color: var(--text-emphasized);
   background-color: var(--background-secondary);
 }
 
@@ -216,7 +215,7 @@ a:hover {
 }
 
 /* h2 a {
-  color: var(--base1);
+  color: var(--basei1);
 } */
 
 span.nav-bar-item a.link {
@@ -346,5 +345,5 @@ button.copyButton:hover {
 }
 
 #ddgSearch > input:focus {
-    outline: 1.5px solid var(--text-emphasized);
+  outline: 1.5px solid var(--text-emphasized);
 }
