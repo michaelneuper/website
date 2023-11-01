@@ -58,9 +58,9 @@ table thead th {
   border-bottom: 1px solid var(--text-secondary);
 }
 
-th {
-  background: var(--background-secondary) !important;
-  color: var(--base1) !important;
+.content th {
+  background: var(--background-secondary);
+  color: var(--text-emphasized);
 }
 
 th,
@@ -68,20 +68,36 @@ td {
   padding: 5px;
 }
 
-blockquote {
+.content blockquote {
   background: var(--background-secondary);
+  border-color: var(--text);
+  border-radius: 0.25rem;
+  padding-right: 20px;
 }
 
 .content pre {
   background-color: var(--background-secondary) !important;
-  color: var(--text-emphasized);
   position: relative;
   border-radius: 0.25rem;
 }
 
-code {
-  background-color: var(--background-secondary) !important;
-  color: var(--text) !important;
+.content code {
+  background-color: var(--background-secondary);
+  color: var(--text);
+}
+
+.content mark {
+    background-color: var(--background-secondary);
+    color: var(--text-emphasized);
+    border-radius: 0.25rem;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.content kbd {
+    background-color: var(--background-secondary);
+    color: var(--text-emphasized);
+    border-radius: 0.25rem;
 }
 
 #wrapper {
@@ -173,8 +189,8 @@ main.grid-container {
   border-radius: 0.25rem;
 }
 
-a {
-  text-decoration: none !important;
+.content a {
+  text-decoration: none ;
 }
 
 a:link {
@@ -189,9 +205,9 @@ a:hover {
   color: var(--violet);
 }
 
-h2 a {
-  color: var(--base1) !important;
-}
+/* h2 a {
+  color: var(--base1);
+} */
 
 span.nav-bar-item a.link {
   color: var(--text-emphasized);
@@ -290,11 +306,11 @@ button.copyButton:hover {
 }
 
 ::selection {
-  background-color: var(--background-secondary);
-  color: var(--text-emphasized);
+  background-color: var(--blue);
+  color: white;
 }
 
 ::-moz-selection {
-  background-color: var(--background-secondary);
-  color: var(--text-emphasized);
+  background-color: var(--blue);
+  color: white;
 }
