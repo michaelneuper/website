@@ -1,0 +1,16 @@
+{{ define "main" }}
+<main id="main">
+    <h1>Categories</h1>
+    <br style="margin-bottom: 20px"></br>
+    <div class="row">
+        {{ range .Data.Terms.ByCount }}
+        <ul>
+            <li><a class="title is-5 is-size-6-mobile" href="{{ .Page.Permalink }}">{{ .Page.Title }}</a>
+                {{ $Totalpage:= len .Pages }}
+                {{ $Totalpage }} post{{ if ne $Totalpage 1 }}s{{ end }}
+            </li>
+        </ul>
+    {{ end }}
+  </div>
+</main>
+{{ end }}

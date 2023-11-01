@@ -6,21 +6,7 @@ tags: ['Networking', 'Hardware']
 draft: false
 ---
 
-<!-- markdown-toc start - Don't edit this section. Run M-x markdown-toc-refresh-toc -->
-**Table of Contents**
-
-- [TP-Link TL-WN722N _v1 vs v2/v3_](#tp-link-tl-wn722n-_v1-vs-v2v3_)
-- [Enabling Monitor Mode](#enabling-monitor-mode)
-    - [v1](#v1)
-    - [v2/v3](#v2v3)
-        - [Upgrade your system](#upgrade-your-system)
-        - [Install headers](#install-headers)
-        - [Change the kernel module](#change-the-kernel-module)
-        - [Enable monitor mode](#enable-monitor-mode)
-
-<!-- markdown-toc end -->
-
-#  TP-Link TL-WN722N _v1 vs v2/v3_
+##  TP-Link TL-WN722N _v1 vs v2/v3_
 
 The TP-Link TL-WN722N is a wireless network interface controller (NIC) that allows a computer to connect to a wireless network.
 There are three versions of this NIC: v1, v2, and v3. While all three versions are similar in many ways, there are some notable differences between them.
@@ -31,9 +17,9 @@ One of the main differences between the TP-Link TL-WN722N v1 and v2/v3 is the ch
 
 The Atheros chip supports monitor mode and packet injection out of the box, but the Realtek chip requires changing the drivers.
 
-# Enabling Monitor Mode
+## Enabling Monitor Mode
 
-## v1
+### v1
 
 Run the following command:
 ``` shell
@@ -45,9 +31,9 @@ That's it, you should see that your card is in monitor mode when running the fol
 sudo iwconfig | grep "Mode"
 ```
 
-## v2/v3
+### v2/v3
 
-### Upgrade your system
+#### Upgrade your system
 
 On Debian-based systems (like Kali):
 ``` shell
@@ -64,7 +50,7 @@ Then reboot:
 sudo reboot
 ```
 
-### Install headers
+#### Install headers
 
 Debian-based:
 ``` shell
@@ -76,7 +62,7 @@ Arch-based:
 sudo pacman -S install linux-headers-$(uname -r)
 ```
 
-### Change the kernel module
+#### Change the kernel module
 
 Remove the previous driver module:
 ``` shell 
@@ -114,7 +100,7 @@ Reboot:
 sudo reboot
 ```
 
-### Enable monitor mode
+#### Enable monitor mode
 
 Kill all airmon-ng processes:
 ``` shell

@@ -6,50 +6,19 @@ tags: ['Emacs', 'Programming']
 draft: false
 ---
 
-<!-- markdown-toc start - Don't edit this section. Run M-x markdown-toc-refresh-toc -->
-**Table of Contents**
-
-- [Introduction](#introduction)
-- [What is Emacs Org Mode?](#what-is-emacs-org-mode)
-- [Why Replace Jupyter Notebook with Emacs Org Mode?](#why-replace-jupyter-notebook-with-emacs-org-mode)
-- [Getting Started with Emacs Org Mode for Literate Programming](#getting-started-with-emacs-org-mode-for-literate-programming)
-    - [Installing Emacs](#installing-emacs)
-    - [Configuring Org Mode](#configuring-org-mode)
-    - [Installing essential packages for data science](#installing-essential-packages-for-data-science)
-    - [Setting up a Python environment in Emacs](#setting-up-a-python-environment-in-emacs)
-    - [Creating and organizing Org files for literate programming](#creating-and-organizing-org-files-for-literate-programming)
-- [Advanced Features of Emacs Org Mode for Data Science](#advanced-features-of-emacs-org-mode-for-data-science)
-    - [Working with multiple languages in a single Org file](#working-with-multiple-languages-in-a-single-org-file)
-    - [Integrating with external tools and libraries](#integrating-with-external-tools-and-libraries)
-    - [Debugging and profiling code within Org Mode](#debugging-and-profiling-code-within-org-mode)
-    - [Customizing code block execution and display options](#customizing-code-block-execution-and-display-options)
-    - [Utilizing Org Mode for project management and collaboration](#utilizing-org-mode-for-project-management-and-collaboration)
-- [Tips and Tricks for Optimizing Your Emacs Org Mode Workflow](#tips-and-tricks-for-optimizing-your-emacs-org-mode-workflow)
-    - [Keyboard shortcuts for Org Mode](#keyboard-shortcuts-for-org-mode)
-    - [Customizing your Emacs theme](#customizing-your-emacs-theme)
-    - [Integrating with other Emacs packages for productivity](#integrating-with-other-emacs-packages-for-productivity)
-    - [Using Org Mode for note-taking and knowledge management](#using-org-mode-for-note-taking-and-knowledge-management)
-- [Transitioning from Jupyter Notebook to Emacs Org Mode](#transitioning-from-jupyter-notebook-to-emacs-org-mode)
-    - [Importing existing Jupyter Notebooks into Org Mode](#importing-existing-jupyter-notebooks-into-org-mode)
-    - [Exporting Org files to Jupyter Notebook format](#exporting-org-files-to-jupyter-notebook-format)
-    - [Overcoming common challenges during the transition](#overcoming-common-challenges-during-the-transition)
-- [Conclusion](#conclusion)
-
-<!-- markdown-toc end -->
-
-# Introduction
+## Introduction
 
 The popularity of Jupyter Notebook has surged in recent years as a powerful tool for interactive data analysis and visualization. 
 However, there is an alternative that has been around for a longer time and is proving to be a valuable resource for many programmers: Emacs Org Mode. 
 In this blog post, we will explore how you can replace Jupyter Notebook with Emacs Org Mode for a seamless and efficient literate programming experience.
 
-# What is Emacs Org Mode?
+## What is Emacs Org Mode?
 
 Emacs Org Mode is an extension of the versatile Emacs text editor, offering a powerful platform for note-taking, project management, and literate programming. 
 Literate programming is an approach in which code and documentation are intertwined, allowing you to create executable documents that can be easily understood by others. 
 Org Mode excels at this by providing a simple and intuitive markup language that supports rich text formatting, embedded code, and exporting to various formats, such as HTML, PDF, and more.
 
-# Why Replace Jupyter Notebook with Emacs Org Mode?
+## Why Replace Jupyter Notebook with Emacs Org Mode?
 
 - Unified Environment: Emacs provides a unified environment for all your programming and text editing needs. With Org Mode, you can manage code, documentation, and project planning all within a single tool. This eliminates the need to switch between multiple applications, streamlining your workflow.
 
@@ -59,9 +28,9 @@ Org Mode excels at this by providing a simple and intuitive markup language that
 
 - Customization: Emacs and Org Mode can be tailored to suit your needs, from key bindings and appearance to functionality. This flexibility allows you to create a personalized environment that aligns with your preferences and workflow.
 
-# Getting Started with Emacs Org Mode for Literate Programming
+## Getting Started with Emacs Org Mode for Literate Programming
 
-## Installing Emacs
+### Installing Emacs
 
 1. Choose your platform:
     - Linux: Use your distribution's package manager to install Emacs (e.g., `sudo apt-get install emacs` for Ubuntu)
@@ -70,7 +39,7 @@ Org Mode excels at this by providing a simple and intuitive markup language that
 
 2. Launch Emacs and familiarize yourself with the interface.
 
-## Configuring Org Mode
+### Configuring Org Mode
 
 1. Ensure Org Mode is installed and up-to-date by checking your Emacs package list (`M-x list-packages`) or manually updating it.
 
@@ -81,7 +50,7 @@ Org Mode excels at this by providing a simple and intuitive markup language that
     (setq org-confirm-babel-evaluate nil)
     ```
 
-## Installing essential packages for data science
+### Installing essential packages for data science
 
 Install the following packages using the built-in Emacs package manager (`M-x list-packages`):
 - `org-babel`: For code block execution and literate programming
@@ -90,7 +59,7 @@ Install the following packages using the built-in Emacs package manager (`M-x li
 
 Configure the installed packages by adding appropriate settings to your Emacs init file.
 
-## Setting up a Python environment in Emacs
+### Setting up a Python environment in Emacs
 
 1. Ensure Python is installed on your system and available in your PATH.
 
@@ -105,7 +74,7 @@ Configure the installed packages by adding appropriate settings to your Emacs in
         python-shell-interpreter-args "-i --simple-prompt")
     ```
 
-## Creating and organizing Org files for literate programming
+### Creating and organizing Org files for literate programming
 
 1. Create a new Org file with the extension `.org` (e.g., `my_project.org`).
 
@@ -131,9 +100,9 @@ print("Hello, Emacs Org Mode!")
 - Execute code blocks using `C-c C-c` and display the results directly in your Org file.
 - Export your Org file to various formats (e.g., HTML, PDF) for sharing and publishing.
 
-# Advanced Features of Emacs Org Mode for Data Science
+## Advanced Features of Emacs Org Mode for Data Science
 
-## Working with multiple languages in a single Org file
+### Working with multiple languages in a single Org file
 
 Org Mode's support for various programming languages allows you to work with multiple languages in a single document.
 
@@ -149,7 +118,7 @@ Configure additional languages in your Emacs init file by adding the appropriate
    ))
 ```
 
-## Integrating with external tools and libraries
+### Integrating with external tools and libraries
 
 Use Org Mode's `#+CALL` syntax to integrate external tools or libraries into your Org document.
 
@@ -164,7 +133,7 @@ pandoc $input -o $output
 #+CALL: pandoc(input="my_markdown_file.md", output="my_converted_file.pdf")
 ```
 
-## Debugging and profiling code within Org Mode
+### Debugging and profiling code within Org Mode
 
 Leverage the debugging and profiling capabilities of your programming language within Org Mode.
 
@@ -182,7 +151,7 @@ my_function(3, 5)
 #+END_SRC
 ```
 
-## Customizing code block execution and display options
+### Customizing code block execution and display options
 
 Customize code block execution with header arguments.
 
@@ -200,7 +169,7 @@ plt.savefig('output.png')
 #+END_SRC
 ```
 
-## Utilizing Org Mode for project management and collaboration
+### Utilizing Org Mode for project management and collaboration
 
 - Take advantage of Org Mode's task management and agenda features to manage data science projects.
 - Create TODO items, set deadlines, and track progress using Org Mode.
@@ -216,9 +185,9 @@ plt.savefig('output.png')
       CLOSED: [2023-03-25]
     ```
     
-# Tips and Tricks for Optimizing Your Emacs Org Mode Workflow
+## Tips and Tricks for Optimizing Your Emacs Org Mode Workflow
 
-## Keyboard shortcuts for Org Mode
+### Keyboard shortcuts for Org Mode
 
 Learn and utilize Org Mode's keyboard shortcuts to improve your productivity:
 - `C-c C-t`: Toggle TODO states
@@ -230,7 +199,7 @@ Learn and utilize Org Mode's keyboard shortcuts to improve your productivity:
 
 Customize your own keyboard shortcuts in your Emacs init file, if needed.
 
-## Customizing your Emacs theme
+### Customizing your Emacs theme
 
 Choose from various built-in and community-provided Emacs themes to personalize your workspace.
 
@@ -241,7 +210,7 @@ Install a new theme using the Emacs package manager (`M-x list-packages`), and a
 ```
 Adjust the appearance of Org Mode elements (e.g., headings, links, and code blocks) by customizing their faces.
 
-## Integrating with other Emacs packages for productivity
+### Integrating with other Emacs packages for productivity
 
 Enhance your Org Mode experience by integrating it with other Emacs packages:
 - `org-ref`: Manage citations and references within Org documents
@@ -251,7 +220,7 @@ Enhance your Org Mode experience by integrating it with other Emacs packages:
 
 Install and configure these packages according to their respective documentation.
 
-## Using Org Mode for note-taking and knowledge management
+### Using Org Mode for note-taking and knowledge management
 
 Use Org Mode as a powerful note-taking tool to complement your data science projects.
 
@@ -273,9 +242,9 @@ Example: Organizing notes in Org Mode:
 - K-means Clustering
 - Hierarchical Clustering
 ```
-# Transitioning from Jupyter Notebook to Emacs Org Mode
+## Transitioning from Jupyter Notebook to Emacs Org Mode
 
-## Importing existing Jupyter Notebooks into Org Mode
+### Importing existing Jupyter Notebooks into Org Mode
 
 Use jupytext to convert Jupyter Notebooks to Org Mode files:
 - Install jupytext with the command: `pip install jupytext`
@@ -285,7 +254,7 @@ Use jupytext to convert Jupyter Notebooks to Org Mode files:
     ```
 -Review the converted Org Mode file to ensure proper formatting and correct any issues.
 
-## Exporting Org files to Jupyter Notebook format
+### Exporting Org files to Jupyter Notebook format
 
 - Use jupytext to convert Org Mode files back to Jupyter Notebooks, if needed:
 - Convert your Org Mode file (`.org`) to a Jupyter Notebook (`.ipynb`) using the following command:
@@ -294,31 +263,31 @@ Use jupytext to convert Jupyter Notebooks to Org Mode files:
     ```
 - Open the converted Jupyter Notebook with your preferred Jupyter environment (e.g., JupyterLab, Jupyter Notebook) and verify its contents.
 
-## Overcoming common challenges during the transition
+### Overcoming common challenges during the transition
 
 - Familiarize yourself with Emacs key bindings and commands, which may differ significantly from traditional text editors.
 - Take the time to explore and customize your Emacs settings to create a comfortable and productive workspace.
 - Seek help from the Emacs and Org Mode communities through online forums, mailing lists, and chat rooms. Many users are happy to share their experiences and offer support.
 
-# Conclusion
+## Conclusion
 
-## Recap of the benefits of using Emacs Org Mode for data science
+### Recap of the benefits of using Emacs Org Mode for data science
 
 - Emacs Org Mode offers a powerful, flexible, and customizable environment for data science tasks, addressing many limitations of Jupyter Notebook.
 - Org Mode's support for literate programming enables seamless integration of code, results, and documentation, promoting reproducible research and collaboration.
 - The extensible nature of Emacs allows users to tailor their workflow to their specific needs, integrating various programming languages, tools, and productivity-enhancing packages.
 
-## Emphasizing the flexibility and customizability of Emacs Org Mode
+### Emphasizing the flexibility and customizability of Emacs Org Mode
 
 - One of the most significant advantages of Emacs Org Mode is its customizability, allowing users to create a personalized workspace that suits their needs and preferences.
 - Users can choose from a wide variety of packages, themes, and settings to create an environment that enhances their productivity and enjoyment of the data science process.
 
-## Encouragement for readers to give Emacs Org Mode a try
+### Encouragement for readers to give Emacs Org Mode a try
 
 - If you're intrigued by the benefits of Emacs Org Mode for data science, consider giving it a try and experiencing its capabilities firsthand.
 - Transitioning from Jupyter Notebook to Emacs Org Mode may require some initial effort, but the long-term gains in productivity and flexibility can be well worth the investment.
 
-## Invitation to join the Emacs Org Mode community and share experiences
+### Invitation to join the Emacs Org Mode community and share experiences
 
 - As you embark on your journey with Emacs Org Mode, don't hesitate to reach out to the vibrant community of users and developers for help, support, and inspiration.
 - Share your experiences, tips, and tricks with others, contributing to the collective knowledge and strengthening the community of Emacs Org Mode enthusiasts in the data science world.

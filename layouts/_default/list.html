@@ -1,36 +1,37 @@
-{{ partial "header.html" . }}
+{{ define "head" }}
+<link rel="stylesheet" href='{{ "css/list.css" | absURL }}'>
+{{ end }}
 
-<div class="content-wrapper">
-  {{if not .IsHome }}
-  <h1>{{ .Title | markdownify }}</h1>
+{{ define "main" }}
+<main id="main" class="archive">
+  {{ if .Site.Params.enableDuckDuckGoSearchBox }}
+  <div id="searchbox">
+    <form method="get" id="ddgSearch" target="_blank" action="https://duckduckgo.com/">
+        <input type="hidden" name="sites" value="{{ .Site.BaseURL }}"/>
+        <input type="hidden" name="kf" value="-1"> <!-- no favicons -->
+        <input type="hidden" name="kh" value="1"> <!-- https -->
+        <input type="hidden" name="kae" value="-1" > <!-- default theme -->
+        <input type="hidden" name="k1" value="-1" > <!-- no ads -->
+        <input type="text" name="q" placeholder="Search…" aria-label="Search michaelneuper.com on DuckDuckGo"/>
+    </form>
+  </div>
+  {{ end }}  
+  {{ $pages := where .Data.Pages "Type" "post" }}
+  {{ range $pages.GroupByDate "2006-01" }}
+  <div class="post-group">
+    <h2>{{ dateFormat "January 2006" (printf "%s-01" .Key) }}</h2>
+    <ul>
+      {{ range .Pages }}
+      <li>
+        <a class="link" href="{{ .RelPermalink }}">{{ .Title }}</a>
+        <time>{{ .PublishDate.Format .Site.Params.dateFormat }}</time>
+      </li>
+      {{ end }}
+    </ul>
+  </div>
   {{ end }}
-
-  {{ .Content }}
-
-  <ul>
-    {{ $pages := .Pages }}
-    {{ if .IsHome }}{{ $pages = first 5 .Site.RegularPages }}{{ end }}
-    {{ range (where $pages "Section" "!=" "") }}
-    <li>
-      <span class="date">{{ .Date.Format "2006 Jan 02" }}</span> - 
-      <a href="{{ .RelPermalink }}">{{ .Title | markdownify }}</a>
-    </li>
-    {{ end }}
-  </ul>
-  {{ if .IsHome }}
-    <a href="/posts/">See All</a>
-  {{ end }}
-
-  <!-- <p> -->
-  <!--   <img align="left" src="/images/badges/gnu.gif"> -->
-  <!--   <img align="left" src="/images/badges/javascript.gif"> -->
-  <!--   <img align="left" src="/images/badges/suckless.gif"> -->
-  <!--   <img align="left" src="/images/badges/libreboot.gif"> -->
-  <!--   <img align="left" src="/images/badges/tor.gif"> -->
-  <!--   <img align="left" src="/images/badges/wiby.org.gif"> -->
-  <!--   <img align="left" src="/images/badges/created-with-emacs.jpg"> -->
-  <!-- </p> -->
-</div>
-
- 
-{{ partial "footer.html" . }}
+  <div class="post-group">
+    <h2>...</h2>
+  </div>
+</main>
+{{ end }}

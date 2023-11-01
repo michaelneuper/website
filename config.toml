@@ -1,57 +1,120 @@
-title = "Michael"
-baseurl = "https://michaelneuper.com"
-theme = "hugo-classic"
-languageCode = "en-US"
+baseURL = "https://michaelneuper.com"
+disqusShortname = ""
 enableEmoji = true
-footnotereturnlinkcontents = "↩"
-ignoreFiles = ["\\.Rmd$", "_files$", "_cache$"]
-
-[taxonomies]
-category = "categories"
-tag = "tags"
-
-[outputs]
-home = ["RSS", "HTML"]
-
-[markup.goldmark.renderer]
-unsafe = true
-
-[markup.highlight]
-anchorLineNos = false
-codeFences = true
-guessSyntax = false
-hl_Lines = ""
-lineAnchors = ""
-lineNoStart = 1
-lineNos = false
-lineNumbersInTable = true
-noClasses = true
-style = "base16-solarized-dark"
-tabWidth = 2
-
-[permalinks]
-post = "/post/:year/:month/:day/:slug/"
+enableGitInfo = false
+enableRobotsTXT = true
+googleAnalytics = "G-BLX24KP7CS"
+hasCJKLanguage = false
+languageCode = "en"
+rssLimit = 10
+theme = "hugo-texify2"
+title = "Michael's Site"
 
 [[menu.main]]
-name = "Categories"
-url = "/categories/"
+identifier = "post"
+name = "Blog"
+url = "/post/"
 weight = 1
 
 [[menu.main]]
-name = "Tags"
-url = "/tags/"
-weight = 2
-
-[[menu.feed]]
+identifier = "rss"
 name = "RSS"
 url = "/index.xml"
+weight = 2
 
-[[menu.feed]]
-name = "github"
+[[menu.main]]
+identifier = "github"
+name = "GitHub"
 url = "https://github.com/michaelneuper"
+weight = 3
+
+[[menu.main]]
+identifier = "contact"
+name = "Contact"
+url = "/pages/contact/"
+weight = 4
+
+[taxonomies]
+tags = "tags"
+categories = "categories"
+
+[markup]
+defaultMarkdownHandler = "goldmark"
+[markup.goldmark.renderer]
+unsafe= true
+[markup.highlight]
+noClasses = false
+[markup.tableOfContents]
+  endLevel = 6
+  ordered = false
+  startLevel = 2
+
+[author]
+email = "michael@michaelneuper.com"
+name = "Michael Neuper"
 
 [params]
-custom_css = ["css/theme-override.css"]
-favicon = "images/favicon.ico"
-description = ""
-footer = "Copyright © 2023 Michael Neuper | [Source](https://github.com/michaelneuper/website)"
+title="Michael Neuper"
+description = "Michael's Personal Website"
+footnote = """
+<!-- Follow me on <a class=link href=https://github.com/michaelneuper target=_blank rel=noopener>GitHub</a> or
+<a class=link href=/index.xml>RSS</a> -->
+"""
+keywords = ["michael", "neuper", "linux", "blog", "productivity"]
+customCSS = ["css/styles.css", "css/syntax.css"]
+customJS = ["js/script.js"]
+dateFormat = "2 January 2006"
+emphasisWithDots = true
+toc = true
+showWordCount = false
+showReadingTime = true
+rootFontSize = "105%"
+math = true
+enableDuckDuckGoSearchBox = true
+numberedSubtitles = true
+
+[params.commentEngine]
+code = """
+<script src="https://giscus.app/client.js"
+        data-repo="michaelneuper/website"
+        data-repo-id="R_kgDOIjPNaQ"
+        data-category="General"
+        data-category-id="DIC_kwDOIjPNac4CaklA"
+        data-mapping="pathname"
+        data-strict="0"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="top"
+        data-theme="https://github.com/michaelneuper/website/static/css/styles.css"
+        data-lang="en"
+        data-loading="lazy"
+        crossorigin="anonymous"
+        async>
+</script>
+"""
+
+[params.buymeacoffee]
+code = """
+<script data-name="BMC-Widget" 
+        data-cfasync="true" 
+        src="https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js" 
+        data-id="michaelneuper" 
+        data-description="Like what I do? Buy me a coffee!" 
+        data-message="" 
+        data-color="#b58900" 
+        data-position="Right" 
+        data-x_margin="18" 
+        data-y_margin="18"
+        crossorigin="anonymous">
+</script>
+"""
+
+[params.sharingbuttons]
+facebook = false
+twitter = false
+email = false
+linkedin = false
+reddit = false
+whatsapp = false
+hackernews = false
+telegram = false
