@@ -258,6 +258,10 @@ header .current a {
   color: var(--text-emphasized);
 }
 
+#header > nav {
+    margin-top: 10px;
+}
+
 h3.taxonomy > a {
   color: var(--text);
 }
