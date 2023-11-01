@@ -314,3 +314,11 @@ button.copyButton:hover {
   background-color: var(--blue);
   color: white;
 }
+
+.book-container {
+    clear: both;
+}
+
+.book-container > img {
+    margin-left: 50px;
+}

@@ -8,9 +8,10 @@ I also don't necessarily like all the books I own.
 
 ## Philosophy
 
-<img align="right" src="/images/books/critique-of-reason.jpg" width="100" height="300">
-<!-- <img align="right" src="/images/books/republic.jpg" width="100" height="150"> -->
- 
+<div class="book-container">
+  <img align="right" src="/images/books/critique-of-reason.jpg" width="100" height="150">
+</div>
+
 - Aristotle - _The Art of Rhetoric_
 - Aurelius, Marcus - _Meditations_
 - Benatar, David - _Better Never to Have Been: The Harm of Coming into Existence_
@@ -18,6 +19,9 @@ I also don't necessarily like all the books I own.
 - Epicurus - _The Art of Happiness_
 - Hitchens, Christopher - _Letters to a Young Contrarian_
 - Hitchens, Christopher - _Mortality_
+  <div class="book-container">
+      <img align="right" src="/images/books/republic.jpg" width="100" height="150">
+  </div>
 - Hume, David - _A Treatise of Human Nature_
 - Kant, Immanuel - _Critique of Pure Reason_
 - Mill, John Stuart - _Utilitarianism_
@@ -31,7 +35,9 @@ I also don't necessarily like all the books I own.
 
 ## Language
 
-<img align="right" src="/images/books/lingua-latina.webp" width="100" height="150">
+<div class="book-container">
+  <img align="right" src="/images/books/lingua-latina.webp" width="100" height="150">
+</div>
 
 - Caesar, Julius - _De Bello Civilli (**The Civil War**)_
 - Caesar, Julius - _De Bello Gallico (**The Gallic War**)_
@@ -42,7 +48,9 @@ I also don't necessarily like all the books I own.
 
 ## General Science
 
-<img align="right" src="/images/books/short-history.JPG" width="100" height="150">
+<div class="book-container">
+  <img align="right" src="/images/books/short-history.JPG" width="100" height="150">
+</div>
 
 - Bryson, Bill - _A Short History of Nearly Everything_
 - Darwin, Charles - _The Origin of Species_
@@ -51,8 +59,10 @@ I also don't necessarily like all the books I own.
 - Tyson, Neil deGrasse - _Astrophysics for People in a Hurry_
 
 ## Computer Science
- 
-<img align="right" src="/images/books/how-linux-works.jpg" width="100" height="150">
+
+<div class="book-container">
+  <img align="right" src="/images/books/how-linux-works.jpg" width="100" height="150">
+</div>
 
 - Ericson, Jon - _Hacking: The Art of Exploitation_
 - Stallman, Richard M. - _Free Software, Free Society_
@@ -60,8 +70,10 @@ I also don't necessarily like all the books I own.
 - Zuboff, Shoshana- _The Age of Surveillance Capitalism_
 
 ## Fiction
- 
-<img align="right" src="/images/books/1984.jpg" width="100" height="150">
+
+<div class="book-container">
+  <img align="right" src="/images/books/1984.jpg" width="100" height="150">
+</div>
 
 - Danielewski, Mark Z. - _House of Leaves_
 - Dick, Philip K. - _Do Androids Dream of Electric Sheep?_
@@ -74,11 +86,10 @@ I also don't necessarily like all the books I own.
 
 - Greene, Robert - _The 48 Laws of Power_
 - Kahneman, Daniel - _Thinking, Fast and Slow_
- 
+
 ## Other
- 
+
 - Chernev, Irving - _Logical Chess_
 - LaBerge, Stephen - _Exploring the World of Lucid Dreaming_
 - Ollam, Deviant- _Practical Lock Picking_
 - Seirawan, Yasser - _Winning Chess Tactics_
- 
