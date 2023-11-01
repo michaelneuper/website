@@ -1,5 +1,4 @@
 baseURL = "https://michaelneuper.com"
-disqusShortname = ""
 enableEmoji = true
 enableGitInfo = false
 enableRobotsTXT = true
