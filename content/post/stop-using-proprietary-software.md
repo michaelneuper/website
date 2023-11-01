@@ -42,7 +42,7 @@ Proprietary software creates a culture of secrecy and competition, where compani
 This prevents the sharing of knowledge and ideas that could lead to better software and technology for everyone. 
 Open-source software, conversely, fosters collaboration, community, and knowledge sharing that benefits the entire industry and its users.
 
-# Conclusion
+## Conclusion
 
 The time has come to break free from the limitations and frustrations of proprietary software. 
 We must recognize the value and potential of open-source alternatives and demand transparency, flexibility, and collaboration from the software industry. 
