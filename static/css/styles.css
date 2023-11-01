@@ -135,6 +135,16 @@ main.grid-container {
   }
 }
 
+#main :target {
+    background-color: var(--background-secondary);
+    color: var(--text-emphasized);
+    border-color: red;
+    border-radius: 0.25em;
+    padding-left: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
 .numbered-subtitles {
   color: var(--text) !important;
 }
