@@ -70,7 +70,7 @@ showWordCount = false
 showReadingTime = true
 rootFontSize = "105%"
 math = true
-enableDuckDuckGoSearchBox = false
+enableDuckDuckGoSearchBox = true
 numberedSubtitles = true
 
 [params.commentEngine]

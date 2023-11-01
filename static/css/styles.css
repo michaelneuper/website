@@ -31,7 +31,7 @@
 
 body {
   background-color: var(--background);
-  color: var(--text-emphasized);
+  color: var(--text);
 }
 
 hr {
@@ -87,17 +87,17 @@ td {
 }
 
 .content mark {
-    background-color: var(--background-secondary);
-    color: var(--text-emphasized);
-    border-radius: 0.25rem;
-    padding-left: 5px;
-    padding-right: 5px;
+  background-color: var(--background-secondary);
+  color: var(--text-emphasized);
+  border-radius: 0.25rem;
+  padding-left: 5px;
+  padding-right: 5px;
 }
 
 .content kbd {
-    background-color: var(--background-secondary);
-    color: var(--text-emphasized);
-    border-radius: 0.25rem;
+  background-color: var(--background-secondary);
+  color: var(--text-emphasized);
+  border-radius: 0.25rem;
 }
 
 #wrapper {
@@ -136,13 +136,13 @@ main.grid-container {
 }
 
 #main :target {
-    background-color: var(--background-secondary);
-    color: var(--text-emphasized);
-    border-color: red;
-    border-radius: 0.25em;
-    padding-left: 20px;
-    padding-top: 10px;
-    padding-bottom: 10px;
+  background-color: var(--background-secondary);
+  color: var(--text-emphasized);
+  border-color: red;
+  border-radius: 0.25em;
+  padding-left: 20px;
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
 
 .numbered-subtitles {
@@ -200,7 +200,7 @@ main.grid-container {
 }
 
 .content a {
-  text-decoration: none ;
+  text-decoration: none;
 }
 
 a:link {
@@ -326,9 +326,25 @@ button.copyButton:hover {
 }
 
 .book-container {
-    clear: both;
+  clear: both;
 }
 
 .book-container > img {
-    margin-left: 50px;
+  margin-left: 50px;
+}
+
+#ddgSearch > input {
+  color: var(--text-emphasized);
+  background-color: var(--background-secondary);
+  font-family: "Latin Modern Roman", "Times New Roman", serif;
+  padding-left: 8px;
+  width: 200px;
+  height: 25px;
+  margin-bottom: 25px;
+  border: 1px solid var(--text);
+  border-radius: 0.25rem;
+}
+
+#ddgSearch > input:focus {
+    outline: 1.5px solid var(--text-emphasized);
 }

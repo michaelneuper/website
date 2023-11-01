@@ -4,6 +4,18 @@
 
 {{ define "main" }}
 <main id="main" class="archive">
+  {{ if .Site.Params.enableDuckDuckGoSearchBox }}
+  <div id="searchbox">
+    <form method="get" id="ddgSearch" target="_blank" action="https://duckduckgo.com/">
+        <input type="hidden" name="sites" value="{{ .Site.BaseURL }}"/>
+        <input type="hidden" name="kf" value="-1"> <!-- no favicons -->
+        <input type="hidden" name="kh" value="1"> <!-- https -->
+        <input type="hidden" name="kae" value="-1" > <!-- default theme -->
+        <input type="hidden" name="k1" value="-1" > <!-- no ads -->
+        <input type="text" name="q" placeholder="Search…" aria-label="Search michaelneuper.com on DuckDuckGo"/>
+    </form>
+  </div>
+  {{ end }}  
   {{ $pages := where .Data.Pages "Type" "post" }}
   {{ range $pages.GroupByDate "2006-01" }}
   <div class="post-group">
