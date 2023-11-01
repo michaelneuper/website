@@ -258,6 +258,18 @@ header .current a {
   color: var(--text-emphasized);
 }
 
+h3.taxonomy > a {
+  color: var(--text);
+}
+
+h3.taxonomy > a:visited {
+    color: var(--text);
+}
+
+h3.taxonomy > a:hover {
+  color: var(--text-emphasized);
+}
+
 .post-group a {
   text-decoration: none;
   transition: text-decoration 0.3s ease;

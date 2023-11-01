@@ -11,14 +11,22 @@
     </div>
 
     <div class="sidebar">
-        <h3>Categories</h3>
+        <h3 class="taxonomy"><a href="/categories/">Categories</a></h3>
         <ul class="nav-list sidenav">
-            {{ partial "categories.html" . }}
+            {{range first 10 ($.Site.GetPage "taxonomyTerm" "categories").Pages }}
+            <li>
+                <a href="{{ .Permalink }}">{{.Title}}</a>
+            </li>
+            {{ end }}
         </ul>
         <p></p>
-        <h3>Tags</h3>
+        <h3 class="taxonomy"><a href="/tags/">Tags</a></h3>
         <ul class="nav-list sidenav">
-            {{ partial "tags.html" . }}
+            {{range first 10 ($.Site.GetPage "taxonomyTerm" "tags").Pages }}
+            <li>
+                <a href="{{ .Permalink }}">{{.Title}}</a>
+            </li>
+            {{ end }}
         </ul>
     </div>
 </main>
