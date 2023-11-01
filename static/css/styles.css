@@ -49,7 +49,7 @@ table {
   border-bottom: 1px solid var(--text-emphasized);
   border-collapse: collapse;
   border: none;
-  border-radius: .25rem;
+  border-radius: 0.25rem;
   margin-top: 0;
   margin-bottom: 0;
 }
@@ -72,14 +72,11 @@ blockquote {
   background: var(--background-secondary);
 }
 
-pre {
-  position: relative;
-  border-radius: .25rem;
-}
-
 .content pre {
   background-color: var(--background-secondary) !important;
   color: var(--text-emphasized);
+  position: relative;
+  border-radius: 0.25rem;
 }
 
 code {
@@ -114,17 +111,12 @@ main.grid-container {
 
 #main {
   max-width: 1000px;
-}
 
-#main .toc {
-  background-color: var(--background-secondary);
-  border: 1px dashed var(--text-secondary);
-  border-radius: .25rem;
-}
-
-#TableOfContents a {
-  text-decoration: none;
-  color: var(--text);
+  .toc {
+    background-color: var(--background-secondary);
+    border: 1px dashed var(--text-secondary);
+    border-radius: 0.25rem;
+  }
 }
 
 .numbered-subtitles {
@@ -178,7 +170,7 @@ main.grid-container {
   margin: 10px 5px;
   margin-left: -5px;
   border: 2px solid;
-  border-radius: .25rem;
+  border-radius: 0.25rem;
 }
 
 a {
@@ -201,14 +193,14 @@ h2 a {
   color: var(--base1) !important;
 }
 
-nav a.link {
+span.nav-bar-item a.link {
   color: var(--text-emphasized);
   text-decoration: none;
   display: inline-block;
   position: relative;
 }
 
-nav a:after {
+span.nav-bar-item a:after {
   background-color: var(--text-emphasized);
   content: "";
   position: absolute;
@@ -221,9 +213,18 @@ nav a:after {
   transition: transform 0.25s ease-out;
 }
 
-nav a:hover:after {
+span.nav-bar-item a:hover:after {
   transform: scaleX(1);
   transform-origin: bottom left;
+}
+
+#TableOfContents a {
+  text-decoration: none;
+  color: var(--text);
+}
+
+#TableOfContents a:hover {
+  text-decoration: underline;
 }
 
 header a:hover,
@@ -254,7 +255,7 @@ button.copyButton {
   opacity: 0.7;
   border: none;
   padding: 5px 10px;
-  border-radius: .25rem;
+  border-radius: 0.25rem;
   cursor: pointer;
   font-size: 14px;
   transition: opacity 0.3s;

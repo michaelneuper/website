@@ -4,7 +4,7 @@ enableEmoji = true
 enableGitInfo = false
 enableRobotsTXT = true
 googleAnalytics = "G-BLX24KP7CS"
-hasCJKLanguage = true
+hasCJKLanguage = false
 languageCode = "en"
 rssLimit = 10
 theme = "hugo-texify2"
@@ -98,7 +98,8 @@ code = """
         data-color="#b58900" 
         data-position="Right" 
         data-x_margin="18" 
-        data-y_margin="18">
+        data-y_margin="18"
+        crossorigin="anonymous">
 </script>
 """
 
