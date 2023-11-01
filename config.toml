@@ -8,7 +8,7 @@ hasCJKLanguage = false
 languageCode = "en"
 rssLimit = 10
 theme = "hugo-texify2"
-title = "Michael's Site"
+title = "Michael"
 
 [[menu.main]]
 identifier = "posts"

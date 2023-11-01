@@ -5,7 +5,7 @@
 
 {{ define "main" }}
 <main id="main" class="post">
-  {{ if ne .Section "post"}}
+  {{ if ne .Section "posts"}}
   <article class="content {{ if .Site.Params.numberedSubtitles }}numbered-subtitles{{ end }}">
     {{ .Content }}
   </article>
