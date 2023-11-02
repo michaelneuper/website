@@ -11,7 +11,13 @@
     </div>
 
     <div class="sidebar">
-        <h3 class="taxonomy"><a href="/categories/">Categories</a></h3>
+        {{ if .Site.Taxonomies.categories }}
+        <h3 class="taxonomy">
+            <span class="icon">
+                <object type='image/svg+xml' data='/images/icons/categories.svg'></object>
+            </span>
+            <a href="/categories/">Categories</a>
+        </h3>
         <ul class="nav-list sidenav">
             {{range first 10 ($.Site.GetPage "taxonomyTerm" "categories").Pages }}
             <li>
@@ -19,8 +25,15 @@
             </li>
             {{ end }}
         </ul>
+        {{ end }}
+        {{ if .Site.Taxonomies.tags }}
         <p></p>
-        <h3 class="taxonomy"><a href="/tags/">Tags</a></h3>
+        <h3 class="taxonomy">
+            <span class="icon">
+                <object type='image/svg+xml' data='/images/icons/tags.svg'></object>
+            </span>
+            <a href="/tags/">Tags</a>
+        </h3>
         <ul class="nav-list sidenav">
             {{range first 10 ($.Site.GetPage "taxonomyTerm" "tags").Pages }}
             <li>
@@ -28,6 +41,7 @@
             </li>
             {{ end }}
         </ul>
+        {{ end }}
     </div>
 </main>
 {{ end }}

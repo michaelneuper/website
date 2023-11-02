@@ -13,24 +13,29 @@ title = "Michael"
 identifier = "posts"
 name = "Blog"
 url = "/posts/"
+pre = "<object class='icon' type='image/svg+xml' data='/images/icons/blog.svg'></object>"
 weight = 1
+
 
 [[menu.main]]
 identifier = "rss"
 name = "RSS"
 url = "/index.xml"
+pre = "<object type='image/svg+xml' data='/images/icons/rss.svg'></object>"
 weight = 2
 
 [[menu.main]]
 identifier = "github"
 name = "GitHub"
 url = "https://github.com/michaelneuper"
+pre = "<object type='image/svg+xml' data='/images/icons/github.svg'></object>"
 weight = 3
 
 [[menu.main]]
 identifier = "contact"
 name = "Contact"
 url = "/pages/contact/"
+pre = "<object type='image/svg+xml' data='/images/icons/contact.svg'></object>"
 weight = 4
 
 [taxonomies]
@@ -40,20 +45,20 @@ categories = "categories"
 [markup]
 defaultMarkdownHandler = "goldmark"
 [markup.goldmark.renderer]
-unsafe= true
+unsafe = true
 [markup.highlight]
 noClasses = false
 [markup.tableOfContents]
-  endLevel = 6
-  ordered = false
-  startLevel = 2
+endLevel = 6
+ordered = false
+startLevel = 2
 
 [author]
 email = "michael@michaelneuper.com"
 name = "Michael Neuper"
 
 [params]
-title="Michael Neuper"
+title = "Michael Neuper"
 description = "Michael's Personal Website"
 footnote = """
 <!-- Follow me on <a class=link href=https://github.com/michaelneuper target=_blank rel=noopener>GitHub</a> or

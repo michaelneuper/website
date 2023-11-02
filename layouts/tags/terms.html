@@ -1,7 +1,12 @@
 {{ define "main" }}
 <main id="main">
-    <h1>Tags</h1>
-    <br style="margin-bottom: 20px"></br>
+    <h2>
+        <span class="icon">
+            <object type='image/svg+xml' data='/images/icons/tags.svg'></object>
+        </span>
+        Tags
+    </h2>
+    <br style="margin-bottom: 10px"></br>
     <div class="row">
         {{ range .Data.Terms.ByCount }}
         <ul>

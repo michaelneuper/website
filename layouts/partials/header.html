@@ -9,6 +9,9 @@
   <nav>
     {{ range .Site.Menus.main }}
     <span class="nav-bar-item">
+      {{ if .Pre }}
+        <span class="icon">{{ .Pre | safeHTML }}</span>
+      {{ end }}
       <a class="link" href="{{ .URL | safeURL }}">{{ .Name }}</a>
     </span>
     {{ end }}
