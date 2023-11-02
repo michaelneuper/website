@@ -1,3 +1,5 @@
+$radius: 0.25rem;
+
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #002b36;
@@ -49,13 +51,15 @@ table {
   border-bottom: 1px solid var(--text);
   border-collapse: collapse;
   border: none;
-  border-radius: 0.25rem;
+  border-radius: $radius;
   margin-top: 0;
   margin-bottom: 0;
-}
 
-table thead th {
-  border-bottom: 1px solid var(--text-secondary);
+  thead {
+    th {
+      border-bottom: 1px solid var(--text-secondary);
+    }
+  }
 }
 
 .content th {
@@ -68,36 +72,38 @@ td {
   padding: 5px;
 }
 
-.content blockquote {
-  background: var(--background-secondary);
-  border-color: var(--text);
-  border-radius: 0.25rem;
-  padding-right: 20px;
-}
+.content {
+  blockquote {
+    background: var(--background-secondary);
+    border-color: var(--text);
+    border-radius: $radius;
+    padding-right: 20px;
+  }
 
-.content pre {
-  background-color: var(--background-secondary) !important;
-  position: relative;
-  border-radius: 0.25rem;
-}
+  pre {
+    background-color: var(--background-secondary) !important;
+    position: relative;
+    border-radius: $radius;
+  }
 
-.content code {
-  background-color: var(--background-secondary);
-  color: var(--text);
-}
+  code {
+    background-color: var(--background-secondary);
+    color: var(--text);
+  }
 
-.content mark {
-  background-color: var(--background-secondary);
-  color: var(--text-emphasized);
-  border-radius: 0.25rem;
-  padding-left: 5px;
-  padding-right: 5px;
-}
+  mark {
+    background-color: var(--background-secondary);
+    color: var(--text-emphasized);
+    border-radius: $radius;
+    padding-left: 5px;
+    padding-right: 5px;
+  }
 
-.content kbd {
-  background-color: var(--background-secondary);
-  color: var(--text-emphasized);
-  border-radius: 0.25rem;
+  kbd {
+    background-color: var(--background-secondary);
+    color: var(--text-emphasized);
+    border-radius: $radius;
+  }
 }
 
 #wrapper {
@@ -131,7 +137,7 @@ main.grid-container {
   .toc {
     background-color: var(--background-secondary);
     border: 1px dashed var(--text-secondary);
-    border-radius: 0.25rem;
+    border-radius: $radius;
   }
 }
 
@@ -195,7 +201,7 @@ main.grid-container {
   margin: 10px 5px;
   margin-left: -5px;
   border: 2px solid;
-  border-radius: 0.25rem;
+  border-radius: $radius;
 }
 
 .content a {
@@ -215,8 +221,8 @@ a:hover {
 }
 
 /* h2 a {
-  color: var(--basei1);
-} */
+    color: var(--basei1);
+  } */
 
 span.nav-bar-item a.link {
   color: var(--text-emphasized);
@@ -259,7 +265,7 @@ header .current a {
 }
 
 #header > nav {
-    margin-top: 10px;
+  margin-top: 10px;
 }
 
 h3.taxonomy > a {
@@ -267,7 +273,7 @@ h3.taxonomy > a {
 }
 
 h3.taxonomy > a:visited {
-    color: var(--text);
+  color: var(--text);
 }
 
 h3.taxonomy > a:hover {
@@ -296,7 +302,7 @@ button.copyButton {
   opacity: 0.7;
   border: none;
   padding: 5px 10px;
-  border-radius: 0.25rem;
+  border-radius: $radius;
   cursor: pointer;
   font-size: 14px;
   transition: opacity 0.3s;
@@ -357,9 +363,9 @@ button.copyButton:hover {
   height: 25px;
   margin-bottom: 25px;
   border: 1px solid var(--text);
-  border-radius: 0.25rem;
-}
+  border-radius: $radius;
 
-#ddgSearch > input:focus {
-  outline: 1.5px solid var(--text-emphasized);
+  &:focus {
+    outline: 1.5px solid var(--text-emphasized);
+  }
 }
