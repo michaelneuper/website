@@ -19,7 +19,7 @@
   {{ $pages := where .Data.Pages "Type" "posts" }}
   {{ range $pages.GroupByDate "2006-01" }}
   <div class="post-group">
-    <h2>{{ dateFormat "January 2006" (printf "%s-01" .Key) }}</h2>
+    <h3>{{ dateFormat "January 2006" (printf "%s-01" .Key) }}</h3>
     <ul>
       {{ range .Pages }}
       <li>
@@ -31,7 +31,7 @@
   </div>
   {{ end }}
   <div class="post-group">
-    <h2>...</h2>
+    <h3>...</h3>
   </div>
 </main>
 {{ end }}
