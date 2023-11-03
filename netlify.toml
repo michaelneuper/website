@@ -48,4 +48,4 @@ for = "/*"
   [headers.values]
   Cache-Control = "max-age=3600"
   X-Content-Type-Options = "nosniff"
-  Content-Encoding = "gzip"
+#   Content-Encoding = "gzip"
