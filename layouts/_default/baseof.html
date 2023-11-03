@@ -83,11 +83,6 @@
     {{ partial "footer.html" . }}
   </div>
 
-  {{ $options := dict "transpiler" "dartsass" "targetPath" "css/index.css" }}
-  {{ with resources.Get "sass/layouts/index.scss" | toCSS $options | postCSS | minify | fingerprint }}
-    <link rel="stylesheet" href="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}" crossorigin="anonymous">
-  {{ end }}
-
   <!-- custom js -->
   {{ range .Site.Params.customJS }}
   <script src="{{ . | absURL }}"></script>
