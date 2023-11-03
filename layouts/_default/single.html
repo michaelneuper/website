@@ -1,5 +1,5 @@
 {{ define "head" }}
-{{ with resources.Get "css/single.css" | postCSS }}
+{{ with resources.Get "css/single.css" | postCSS | minify }}
   <link rel="stylesheet" href="{{ .RelPermalink }}">
 {{ end }}
 {{ end }}

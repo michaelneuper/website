@@ -53,10 +53,10 @@
   {{ template "_internal/schema.html" . }}
 
   <!-- style -->
-  {{ with resources.Get "css/common.css" | postCSS }}
+  {{ with resources.Get "css/common.css" | postCSS | minify }}
     <link rel="stylesheet" href="{{ .RelPermalink }}">
   {{ end }}
-  {{ with resources.Get "css/content.css" | postCSS }}
+  {{ with resources.Get "css/content.css" | postCSS | minify }}
     <link rel="stylesheet" href="{{ .RelPermalink }}">
   {{ end }}
 
