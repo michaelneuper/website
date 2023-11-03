@@ -2,7 +2,7 @@
 title: "Programs I Use"
 ---
 
-<img align="right" src="/images/logo.png">
+<img align="right" src="/images/logo.webp">
 
 ## Basic
 **Operating system:**

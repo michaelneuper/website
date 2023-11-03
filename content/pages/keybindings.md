@@ -89,7 +89,7 @@ I have each profile set to a different game/progam and a colour corresponding to
 
 This is what the mouse looks like:
 
-![Redragon Mouse](/images/redragon_mouse.png)
+![Redragon Mouse](/images/redragon_mouse.webp)
 
 This is my configuration:
 
@@ -123,5 +123,7 @@ These are some of my shortcuts:
 | **Hold**       | Page Browser               | Refresh Screen          | Toggle RTL Page Turning  |
 
 ## Wacom Tablet
-<!-- ![Wacom Tablet](/images/wacom-tablet.jpg) -->
+
+![Wacom Tablet](/images/wacom_tablet.webp)
+
 In progress
