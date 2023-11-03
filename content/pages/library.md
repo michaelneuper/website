@@ -9,7 +9,7 @@ I also don't necessarily like all the books I own.
 ## Philosophy
 
 <div class="book-container">
-  <img align="right" src="/images/books/critique-of-reason.jpg" width="100" height="150">
+  <img align="right" src="/images/books/critique-of-reason.webp" width="100" height="150">
 </div>
 
 - Aristotle - _The Art of Rhetoric_
@@ -20,7 +20,7 @@ I also don't necessarily like all the books I own.
 - Hitchens, Christopher - _Letters to a Young Contrarian_
 - Hitchens, Christopher - _Mortality_
   <div class="book-container">
-      <img align="right" src="/images/books/republic.jpg" width="100" height="150">
+      <img align="right" src="/images/books/republic.webp" width="100" height="150">
   </div>
 - Hume, David - _A Treatise of Human Nature_
 - Kant, Immanuel - _Critique of Pure Reason_
@@ -49,7 +49,7 @@ I also don't necessarily like all the books I own.
 ## General Science
 
 <div class="book-container">
-  <img align="right" src="/images/books/short-history.JPG" width="100" height="150">
+  <img align="right" src="/images/books/short-history.webp" width="100" height="150">
 </div>
 
 - Bryson, Bill - _A Short History of Nearly Everything_
@@ -61,7 +61,7 @@ I also don't necessarily like all the books I own.
 ## Computer Science
 
 <div class="book-container">
-  <img align="right" src="/images/books/how-linux-works.jpg" width="100" height="150">
+  <img align="right" src="/images/books/how-linux-works.webp" width="100" height="150">
 </div>
 
 - Ericson, Jon - _Hacking: The Art of Exploitation_
@@ -72,7 +72,7 @@ I also don't necessarily like all the books I own.
 ## Fiction
 
 <div class="book-container">
-  <img align="right" src="/images/books/1984.jpg" width="100" height="150">
+  <img align="right" src="/images/books/1984.webp" width="100" height="150">
 </div>
 
 - Danielewski, Mark Z. - _House of Leaves_
