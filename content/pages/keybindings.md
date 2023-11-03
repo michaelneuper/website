@@ -4,11 +4,11 @@ title: "Key Bindings"
 
 This is an archive of the various key bindings/shortcuts that I use across different software/hardware.
 
-# Keyboard
+## Keyboard
 
-## Window Manager
+### Window Manager
 
-### Basic Key Bindings
+#### Basic Key Bindings
 | **Key Binding**               | **Action**            |
 |-------------------------------|-----------------------|
 | <kbd>s-RET</kbd>              | spawn terminal        |
@@ -20,7 +20,7 @@ This is an archive of the various key bindings/shortcuts that I use across diffe
 | <kbd>C-M-{h, j, k, l}</kbd>   | increase window size  |
 | <kbd>C-S-M-{h, j, k, l}</kbd> | decrease window size  |
 
-### Window States
+#### Window States
 | **Key Binding**   | **State**               |
 |-------------------|-------------------------|
 | <kbd>s-t</kbd>    | tiled                   |
@@ -28,7 +28,7 @@ This is an archive of the various key bindings/shortcuts that I use across diffe
 | <kbd>s-S-f</kbd>  | floating                |
 | <kbd>s-f</kbd>    | fullscreen              |
 
-### Window Flags
+#### Window Flags
 | **Key Binding**  | **Flag** |
 |------------------|----------|
 | <kbd>s-C-m</kbd> | marked   |
@@ -36,7 +36,7 @@ This is an archive of the various key bindings/shortcuts that I use across diffe
 | <kbd>s-C-y</kbd> | sticky   |
 | <kbd>s-C-z</kbd> | private  |
 
-### Basic Utilities
+#### Basic Utilities
 | **Key Binding**    | **Action**                                 |
 |--------------------|--------------------------------------------|
 | <kbd>s-x</kbd>     | lock the screen                            |
@@ -44,7 +44,7 @@ This is an archive of the various key bindings/shortcuts that I use across diffe
 | <kbd>PRNTSC</kbd>  | screenshot entire screen                   |
 | <kbd>s-PRTSC</kbd> | select portion of the screen to screenshot |
 
-### Basic Programs
+#### Basic Programs
 | **Key Binding**  | **Program**            |
 |------------------|------------------------|
 | <kbd>s-w</kbd>   | web browser            |
@@ -54,7 +54,7 @@ This is an archive of the various key bindings/shortcuts that I use across diffe
 | <kbd>s-c</kbd>   | calculator             |
 | <kbd>s-v</kbd>   | vscode                 |
 
-## Key Remaps
+### Key Remaps
 
 I use a program called [keyd](https://github.com/rvaiya/keyd) to remap some of the keys on my keyboard.
 Here is my configuration:
@@ -81,13 +81,14 @@ k = up
 l = right
 ```
 
-# Mouse
+## Mouse
 
 I use the Redragon Perdition 2 MMO mouse.
 It has 12 buttons on the side and allows for different profiles. 
 I have each profile set to a different game/progam and a colour corresponding to that game/program.
 
 This is what the mouse looks like:
+
 ![Redragon Mouse](/images/redragon_mouse.png)
 
 This is my configuration:
@@ -108,7 +109,7 @@ This is my configuration:
 | **11**     | Increase DPI            |                              |                             |
 | **12**     | Change Profile          |                              |                             |
 
-# Koreader
+## Koreader
 
 I use a program called [koreader](https://koreader.rocks/) on my jailbroken Kindle Paperwhite (10th Gen).
 This has a lot more features than the default reader program on the kindle including: epub support, sending books over the network, and way more.
@@ -121,6 +122,6 @@ These are some of my shortcuts:
 | **Double Tap** | Book Map                   | Toggle Dark Mode        | Bookmark Page            |
 | **Hold**       | Page Browser               | Refresh Screen          | Toggle RTL Page Turning  |
 
-# Wacom Tablet
+## Wacom Tablet
 <!-- ![Wacom Tablet](/images/wacom-tablet.jpg) -->
 In progress

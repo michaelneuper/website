@@ -24,8 +24,8 @@ If you want, you can restructure the tree via drag and drop.
 ### [Simple Tab Groups](https://addons.mozilla.org/en-US/firefox/addon/simple-tab-groups/)
 Simple Tab Groups works across browser instances/windows too. 
 If you select a group in another window, the selected window will jump to the foreground with the chosen group selected. You can even select the specific tab within that group in background browser windows.
-![GIF example](https://user-images.githubusercontent.com/7843031/33828871-806ccf6e-de76-11e7-9a0e-1ddfb97e878d.gif)
 
+![GIF example](https://user-images.githubusercontent.com/7843031/33828871-806ccf6e-de76-11e7-9a0e-1ddfb97e878d.gif)
 
 ### [Firefox Multi-Account Containers](https://addons.mozilla.org/en-US/firefox/addon/multi-account-containers/)
 The Firefox Multi-Account Containers extension lets you carve out a separate box for each of your online lives – no more opening a different browser just to check your work email!
