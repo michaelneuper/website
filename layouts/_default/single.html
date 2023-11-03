@@ -1,6 +1,7 @@
 {{ define "head" }}
-<link rel="stylesheet" href='{{ "css/single.css" | absURL }}'>
-<link rel="stylesheet" href='{{ "css/sharingbuttons.css" | absURL }}'>
+{{ with resources.Get "css/single.css" | postCSS }}
+  <link rel="stylesheet" href="{{ .RelPermalink }}">
+{{ end }}
 {{ end }}
 
 {{ define "main" }}

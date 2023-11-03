@@ -53,8 +53,12 @@
   {{ template "_internal/schema.html" . }}
 
   <!-- style -->
-  <link media="screen" rel="stylesheet" href='{{ "css/common.css" | absURL }}'>
-  <link media="screen" rel="stylesheet" href='{{ "css/content.css" | absURL }}'>
+  {{ with resources.Get "css/common.css" | postCSS }}
+    <link rel="stylesheet" href="{{ .RelPermalink }}">
+  {{ end }}
+  {{ with resources.Get "css/content.css" | postCSS }}
+    <link rel="stylesheet" href="{{ .RelPermalink }}">
+  {{ end }}
 
   <!-- title -->
   {{ if .IsHome }}
