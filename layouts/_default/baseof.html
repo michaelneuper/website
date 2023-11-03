@@ -54,12 +54,12 @@
 
   <!-- style -->
   {{ $options := dict "transpiler" "dartsass" "targetPath" "css/common.css" }}
-  {{ with resources.Get "sass/common.scss" | toCSS $options | postCSS | minify | fingerprint }}
+  {{ with resources.Get "sass/layouts/common.scss" | toCSS $options | postCSS | minify | fingerprint }}
     <link rel="stylesheet" href="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}" crossorigin="anonymous">
   {{ end }}
 
   {{ $options := dict "transpiler" "dartsass" "targetPath" "css/content.css" }}
-  {{ with resources.Get "sass/content.scss" | toCSS $options | postCSS | minify | fingerprint }}
+  {{ with resources.Get "sass/layouts/content.scss" | toCSS $options | postCSS | minify | fingerprint }}
     <link rel="stylesheet" href="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}" crossorigin="anonymous">
   {{ end }}
 
@@ -82,12 +82,6 @@
     {{ block "main" . }}{{ end }}
     {{ partial "footer.html" . }}
   </div>
-
-  <!-- custom css -->
-  {{ $options := dict "transpiler" "dartsass" "targetPath" "css/main.css" }}
-  {{ with resources.Get "sass/main.scss" | toCSS $options | postCSS | minify | fingerprint }}
-    <link rel="stylesheet" href="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}" crossorigin="anonymous">
-  {{ end }}
 
   <!-- custom js -->
   {{ range .Site.Params.customJS }}

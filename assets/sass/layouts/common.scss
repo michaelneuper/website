@@ -1,0 +1,214 @@
+@use "sass:math";
+
+@import "../vars";
+@import "../fonts";
+
+// global
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--background);
+  color: var(--text);
+}
+
+a {
+  text-decoration: none;
+
+  &:link {
+    color: var(--blue);
+  }
+
+  &:hover,
+  &:visited {
+    color: var(--violet);
+  }
+}
+
+::selection {
+  background-color: var(--blue);
+  color: white;
+}
+
+time {
+  color: var(--text-secondary);
+  margin-left: 1rem;
+  min-width: 5rem;
+}
+
+hr {
+  background-color: var(--text-secondary);
+  margin-top: $margin;
+  margin-bottom: $margin;
+  border: 0;
+  height: $border;
+}
+
+#wrapper {
+  background-color: var(--background);
+  display: flex;
+  flex-direction: column;
+  font-family: "Latin Modern Roman", "Times New Roman", serif;
+  min-height: 100vh;
+  overflow-wrap: break-word;
+  padding: 1rem $padding;
+
+  @media screen and (max-width: $mobile-breakpoint) {
+    padding-left: math.div($padding, 3);
+    padding-right: math.div($padding, 3);
+  }
+}
+
+.paginator {
+  align-items: flex-end;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-top: 2rem;
+}
+
+::-webkit-scrollbar {
+  background-color: var(--background);
+  height: 8px;
+  width: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--text-secondary);
+
+  &:hover {
+    background-color: var(--text-emphasized);
+  }
+}
+
+// header
+#header {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+
+  & > h1 {
+    text-align: center;
+
+    @media screen and (min-width: $mobile-breakpoint) {
+      font-size: 2.8rem;
+    }
+  }
+
+  & > nav {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    max-width: $mobile-breakpoint;
+    margin-top: 10px;
+    width: 100%;
+
+    & > span > a {
+      font-size: 1.2rem;
+      color: var(--text-emphasized);
+      text-decoration: none;
+      display: inline-block;
+      position: relative;
+
+      &:after {
+        background-color: var(--text-emphasized);
+        content: "";
+        position: absolute;
+        width: 100%;
+        transform: scaleX(0);
+        height: $border;
+        bottom: 0;
+        left: 0;
+        transform-origin: bottom right;
+        transition: transform 0.25s ease-out;
+      }
+
+      &:hover:after {
+        transform: scaleX(1);
+        transform-origin: bottom left;
+      }
+    }
+  }
+
+  a,
+  a:hover,
+  a:visited {
+    color: var(--text-emphasized);
+  }
+}
+
+// main
+main {
+  margin: 0 $margin;
+}
+
+#main {
+  align-self: center;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  max-width: 100%;
+  padding: 0;
+  width: calc(100% - 2rem); // TODO
+}
+
+// footer
+#footer {
+  color: var(--text-secondary);
+  align-items: center;
+  display: flex;
+  font-size: 0.9rem;
+  flex-direction: column;
+  margin-top: $margin;
+
+  & > .footnote {
+    text-align: center;
+  }
+}
+
+// misc
+#sharingbuttons {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-top: 1rem;
+  flex-wrap: wrap;
+}
+
+#searchbox {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-top: 0;
+  margin-bottom: $margin;
+
+  #ddgSearch > input {
+    color: var(--text-emphasized);
+    background-color: var(--background-secondary);
+    font-family: "Latin Modern Roman", "Times New Roman", serif;
+    padding-left: 8px;
+    width: 200px;
+    height: 1.5rem;
+    border: $border solid var(--text-secondary);
+    border-radius: $radius;
+
+    &:focus {
+      outline: $border solid var(--text-emphasized);
+    }
+  }
+}
+
+.icon {
+  padding-right: 0.1em;
+  padding-left: 0.1em;
+}
+
+.row {
+  margin-left: 2rem;
+}
