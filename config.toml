@@ -47,7 +47,7 @@ defaultMarkdownHandler = "goldmark"
 [markup.goldmark.renderer]
 unsafe = true
 [markup.highlight]
-noClasses = false
+noClasses = true
 [markup.tableOfContents]
 endLevel = 6
 ordered = false
