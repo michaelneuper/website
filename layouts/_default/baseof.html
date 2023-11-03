@@ -30,7 +30,7 @@
   {{ end }}
 
   <!-- math -->
-  {{ if .Site.Params.math }}
+  {{ if or .Params.math .Site.Params.math }}
   {{ partial "math.html" . }}
   {{ end }}
 

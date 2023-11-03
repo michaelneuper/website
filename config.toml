@@ -16,7 +16,6 @@ url = "/posts/"
 pre = "<object class='icon' type='image/svg+xml' data='/images/icons/blog.svg'></object>"
 weight = 1
 
-
 [[menu.main]]
 identifier = "rss"
 name = "RSS"
@@ -73,7 +72,7 @@ toc = true
 showWordCount = false
 showReadingTime = true
 rootFontSize = "105%"
-math = true
+math = false
 enableDuckDuckGoSearchBox = true
 numberedSubtitles = true
 
