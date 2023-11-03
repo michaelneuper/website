@@ -1,7 +1,9 @@
+@use 'sass:math';
+
 $radius: 0.25rem;
 $margin: 1rem;
 $max-width: 70vw;
-$padding: (100vw - $max-width) / 2;
+$padding: math.div(100vw - $max-width, 2);
 $border: 2px;
 $mobile-breakpoint: 768px;
 
@@ -46,8 +48,8 @@ body {
     padding-right: $padding;
 
     @media (max-width: $mobile-breakpoint) {
-      padding-left: $padding / 3;
-      padding-right: $padding / 3;
+      padding-left: math.div($padding, 3);
+      padding-right: math.div($padding, 3);
     }
   }
 }
@@ -65,8 +67,7 @@ a {
   }
 }
 
-::selection,
-::-moz-selection {
+::selection {
   background-color: var(--blue);
   color: white;
 }
@@ -187,13 +188,13 @@ main {
       .publish-date {
         color: var(--text-secondary);
         font-size: large;
-        padding-top: $margin / 2;
+        padding-top: math.div($margin, 2);
       }
     }
 
     .toc {
       background-color: var(--background-secondary);
-      border: $border / 2 dashed var(--text-secondary);
+      border: math.div($border, 2) dashed var(--text-secondary);
       border-radius: $radius;
 
       #TableOfContents a {
@@ -264,9 +265,9 @@ main {
         padding: 0;
         border-color: var(--text-secondary);
         display: block;
-        padding: $margin / 2;
-        margin-top: $margin / 2;
-        margin-bottom: $margin / 2;
+        padding: math.div($margin, 2);
+        margin-top: math.div($margin, 2);
+        margin-bottom: math.div($margin, 2);
         border: $border solid;
         border-radius: $radius;
 
