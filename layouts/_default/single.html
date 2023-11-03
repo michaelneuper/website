@@ -1,6 +1,7 @@
 {{ define "head" }}
-{{ with resources.Get "css/single.css" | postCSS | minify }}
-  <link rel="stylesheet" href="{{ .RelPermalink }}">
+{{ $options := dict "transpiler" "dartsass" "targetPath" "css/single.css" }}
+{{ with resources.Get "sass/single.scss" | toCSS $options | postCSS | minify | fingerprint }}
+  <link rel="stylesheet" href="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}" crossorigin="anonymous">
 {{ end }}
 {{ end }}
 

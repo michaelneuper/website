@@ -53,11 +53,14 @@
   {{ template "_internal/schema.html" . }}
 
   <!-- style -->
-  {{ with resources.Get "css/common.css" | postCSS | minify }}
-    <link rel="stylesheet" href="{{ .RelPermalink }}">
+  {{ $options := dict "transpiler" "dartsass" "targetPath" "css/common.css" }}
+  {{ with resources.Get "sass/common.scss" | toCSS $options | postCSS | minify | fingerprint }}
+    <link rel="stylesheet" href="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}" crossorigin="anonymous">
   {{ end }}
-  {{ with resources.Get "css/content.css" | postCSS | minify }}
-    <link rel="stylesheet" href="{{ .RelPermalink }}">
+
+  {{ $options := dict "transpiler" "dartsass" "targetPath" "css/content.css" }}
+  {{ with resources.Get "sass/content.scss" | toCSS $options | postCSS | minify | fingerprint }}
+    <link rel="stylesheet" href="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}" crossorigin="anonymous">
   {{ end }}
 
   <!-- title -->
@@ -81,7 +84,7 @@
   </div>
 
   <!-- custom css -->
-  {{ $options := dict "transpiler" "dartsass" "targetPath" "css/style.css" }}
+  {{ $options := dict "transpiler" "dartsass" "targetPath" "css/main.css" }}
   {{ with resources.Get "sass/main.scss" | toCSS $options | postCSS | minify | fingerprint }}
     <link rel="stylesheet" href="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}" crossorigin="anonymous">
   {{ end }}
