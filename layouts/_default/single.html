@@ -11,10 +11,10 @@
   </article>
 
   {{ else }}
-  <h1 class="post-title">
-    {{ .Title }}
+  <div class="post-heading">
+    <h1 class="post-title">{{ .Title }}</h1>
     <div class="publish-date">{{ .PublishDate.Format .Site.Params.dateFormat }}</div>
-  </h1>
+  </div>
 
   {{ if ne .Params.tags nil }}
   <div>
