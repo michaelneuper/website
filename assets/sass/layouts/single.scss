@@ -1,0 +1,59 @@
+@import "../vars";
+
+#main {
+  & > h1 {
+    text-align: center;
+  }
+
+  .post-heading {
+    text-align: center;
+
+    .publish-date {
+      color: var(--text-secondary);
+      font-size: large;
+      padding-top: 0.5rem;
+    }
+  }
+
+  .toc {
+    background-color: var(--background-secondary);
+    border: var(--text-secondary) 1px dashed;
+    display: inline-block;
+    margin: 1rem;
+    padding: 0.5rem 1rem;
+
+    a {
+      color: var(--text);
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+
+    li > ul {
+      margin-left: 1.5rem;
+    }
+
+    ul {
+      list-style: none;
+    }
+
+    &:target {
+      background-color: var(--background-secondary);
+    }
+  }
+
+  .warning {
+    background-color: var(--red);
+    color: white;
+    font-size: 1.1rem;
+    margin: 2rem 0;
+    padding: 1rem 0;
+    text-align: center;
+    border-radius: $radius;
+  }
+
+  .content {
+    padding-top: 1rem;
+  }
+}

@@ -1,0 +1,38 @@
+@import "../vars";
+
+#main {
+  & > .post-group {
+    & > ul {
+      border-left: var(--text-secondary) solid $border;
+      list-style-type: none;
+      margin-left: 0.5rem;
+      padding-left: $margin;
+
+      & > li {
+        align-items: center;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        line-height: 1.6;
+
+        & > time {
+          text-align: right;
+        }
+      }
+
+      @media screen and (min-width: $mobile-breakpoint) {
+        margin-left: 1rem;
+        padding-left: 2rem;
+      }
+    }
+
+    a {
+      text-decoration: none;
+      transition: text-decoration 0.3s ease;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+}

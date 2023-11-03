@@ -1,0 +1,59 @@
+@use "sass:math";
+
+@import "../vars";
+
+.grid-container {
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+  gap: $margin * 2;
+
+  @media (max-width: $mobile-breakpoint) {
+    grid-template-columns: 1fr;
+  }
+
+  .sidebar {
+    flex: 1;
+
+    @media screen and (max-width: $mobile-breakpoint) {
+      order: 1;
+    }
+
+    h3.taxonomy > a {
+      color: var(--text);
+
+      &:visited {
+        color: var(--text);
+      }
+
+      &:hover {
+        color: var(--text-emphasized);
+      }
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+      border-color: var(--text-secondary);
+      display: block;
+      padding: math.div($margin, 2);
+      margin-top: math.div($margin, 2);
+      margin-bottom: math.div($margin, 2);
+      border: $border solid;
+      border-radius: $radius;
+
+      li a {
+        text-decoration: none;
+        display: block;
+        padding: 2px 12px;
+        color: var(--text);
+        transition: color 0.3s, background-color 0.3s;
+
+        &:hover {
+          color: var(--text-emphasized);
+          background-color: var(--background-secondary);
+          border-radius: $radius;
+        }
+      }
+    }
+  }
+}
