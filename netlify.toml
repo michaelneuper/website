@@ -14,7 +14,38 @@ command = """\
   """
 
 [[headers]]
+for = "/*.css"
+  [headers.values]
+  Cache-Control = "max-age=31536000"
+
+[[headers]]
+for = "/*.js"
+  [headers.values]
+  Cache-Control = "max-age=31536000"
+
+[[headers]]
+for = "/*.jpg"
+  [headers.values]
+  Cache-Control = "max-age=604800"
+
+[[headers]]
+for = "/*.jpeg"
+  [headers.values]
+  Cache-Control = "max-age=604800"
+
+[[headers]]
+for = "/*.png"
+  [headers.values]
+  Cache-Control = "max-age=604800"
+
+[[headers]]
+for = "/*.gif"
+  [headers.values]
+  Cache-Control = "max-age=604800"
+
+[[headers]]
 for = "/*"
-[headers.values]
-Cache-Control = "max-age=3600"
-# X-Content-Type-Options = "nosniff"
+  [headers.values]
+  Cache-Control = "max-age=3600"
+  X-Content-Type-Options = "nosniff"
+  Content-Encoding = "gzip"
