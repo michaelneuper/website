@@ -51,9 +51,8 @@
     border-radius: $radius;
     font-family: "Latin Modern Mono", Courier, monospace;
     position: relative;
-    margin-top: 0.5rem;
     overflow-x: auto;
-    padding: 0.5rem;
+    padding: 1rem;
 
     code {
       padding: 0;
@@ -99,22 +98,25 @@
   }
 }
 
-button.copyButton {
+button.copy-button {
   background-color: var(--background);
   color: var(--text-emphasized);
   position: absolute;
-  bottom: 5px;
-  right: 5px;
+  top: calc((4px + $margin) / 2);
+  right: calc((4px + $margin) / 2);
   opacity: 0.7;
   border: none;
-  padding: 5px 10px;
+  padding: 0.5rem;
   border-radius: $radius;
   cursor: pointer;
-  font-size: 14px;
   transition: opacity 0.3s;
 
   &:hover {
     opacity: 1;
+  }
+
+  .octicon-check {
+    color: var(--green);
   }
 }
 
