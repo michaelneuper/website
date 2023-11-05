@@ -1,3 +1,5 @@
+@use "sass:math";
+
 @import "../vars";
 
 .content {
@@ -150,32 +152,31 @@ button.copy-button {
 .content h4,
 .content h5,
 .content h6 {
-  line-height: 1.5;
+  line-height: 1.6;
 }
 
-// TODO change to golden ratio
 .content h1 {
-  font-size: 2.4rem;
+  font-size: $f * math.pow($phi, 2);
 }
 
 .content h2 {
-  font-size: 1.8rem;
+  font-size: $f * math.pow($phi, math.div(3, 2));
 }
 
 .content h3 {
-  font-size: 1.4rem;
+  font-size: $f * $phi;
 }
 
 .content h4 {
-  font-size: 1.2rem;
+  font-size: $f * math.sqrt($phi);
 }
 
 .content h5 {
-  font-size: 1.1rem;
+  font-size: $f;
 }
 
 .content h6 {
-  font-size: 1rem;
+  font-size: math.div($f, math.sqrt($phi));
 }
 
 .content img {
