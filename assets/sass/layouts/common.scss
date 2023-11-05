@@ -180,6 +180,29 @@ main {
   flex-wrap: wrap;
 }
 
+.dark-mode-toggle {
+  background-color: var(--background-secondary);
+  color: var(--text);
+  position: absolute;
+  top: calc(((4px + $margin) / 2) + 12.55px);
+  right: $padding;
+  border: none;
+  padding: 0.5rem;
+  border-radius: $radius;
+  cursor: pointer;
+  transition: opacity 0.3s;
+
+  &:hover {
+    color: var(--text-emphasized);
+  }
+
+  @media screen {
+    @media screen and (max-width: $mobile-breakpoint) {
+        right: calc((4px + $margin) / 2);
+      }
+  }
+}
+
 .icon {
   padding-right: 0.1em;
   padding-left: 0.1em;

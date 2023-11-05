@@ -14,24 +14,20 @@ $padding: math.div(100vw - $max-width, 2);
 $border: 2px;
 $mobile-breakpoint: 768px;
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #002b36;
-    --background-secondary: #073642;
-    --text: #839496;
-    --text-secondary: #586e75;
-    --text-emphasized: #93a1a1;
-  }
+:root {
+  --background: #fdf6e3;
+  --background-secondary: #eee8d5;
+  --text: #657b83;
+  --text-secondary: #93a1a1;
+  --text-emphasized: #586e75;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    --background: #fdf6e3;
-    --background-secondary: #eee8d5;
-    --text: #657b83;
-    --text-secondary: #93a1a1;
-    --text-emphasized: #586e75;
-  }
+.darkmode {
+  --background: #002b36;
+  --background-secondary: #073642;
+  --text: #839496;
+  --text-secondary: #586e75;
+  --text-emphasized: #93a1a1;
 }
 
 :root {
