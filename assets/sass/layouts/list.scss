@@ -36,3 +36,46 @@
     }
   }
 }
+
+#searchbox {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-top: 0;
+  margin-bottom: $margin;
+
+  #ddgSearch {
+    position: relative;
+    display: inline-block;
+
+    input {
+      color: var(--text-emphasized);
+      background-color: var(--background-secondary);
+      font-family: sans-serif;
+      padding-left: 10px;
+      width: 200px;
+      height: 1.7rem;
+      border: $border solid var(--text-secondary);
+      border-radius: $radius;
+
+      &:focus {
+        outline: 1px solid var(--text-emphasized);
+      }
+    }
+
+    button {
+      position: absolute;
+      aspect-ratio: 1rem;
+      right: 1em;
+      top: 4.9px;
+      background-color: transparent;
+      border: none;
+      cursor: pointer;
+
+      svg {
+        fill: var(--text-emphasized);
+      }
+    }
+  }
+}

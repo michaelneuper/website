@@ -180,30 +180,6 @@ main {
   flex-wrap: wrap;
 }
 
-#searchbox {
-  align-items: center;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  margin-top: 0;
-  margin-bottom: $margin;
-
-  #ddgSearch > input {
-    color: var(--text-emphasized);
-    background-color: var(--background-secondary);
-    font-family: "Latin Modern Roman", "Times New Roman", serif;
-    padding-left: 8px;
-    width: 200px;
-    height: 1.5rem;
-    border: $border solid var(--text-secondary);
-    border-radius: $radius;
-
-    &:focus {
-      outline: $border solid var(--text-emphasized);
-    }
-  }
-}
-
 .icon {
   padding-right: 0.1em;
   padding-left: 0.1em;
