@@ -181,7 +181,7 @@ main {
 }
 
 .dark-mode-toggle {
-  background-color: var(--background-secondary);
+  background-color: var(--background);
   color: var(--text);
   position: absolute;
   top: calc(((4px + $margin) / 2) + 12.55px);
