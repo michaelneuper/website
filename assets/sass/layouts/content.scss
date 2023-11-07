@@ -1,6 +1,7 @@
 @use "sass:math";
 
 @import "../vars";
+@import "../syntax";
 
 .content {
   .MathJax {
@@ -43,7 +44,6 @@
   code {
     background-color: var(--bg_s);
     border-radius: $radius;
-    color: var(--fg);
     font-family: "Latin Modern Mono", Courier, monospace;
     padding: 0 0.2rem;
   }
