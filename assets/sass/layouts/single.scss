@@ -16,21 +16,21 @@
   }
 
   .tag {
-    background-color: var(--background-secondary);
+    background-color: var(--bg_s);
     border-radius: $radius;
     padding: 0.2em 0.3em;
   }
 
   .toc {
-    background-color: var(--background-secondary);
-    border: var(--text-secondary) 1px dashed;
+    background-color: var(--bg_s);
+    border: var(--fg4) 1px dashed;
     border-radius: $radius;
     display: inline-block;
     margin: 1rem;
     padding: 0.5rem 1rem;
 
     a {
-      color: var(--text);
+      color: var(--fg);
 
       &:hover {
         text-decoration: underline;
@@ -46,7 +46,7 @@
     }
 
     &:target {
-      background-color: var(--background-secondary);
+      background-color: var(--bg_s);
     }
   }
 

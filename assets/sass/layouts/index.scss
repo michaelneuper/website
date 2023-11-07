@@ -19,21 +19,21 @@
     }
 
     h3.taxonomy > a {
-      color: var(--text);
+      color: var(--fg);
 
       &:visited {
-        color: var(--text);
+        color: var(--fg);
       }
 
       &:hover {
-        color: var(--text-emphasized);
+        color: var(--fg1);
       }
     }
 
     ul {
       list-style: none;
       padding: 0;
-      border-color: var(--text-secondary);
+      border-color: var(--fg4);
       display: block;
       padding: math.div($margin, 2);
       margin-top: math.div($margin, 2);
@@ -45,12 +45,12 @@
         text-decoration: none;
         display: block;
         padding: 2px 12px;
-        color: var(--text);
+        color: var(--fg);
         transition: color 0.3s, background-color 0.3s;
 
         &:hover {
-          color: var(--text-emphasized);
-          background-color: var(--background-secondary);
+          color: var(--fg1);
+          background-color: var(--bg_s);
           border-radius: $radius;
         }
       }

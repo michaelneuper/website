@@ -33,23 +33,23 @@
   }
 
   blockquote {
-    background: var(--background-secondary);
-    border-left: var(--text) $border solid;
+    background: var(--bg_s);
+    border-left: var(--fg) $border solid;
     border-radius: $radius;
     font-style: italic;
     padding: 1rem 2rem;
   }
 
   code {
-    background-color: var(--background-secondary);
+    background-color: var(--bg_s);
     border-radius: $radius;
-    color: var(--text);
+    color: var(--fg);
     font-family: "Latin Modern Mono", Courier, monospace;
     padding: 0 0.2rem;
   }
 
   pre {
-    background-color: var(--background-secondary) !important;
+    background-color: var(--bg_s) !important;
     border-radius: $radius;
     font-family: "Latin Modern Mono", Courier, monospace;
     position: relative;
@@ -62,15 +62,15 @@
   }
 
   mark {
-    background-color: var(--background-secondary);
-    color: var(--text-emphasized);
+    background-color: var(--bg_s);
+    color: var(--fg1);
     border-radius: $radius;
     padding: 0 0.2rem;
   }
 
   kbd {
-    background-color: var(--background-secondary);
-    color: var(--text-emphasized);
+    background-color: var(--bg_s);
+    color: var(--fg1);
     border-radius: $radius;
   }
 
@@ -78,19 +78,19 @@
     display: block;
     overflow-x: auto;
     margin: auto;
-    background-color: var(--background);
+    background-color: var(--bg);
     border-collapse: collapse;
     border: none;
 
     td,
     th {
-      border: var(--text-secondary) $border solid;
+      border: var(--fg4) $border solid;
       padding: 0.1rem 0.5rem;
     }
 
     th {
-      background-color: var(--background-secondary);
-      color: var(--text-emphasized);
+      background-color: var(--bg_s);
+      color: var(--fg4);
     }
   }
 
@@ -102,7 +102,7 @@
 
 button.copy-button {
   background-color: var(--background);
-  color: var(--text-emphasized);
+  color: var(--fg1);
   position: absolute;
   top: calc((4px + $margin) / 2);
   right: calc((4px + $margin) / 2);

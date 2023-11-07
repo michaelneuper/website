@@ -3,7 +3,7 @@
 #main {
   & > .post-group {
     & > ul {
-      border-left: var(--text-secondary) solid $border;
+      border-left: var(--fg4) solid $border;
       list-style-type: none;
       margin-left: 0.5rem;
       padding-left: $margin;
@@ -50,17 +50,17 @@
     display: inline-block;
 
     input {
-      color: var(--text-emphasized);
-      background-color: var(--background-secondary);
+      color: var(--fg1);
+      background-color: var(--bg_s);
       font-family: sans-serif;
       padding-left: 10px;
       width: 200px;
       height: 1.7rem;
-      border: $border solid var(--text-secondary);
+      border: $border solid var(--fg4);
       border-radius: $radius;
 
       &:focus {
-        outline: 1px solid var(--text-emphasized);
+        outline: 1px solid var(--fg1);
       }
     }
 
@@ -74,7 +74,7 @@
       cursor: pointer;
 
       svg {
-        fill: var(--text-emphasized);
+        fill: var(--fg1);
       }
     }
   }
