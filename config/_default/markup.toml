@@ -1,12 +1,12 @@
 defaultMarkdownHandler = "goldmark"
 
 [goldmark.renderer]
-  unsafe = true
+unsafe = true
 
 [highlight]
-  noClasses = false
+noClasses = false
 
 [tableOfContents]
-  endLevel = 6
-  ordered = false
-  startLevel = 2
+endLevel = 6
+ordered = false
+startLevel = 2
