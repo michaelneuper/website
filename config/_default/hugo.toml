@@ -2,11 +2,23 @@ baseURL = "https://michaelneuper.com"
 enableEmoji = true
 enableGitInfo = false
 enableRobotsTXT = true
-googleAnalytics = "G-BLX24KP7CS"
 hasCJKLanguage = false
 languageCode = "en"
 rssLimit = 10
 title = "Michael"
+
+[author]
+email = "michael@michaelneuper.com"
+name = "Michael Neuper"
+
+[taxonomies]
+tags = "tags"
+categories = "categories"
+
+[module]
+  [[module.imports]]
+    path = "github.com/michaelneuper/hugo-texify3"
+    disable = false
 
 [[menu.main]]
 identifier = "posts"
@@ -47,92 +59,3 @@ pre = """
 <path d="M17,21.63H5a3,3,0,0,1-3-3v-8a1,1,0,0,0-2,0v8a5,5,0,0,0,5,5H17a1,1,0,0,0,0-2Zm4-18H7a3,3,0,0,0-3,3v10a3,3,0,0,0,3,3H21a3,3,0,0,0,3-3v-10A3,3,0,0,0,21,3.63Zm-.41,2-5.88,5.88a1,1,0,0,1-1.42,0L7.41,5.63Zm1.41,11a1,1,0,0,1-1,1H7a1,1,0,0,1-1-1V7l5.88,5.88a3,3,0,0,0,4.24,0L22,7Z"/></svg>
 """
 weight = 4
-
-[taxonomies]
-tags = "tags"
-categories = "categories"
-
-[markup]
-defaultMarkdownHandler = "goldmark"
-[markup.goldmark.renderer]
-unsafe = true
-[markup.highlight]
-noClasses = false
-[markup.tableOfContents]
-endLevel = 6
-ordered = false
-startLevel = 2
-
-[author]
-email = "michael@michaelneuper.com"
-name = "Michael Neuper"
-
-[params]
-title = "Michael Neuper"
-description = "Michael's Personal Website"
-footnote = """
-<!-- Follow me on <a class=link href=https://github.com/michaelneuper target=_blank rel=noopener>GitHub</a> or
-<a class=link href=/index.xml>RSS</a> -->
-"""
-keywords = ["michael", "neuper", "linux", "blog", "productivity"]
-customJS = ["js/script.js"]
-dateFormat = "2 January 2006"
-emphasisWithDots = true
-toc = true
-showWordCount = false
-showReadingTime = true
-rootFontSize = "105%"
-math = false
-enableDuckDuckGoSearchBox = true
-numberedSubtitles = true
-
-[params.commentEngine]
-code = """
-<script src="https://giscus.app/client.js"
-        data-repo="michaelneuper/website"
-        data-repo-id="R_kgDOIjPNaQ"
-        data-category="General"
-        data-category-id="DIC_kwDOIjPNac4CaklA"
-        data-mapping="pathname"
-        data-strict="0"
-        data-reactions-enabled="1"
-        data-emit-metadata="0"
-        data-input-position="top"
-        data-theme=""
-        data-lang="en"
-        data-loading="lazy"
-        crossorigin="anonymous"
-        async>
-</script>
-"""
-
-[params.buymeacoffee]
-code = """
-<script async data-name="BMC-Widget" 
-        data-cfasync="true" 
-        src="https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js" 
-        data-id="michaelneuper" 
-        data-description="Like what I do? Buy me a coffee!" 
-        data-message="" 
-        data-color="#d79921" 
-        data-position="Right" 
-        data-x_margin="18" 
-        data-y_margin="18"
-        crossorigin="anonymous">
-</script>
-"""
-
-[params.sharingbuttons]
-facebook = false
-twitter = false
-email = false
-linkedin = false
-reddit = false
-whatsapp = false
-hackernews = false
-telegram = false
-
-[module]
-  [[module.imports]]
-    path = "github.com/michaelneuper/hugo-texify3"
-    disable = false

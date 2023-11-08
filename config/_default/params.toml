@@ -1,0 +1,63 @@
+title = "Michael Neuper"
+description = "Michael's Personal Website"
+footnote = """
+<!-- Follow me on <a class=link href=https://github.com/michaelneuper target=_blank rel=noopener>GitHub</a> or
+<a class=link href=/index.xml>RSS</a> -->
+"""
+keywords = ["michael", "neuper", "linux", "blog", "productivity"]
+customJS = ["js/script.js"]
+dateFormat = "2 January 2006"
+emphasisWithDots = true
+toc = true
+showWordCount = false
+showReadingTime = true
+rootFontSize = "105%"
+math = false
+enableDuckDuckGoSearchBox = true
+numberedSubtitles = true
+
+[commentEngine]
+  code = """
+  <script src="https://giscus.app/client.js"
+          data-repo="michaelneuper/website"
+          data-repo-id="R_kgDOIjPNaQ"
+          data-category="General"
+          data-category-id="DIC_kwDOIjPNac4CaklA"
+          data-mapping="pathname"
+          data-strict="0"
+          data-reactions-enabled="1"
+          data-emit-metadata="0"
+          data-input-position="top"
+          data-theme=""
+          data-lang="en"
+          data-loading="lazy"
+          crossorigin="anonymous"
+          async>
+  </script>
+  """
+
+[buymeacoffee]
+  code = """
+  <script async data-name="BMC-Widget" 
+          data-cfasync="true" 
+          src="https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js" 
+          data-id="michaelneuper" 
+          data-description="Like what I do? Buy me a coffee!" 
+          data-message="" 
+          data-color="#d79921" 
+          data-position="Right" 
+          data-x_margin="18" 
+          data-y_margin="18"
+          crossorigin="anonymous">
+  </script>
+  """
+
+[sharingbuttons]
+  facebook = false
+  twitter = false
+  email = false
+  linkedin = false
+  reddit = false
+  whatsapp = false
+  hackernews = false
+  telegram = false
