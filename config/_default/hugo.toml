@@ -7,6 +7,10 @@ languageCode = "en"
 rssLimit = 10
 title = "Michael"
 
+[author]
+email = "michael@michaelneuper.com"
+name = "Michael Neuper"
+
 [taxonomies]
 tags = "tags"
 categories = "categories"

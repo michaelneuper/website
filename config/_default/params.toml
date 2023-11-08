@@ -16,10 +16,6 @@ math = false
 enableDuckDuckGoSearchBox = true
 numberedSubtitles = true
 
-[author]
-email = "michael@michaelneuper.com"
-name = "Michael Neuper"
-
 [commentEngine]
 code = """
 <script src="https://giscus.app/client.js"
