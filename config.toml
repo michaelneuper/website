@@ -6,7 +6,6 @@ googleAnalytics = "G-BLX24KP7CS"
 hasCJKLanguage = false
 languageCode = "en"
 rssLimit = 10
-theme = "hugo-texify2"
 title = "Michael"
 
 [[menu.main]]
@@ -115,7 +114,7 @@ code = """
         data-id="michaelneuper" 
         data-description="Like what I do? Buy me a coffee!" 
         data-message="" 
-        data-color="#b58900" 
+        data-color="#d79921" 
         data-position="Right" 
         data-x_margin="18" 
         data-y_margin="18"
@@ -132,3 +131,8 @@ reddit = false
 whatsapp = false
 hackernews = false
 telegram = false
+
+[module]
+  [[module.imports]]
+    path = "github.com/michaelneuper/hugo-texify3"
+    disable = false
