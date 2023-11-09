@@ -2,7 +2,7 @@
 title: "Home"
 ---
 
-### Hi, I'm Michael
+## Hi, I'm Michael
 
 Welcome to my little piece of the internet!
 
@@ -15,7 +15,7 @@ Thanks for stopping by! I hope you enjoy reading my articles and find them usefu
 
 ---
 
-### Introduction
+## Introduction
 
 - [Programs I use and recommend](/pages/software/)
 - [Key bindings I use](/pages/keybindings/)
