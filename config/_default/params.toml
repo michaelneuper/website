@@ -1,8 +1,10 @@
 title = "Michael Neuper"
 description = "Michael's Personal Website"
 footnote = """
-<!-- Follow me on <a class=link href=https://github.com/michaelneuper target=_blank rel=noopener>GitHub</a> or
-<a class=link href=/index.xml>RSS</a> -->
+Made with <a href="https://gohugo.io" target="_blank">
+<img src="/images/icons/hugo.svg" alt="Hugo" class="hugo-svg">
+</a> and <a href="https://www.gnu.org/software/emacs/" target="_blank">
+<img src="/images/icons/emacs.svg" alt="Emacs" class="emacs-svg"></a>
 """
 keywords = ["michael", "neuper", "linux", "blog", "productivity"]
 customCSS = ["css/styles.css"]
