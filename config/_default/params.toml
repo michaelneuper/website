@@ -5,7 +5,7 @@ footnote = """
 <a class=link href=/index.xml>RSS</a> -->
 """
 keywords = ["michael", "neuper", "linux", "blog", "productivity"]
-customJS = ["js/script.js"]
+customCSS = ["css/styles.css"]
 dateFormat = "2 January 2006"
 emphasisWithDots = true
 toc = true

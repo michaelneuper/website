@@ -93,3 +93,24 @@ I also don't necessarily like all the books I own.
 - LaBerge, Stephen - _Exploring the World of Lucid Dreaming_
 - Ollam, Deviant- _Practical Lock Picking_
 - Seirawan, Yasser - _Winning Chess Tactics_
+
+## Suggestions
+
+If you would like to suggest a book, you can submit the form below.
+
+<p>
+  <form name="book" class="suggestion" netlify>
+  <p>
+      <label>Name <input type="text" name="name" /></label>
+  </p>
+  <p>
+      <label>Title <input type="text" name="title" /></label>
+  </p>
+  <p>
+      <label>Author <input type="text" name="author" /></label>
+  </p>
+  <p>
+      <button type="submit">Send</button>
+  </p>
+  </form>
+</p>

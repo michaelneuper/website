@@ -5,6 +5,7 @@ title: "Programs I Use"
 <img align="right" src="/images/logo.webp">
 
 ## Basic
+
 **Operating system:**
 I use [arch](https://archlinux.org/), btw.
 
@@ -19,11 +20,12 @@ Nowadays I mostly use vterm or eshell in emacs.
 [bspwm](https://github.com/baskerville/bspwm) on Linux and [yabai](https://github.com/koekeishiya/yabai) on macOS.
 
 **Text editor/IDE:**
-[GNU Emacs](https://www.gnu.org/software/emacs/) with the [Doom Emacs](https://github.com/hlissner/doom-emacs) configuration framework. 
+[GNU Emacs](https://www.gnu.org/software/emacs/) with the [Doom Emacs](https://github.com/hlissner/doom-emacs) configuration framework.
 
 ## Utilities
+
 **File manager:**
-I do 99% of my file management with dired inside emacs. 
+I do 99% of my file management with dired inside emacs.
 For the other 1% I'll use the default file manager.
 
 **Web browser:**
@@ -39,6 +41,7 @@ Used to use vlc, now I use mpv like all the cool kids.
 [qBittorrent](https://www.qbittorrent.org/) on Linux and [Transmission](https://transmissionbt.com/) on macOS.
 
 ## Production
+
 **Digital Art:**
 Been getting into digital art lately and have been loving [krita](https://krita.org/en/).
 
@@ -55,3 +58,20 @@ I used to use [zathura](https://pwmt.org/projects/zathura/) but now I use pdf-to
 
 **Image modification:**
 [GIMP](https://www.gimp.org/)
+
+## Suggestions
+
+If you would like to suggest a program/software for me to try, you can submit the form below.
+<p>
+  <form name="software" class="suggestion" netlify>
+  <p>
+      <label>Name <input type="text" name="name" /></label>
+  </p>
+  <p>
+      <label>Program <input type="text" name="program" /></label>
+  </p>
+  <p>
+      <button type="submit">Send</button>
+  </p>
+  </form>
+</p>
