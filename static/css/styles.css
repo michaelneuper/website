@@ -7,21 +7,18 @@ form.suggestion {
   border-radius: 0.25rem;
 }
 
-form.suggestion input[type="text"],
-form.suggestion input[type="email"],
-form.suggestion input[type="text"] {
+form.suggestion input{
   width: 100%;
   padding: 0.5rem;
   border: 1px solid var(--fg);
   border-radius: 4px;
   color: var(--fg);
+  background-color: var(--bg);
 }
 
-form.suggestion input[type="text"],
-form.suggestion input[type="email"],
-form.suggestion input[type="text"]:focus {
+form.suggestion input:focus {
   outline: 1px solid var(--fg);
-  background-color: var(--bg);
+  background-color: var(--bg1);
 }
 
 form.suggestion button[type="submit"] {
