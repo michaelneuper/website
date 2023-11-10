@@ -6,3 +6,5 @@ github.com/michaelneuper/hugo-texify3 v0.0.0-20231109085612-50d2e32742c6 h1:dbCH
 github.com/michaelneuper/hugo-texify3 v0.0.0-20231109085612-50d2e32742c6/go.mod h1:OLgVlYkX7N8YT/Qx//nu6Yemst3vx3jDUNTBTrIJIZE=
 github.com/michaelneuper/hugo-texify3 v0.0.0-20231109133233-7aea7a5680b1 h1:u27EKaJaNRkalGMAU0mIJ+41kF9tUUS3qsYa0sxJZIQ=
 github.com/michaelneuper/hugo-texify3 v0.0.0-20231109133233-7aea7a5680b1/go.mod h1:OLgVlYkX7N8YT/Qx//nu6Yemst3vx3jDUNTBTrIJIZE=
+github.com/michaelneuper/hugo-texify3 v0.0.0-20231110103632-82079534d505 h1:cvCt/15GCvGtMhG81dX7L62AqhOsH4+Raprsy/mte8U=
+github.com/michaelneuper/hugo-texify3 v0.0.0-20231110103632-82079534d505/go.mod h1:OLgVlYkX7N8YT/Qx//nu6Yemst3vx3jDUNTBTrIJIZE=

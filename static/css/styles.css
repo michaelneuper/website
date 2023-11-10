@@ -46,13 +46,11 @@ form.suggestion button[type="submit"]:hover {
 
 /* footer icons */
 img.hugo-svg {
-  width: 45px;
   margin-left: 2px;
   margin-right: 2px;
+  vertical-align: -1px;
 }
 
 img.emacs-svg {
-  width: 20px;
-  height: 20px;
   vertical-align: -5px;
 }
