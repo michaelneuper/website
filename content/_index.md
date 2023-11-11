@@ -4,7 +4,7 @@ title: "Home"
 
 ## Hi, I'm Michael
 
-Welcome to my little piece of the internet!
+Welcome to my little corner of the internet!
 
 I'm a linguistics nerd, emacs user, and a proponent of free and open-source software (FOSS). I love tweaking my [dotfiles](https://github.com/michaelneuper/dotfiles), writing software, and producing electronic music.
 

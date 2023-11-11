@@ -2,7 +2,9 @@
 title: "Key Bindings"
 ---
 
-This is an archive of the various key bindings/shortcuts that I use across different software/hardware.
+This is an archive of the various key bindings/shortcuts that I use across different software/hardware, written using Emacs Key Notation.[^1]
+
+[^1]: [Emacs Key Notation](https://www.emacswiki.org/emacs/EmacsKeyNotation)
 
 ## Keyboard
 
