@@ -2,7 +2,7 @@
 title: "Modelling Population Growth in Python"
 date: 2023-11-12T13:25:23+02:00
 description: Generic description
-categories: ["Guides"]
+categories: ["Tutorials"]
 tags: ["Mathematics", "Software"]
 toc: true
 math: true
@@ -42,6 +42,7 @@ where:
 - $K$ is the carrying capacity
 
 The recurrence relation is suitable for scenarios where population counts are measured at discrete intervals, aligning well with real-world data.
+It is also easier to implement in Python.
 
 ### Variables
 
@@ -159,14 +160,14 @@ plt.show()
 The Lotka-Volterra equations are also commonly expressed in their differential form:
 
 $$
-\frac{\text{d}x}{\text{d}t} = \alpha x - \beta xy,
+\frac{\text{d}x}{\text{d}t} = \alpha x - \beta xy
 $$
 
 $$
-\frac{\text{d}y}{\text{d}t} = \delta xy - \gamma y,
+\frac{\text{d}y}{\text{d}t} = \delta xy - \gamma y
 $$
 
-However, for the same reasons, we'll use their recurrence relation counterparts.
+However, for the same reasons, I'll use their recurrence relation counterparts.
 I'll also use $a$, $b$, $c$ and $f$ instead of $\alpha$, $\beta$, $\delta$ and $\gamma$.
 Additionally, I'll use $R_n$ (for "rabbits") to represent the prey population, and $F_n$ (for "foxes") to represent the predator population.
 This is more intuitive to use than $x$ and $y$ in my opinion.
