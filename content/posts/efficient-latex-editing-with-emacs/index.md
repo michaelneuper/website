@@ -38,6 +38,7 @@ Here's what it looks like:
 
 <video autoplay loop muted playsinline width="100%">
   <source src="preview.webm" type="video/webm">
+  <source src="preview.mp4" type="video/mp4">
   Your browser does not support the video tag or the file format of this video.
 </video>
 
