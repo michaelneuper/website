@@ -3,7 +3,7 @@ title: "Modelling Population Growth in Python"
 date: 2023-11-12T13:25:23+02:00
 description: Generic description
 categories: ["Tutorials"]
-tags: ["Mathematics", "Software"]
+tags: ["Mathematics", "Programming"]
 toc: true
 math: true
 draft: false
