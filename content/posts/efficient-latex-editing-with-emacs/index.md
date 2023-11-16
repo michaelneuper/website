@@ -61,6 +61,7 @@ This is easier to show than to explain:
 
 <video autoplay loop muted playsinline width="100%">
   <source src="tex-folding.webm" type="video/webm">
+  <source src="tex-folding.mp4" type="video/mp4">
   Your browser does not support the video tag or the file format of this video.
 </video>
 
@@ -84,6 +85,7 @@ Abbreviation expansion is triggered with <kbd>TAB</kbd>, for example:
 
 <video autoplay loop muted playsinline width="100%">
   <source src="abbreviations.webm" type="video/webm">
+  <source src="abbreviations.mp4" type="video/mp4">
   Your browser does not support the video tag or the file format of this video.
 </video>
 
@@ -100,6 +102,7 @@ The macros can also be customised with the `cdlatex-math-symbol-alist` variable.
 
 <video autoplay loop muted playsinline width="100%">
   <source src="math-symbols.webm" type="video/webm">
+  <source src="math-symbols.mp4" type="video/mp4">
   Your browser does not support the video tag or the file format of this video.
 </video>
 
@@ -110,6 +113,7 @@ The accent or font change is applied to the character or LaTeX macro **before** 
 
 <video autoplay loop muted playsinline width="100%">
   <source src="accents.webm" type="video/webm">
+  <source src="accents.mp4" type="video/mp4">
   Your browser does not support the video tag or the file format of this video.
 </video>
 
@@ -135,6 +139,7 @@ After that, you can build it with `C-c C-a`.
 
 <video autoplay loop muted playsinline width="100%">
   <source src="latexmk.webm" type="video/webm">
+  <source src="latexmk.mp4" type="video/mp4">
   Your browser does not support the video tag or the file format of this video.
 </video>
 
@@ -182,6 +187,7 @@ Xenops replaces the `preview-latex` functionality in auctex, which does not seem
 
 <video autoplay loop muted playsinline width="100%">
   <source src="xenops-render.webm" type="video/webm">
+  <source src="xenops-render.mp4" type="video/mp4">
   Your browser does not support the video tag or the file format of this video.
 </video>
 
@@ -191,6 +197,7 @@ Simply run `M-x xenops-image-handle-paste` to paste an image from the clipboard 
 
 <video autoplay loop muted playsinline width="100%">
   <source src="xenops-paste.webm" type="video/webm">
+  <source src="xenops-paste.mp4" type="video/mp4">
   Your browser does not support the video tag or the file format of this video.
 </video>
 
@@ -205,6 +212,7 @@ Some useful snippets can be found [here](https://github.com/doomemacs/snippets).
 
 <video autoplay loop muted playsinline width="100%">
   <source src="snippets.webm" type="video/webm">
+  <source src="snippets.mp4" type="video/mp4">
   Your browser does not support the video tag or the file format of this video.
 </video>
 
@@ -226,6 +234,7 @@ Here's an example of me finding the taylor series expansion of _e<sup>x</sup>_ t
 
 <video autoplay loop muted playsinline width="100%">
   <source src="gnu-calc.webm" type="video/webm">
+  <source src="gnu-calc.mp4" type="video/mp4">
   Your browser does not support the video tag or the file format of this video.
 </video>
 
@@ -238,6 +247,7 @@ Here's an example of me using it:
 
 <video autoplay loop muted playsinline width="100%">
   <source src="evil-tex.webm" type="video/webm">
+  <source src="evil-tex.mp4" type="video/mp4">
   Your browser does not support the video tag or the file format of this video.
 </video>
 
