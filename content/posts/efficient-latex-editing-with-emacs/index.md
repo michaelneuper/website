@@ -16,7 +16,6 @@ This guide assumes basic knowledge of both Emacs and LaTeX.
 <!--more-->
 
 ## AUCTeX
-<!--TODO add auto insert braces-->
 
 [AUCTeX](https://www.gnu.org/software/auctex/) can be enabled by enabling `:lang latex` in your `doom` block.
 
@@ -52,6 +51,9 @@ Here's what it looks like:
 
 ![Symbols](symbols.png)
 
+You'll notice that the superscripts and subscripts are also displayed as such in the editor, this is also done by _AUCTeX_.
+_AUCTeX_ can also automatically insert braces when you type `^` or `_`, this is done by setting the `TeX-electric-sub-and-superscript` variable, it is set to `t` by default in Doom Emacs.
+
 ### Text Folding
 
 You can remove some of the visual noise in a LaTeX buffer by enabling `TeX-fold-mode`.
@@ -77,7 +79,7 @@ You can enable this by adding the `+cdlatex` flag to the latex section of your `
 (latex +cdlatex)
 ```
 
-CDLaTeX also has a ton of features, but here are the ones I use the most:
+_CDLaTeX_ also has a ton of features, but here are the ones I use the most:
 
 ### Abbreviations
 
@@ -134,7 +136,7 @@ So it should look something like this if you're using [cdlatex](#cdlatex) as wel
 
 <!--TODO ass continuous build-->
 
-When you build your LaTeX project for the first time using _latexmk_, press <kbd>C-c C-c</kbd> and select the `LatexMk` option.
+When you build your LaTeX project for the first time using _LatexMk_, press <kbd>C-c C-c</kbd> and select the `LatexMk` option.
 After that, you can build it with `C-c C-a`.
 
 <video autoplay loop muted playsinline width="100%">
@@ -149,7 +151,7 @@ After that, you can build it with `C-c C-a`.
 
 You can enable [lsp-mode](https://github.com/emacs-lsp/lsp-mode/) for Doom Emacs by enabling the `:tools lsp` module in your `doom` block.
 
-You can view a list of useful lsp-mode features [here](https://emacs-lsp.github.io/lsp-mode/tutorials/how-to-turn-off/).
+You can view a list of useful _lsp-mode_ features **[here](https://emacs-lsp.github.io/lsp-mode/tutorials/how-to-turn-off/)**.
 
 To enable lsp-mode for LaTeX, add the `+lsp` flag to `latex` in your `doom` block.
 Your `doom` block will look like this by now:
@@ -161,7 +163,7 @@ Your `doom` block will look like this by now:
 Additionally, you'll also need a language server for LaTeX installed.
 The two most popular ones are [TexLab](https://github.com/latex-lsp/texlab) and [Digestif](https://github.com/astoff/digestif).
 The choice between the two ultimately comes down to personal preference, and you'll have to look at their features and decide for yourself which one you prefer.
-I prefer TexLab, but it you want to use Digestif instead, you can add the following line to your `config.el`:
+I prefer _TexLab_, but it you want to use _Digestif_ instead, you can add the following line to your `config.el`:
 
 ```emacs-lisp
 (setq lsp-tex-server 'digestif)
@@ -179,11 +181,11 @@ If you would like to enable it automatically in `LaTeX` buffers, add the followi
 (add-hook LaTeX-mode-hook #'xenops-mode)
 ```
 
-Here are some of the notable features of Xenops:
+Here are some the notable features of Xenops:
 
 ### Render Maths, Tables and TikZ Diagrams
 
-Xenops replaces the `preview-latex` functionality in auctex, which does not seem to support rendering images as SVGs.
+_Xenops_ replaces the `preview-latex` functionality in _AUCTeX_, which does not seem to support rendering images as SVGs.
 
 <video autoplay loop muted playsinline width="100%">
   <source src="xenops-render.webm" type="video/webm">
@@ -206,7 +208,7 @@ Simply run `M-x xenops-image-handle-paste` to paste an image from the clipboard 
 [YASnippet](https://github.com/joaotavora/yasnippet) is a template system for Emacs.
 It allows you to type an abbreviation and automatically expand it into function templates when pressing <kbd>TAB</kbd>.
 
-You can install YASnippet by enabling `:editor snippets` in your `doom` block.
+You can install _YASnippet_ by enabling `:editor snippets` in your `doom` block.
 
 Some useful snippets can be found [here](https://github.com/doomemacs/snippets).
 
@@ -216,8 +218,8 @@ Some useful snippets can be found [here](https://github.com/doomemacs/snippets).
   Your browser does not support the video tag or the file format of this video.
 </video>
 
-Note that [CDLaTeX](#cdlatex) also has snippet functionaly for LaTeX.
-If the same snippet is defined in both CDLaTeX and YASnippet, you'll probably want to use the CDLaTeX snippet, so add the following line to your `config.el`:
+Note that _[CDLaTeX](#cdlatex)_ also has snippet functionaly for LaTeX.
+If the same snippet is defined in both _CDLaTeX_ and _YASnippet_, you'll probably want to use the _CDLaTeX_ snippet, so add the following line to your `config.el`:
 
 ```emacs-lisp
 (map! :map cdlatex-mode-map
