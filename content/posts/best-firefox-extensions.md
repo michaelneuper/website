@@ -3,7 +3,7 @@ title: "Best Firefox Extensions"
 date: 2023-04-08T08:18:16+02:00
 categories: ['Listicles']
 tags: ['Productivity', 'Privacy']
-draft: false
+draft: true
 ---
 
 Welcome to my comprehensive guide on the best Firefox extensions to supercharge your browsing experience!
