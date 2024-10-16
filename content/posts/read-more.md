@@ -3,7 +3,7 @@ title: "Unlock the Joy of Reading: Simple Strategies to Read More"
 date: 2023-03-13T20:36:16+02:00
 categories: ['Guides']
 tags: ['Reading', 'Productivity']
-draft: false
+draft: true
 ---
 
 In today's fast-paced world, finding time to read can be challenging. 
