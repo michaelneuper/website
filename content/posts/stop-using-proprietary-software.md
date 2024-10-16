@@ -3,7 +3,7 @@ title: "Free Yourself from the Shackles of Proprietary Software: A Rant"
 date: 2023-03-27T21:19:13+02:00
 categories: ['Editorials']
 tags: ['Open-source', 'Software']
-draft: false
+draft: true
 ---
 
 ## Introduction
