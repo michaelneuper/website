@@ -6,7 +6,8 @@ title: "Home"
 
 Welcome to my little corner of the internet!
 
-I'm a linguistics nerd, emacs user, and a proponent of free and open-source software (FOSS). I love tweaking my [dotfiles](https://github.com/michaelneuper/dotfiles), writing software, and producing electronic music.
+I'm a linguistics nerd, emacs enthusiast, and a proponent of free and open-source software (FOSS). 
+I love tweaking [my emacs config](https://github.com/michaelneuper/doom), writing software, and producing electronic music.
 
 Once in a while, I write about the things that I am passionate about, including technology, Linux, and low level software.
 My goal is to share my views and experiences on these topics, and help inform others who are interested in learning more.
