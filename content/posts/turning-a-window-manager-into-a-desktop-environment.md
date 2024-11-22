@@ -2,7 +2,7 @@
 title: "The Ultimate Guide to Building Your Own Desktop Environment"
 date: 2022-12-11T21:31:27+02:00
 categories: ['Guides']
-tags: ['Linux', 'Desktop Environment']
+tags: ['Linux']
 draft: false
 ---
 
