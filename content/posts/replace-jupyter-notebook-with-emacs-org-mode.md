@@ -1,5 +1,5 @@
 ---
-title: "Replace Jupyter Notebook With Emacs Org Mode: Unleash the Power of Literate Programming"
+title: "Replace Jupyter Notebook With Emacs Org Mode"
 date: 2023-02-27T15:06:40+02:00
 categories: ['Guides']
 tags: ['Emacs', 'Programming']
