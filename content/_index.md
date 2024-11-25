@@ -21,4 +21,4 @@ Thanks for stopping by! I hope you enjoy reading my articles and find them usefu
 - [Programs I use and recommend](/pages/software/)
 - [Key bindings I use](/pages/keybindings/)
 - [Personal library](/pages/library)
-- [Donate via crypto](/pages/donate/)
+- [Make a donation](/pages/donate/)
