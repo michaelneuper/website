@@ -1,5 +1,5 @@
 ---
-title: "How I use Org-Roam to take notes for CS"
+title: "How I Use Org-Roam to Take Notes for CS"
 date: 2024-11-22T16:52:54+02:00
 categories: ["Articles"]
 tags: ["Emacs"]
