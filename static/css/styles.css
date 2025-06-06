@@ -1,3 +1,10 @@
+@import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&family=Literata:ital,opsz,wght@0,7..72,200..900;1,7..72,200..900&display=swap");
+
+/* fonts */
+#wrapper {
+  font-family: "Literata", serif;
+  padding: 1rem 20vw;
+}
 /* suggestion forms */
 form.suggestion {
   max-width: 400px;
@@ -7,7 +14,7 @@ form.suggestion {
   border-radius: 0.25rem;
 }
 
-form.suggestion input{
+form.suggestion input {
   width: 100%;
   padding: 0.5rem;
   border: 1px solid var(--fg);
