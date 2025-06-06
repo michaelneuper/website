@@ -14,11 +14,11 @@ My goal is to share my views and experiences on these topics, and help inform ot
 
 Thanks for stopping by! I hope you enjoy reading my articles and find them useful.
 
----
+<!-- --- -->
 
-## Introduction
+<!-- ## Introduction -->
 
-- [Programs I use and recommend](/pages/software/)
-- [Key bindings I use](/pages/keybindings/)
-- [Personal library](/pages/library)
-- [Make a donation](/pages/donate/)
+<!-- - [Programs I use and recommend](/pages/software/) -->
+<!-- - [Key bindings I use](/pages/keybindings/) -->
+<!-- - [Personal library](/pages/library) -->
+<!-- - [Make a donation](/pages/donate/) -->
