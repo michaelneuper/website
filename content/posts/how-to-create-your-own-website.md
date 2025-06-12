@@ -1,5 +1,5 @@
 ---
-title: "How to Create Your Own Static Website in Under an Hour"
+title: "How to Create Your Own Static Website"
 date: 2022-12-03T19:39:46+02:00
 categories: ['Tutorials']
 tags: []
