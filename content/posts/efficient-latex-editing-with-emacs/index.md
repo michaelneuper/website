@@ -1,7 +1,6 @@
 ---
 title: "Efficient LaTeX Editing With Emacs"
 date: 2023-11-15T13:26:32+02:00
-description: Generic description
 categories: ["Guides"]
 tags: ["Emacs", "LaTeX"]
 toc: true
