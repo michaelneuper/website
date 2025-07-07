@@ -5,6 +5,13 @@
   font-family: "Literata", serif;
   padding: 1rem 20vw;
 }
+
+@media (max-width: 768px) {
+  #wrapper {
+    padding: 1rem 5vw;
+  }
+}
+
 /* suggestion forms */
 form.suggestion {
   max-width: 400px;
