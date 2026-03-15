@@ -20,6 +20,7 @@ There’s a comment section at the bottom of this post where you can share your 
 You’ll need a GitHub account to sign in, but your comments could be valuable to others who come across this post. 
 If you’d rather not comment there, that’s fine too --- I appreciate your engagement regardless.
 
+<s>
 Some people have expressed interest in actually seeing my notes, so I've decided to 
 make [all of my notes](https://notes.michaelneuper.com/) publicly available for free.
 However, please note that there are no images or attachments included due to copyright considerations 
@@ -33,6 +34,9 @@ or things I simply missed.
 They are all stored on [this GitHub repo](https://github.com/michaelneuper/notes),
 so feel free to submit a pull request if you spot any.
 Collaboration is always welcome!
+</s>
+
+Unfortunately they had to be made private because of copyright concerns.
 
 ## Why Org-Roam?
 
