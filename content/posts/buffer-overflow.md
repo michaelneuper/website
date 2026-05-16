@@ -3,7 +3,7 @@ title: "Buffer Overflows: Keep Your Code Safe"
 date: 2022-12-14T18:59:28+02:00
 categories: ['Articles']
 tags: ['Security', 'Programming']
-draft: false
+draft: true
 ---
 
 A buffer overflow attack is a type of cyber attack in which an attacker attempts to write more data to a buffer (a temporary data storage area) in a computer's memory than the buffer is designed to hold. 

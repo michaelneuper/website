@@ -3,7 +3,7 @@ title: "How to Create Your Own Static Website"
 date: 2022-12-03T19:39:46+02:00
 categories: ['Tutorials']
 tags: []
-draft: false
+draft: true
 ---
 
 Setting up your own static website can be a great way to showcase your personal brand, portfolio, or business online. 

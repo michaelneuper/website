@@ -6,7 +6,7 @@ categories: ["Tutorials"]
 tags: ["Mathematics", "Programming"]
 toc: true
 math: true
-draft: false
+draft: true
 ---
 
 In this guide we will be modelling population growth using both the Logistic Model[^1] and the Lotka–Volterra (or Predator-Prey) Model[^2] in python and plotting it with `matplotlib`.
