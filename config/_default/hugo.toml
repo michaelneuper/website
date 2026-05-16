@@ -3,7 +3,7 @@ enableEmoji = true
 enableGitInfo = false
 enableRobotsTXT = true
 hasCJKLanguage = false
-languageCode = "en"
+locale = "en"
 rssLimit = 10
 title = "Michael"
 
