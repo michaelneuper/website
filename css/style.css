@@ -64,6 +64,7 @@
   --hl: color-mix(in srgb, var(--fg) 10%, var(--bg));
   --wash: color-mix(in srgb, var(--fg) 5%, transparent);
   --led-off: color-mix(in srgb, var(--fg) 13%, var(--bg));
+  --violet: color-mix(in oklch, var(--blue) 50%, var(--magenta));
 
   --c-hw: var(--yellow);
   --c-sw: var(--blue);
@@ -1056,35 +1057,97 @@ input[type="range"]::-moz-range-thumb {
   padding-right: 3ch;
 }
 
-.ds-rev {
-  min-width: 0;
+/* experience as git log --graph --color */
+
+.gitlog-cmd {
+  margin-bottom: 12px;
+  font-weight: 400;
+  color: var(--fg);
+  line-height: 1.5;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
 }
 
-.ds-rev th:first-child {
-  width: 16ch;
-  white-space: nowrap;
+.gitlog-cmd .prompt {
+  color: var(--green);
 }
 
-.ds-rev td:nth-child(2) {
+.gitlog {
+  padding: 16px 18px;
+  overflow-x: auto;
+  border: 1px solid var(--rule);
+  font-size: 12px;
+  line-height: 1.7;
   color: var(--fg);
 }
 
-.ds-rev td p {
-  margin: 0;
+.gl-line {
+  width: max-content;
+  white-space: pre;
 }
 
-.ds-rev td ul {
-  margin: 6px 0 0;
-  padding-left: 2.5ch;
+/* one colour per branch */
+.gitlog .lm { color: var(--magenta); } /* main */
+.gitlog .lu { color: var(--green); }   /* undergrad */
+.gitlog .lt { color: var(--yellow); }  /* teaching-assistant */
+.gitlog .lb { color: var(--red); }     /* bbd-software */
+.gitlog .li { color: var(--blue); }    /* mwr-internship */
+
+.gl-tip {
+  color: var(--fg);
+  font-weight: 600;
 }
 
-.ds-rev td li {
-  margin-bottom: 3px;
+.gl-refs {
+  color: var(--yellow);
+}
+
+.gl-head {
+  color: var(--cyan);
+  font-weight: 600;
+}
+
+.gl-branch {
+  color: var(--green);
+  font-weight: 600;
+}
+
+.gl-author {
+  color: var(--blue);
+}
+
+.gl-subj {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  white-space: pre;
+  text-decoration: underline dotted;
+  text-decoration-color: var(--faint);
+  text-underline-offset: 0.25em;
+}
+
+.gl-subj:hover,
+.gl-subj[aria-expanded="true"] {
+  text-decoration-style: solid;
+  text-decoration-color: currentColor;
+}
+
+.gl-body,
+.gl-desc {
   color: var(--dim);
 }
 
-.ds-rev td li::marker {
-  color: var(--faint);
+/* before the script runs (or without it), descriptions show under their commit */
+.gl-desc {
+  display: block;
+  padding-left: 4ch;
+}
+
+.gitlog-hint {
+  margin: 8px 0 0;
+  font-size: 12px;
 }
 
 /* ───────────────────────────── memory map ───────────────────────────── */
@@ -1400,12 +1463,14 @@ input[type="range"]::-moz-range-thumb {
 /* ───────────────────────────── posts: an Org buffer ───────────────────────────── */
 
 .org {
-  max-width: 820px;
+  max-width: 880px;
   font-size: 13px;
+  line-height: 1.75;
 }
 
 .org-kw {
   margin: 0;
+  font: inherit;
   color: var(--dim);
 }
 
@@ -1413,13 +1478,24 @@ input[type="range"]::-moz-range-thumb {
   color: var(--fg);
 }
 
-.org-kw .title {
-  font: 400 1.6em/1.4 var(--serif);
+.org-title {
   color: var(--fg);
+  font-weight: 600;
+}
+
+.org-p {
+  max-width: 76ch;
+  margin: 20px 0 0;
+  font-size: 13px;
+  line-height: 1.75;
+}
+
+.org > .org-tree {
+  margin-top: 20px;
 }
 
 .org-tree {
-  margin: 20px 0 0;
+  margin: 0;
   padding: 0;
   list-style: none;
 }
@@ -1428,7 +1504,6 @@ input[type="range"]::-moz-range-thumb {
   display: flex;
   align-items: baseline;
   gap: 1ch;
-  padding: 3px 0;
 }
 
 .org-h:focus-visible {
@@ -1436,42 +1511,27 @@ input[type="range"]::-moz-range-thumb {
   background: var(--hl);
 }
 
-.org-bullet {
+.org-stars {
   flex: none;
-  width: 2ch;
   padding: 0;
   border: 0;
   background: none;
-  color: var(--c, var(--blue));
-  font: 400 13px/1 var(--mono);
-  text-align: left;
+  color: inherit;
+  font: inherit;
 }
 
 .org-h1 > .org-h {
-  margin-top: 10px;
-  font: 400 21px/1.3 var(--serif);
-}
-
-.org-h1 > .org-h .org-bullet {
   color: var(--blue);
-}
-
-.org-h1 > .org-h .count {
-  font: 400 12px/1 var(--mono);
-  color: var(--dim);
-}
-
-.org-h2 {
-  padding-left: 3ch;
+  font-weight: 600;
 }
 
 .org-h2 > .org-h {
-  font: 400 17px/1.4 var(--serif);
+  color: var(--magenta);
 }
 
 .org-h2 a {
-  flex: 1;
   min-width: 0;
+  color: inherit;
   text-decoration: none;
 }
 
@@ -1480,33 +1540,35 @@ input[type="range"]::-moz-range-thumb {
   text-decoration-thickness: 1px;
 }
 
+.org-h .count,
+.org-ellipsis {
+  color: var(--dim);
+  font-weight: 400;
+}
+
 .org-tags {
   flex: none;
   margin-left: auto;
-  font: 400 12px/1 var(--mono);
+  padding-left: 2ch;
   color: var(--dim);
+  white-space: nowrap;
 }
 
 .org-tags .t {
-  color: var(--c, var(--dim));
-}
-
-.org-ellipsis {
-  color: var(--dim);
-  font: 400 12px/1 var(--mono);
+  color: var(--tag, var(--dim));
 }
 
 .org-drawer {
-  margin: 2px 0 6px 3ch;
+  margin: 0 0 6px 3ch;
+  overflow-x: auto;
   color: var(--dim);
   font-size: 12px;
   line-height: 1.6;
   white-space: pre;
-  overflow-x: auto;
 }
 
 .org-drawer .k {
-  color: var(--magenta);
+  color: var(--faint);
 }
 
 .org-drawer .ts {
@@ -2218,6 +2280,15 @@ input[type="range"]::-moz-range-thumb {
 
   .bc-cols {
     grid-template-columns: minmax(0, 1fr);
+  }
+
+  .gitlog {
+    padding: 12px;
+    font-size: 11.5px;
+  }
+
+  .gitlog-cmd {
+    font-size: 11.5px;
   }
 
   .org-tags {

@@ -30,6 +30,7 @@
     <span>michael neuper</span>
   </a>
   <nav class="nav" id="nav" aria-label="Sections">
+    <a href="#top">computer</a>
     <a href="#about">about</a>
     <a href="#projects">projects</a>
     <a href="#posts">posts</a>
@@ -119,51 +120,47 @@
       </figure>
     </div>
 
-    <h3 class="ds-h">3 Revision history</h3>
-    <div class="table-scroll">
-      <table class="ds-table ds-rev">
-        <thead>
-          <tr><th scope="col">Date</th><th scope="col">Changes</th></tr>
-        </thead>
-        <tbody>
-          <tr>
-            <th scope="row"><time datetime="2026-06">June 2026</time></th>
-            <td>Teaching assistant for computer architecture.</td>
-          </tr>
-          <tr>
-            <th scope="row"><time datetime="2026-02">February 2026</time></th>
-            <td>Teaching assistant for introductory computer science.</td>
-          </tr>
-          <tr>
-            <th scope="row"><time datetime="2025-01">January 2025</time></th>
-            <td>
-              <p>Bursar at BBD Software, in its Bursary &amp; Beyond Programme. Each year’s Vac Weeks put bursars in small teams to design, build and present a full-stack web application:</p>
-              <ul>
-                <li>2025: an online laser tag game that uses computer vision to detect and tag players as they play.</li>
-                <li>2026: an online foosball game you steer with your phone’s gyroscope.</li>
-              </ul>
-            </td>
-          </tr>
-          <tr>
-            <th scope="row"><time datetime="2024-12">December 2024</time></th>
-            <td>
-              <p>Cybersecurity consultant intern.</p>
-              <ul>
-                <li>Completed cybersecurity training with labs on TryHackMe.</li>
-                <li>Assessed the security of a web application from end to end, documenting each vulnerability with its risk and how to fix it.</li>
-                <li>Wrote a professional report and presented it, client-style, to a panel of industry professionals.</li>
-              </ul>
-            </td>
-          </tr>
-          <tr>
-            <th scope="row"><time datetime="2024-01">January 2024</time></th>
-            <td>Initial release. Started an undergraduate degree in computer science at Stellenbosch University.</td>
-          </tr>
-        </tbody>
-      </table>
+    <!-- Experience, as the one-line git log that would print it: "<date> - (refs) <subject> <author>".
+         data-lanes colours each graph character by branch: m main, u undergrad, t teaching-assistant,
+         b bbd-software, i mwr-internship (the colours are set in css/style.css). data-cont is the graph that continues below a commit, and a
+         .gl-desc becomes its expandable description. data-branch colours the date; data-tip makes the
+         * bold for a branch that's still going; data-today swaps in the current month when the page loads.
+         Without JavaScript this shows as plain text. -->
+    <h3 class="ds-h gitlog-cmd"><span class="prompt" aria-hidden="true">$ </span>git log --graph --all --color \
+    --date=format:'%Y-%m' \
+    --format='%ad -%C(auto)%d%C(reset) %s %C(blue)&lt;%an&gt;%C(reset)'</h3>
+    <div class="gitlog" aria-label="Experience, newest first">
+<div class="gl-line" data-lanes="  b u t " data-cont="| | | | " data-cont-lanes="m b u t " data-branch="m" data-tip data-today>* | | | 2026-10 - (HEAD -&gt; main)</div>
+<div class="gl-line" data-lanes="m   u t " data-cont="| | | | " data-cont-lanes="m b u t " data-branch="b" data-tip>| * | | 2026-06 - (bbd-software) Vac Week 2026 &lt;BBD Software&gt;<div class="gl-desc">Built an online foosball game: players steer the rods by
+tilting their phones, using the gyroscope. Designed and
+presented as a full-stack web app with a small team.</div></div>
+<div class="gl-line" data-lanes="m b u   " data-cont="| | | | " data-cont-lanes="m b u t " data-branch="t" data-tip>| | | * 2026-06 - (teaching-assistant) Teach computer architecture as a TA &lt;Stellenbosch University&gt;</div>
+<div class="gl-line" data-lanes="m b u t">| | | |</div>
+<div class="gl-line" data-lanes="m b u   " data-cont="| | | | " data-cont-lanes="m b u t " data-branch="t">| | | * 2026-02 - Teach introductory computer science as a TA &lt;Stellenbosch University&gt;</div>
+<div class="gl-line" data-lanes="m   u t " data-cont="| | | | " data-cont-lanes="m b u t " data-branch="b">| * | | 2025-06 - Vac Week 2025 &lt;BBD Software&gt;<div class="gl-desc">Built an online laser tag game: computer vision finds players
+in the camera feed and tags them. Designed and presented as a
+full-stack web app with a small team.</div></div>
+<div class="gl-line" data-lanes="m b u t">| | | |</div>
+<div class="gl-line" data-lanes="m   u t " data-cont="| | | | " data-cont-lanes="m b u t " data-branch="b">| * | | 2025-01 - Join BBD Software as a bursar &lt;BBD Software&gt;<div class="gl-desc">Part of the Bursary &amp; Beyond Programme, which includes the
+yearly Vac Weeks.</div></div>
+<div class="gl-line" data-lanes="mb  u t">|/  | |</div>
+<div class="gl-line" data-lanes="m   u t">|   | |</div>
+<div class="gl-line" data-lanes="mi  u t">|\  | |</div>
+<div class="gl-line" data-lanes="m   u t " data-cont="| | | | " data-cont-lanes="m i u t " data-branch="i">| * | | 2024-12 - (mwr-internship) Complete a cybersecurity consultant internship &lt;MWR CyberSec&gt;<div class="gl-desc">- Completed cybersecurity training with labs on TryHackMe.
+- Assessed a web application end to end, documenting each
+  vulnerability with its risk and how to fix it.
+- Wrote a professional report and presented it, client-style,
+  to a panel of industry professionals.</div></div>
+<div class="gl-line" data-lanes="mi  u t">|/  | |</div>
+<div class="gl-line" data-lanes="m   ut">|   |/</div>
+<div class="gl-line" data-lanes="m     " data-cont="|   | " data-cont-lanes="m   u " data-branch="u" data-tip>|   * 2024-01 - (undergrad) Start an undergraduate degree in computer science &lt;Stellenbosch University&gt;</div>
+<div class="gl-line" data-lanes="m  u">|  /</div>
+<div class="gl-line" data-lanes="mu">|/</div>
+<div class="gl-line" data-lanes="  " data-cont="  " data-cont-lanes="  " data-branch="m">* 2005-06 - Initial commit &lt;Michael Neuper&gt;</div>
     </div>
+    <p class="gitlog-hint dim">Click an underlined commit message to read the rest of it.</p>
 
-    <h3 class="ds-h">4 Ordering information</h3>
+    <h3 class="ds-h">3 Ordering information</h3>
     <p class="prose">Interested in systems programming, low-level software and security work. If that’s what you do, <a href="#contact">get in touch</a>.</p>
   </section>
 
@@ -218,10 +215,9 @@
   <!-- ────────────────────────────── posts ────────────────────────────── -->
   <section class="sec" id="posts" data-file="posts.org" data-mode="Org">
     <p class="winbar"><span class="file">posts.org</span><span class="rule" aria-hidden="true"></span><span class="meta" data-org="meta"></span></p>
-    <h2 class="h2">Posts</h2>
-    <p class="lede">From my blog at michaelneuper.com, shown the way I see them: as an Org buffer. Click a bullet or press <kbd>TAB</kbd> on a heading to fold it, <kbd>S-TAB</kbd> to cycle the whole buffer.</p>
+    <p class="org-p">From my blog at michaelneuper.com, shown the way I read them. <kbd>TAB</kbd> on a heading folds it, <kbd>S-TAB</kbd> cycles the whole buffer, and clicking a heading’s stars does the same.</p>
 
-    <!-- Edit posts here. data-tags are space separated; data-cat colours the bullet. -->
+    <!-- Edit posts here. data-tags are space separated; each tag gets its own colour (see TAG_COLORS in js/org.js). -->
     <ol class="posts">
       <li data-date="2024-11-22" data-tags="emacs org" data-cat="sw"><a href="https://michaelneuper.com/posts/how-i-use-org-roam-to-takes-notes-for-cs/">How I Use Org-Roam to Take Notes for CS</a></li>
       <li data-date="2023-11-15" data-tags="emacs latex" data-cat="math"><a href="https://michaelneuper.com/posts/efficient-latex-editing-with-emacs/">Efficient LaTeX Editing With Emacs</a></li>
@@ -309,7 +305,7 @@
     <span class="ml-flags" aria-hidden="true"></span>
     <span class="ml-mode">Asm</span>
     <span class="ml-enc" aria-hidden="true">LF UTF-8</span>
-    <span class="ml-vc" aria-hidden="true">Git-master</span>
+    <span class="ml-vc" aria-hidden="true">master</span>
     <span class="ml-time" aria-hidden="true"></span>
   </div>
   <div class="mini" hidden>

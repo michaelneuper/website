@@ -11,6 +11,8 @@ import { defcommand, message, completingRead, setSegment } from "./shell.js";
 // Control lines, in the order the control-word LEDs show them.
 const LINES = ["HLT", "MI", "RI", "RO", "IO", "II", "AI", "AO", "EO", "SU", "BI", "OI", "CE", "CO", "J", "FI"];
 const L = Object.fromEntries(LINES.map((n, i) => [n, 1 << (15 - i)]));
+// How the lines are printed on the board: the sum-out line is ΣO, as on the build.
+const LABEL = { EO: "ΣO" };
 
 const OPS = { 0: "NOP", 1: "LDA", 2: "ADD", 3: "SUB", 4: "STA", 5: "LDI", 6: "JMP", 7: "JC", 8: "JZ", 14: "OUT", 15: "HLT" };
 const CODE = Object.fromEntries(Object.entries(OPS).map(([k, v]) => [v, +k]));
@@ -161,7 +163,7 @@ export function initComputer() {
     const head = el("div", "mod-head");
     head.append(el("span", "mod-name", name));
     for (const sig of sigs) {
-      const t = el("span", "sig", sig);
+      const t = el("span", "sig", LABEL[sig] ?? sig);
       t.dataset.sig = sig;
       head.append(t);
     }
@@ -293,7 +295,7 @@ export function initComputer() {
   const cwBits = LINES.map((n) => {
     const bit = el("span", "cw-bit");
     const l = el("span", "led b");
-    bit.append(l, el("span", "", n));
+    bit.append(l, el("span", "", LABEL[n] ?? n));
     cwWrap.append(bit);
     return [bit, l];
   });

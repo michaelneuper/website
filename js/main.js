@@ -2,6 +2,7 @@ import { fontsReady } from "./util.js";
 import "./shell.js";
 import { initComputer } from "./computer.js";
 import { initDatasheet } from "./datasheet.js";
+import { initGitlog } from "./gitlog.js";
 import { initMemmap } from "./memmap.js";
 import { initOrg } from "./org.js";
 import { initUart } from "./uart.js";
@@ -14,6 +15,7 @@ function safely(fn) {
 
 safely(initComputer);
 safely(initDatasheet);
+safely(initGitlog);
 safely(initOrg);
 safely(initUart);
 safely(initCtf);

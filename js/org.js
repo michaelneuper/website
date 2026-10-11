@@ -1,20 +1,34 @@
-// Renders the posts list as an Org buffer: years as top-level headings, posts
-// under them with tags and a property drawer. TAB folds the heading at point,
-// S-TAB cycles the whole buffer through OVERVIEW, CONTENTS and SHOW ALL.
+// Renders the posts section as an Org buffer: keywords, a paragraph, years as
+// "*" headings and posts as "**" headings with tags and a property drawer.
+// TAB folds the heading at point; S-TAB cycles OVERVIEW, CONTENTS and SHOW ALL.
 
 import { $, $$ } from "./util.js";
 import { message } from "./shell.js";
 
 const DAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
+// One colour per tag, like org-tag-faces. Add an entry when you add a tag.
+const TAG_COLORS = {
+  emacs: "var(--magenta)",
+  org: "var(--green)",
+  latex: "var(--cyan)",
+  python: "var(--yellow)",
+  maths: "var(--blue)",
+  linux: "var(--orange)",
+  security: "var(--red)",
+  c: "var(--violet)",
+  web: "var(--fg)",
+};
+
 export function initOrg() {
   const sec = $("#posts");
   const src = sec && $(".posts", sec);
   if (!src) return;
+  const intro = $(".org-p", sec);
 
   const posts = $$("li", src).map((li) => {
     const a = $("a", li);
-    return { date: li.dataset.date, tags: (li.dataset.tags || "").split(/\s+/).filter(Boolean), cat: li.dataset.cat, title: a.textContent.trim(), href: a.href };
+    return { date: li.dataset.date, tags: (li.dataset.tags || "").split(/\s+/).filter(Boolean), title: a.textContent.trim(), href: a.href };
   });
   const years = [...new Set(posts.map((p) => p.date.slice(0, 4)))].sort().reverse();
 
@@ -26,49 +40,70 @@ export function initOrg() {
   };
 
   const org = el("div", "org");
-  const kw = (k, v, cls = "v") => {
-    const p = el("p", "org-kw", `#+${k}: `);
-    p.append(el("span", cls, v));
+  const kw = (tag, key, value, cls) => {
+    const p = el(tag, "org-kw");
+    const k = el("span", "org-key", `#+${key}: `);
+    if (tag === "h2") k.setAttribute("aria-hidden", "true");
+    p.append(k, el("span", cls, value));
     return p;
   };
-  org.append(kw("title", "Posts", "title"), kw("author", "Michael Neuper"), kw("startup", "content"));
+  org.append(kw("h2", "title", "Posts", "org-title"), kw("p", "author", "Michael Neuper", "v"), kw("p", "startup", "content", "v"));
+  if (intro) org.append(intro);
 
   const tree = el("ul", "org-tree");
   tree.setAttribute("role", "tree");
   tree.setAttribute("aria-label", "Posts by year");
   const headings = [];
 
+  function heading(li, level) {
+    const h = el("div", "org-h");
+    h.tabIndex = headings.length === 0 ? 0 : -1;
+    const stars = el("button", "org-stars", "*".repeat(level));
+    stars.type = "button";
+    stars.tabIndex = -1;
+    stars.setAttribute("aria-label", "Fold or unfold");
+    stars.addEventListener("click", () => { li._fold(!li._open()); h.focus({ preventScroll: true }); });
+    h.append(stars);
+    li.prepend(h);
+    headings.push(h);
+    return h;
+  }
+
   for (const y of years) {
     const items = posts.filter((p) => p.date.startsWith(y));
     const li = el("li", "org-h1");
     li.setAttribute("role", "treeitem");
     const h = heading(li, 1);
-    h.append(el("span", "", y), el("span", "count", `[${items.length}]`));
-    const ell = el("span", "org-ellipsis", "…");
-    ell.hidden = true;
+    h.append(el("span", "org-text", y), el("span", "count", `[${items.length}]`));
+    const ell = el("span", "org-ellipsis", "...");
     h.append(ell);
+
     const kids = el("ul", "org-tree");
     kids.setAttribute("role", "group");
-    kids.style.margin = "0";
     for (const p of items) {
       const pl = el("li", "org-h2");
       pl.setAttribute("role", "treeitem");
-      if (p.cat) pl.dataset.cat = p.cat;
       const ph = heading(pl, 2);
-      const a = el("a", "", p.title);
+      const a = el("a", "org-text", p.title);
       a.href = p.href;
       a.tabIndex = -1;
       ph.append(a);
-      const tags = el("span", "org-tags");
-      tags.append(":");
-      for (const t of p.tags) tags.append(el("span", "t", t), ":");
-      ph.append(tags);
-      const pell = el("span", "org-ellipsis", "…");
+      if (p.tags.length) {
+        const tags = el("span", "org-tags");
+        tags.append(":");
+        for (const t of p.tags) {
+          const tg = el("span", "t", t);
+          tg.style.setProperty("--tag", TAG_COLORS[t] ?? "var(--dim)");
+          tags.append(tg, ":");
+        }
+        ph.append(tags);
+      }
+      const pell = el("span", "org-ellipsis", "...");
       ph.append(pell);
+
       const d = new Date(`${p.date}T12:00:00Z`);
       const drawer = el("div", "org-drawer");
       drawer.innerHTML = `<span class="k">:PROPERTIES:</span>\n<span class="k">:DATE:</span>     <span class="ts">&lt;${p.date} ${DAYS[d.getUTCDay()]}&gt;</span>\n<span class="k">:URL:</span>      <a href="${p.href}" tabindex="-1">${p.href.replace(/^https?:\/\//, "")}</a>\n<span class="k">:END:</span>`;
-      drawer.hidden = true;
       pl.append(drawer);
       pl._fold = (open) => {
         drawer.hidden = !open;
@@ -94,24 +129,6 @@ export function initOrg() {
 
   const meta = $('[data-org="meta"]', sec);
   if (meta) meta.textContent = `${posts.length} posts`;
-
-  function heading(li, level) {
-    const h = el("div", "org-h");
-    h.tabIndex = headings.length === 0 ? 0 : -1;
-    const bullet = el("button", "org-bullet", level === 1 ? "◉" : "○");
-    bullet.type = "button";
-    bullet.tabIndex = -1;
-    bullet.setAttribute("aria-label", "Fold or unfold");
-    bullet.addEventListener("click", () => { cycle(li); h.focus({ preventScroll: true }); });
-    h.append(bullet);
-    li.prepend(h);
-    headings.push(h);
-    return h;
-  }
-
-  function cycle(li) {
-    li._fold(!li._open());
-  }
 
   // Global visibility cycling, like S-TAB in Org.
   const STATES = ["OVERVIEW", "CONTENTS", "SHOW ALL"];
@@ -139,13 +156,13 @@ export function initOrg() {
       t.focus();
     };
     if (e.key === "Tab" && e.shiftKey) { e.preventDefault(); globalCycle(); }
-    else if (e.key === "Tab") { e.preventDefault(); cycle(li); }
+    else if (e.key === "Tab") { e.preventDefault(); li._fold(!li._open()); }
     else if (e.key === "ArrowDown" || e.key === "j") { e.preventDefault(); move(i + 1); }
     else if (e.key === "ArrowUp" || e.key === "k") { e.preventDefault(); move(i - 1); }
     else if (e.key === "Enter") {
       const a = h.querySelector("a");
       if (a) a.click();
-      else cycle(li);
+      else li._fold(!li._open());
     }
   });
 }
