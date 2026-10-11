@@ -1,0 +1,351 @@
+<!doctype html>
+<html lang="en" data-theme="doom-gruvbox">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Michael Neuper</title>
+<meta name="description" content="Computer science student at Stellenbosch University. Low-level software, electronics, a little security, and a lot of Emacs.">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preload" href="fonts/jetbrains-mono-regular.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/cm-regular.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="css/style.css">
+<script>
+  // Pick the theme before first paint so there is no flash. Keep this list in sync with js/themes.js.
+  try {
+    var t = localStorage.getItem("theme");
+    var known = /^(doom-gruvbox|doom-gruvbox-light|doom-one|atom-one-dark|modus-vivendi|modus-operandi|doom-dracula|doom-nord|catppuccin|doom-tokyo-night|doom-solarized-light)$/;
+    if (!known.test(t || "")) t = matchMedia("(prefers-color-scheme: light)").matches ? "doom-gruvbox-light" : "";
+    if (t) document.documentElement.dataset.theme = t;
+  } catch (e) {}
+</script>
+<script type="module" src="js/main.js"></script>
+</head>
+<!-- Reading the source? Good instinct. flag{view_source_is_recon} -->
+<body>
+<a class="skip" href="#about">Skip to content</a>
+
+<header class="top">
+  <a class="brand" href="#top" aria-label="Michael Neuper, back to top">
+    <svg class="logo" viewBox="0 0 32 16" aria-hidden="true"><path d="M1 14H3V2H9V14H11V2H17V14H20V2H26V14H31"/></svg>
+    <span>michael neuper</span>
+  </a>
+  <nav class="nav" id="nav" aria-label="Sections">
+    <a href="#about">about</a>
+    <a href="#projects">projects</a>
+    <a href="#posts">posts</a>
+    <a href="#contact">contact</a>
+  </nav>
+  <button class="theme-key" type="button" title="SPC h t">load-theme</button>
+  <button class="menu-key" type="button" aria-expanded="false" aria-controls="nav">menu</button>
+</header>
+
+<main>
+
+  <!-- ─────────────────────────── 8-bit computer ─────────────────────────── -->
+  <section class="hero" id="top" data-file="sap-1.asm" data-mode="Asm" aria-labelledby="hero-name">
+    <div class="hero-id">
+      <h1 class="hero-name" id="hero-name">Michael Neuper</h1>
+      <p class="hero-lede">Computer science student at Stellenbosch University. I like low-level software, electronics and the maths underneath both, and I do almost all of it in Emacs.</p>
+      <ul class="legend" aria-label="Colour key used across the site">
+        <li data-cat="hw">hardware</li>
+        <li data-cat="sw">software</li>
+        <li data-cat="math">maths</li>
+        <li data-cat="sec">security</li>
+      </ul>
+    </div>
+
+    <div class="hero-sim">
+      <div class="board" role="group" aria-label="Simulated 8-bit breadboard computer"></div>
+      <div class="sim-bar">
+        <button type="button" class="btn" data-sim="run" aria-pressed="false">run</button>
+        <button type="button" class="btn" data-sim="step">step</button>
+        <button type="button" class="btn" data-sim="reset">reset</button>
+        <label class="sim-field"><span>program</span>
+          <select data-sim="program">
+            <option value="fibonacci">fibonacci</option>
+            <option value="multiply">multiply 7 × 6</option>
+            <option value="count">count up and down</option>
+            <option value="add">add 28 + 14</option>
+          </select>
+        </label>
+        <label class="sim-field"><span>clock</span>
+          <input type="range" min="0" max="100" value="43" data-sim="hz" aria-describedby="sim-hz">
+          <output id="sim-hz">10 Hz</output>
+        </label>
+      </div>
+      <p class="sim-note">The 8-bit breadboard computer I built from Ben Eater’s series, simulated one clock cycle at a time. <kbd>c</kbd> runs or pauses, <kbd>n</kbd> steps one cycle, <kbd>r</kbd> resets. Click a bit in RAM to change the program.</p>
+    </div>
+  </section>
+
+  <!-- ───────────────────────────── datasheet ───────────────────────────── -->
+  <section class="sec" id="about" data-file="whoami.pdf" data-mode="PDFView">
+    <p class="winbar"><span class="file">whoami.pdf</span><span class="rule" aria-hidden="true"></span><span class="meta">revised June 2026</span></p>
+
+    <header class="ds-head">
+      <p class="ds-part">MN-2026</p>
+      <h2 class="ds-title">Low-level, wide-bandwidth computer science student</h2>
+    </header>
+
+    <div class="ds-grid">
+      <div class="ds-text">
+        <h3 class="ds-h">1 Description</h3>
+        <p class="prose">I study computer science at Stellenbosch University and have been a teaching assistant for introductory computer science and computer architecture. I like understanding things all the way down, from a line of C to the gates that run it, and I’m happiest when that ends in something I built: a scheduler, a compiler, or a computer on breadboards. Away from that I’m a linguistics nerd and a free-software advocate.</p>
+      </div>
+
+      <figure class="pinout">
+        <h3 class="ds-h">2 Pin configuration and functions</h3>
+        <div class="chip-wrap"><!-- built from the list below --></div>
+        <div class="pin-readout" aria-live="polite"><p class="dim">Point at a pin to read its function.</p></div>
+        <figcaption>Figure 1. MN-2026, DIP-16 package, top view.</figcaption>
+        <!-- Edit the pins here. data-cat: hw, sw, math or sec. "M-x some-command" in a description becomes a button. -->
+        <ol class="pin-list">
+          <li data-name="VCC" data-type="power">Supply input: coffee. Top it up with M-x coffee-refill.</li>
+          <li data-name="C" data-type="I/O" data-cat="sw">Most of what I write, from a compiler to terminal toys like a spinning cube and the Game of Life.</li>
+          <li data-name="ASM" data-type="I/O" data-cat="sw">Assembly, starting with the 8-bit computer’s eleven instructions.</li>
+          <li data-name="JVM" data-type="output" data-cat="sw">The target of my compiler, so I read javap output for fun.</li>
+          <li data-name="LINUX" data-type="I/O" data-cat="sw">Daily driver. Dotfiles on GitHub, and posts on packaging formats and turning a window manager into a desktop.</li>
+          <li data-name="TTL" data-type="I/O" data-cat="hw">74-series logic. The 8-bit computer is dozens of these chips on breadboards.</li>
+          <li data-name="SEC" data-type="input" data-cat="sec">Security: a consulting internship, a web application assessment, and the habit of asking how things break.</li>
+          <li data-name="GND" data-type="power">Return path. Sleep, when the config is finished (it is never finished).</li>
+          <li data-name="RST" data-type="input">Active low. Asserted by a walk without a laptop.</li>
+          <li data-name="TA" data-type="output" data-cat="hw">Teaching assistant for introductory computer science and computer architecture.</li>
+          <li data-name="TEX" data-type="output" data-cat="math">Notes, templates and maths typeset in LaTeX, usually from Emacs.</li>
+          <li data-name="ORG" data-type="I/O" data-cat="sw">Org mode and org-roam for notes, literate configs, and replacing Jupyter.</li>
+          <li data-name="EMACS" data-type="I/O" data-cat="sw">Doom Emacs, with a literate config of over a thousand lines. Location: ~/.config/emacs/.</li>
+          <li data-name="MATH" data-type="input" data-cat="math">Project Euler, discrete maths, and modelling things in Python.</li>
+          <li data-name="CAN" data-type="I/O">CAN bus, the network inside every car. Cars are my one interest that isn’t a computer, mostly.</li>
+          <li data-name="NC" data-type="no connect">Reserved for the next obsession.</li>
+        </ol>
+      </figure>
+    </div>
+
+    <h3 class="ds-h">3 Revision history</h3>
+    <div class="table-scroll">
+      <table class="ds-table ds-rev">
+        <thead>
+          <tr><th scope="col">Date</th><th scope="col">Changes</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row"><time datetime="2026-06">June 2026</time></th>
+            <td>Teaching assistant for computer architecture.</td>
+          </tr>
+          <tr>
+            <th scope="row"><time datetime="2026-02">February 2026</time></th>
+            <td>Teaching assistant for introductory computer science.</td>
+          </tr>
+          <tr>
+            <th scope="row"><time datetime="2025-01">January 2025</time></th>
+            <td>
+              <p>Bursar at BBD Software, in its Bursary &amp; Beyond Programme. Each year’s Vac Weeks put bursars in small teams to design, build and present a full-stack web application:</p>
+              <ul>
+                <li>2025: an online laser tag game that uses computer vision to detect and tag players as they play.</li>
+                <li>2026: an online foosball game you steer with your phone’s gyroscope.</li>
+              </ul>
+            </td>
+          </tr>
+          <tr>
+            <th scope="row"><time datetime="2024-12">December 2024</time></th>
+            <td>
+              <p>Cybersecurity consultant intern.</p>
+              <ul>
+                <li>Completed cybersecurity training with labs on TryHackMe.</li>
+                <li>Assessed the security of a web application from end to end, documenting each vulnerability with its risk and how to fix it.</li>
+                <li>Wrote a professional report and presented it, client-style, to a panel of industry professionals.</li>
+              </ul>
+            </td>
+          </tr>
+          <tr>
+            <th scope="row"><time datetime="2024-01">January 2024</time></th>
+            <td>Initial release. Started an undergraduate degree in computer science at Stellenbosch University.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 class="ds-h">4 Ordering information</h3>
+    <p class="prose">Interested in systems programming, low-level software and security work. If that’s what you do, <a href="#contact">get in touch</a>.</p>
+  </section>
+
+  <!-- ──────────────────────────── memory map ──────────────────────────── -->
+  <section class="sec" id="projects" data-file="memory.map" data-mode="Fundamental">
+    <p class="winbar"><span class="file">memory.map</span><span class="rule" aria-hidden="true"></span><span class="meta" data-mm="meta"></span></p>
+    <h2 class="h2">Projects</h2>
+    <p class="lede">Laid out like a linker map: each project is a region in memory holding its one-line summary, and the hexdump shows exactly those bytes. Select one to read about it; two of them run.</p>
+
+    <div class="mm">
+      <div class="mm-bar" aria-hidden="true"></div>
+      <div class="mm-cols">
+        <div class="mm-table">
+          <p class="mm-head" aria-hidden="true"><span>origin</span><span>length</span><span>name</span><span>source</span></p>
+          <!-- Edit projects here. data-cat: hw, sw, math or sec. data-src: shown in the source column.
+               data-demo: scheduler or bytecode (optional). -->
+          <ol class="mm-list">
+            <li class="proj" data-cat="hw" data-src="built">
+              <h3 class="proj-name">8-bit-computer</h3>
+              <p class="proj-sum">Ben Eater's 8-bit breadboard computer, built chip by chip.</p>
+              <div class="proj-body">
+                <p>My most recent finished project: a programmable computer on breadboards, built from 74-series logic chips following Ben Eater’s video series. It has 16 bytes of RAM, an 8-bit bus, and microcode in EEPROMs that drives sixteen control lines.</p>
+                <p>The simulation at the top of this page runs the same instruction set and microcode, so you can step through it one control word at a time.</p>
+                <p class="proj-stack">74HC logic, EEPROMs, breadboards, a lot of jumper wire</p>
+                <p class="proj-links"><a href="#top">Run it</a> <a href="https://eater.net/8bit">Ben Eater’s series</a></p>
+              </div>
+            </li>
+            <li class="proj" data-cat="sw" data-src="private" data-demo="scheduler">
+              <h3 class="proj-name">os-scheduler</h3>
+              <p class="proj-sum">A multicore operating system scheduler, for a concurrency course.</p>
+              <div class="proj-body">
+                <p>The part of an operating system that decides which process runs on which core, and for how long. I wrote it for a concurrency course, so the source stays private, but the idea fits in a small simulation: processes arrive, wait in a shared ready queue, and get dispatched to cores under a scheduling policy.</p>
+                <p class="proj-links dim">Source private (concurrency coursework)</p>
+              </div>
+            </li>
+            <li class="proj" data-cat="sw" data-src="private" data-demo="bytecode">
+              <h3 class="proj-name">jvm-compiler</h3>
+              <p class="proj-sum">A compiler in C for a custom language that targets the JVM.</p>
+              <div class="proj-body">
+                <p>I wrote it in C for a computer architecture course. It reads a small custom programming language and produces bytecode the Java virtual machine can run. The source stays private, but the last stage is easy to show: the JVM is a stack machine, so an expression compiles to instructions that push and pop an operand stack. Type one below to see the bytecode and run it.</p>
+                <p class="proj-stack">C, JVM bytecode</p>
+                <p class="proj-links dim">Source private (computer architecture coursework)</p>
+              </div>
+            </li>
+          </ol>
+        </div>
+        <article class="mm-detail" aria-live="polite"></article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ────────────────────────────── posts ────────────────────────────── -->
+  <section class="sec" id="posts" data-file="posts.org" data-mode="Org">
+    <p class="winbar"><span class="file">posts.org</span><span class="rule" aria-hidden="true"></span><span class="meta" data-org="meta"></span></p>
+    <h2 class="h2">Posts</h2>
+    <p class="lede">From my blog at michaelneuper.com, shown the way I see them: as an Org buffer. Click a bullet or press <kbd>TAB</kbd> on a heading to fold it, <kbd>S-TAB</kbd> to cycle the whole buffer.</p>
+
+    <!-- Edit posts here. data-tags are space separated; data-cat colours the bullet. -->
+    <ol class="posts">
+      <li data-date="2024-11-22" data-tags="emacs org" data-cat="sw"><a href="https://michaelneuper.com/posts/how-i-use-org-roam-to-takes-notes-for-cs/">How I Use Org-Roam to Take Notes for CS</a></li>
+      <li data-date="2023-11-15" data-tags="emacs latex" data-cat="math"><a href="https://michaelneuper.com/posts/efficient-latex-editing-with-emacs/">Efficient LaTeX Editing With Emacs</a></li>
+      <li data-date="2023-11-12" data-tags="python maths" data-cat="math"><a href="https://michaelneuper.com/posts/modelling-population-growth-in-python/">Modelling Population Growth in Python</a></li>
+      <li data-date="2023-02-27" data-tags="emacs org" data-cat="sw"><a href="https://michaelneuper.com/posts/replace-jupyter-notebook-with-emacs-org-mode/">Replace Jupyter Notebook With Emacs Org Mode</a></li>
+      <li data-date="2023-01-09" data-tags="linux" data-cat="sw"><a href="https://michaelneuper.com/posts/what-linux-packaging-format-to-use/">Which Linux Packaging Format Should You Use?</a></li>
+      <li data-date="2022-12-16" data-tags="linux security" data-cat="sec"><a href="https://michaelneuper.com/posts/enable-monitor-mode-on-tp-link/">Enable Monitor Mode on TP-Link TL-WN722N</a></li>
+      <li data-date="2022-12-14" data-tags="security c" data-cat="sec"><a href="https://michaelneuper.com/posts/buffer-overflow/">Buffer Overflows: Keep Your Code Safe</a></li>
+      <li data-date="2022-12-11" data-tags="linux" data-cat="sw"><a href="https://michaelneuper.com/posts/turning-a-window-manager-into-a-desktop-environment/">A Guide to Building Your Own Desktop Environment</a></li>
+      <li data-date="2022-12-03" data-tags="web" data-cat="sw"><a href="https://michaelneuper.com/posts/how-to-create-your-own-website/">How to Create Your Own Static Website</a></li>
+    </ol>
+  </section>
+
+  <!-- ───────────────────────────── contact ───────────────────────────── -->
+  <section class="sec" id="contact" data-file="uart.log" data-mode="Fundamental">
+    <p class="winbar"><span class="file">uart.log</span><span class="rule" aria-hidden="true"></span><span class="meta">115200 8N1</span></p>
+    <h2 class="h2">Say hello</h2>
+    <p class="lede">Email works best. Here’s my address the way a logic analyser sees it on a serial line: 115200 baud, eight data bits, no parity, one stop bit.</p>
+
+    <div class="uart">
+      <div class="uart-scroll"><svg class="uart-svg" role="img" aria-label="UART waveform of my email address"></svg></div>
+      <p class="uart-frame dim" aria-live="polite">Point at a frame to decode it.</p>
+    </div>
+
+    <div class="contact">
+      <!-- The address is only ever put together in JavaScript, so scrapers reading this HTML don't see it.
+           The link, the copy button and the waveform all read data-user and data-host. -->
+      <a class="mail" href="#contact" data-user="michael" data-host="michaelneuper.com">michael<span class="at"> &lt;at&gt; </span>michaelneuper.com</a>
+      <button type="button" class="btn" data-email="copy">copy address</button>
+    </div>
+
+    <div class="contact-grid">
+      <div class="gpg">
+        <h3 class="ds-h">Encrypt it</h3>
+        <p class="gpg-fp"><span class="dim">fingerprint</span><code>4E7B F800 0D86 182D F484 5C37 508B CF84 373C 8930</code></p>
+        <div class="gpg-cmd">
+          <pre><code>curl -sL https://michaelneuper.com/michaelneuper.gpg | gpg --import</code></pre>
+          <button type="button" class="btn" data-copy=".gpg-cmd code">copy</button>
+        </div>
+      </div>
+      <div>
+        <h3 class="ds-h">Elsewhere</h3>
+        <ul class="elsewhere">
+          <li><a href="https://github.com/michaelneuper">GitHub</a></li>
+          <li><a href="https://www.linkedin.com/in/michaelneuper/">LinkedIn</a></li>
+          <li><a href="https://michaelneuper.com">michaelneuper.com</a></li>
+          <li><a href="https://buymeacoffee.com/michaelneuper" target="_blank" rel="noopener">Buy me a coffee</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="ctf">
+      <h3 class="ds-h">Capture the flag</h3>
+      <p>Three flags are hidden on this site, the kind you would find in a beginner CTF. They look like <code>flag{…}</code>. Found one? Run <kbd>M-x</kbd> <code>submit-flag</code>, or use the button.</p>
+      <p class="ctf-row"><button type="button" class="btn" data-ctf="submit">submit a flag</button><span class="ctf-progress" aria-live="polite">0 of 3 found</span></p>
+    </div>
+  </section>
+
+  <footer class="foot">
+    <p>Made with HTML, CSS, JavaScript and Emacs, without a framework, a build step or cookies.</p>
+    <p class="dim">Press <kbd>SPC</kbd> for commands or <kbd>M-x</kbd> to run one by name.</p>
+  </footer>
+</main>
+
+<!-- ───────────────────────── coffee, modeline and minibuffer ───────────────────────── -->
+<div class="coffee" hidden role="dialog" aria-label="Coffee refill">
+  <pre class="mug" aria-hidden="true"></pre>
+  <div class="coffee-info">
+    <p class="winbar"><span class="file">*coffee*</span><span class="rule" aria-hidden="true"></span><span class="meta">q to close</span></p>
+    <p class="vcc"><span class="dim">VCC</span><span class="vbar" aria-hidden="true"></span><span class="volts">2.6 V</span></p>
+    <p class="coffee-msg" aria-live="polite">brewing…</p>
+    <p class="coffee-links"><a href="https://buymeacoffee.com/michaelneuper" target="_blank" rel="noopener">That one was simulated. Buy me an actual coffee</a></p>
+  </div>
+  <button type="button" class="coffee-close" aria-label="Close">×</button>
+</div>
+<div class="which-key" hidden aria-live="polite"></div>
+<div class="frame-bottom">
+  <div class="modeline">
+    <span class="ml-evil" title="evil state">&lt;N&gt;</span>
+    <span class="ml-buf">sap-1.asm</span>
+    <span class="ml-pos" aria-hidden="true">1:0</span>
+    <span class="ml-pct" aria-hidden="true">Top</span>
+    <span class="ml-spacer"></span>
+    <span class="ml-misc" aria-live="polite"></span>
+    <span class="ml-flags" aria-hidden="true"></span>
+    <span class="ml-mode">Asm</span>
+    <span class="ml-enc" aria-hidden="true">LF UTF-8</span>
+    <span class="ml-vc" aria-hidden="true">Git-master</span>
+    <span class="ml-time" aria-hidden="true"></span>
+  </div>
+  <div class="mini" hidden>
+    <form class="mini-prompt" autocomplete="off">
+      <label><span class="mini-count"></span><span class="mini-ps"></span><input type="text" spellcheck="false" autocapitalize="off" role="combobox" aria-expanded="true" aria-controls="mini-list" aria-autocomplete="list"></label>
+    </form>
+    <ul class="mini-list" id="mini-list" role="listbox"></ul>
+  </div>
+  <div class="echo" role="status"></div>
+</div>
+
+<dialog class="help" aria-labelledby="help-title">
+  <p class="winbar"><span class="file" id="help-title">*Help*</span><span class="rule" aria-hidden="true"></span><span class="meta">q or esc to close</span></p>
+  <div class="help-cols">
+    <div>
+      <h3>Keys</h3>
+      <dl>
+        <div><dt><kbd>SPC</kbd></dt><dd>leader key: shows every command</dd></div>
+        <div><dt><kbd>M-x</kbd></dt><dd>run a command by name (Alt+x or Option+x)</dd></div>
+        <div><dt><kbd>SPC h t</kbd></dt><dd>load a theme, with live preview</dd></div>
+        <div><dt><kbd>:</kbd></dt><dd>evil ex commands, like <code>:q</code></dd></div>
+        <div><dt><kbd>C-g</kbd></dt><dd>cancel (so does <kbd>esc</kbd>)</dd></div>
+      </dl>
+    </div>
+    <div>
+      <h3>On this page</h3>
+      <dl>
+        <div><dt><kbd>c</kbd> <kbd>n</kbd> <kbd>r</kbd></dt><dd>computer: run or pause, step, reset</dd></div>
+        <div><dt><kbd>TAB</kbd></dt><dd>fold the Org heading under focus</dd></div>
+        <div><dt><kbd>S-TAB</kbd></dt><dd>cycle the whole Org buffer</dd></div>
+        <div><dt><code>coffee-refill</code></dt><dd>top up VCC and overclock the computer</dd></div>
+        <div><dt><code>submit-flag</code></dt><dd>check a CTF flag</dd></div>
+      </dl>
+    </div>
+  </div>
+  <form method="dialog"><button class="btn" type="submit">close</button></form>
+</dialog>
+</body>
+</html>
