@@ -61,7 +61,8 @@
     top: calc(var(--top-h) + 32px);
     grid-row: 1;
     grid-column: 2;
-    max-height: calc(100vh - var(--top-h) - var(--frame-h) - 64px);
+    /* stops short of the back-to-top button over the modeline */
+    max-height: calc(100vh - var(--top-h) - var(--frame-h) - 92px);
     margin: 0;
     overflow-y: auto;
   }

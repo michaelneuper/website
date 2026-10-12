@@ -1,7 +1,7 @@
 // doom-modeline: evil state, buffer name, position, major mode and a clock.
 // Other modules fill the misc and flags segments with setSegment().
 
-import { $, isTyping } from "../util.js";
+import { $, isTyping, reducedMotion } from "../util.js";
 
 const root = document.documentElement;
 const modeline = $(".modeline");
@@ -27,12 +27,21 @@ document.addEventListener("focusin", evilState);
 document.addEventListener("focusout", () => setTimeout(evilState));
 document.addEventListener("selectionchange", evilState);
 
+// back to top, once the reader is a screen down; gg does the same
+const toTop = $(".to-top");
+toTop.addEventListener("click", () => {
+  scrollTo({ top: 0, behavior: reducedMotion.matches ? "instant" : "smooth" });
+  // the button hides at the top, so focus goes to the first link on the page
+  $(".brand")?.focus({ preventScroll: true });
+});
+
 function onScroll() {
   const max = root.scrollHeight - innerHeight;
   const y = scrollY;
   ml.pct.textContent = y <= 2 ? "Top" : y >= max - 2 ? "Bot" : `${Math.round((y / max) * 100)}%`;
   ml.pos.textContent = `${Math.floor(y / 21) + 1}:0`;
   root.classList.toggle("is-scrolled", y > 24);
+  toTop.hidden = y < innerHeight;
 }
 addEventListener("scroll", onScroll, { passive: true });
 onScroll();

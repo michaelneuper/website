@@ -1,11 +1,15 @@
 // The keys: SPC opens which-key on the leader map, M-x (Alt+x) and : open the
-// minibuffer, ? opens *Help* and C-g quits. Keys typed into a field are left alone.
+// minibuffer, ? opens *Help* and C-g quits. evil's motions scroll (motions.js),
+// and / searches the page, then n and N step through the matches (search.js).
+// Keys typed into a field are left alone.
 
 import { $, isTyping } from "../util.js";
 import { message, idle } from "./echo.js";
 import { call, hasCommand } from "./commands.js";
 import { mx, ex } from "./mx.js";
 import { toggleMenu, menuOpen } from "./menu.js";
+import { motion } from "./motions.js";
+import { search, searchNext, searchActive, clearSearch } from "./search.js";
 
 const wk = $(".which-key");
 const help = $(".help");
@@ -108,13 +112,18 @@ addEventListener("keydown", (e) => {
     return;
   }
   if (!mini.hidden || isTyping(e)) return;
+  // The posts list has its own j and k, and a dialog or butterfly has the keys to itself.
+  const free = !e.target.closest?.("[role='tree']") && !document.querySelector("dialog[open], .butterfly");
 
   if (e.altKey && e.code === "KeyX" && !e.ctrlKey && !e.metaKey) {
     e.preventDefault();
     mx();
   } else if (e.ctrlKey && e.key === "g") {
     e.preventDefault();
+    clearSearch();
     call("keyboard-quit");
+  } else if (free && motion(e)) {
+    // scrolled
   } else if (e.metaKey || e.ctrlKey || e.altKey) {
     // leave browser shortcuts alone
   } else if (e.key === " " && !e.target.closest?.("button, a, select, summary, [tabindex]")) {
@@ -126,7 +135,17 @@ addEventListener("keydown", (e) => {
   } else if (e.key === "?") {
     e.preventDefault();
     call("help");
+  } else if (free && e.key === "/") {
+    e.preventDefault();
+    search();
+  } else if (free && (e.key === "n" || e.key === "N") && searchActive()) {
+    // only while there are matches; otherwise n is the computer's step
+    e.preventDefault();
+    searchNext(e.key === "n" ? 1 : -1);
   } else if (e.key === "Escape" && menuOpen()) {
     toggleMenu(false);
+  } else if (e.key === "Escape" && searchActive()) {
+    clearSearch();
+    idle();
   }
 }, true);

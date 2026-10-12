@@ -7,7 +7,9 @@ const echo = $(".echo");
 
 let echoTimer = 0;
 const idleText = () => (finePointer.matches ? "Press SPC for commands, or M-x to run one by name." : "");
-export function message(text, kind = "", ms = 5000) {
+// quiet: shown but not read out, for the tips, which come round every minute or so
+export function message(text, kind = "", ms = 5000, { quiet = false } = {}) {
+  echo.setAttribute("aria-live", quiet ? "off" : "polite");
   echo.textContent = text;
   echo.className = kind ? `echo is-${kind}` : "echo";
   clearTimeout(echoTimer);
@@ -17,3 +19,6 @@ export function message(text, kind = "", ms = 5000) {
 /** Back to the idle hint. */
 export const idle = () => message(idleText(), "", 0);
 idle();
+
+/** Whether the echo area is showing nothing but the idle hint. */
+export const isIdle = () => echo.className === "echo" && echo.textContent === idleText();

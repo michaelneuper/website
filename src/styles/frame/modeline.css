@@ -94,6 +94,11 @@
   color: var(--green);
 }
 
+/* the odd tip (src/scripts/emacs/tips.js), quieter than a message */
+.echo.is-tip {
+  color: var(--dim);
+}
+
 .mini:not([hidden]) ~ .echo {
   display: none;
 }
@@ -244,4 +249,20 @@
   .ml-pct {
     display: none;
   }
+}
+
+/* back to top: over the bottom right of the page, just above the modeline,
+   once the reader is a screen down (modeline.js). .btn.to-top, because the
+   bundle can put base.css's .btn (background: none) after this, and the text
+   under the button would show through. */
+.btn.to-top {
+  position: fixed;
+  right: var(--gutter);
+  bottom: calc(var(--frame-h) + env(safe-area-inset-bottom, 0px) + 12px);
+  z-index: 28;
+  background: var(--bg);
+}
+
+.to-top[hidden] {
+  display: none;
 }

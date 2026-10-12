@@ -7,6 +7,13 @@ const CORES = 4;
 const SPAN = 48;
 const QUANTUM = 3;
 
+// what each policy does, shown under the chart for the one that's picked
+const POLICY = {
+  fcfs: "First come, first served runs each process to completion.",
+  rr: `Round robin preempts a process after ${QUANTUM} ticks.`,
+  prio: "Preemptive priority always runs the highest-priority processes (p1 is highest), so a new arrival can take a core from a lower-priority one.",
+};
+
 export function mount(host) {
   // with reduced motion the chart starts still, until you unpause it
   let paused = reducedMotion.matches;
@@ -22,11 +29,14 @@ export function mount(host) {
       <span class="dim" data-k="stats"></span>
     </div>
     <canvas height="150" style="height:150px" aria-label="Gantt chart of processes running on four cores" role="img"></canvas>
-    <p class="cap">Four cores share one ready queue. First come, first served runs each process to completion. Round robin preempts a process after ${QUANTUM} ticks. Preemptive priority always runs the highest-priority processes (p1 is highest), so a new arrival can take a core from a lower-priority one.</p>`;
+    <p class="cap" data-k="policy" aria-live="polite"></p>`;
   const cv = host.querySelector("canvas");
   const sel = host.querySelector("select");
   const stats = host.querySelector('[data-k="stats"]');
   const pauseBtn = host.querySelector('[data-k="pause"]');
+  const policy = host.querySelector('[data-k="policy"]');
+  const describe = () => { policy.textContent = `Four cores share one ready queue. ${POLICY[sel.value]}`; };
+  describe();
 
   let t = 0;
   let nextId = 1;
@@ -204,6 +214,7 @@ export function mount(host) {
     done = 0;
     waitSum = 0;
     preempted = 0;
+    describe();
     showStats();
     draw();
   });

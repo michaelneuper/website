@@ -1,0 +1,12 @@
+/* Matches of / (src/scripts/emacs/search.js), painted over the text without
+   changing it: every match tinted the theme's yellow, as vim's Search, and the
+   one you're on in reverse video, as its IncSearch. */
+
+::highlight(search) {
+  background-color: color-mix(in srgb, var(--yellow) 32%, transparent);
+}
+
+::highlight(search-current) {
+  background-color: var(--fg);
+  color: var(--bg);
+}

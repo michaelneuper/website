@@ -41,6 +41,10 @@
   padding: 3px 0;
 }
 
+.help dl div[hidden] {
+  display: none;
+}
+
 .help dt {
   color: var(--fg);
 }

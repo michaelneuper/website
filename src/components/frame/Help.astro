@@ -13,6 +13,10 @@ import "../../styles/frame/help.css";
         <div><dt><kbd>M-x</kbd></dt><dd>run a command by name (Alt+x or Option+x)</dd></div>
         <div><dt><kbd>SPC h t</kbd></dt><dd>load a theme, with live preview</dd></div>
         <div><dt><kbd>:</kbd></dt><dd>evil ex commands, like <code>:q</code></dd></div>
+        <div><dt><kbd>j</kbd> <kbd>k</kbd></dt><dd>scroll down, up</dd></div>
+        <div><dt><kbd>d</kbd> <kbd>u</kbd></dt><dd>half a screen down, up (<kbd>C-d</kbd> <kbd>C-u</kbd> too on a Mac)</dd></div>
+        <div><dt><kbd>gg</kbd> <kbd>G</kbd></dt><dd>top, bottom</dd></div>
+        <div><dt><kbd>/</kbd></dt><dd>search the page; then <kbd>n</kbd> <kbd>N</kbd> for the next, previous match, and <kbd>esc</kbd> to clear</dd></div>
         <div><dt><kbd>C-g</kbd></dt><dd>cancel (so does <kbd>esc</kbd>)</dd></div>
       </dl>
     </div>
@@ -21,6 +25,9 @@ import "../../styles/frame/help.css";
       <dl>
         <slot />
         <div><dt><code>submit-flag</code></dt><dd>check a CTF flag</dd></div>
+        {/* shown once the three CTF flags are found (src/scripts/ctf.js) */}
+        <div data-unlock="butterfly" hidden><dt><code>butterfly</code></dt><dd>flip one bit, as in xkcd 378</dd></div>
+        <div><dt><code>morse-region</code></dt><dd>turn the selected text into Morse code (<code>unmorse-region</code> turns it back)</dd></div>
       </dl>
     </div>
   </div>

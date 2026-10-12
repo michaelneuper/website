@@ -108,7 +108,7 @@
   color: var(--green);
 }
 
-/* once all three are found, the button runs M-x zone */
+/* once all three are found, the button runs M-x butterfly */
 .ctf-row .btn.is-done {
   border-color: var(--green);
   color: var(--green);

@@ -1,0 +1,29 @@
+/* M-x butterfly (src/scripts/emacs/play.js): the *butterfly* buffer over the
+   page, under the top line and the modeline, with the physics flying
+   into place in ten steps, the way Emacs's animate-string moves text. */
+
+.butterfly {
+  position: fixed;
+  inset: 0;
+  z-index: 15;
+  display: grid;
+  place-items: center;
+  background: var(--bg);
+}
+
+.butterfly p {
+  margin: 0;
+  font-size: 13px;
+  white-space: pre;
+}
+
+.butterfly span {
+  display: inline-block;
+  transition: transform 1.4s steps(10, end);
+}
+
+/* where the bit landed, for a few seconds afterwards */
+::highlight(butterfly) {
+  background-color: var(--fg);
+  color: var(--bg);
+}
