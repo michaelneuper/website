@@ -27,6 +27,9 @@ export default defineConfig({
     // Code takes its colours from the current Emacs theme (the --astro-code-* variables in src/styles/post/org.css).
     shikiConfig: { theme: "css-variables" },
   },
+  // Minifying strips comments, but legal ones (//! or /*!) stay in the scripts,
+  // for anyone reading them in the browser's devtools (src/scripts/ctf.js has one).
+  vite: { build: { rolldownOptions: { output: { comments: { legal: true } } } } },
   // Pages from the Hugo site that now live on the home page.
   redirects: {
     "/posts": "/#posts",

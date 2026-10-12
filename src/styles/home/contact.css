@@ -108,6 +108,12 @@
   color: var(--green);
 }
 
+/* once all three are found, the button runs M-x zone */
+.ctf-row .btn.is-done {
+  border-color: var(--green);
+  color: var(--green);
+}
+
 @media (max-width: 920px) {
   .contact-grid {
     grid-template-columns: minmax(0, 1fr);
