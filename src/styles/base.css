@@ -10,7 +10,6 @@ html {
   background: var(--bg);
   color: var(--fg);
   scroll-behavior: smooth;
-  scroll-snap-type: y proximity;
   scroll-padding-top: calc(var(--top-h) + 24px);
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;

@@ -17,7 +17,7 @@ const projects = await Promise.all(
     .map(async (p) => ({ ...p.data, Body: (await render(p)).Content })),
 );
 ---
-<Buffer id="projects" file="projects.map" mode="Fundamental" metaAttrs={{ "data-pj": "meta" }}>
+<Buffer id="projects" file="~/projects/" mode="Dired" metaAttrs={{ "data-pj": "meta" }}>
   <h2 class="h2">Projects</h2>
 
   <div class="pj">
@@ -38,16 +38,16 @@ const projects = await Promise.all(
 
     <ol class="pj-list">
       {projects.map((p) => (
-        <li class="proj" data-cat={p.cat} data-demo={p.demo} data-demo-note={p.demoNote}>
+        <li class="proj" data-name={p.name} data-cat={p.cat} data-demo={p.demo} data-demo-note={p.demoNote}>
           <p class="proj-cat">{CATS[p.cat] ?? p.cat}</p>
-          <h3 class="proj-name">{p.name}</h3>
+          <h3 class="proj-name">{p.title}</h3>
           <p class="proj-sum">{p.summary}</p>
-          <div class="proj-body">
-            <p.Body />
-            {p.stack && <p class="proj-stack">{p.stack}</p>}
-            {p.links.length > 0 && <p class="proj-links">{p.links.map((l) => <a href={l.href}>{l.text}</a>)}</p>}
-            {p.note && <p class="proj-links dim">{p.note}</p>}
-          </div>
+          <dl class="proj-facts">
+            {p.stack && <div><dt>stack</dt><dd>{p.stack}</dd></div>}
+            {p.links.length > 0 && <div><dt>links</dt><dd>{p.links.map((l) => <a href={l.href}>{l.text}</a>)}</dd></div>}
+            {p.note && <div><dt>source</dt><dd>{p.note}</dd></div>}
+          </dl>
+          <div class="proj-body"><p.Body /></div>
         </li>
       ))}
     </ol>

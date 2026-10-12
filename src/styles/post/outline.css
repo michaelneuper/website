@@ -38,7 +38,7 @@
 }
 
 .post-toc .mk {
-  color: var(--faint);
+  color: var(--dim);
 }
 
 @media (min-width: 1100px) {

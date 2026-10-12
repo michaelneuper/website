@@ -1,13 +1,15 @@
 /* The landing section: the name (which decodes itself on load), a lede and the colour key */
 
+/* The section fills the screen, but its contents hang from a shared top line in the
+   upper part of it: the name and the chip start level, and the space is left below. */
 .hero {
   display: grid;
   grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
   gap: 32px clamp(32px, 4vw, 64px);
-  align-items: center;
+  align-items: start;
   min-height: 100vh;
   min-height: 100svh;
-  padding: calc(var(--top-h) + 28px) var(--gutter) calc(var(--frame-h) + 32px);
+  padding: calc(var(--top-h) + clamp(32px, 12vh, 136px)) var(--gutter) calc(var(--frame-h) + 32px);
   max-width: 1440px;
   margin: 0 auto;
 }
@@ -59,10 +61,9 @@
 }
 
 .hero-lede {
-  max-width: 44ch;
-  margin: 0 0 20px;
-  font-size: 14px;
-  line-height: 1.6;
+  max-width: 30em;
+  margin: 0 0 24px;
+  font: 400 19px/1.55 var(--serif);
 }
 
 .legend {
@@ -95,5 +96,15 @@
 
   .hero-id {
     max-width: 640px;
+  }
+}
+
+@media (max-width: 640px) {
+  .hero {
+    padding-top: calc(var(--top-h) + 28px);
+  }
+
+  .hero-lede {
+    font-size: 17px;
   }
 }

@@ -5,7 +5,8 @@
 // the detail, with its demo.
 //
 // On wide screens the wheel stands in the left margin, bulging towards the
-// content; on narrow ones it lies across the top of the section.
+// content; on narrower ones it lies across the top of the section, so the
+// project gets the whole column.
 
 import { $, $$, on, onFrame, reducedMotion, clamp } from "../util.js";
 
@@ -24,7 +25,7 @@ export function initProjects() {
   const spine = $(".pj-spine", root);
   const meta = $('[data-pj="meta"]');
   const hint = $(".pj-hint", root);
-  const across = matchMedia("(max-width: 999px)");
+  const across = matchMedia("(max-width: 1399px)");
   const n = cards.length;
   if (!n) return;
 
@@ -233,10 +234,12 @@ export function initProjects() {
     const li = items[i];
     detail.dataset.cat = li.dataset.cat;
     detail.setAttribute("aria-labelledby", cards[i].id);
-    // the write-up, and the demo beside it (or under it when there isn't room)
+    // the write-up, and the demo beside it (or under it when there isn't room);
+    // the card already shows the category and the slug, and the write-up says
+    // what the summary says, so those stay in the list for when there's no wheel
     const text = document.createElement("div");
     text.className = "pj-text";
-    text.append(...[".proj-cat", ".proj-name", ".proj-sum", ".proj-body"].map((s) => $(s, li).cloneNode(true)));
+    text.append(...[".proj-name", ".proj-facts", ".proj-body"].map((s) => $(s, li).cloneNode(true)));
     const row = document.createElement("div");
     row.className = "pj-row";
     row.append(text);
@@ -271,9 +274,9 @@ export function initProjects() {
     }
   }
 
-  // Other parts of the page can open a project by name (the computer commands do).
+  // Other parts of the page can open a project by its slug (the computer commands do).
   on("project", (name) => {
-    const i = items.findIndex((li) => $(".proj-name", li).textContent.trim() === name);
+    const i = items.findIndex((li) => li.dataset.name === name);
     if (i >= 0) goTo(i, { now: true });
   });
 

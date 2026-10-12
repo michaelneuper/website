@@ -104,6 +104,16 @@
   --glow: 0;
 }
 
+/* gruvbox's blue is a grey-green beside its yellow, purple and red, so the
+   software colour pulls it towards blue, keeping a little of its own tone */
+:root[data-theme="doom-gruvbox"] {
+  --c-sw: color-mix(in oklch, var(--blue) 20%, oklch(0.7 0.11 242));
+}
+
+:root[data-theme="doom-gruvbox-light"] {
+  --c-sw: color-mix(in oklch, var(--blue) 40%, oklch(0.47 0.11 245));
+}
+
 [data-cat="hw"] { --c: var(--c-hw); }
 [data-cat="sw"] { --c: var(--c-sw); }
 [data-cat="math"] { --c: var(--c-math); }

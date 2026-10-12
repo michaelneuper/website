@@ -1,19 +1,20 @@
 /* Projects: a wheel of cards (out in the left margin on wide screens, across the top
-   on narrow ones) and the write-up and demo of the one picked on it
+   on narrower ones) and the write-up and demo of the one picked on it
    (src/scripts/home/projects.js) */
 
 .pj {
-  --wheel: 200px;
-  --pj-gap: 44px;
-  display: grid;
-  grid-template-columns: var(--wheel) minmax(0, 1fr);
-  column-gap: var(--pj-gap);
-  align-items: start;
+  /* the wheel's height, and the least a project's split takes */
+  --pj-h: min(620px, calc(100svh - var(--top-h) - var(--frame-h) - 72px));
 }
 
 /* with room beside the content column, the wheel stands out in the margin */
 @media (min-width: 1400px) {
   .pj {
+    --pj-gap: 44px;
+    display: grid;
+    grid-template-columns: var(--wheel) minmax(0, 1fr);
+    column-gap: var(--pj-gap);
+    align-items: start;
     --wheel: min(236px, calc((100vw - var(--col)) / 2 + var(--gutter) - var(--pj-gap) - 20px));
     margin-left: calc(-1 * (var(--wheel) + var(--pj-gap)));
   }
@@ -24,7 +25,7 @@
 .pj-wheel {
   position: sticky;
   top: calc(var(--top-h) + 24px);
-  height: min(620px, calc(100svh - var(--top-h) - var(--frame-h) - 72px));
+  height: var(--pj-h);
   touch-action: none;
   -webkit-user-select: none;
   user-select: none;
@@ -165,7 +166,7 @@
   bottom: 4px;
   margin: 0;
   font-size: 11px;
-  color: var(--faint);
+  color: var(--dim);
 }
 
 .pj-hint kbd {
@@ -253,12 +254,18 @@
 
 /* ── a project ─────────────────────────────────────────────────────── */
 
+/* The write-up and the demo are two windows side by side, as after C-x 3: the
+   same height, with a divider between them. The split is at least as tall as
+   the wheel, so picking another project hardly changes the page's height. */
 .pj-detail {
   container: pj-detail / inline-size;
-  min-height: 420px;
 }
 
+/* the category, as a header line over each project in the list without
+   JavaScript (on the wheel, the card shows it) */
 .proj-cat {
+  display: flex;
+  align-items: center;
   margin: 0 0 12px;
   font-size: 12px;
   color: var(--dim);
@@ -266,30 +273,63 @@
 
 .proj-cat::before {
   content: "";
-  display: inline-block;
+  flex: none;
   width: 7px;
   height: 7px;
   margin-right: 1ch;
   background: var(--c, var(--fg));
-  vertical-align: 0.06em;
+}
+
+.proj-cat::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  margin-left: 1.5ch;
+  background: var(--rule);
 }
 
 .proj-name {
-  margin: 0 0 10px;
+  margin: 0 0 16px;
   font: 400 clamp(30px, 3.6vw, 44px)/1.06 var(--serif);
 }
 
 .proj-sum {
   max-width: 64ch;
-  margin: 0 0 28px;
+  margin: 0 0 18px;
   font-size: 13px;
   color: var(--dim);
 }
 
+/* stack, links and source, labelled */
+.proj-facts {
+  margin: 0 0 26px;
+  font-size: 13px;
+}
+
+.proj-facts div {
+  display: flex;
+  gap: 1.5ch;
+}
+
+.proj-facts dt {
+  flex: none;
+  width: 6ch;
+  color: var(--dim);
+}
+
+.proj-facts dd {
+  margin: 0;
+}
+
+.proj-facts a {
+  margin-right: 2ch;
+}
+
+/* the write-up reads at the same size as About */
 .proj-body > p,
 .proj-body li {
-  max-width: 36em;
-  font: 400 17px/1.6 var(--serif);
+  max-width: 34em;
+  font: 400 19px/1.55 var(--serif);
 }
 
 .proj-body > p {
@@ -306,20 +346,15 @@
   margin-bottom: 6px;
 }
 
-.proj-body > .proj-stack,
-.proj-body > .proj-links {
-  font: 400 12px/1.6 var(--mono);
+/* on phones, like About's text */
+@media (max-width: 640px) {
+  .proj-body > p,
+  .proj-body li {
+    font-size: 17px;
+  }
 }
 
-.proj-stack {
-  color: var(--dim);
-}
-
-.proj-links a {
-  margin-right: 2ch;
-}
-
-/* the demo, under a header line like a winbar's: *demo*, a rule, then a note on what it is */
+/* the demo, under a header line of its own: *demo*, a rule, then a note on what it is */
 .pj-demo {
   margin-top: 36px;
   font-size: 12px;
@@ -329,7 +364,7 @@
   display: flex;
   align-items: center;
   gap: 1.5ch;
-  margin: 0 0 6px;
+  margin: 0 0 12px;
 }
 
 .pj-demo-head .rule {
@@ -345,27 +380,30 @@
   color: var(--dim);
 }
 
-/* with room, the demo sits beside the write-up */
+/* with room, the two windows sit side by side */
 @container pj-detail (min-width: 820px) {
   .pj-row {
     display: flex;
-    gap: 48px;
-    align-items: flex-start;
+    min-height: var(--pj-h);
   }
 
   .pj-row > .pj-text {
-    flex: 0 0 calc(46% - 24px);
+    flex: 0 0 50%;
+    padding-right: 32px;
   }
 
-  .pj-row .proj-body > p:not(.proj-stack, .proj-links),
+  /* a touch smaller beside the demo, so the lines don't get too short */
+  .pj-row .proj-body > p,
   .pj-row .proj-body li {
-    font-size: 16px;
+    font-size: 18px;
   }
 
   .pj-row > .pj-demo {
     flex: 1;
     min-width: 0;
     margin-top: 0;
+    padding-left: 32px;
+    border-left: 1px solid var(--rule);
   }
 }
 
@@ -377,8 +415,7 @@
 }
 
 .pj-list .proj {
-  padding: 32px 0;
-  border-top: 1px solid var(--rule);
+  padding: 32px 0 0;
 }
 
 .pj:not(.is-built) {
@@ -392,13 +429,10 @@
   display: none;
 }
 
-/* ── narrow screens: the wheel lies across the top ────────────────── */
+/* ── narrower screens: the wheel lies across the top, leaving the whole
+   column to the project ───────────────────────────────────────────── */
 
-@media (max-width: 999px) {
-  .pj {
-    display: block;
-  }
-
+@media (max-width: 1399px) {
   .pj-wheel {
     position: relative;
     top: auto;
@@ -446,9 +480,5 @@
     right: auto;
     bottom: 0;
     left: var(--gutter);
-  }
-
-  .pj-detail {
-    min-height: 0;
   }
 }

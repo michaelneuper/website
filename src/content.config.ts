@@ -22,7 +22,10 @@ const posts = defineCollection({
 const projects = defineCollection({
   loader: glob({ pattern: "*.md", base: "./src/content/projects" }),
   schema: z.object({
+    // the slug, shown in mono on the project's card
     name: z.string(),
+    // what the project is, as its heading
+    title: z.string(),
     order: z.number(),
     cat: z.enum(["hw", "sw", "math", "sec"]),
     summary: z.string(),
@@ -34,7 +37,7 @@ const projects = defineCollection({
     demoNote: z.string().optional(),
     stack: z.string().optional(),
     links: z.array(z.object({ text: z.string(), href: z.string() })).default([]),
-    // A line in place of links, like "Source private (coursework)".
+    // Where the source is when there's no link, shown as "source": "private (coursework)".
     note: z.string().optional(),
   }),
 });

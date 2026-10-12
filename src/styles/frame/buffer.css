@@ -1,19 +1,18 @@
 /* A buffer: a section of the page with its winbar (file name, a rule, and a note) */
 
 .sec {
+  --sec-pad: 136px;
   max-width: var(--col);
   margin: 0 auto;
-  padding: 136px var(--gutter) 0;
-}
-
-.hero,
-.sec > .winbar {
-  scroll-snap-align: start;
+  padding: var(--sec-pad) var(--gutter) 0;
+  /* A link to a section from another page (/#projects) lands on its winbar, the
+     same place the menu scrolls it to, not on the padding above. */
+  scroll-margin-top: calc(-1 * var(--sec-pad));
 }
 
 /* On the home page each section is at least a screen tall from its winbar down,
-   so with its winbar at the top (where scrolling snaps it) the next one is out of
-   sight. Every section has the same padding above its winbar, so that padding
+   so with its winbar at the top (where the menu scrolls it) the next one is out
+   of sight. Every section has the same padding above its winbar, so that padding
    cancels out. lvh: tall enough when a phone's toolbars are hidden too. */
 .hero ~ .sec {
   min-height: calc(100vh - var(--top-h) - 24px);
@@ -73,7 +72,7 @@
 
 @media (max-width: 640px) {
   .sec {
-    padding-top: 104px;
+    --sec-pad: 104px;
   }
 
   .winbar {

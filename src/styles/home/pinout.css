@@ -18,8 +18,11 @@
   height: 9px;
 }
 
-.hero-chip .pin-readout {
-  min-height: 6.5em;
+/* the readout's height is set by src/scripts/home/pinout.js to fit the longest pin;
+   without JavaScript the pin list below says it all, and there is nothing to point at */
+.pinout:not(.is-built) .pin-readout,
+.pinout:not(.is-built) .pin-hint {
+  display: none;
 }
 
 .pinout {
@@ -129,7 +132,6 @@
 }
 
 .pin-readout {
-  min-height: 7.5em;
   margin-top: 20px;
   padding-top: 12px;
   border-top: 1px solid var(--rule);
@@ -175,5 +177,22 @@
 @media (max-width: 920px) {
   .pinout {
     max-width: 420px;
+  }
+}
+
+/* on a phone the chip is about two thirds of the width, with the readout full width under it */
+@media (max-width: 640px) {
+  .hero-chip .chip-wrap {
+    width: 72%;
+    margin-inline: auto;
+  }
+
+  .hero-chip .chip {
+    grid-template-columns: minmax(0, 1fr) 84px minmax(0, 1fr);
+    font-size: 12px;
+  }
+
+  .hero-chip .pin {
+    height: 30px;
   }
 }

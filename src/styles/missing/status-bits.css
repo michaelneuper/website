@@ -19,7 +19,8 @@
   align-items: center;
   gap: 0.14em;
   padding: 0 0.04em;
-  color: var(--faint);
+  /* unlit 0s, dimmer than the labels but still 3:1 against the background, as large text needs */
+  color: color-mix(in srgb, var(--fg) 48%, var(--bg));
   font-variant-numeric: tabular-nums;
   transition: color 120ms ease;
 }
@@ -33,7 +34,7 @@
 }
 
 .sb-bit .w {
-  color: var(--faint);
+  color: var(--dim);
   font: 400 clamp(9px, 1.2vw, 12px)/1 var(--mono);
 }
 

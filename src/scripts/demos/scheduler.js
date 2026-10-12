@@ -19,7 +19,7 @@ export function mount(host) {
       <button type="button" class="btn" data-k="pause" aria-pressed="false">pause</button>
       <span class="dim" data-k="stats"></span>
     </div>
-    <canvas height="150" aria-label="Gantt chart of processes running on four cores" role="img"></canvas>
+    <canvas height="150" style="height:150px" aria-label="Gantt chart of processes running on four cores" role="img"></canvas>
     <p class="cap">Four cores share one ready queue. First come, first served runs each process to completion. Round robin preempts a process after ${QUANTUM} ticks. Preemptive priority always runs the highest-priority processes (p1 is highest), so a new arrival can take a core from a lower-priority one.</p>`;
   const cv = host.querySelector("canvas");
   const sel = host.querySelector("select");

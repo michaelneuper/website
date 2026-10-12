@@ -21,8 +21,8 @@ import "../../styles/home/pinout.css";
   <div class="hero-chip">
     <figure class="pinout">
       <div class="chip-wrap"></div>
-      <div class="pin-readout" aria-live="polite"><p class="dim">Point at a pin to read its function.</p></div>
-      <figcaption>Figure 1. MN-2026, DIP-16 package, top view.</figcaption>
+      <div class="pin-readout"></div>
+      <figcaption>Figure 1. MN-2026, DIP-16 package, top view.<span class="pin-hint"> Point at a pin to read its function.</span></figcaption>
       <ol class="pin-list">
         {PINS.map((p) => <li data-name={p.name} data-type={p.type} data-cat={p.cat}>{p.text}</li>)}
       </ol>

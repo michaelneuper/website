@@ -1,12 +1,13 @@
 ---
 name: chat-voip-p2p
+title: "Chat, voice calls and P2P file sharing"
 order: 5
 cat: sw
 demo: rbudp
 demoNote: "The RBUDP file transfer in miniature, animated for this page: blast every packet over UDP, ask over TCP which ones arrived, and resend the gaps."
 summary: "Four networking projects in Java: chat, fast UDP file transfer, voice calls and P2P sharing."
 stack: "Java, JavaFX, TCP and UDP sockets, Java Sound, RSA, AES-GCM"
-note: "Source private (coursework, group project)"
+note: "private (coursework, group project)"
 ---
 
 Four projects my group built for a university course:

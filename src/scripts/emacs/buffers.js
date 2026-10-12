@@ -24,7 +24,7 @@ sections.forEach((s) => sectionIO.observe(s));
 export function goto(id, quiet = false) {
   const s = document.getElementById(id);
   if (!s) return;
-  // Sections snap to their header line, so scroll to that rather than the padding above it.
+  // Scroll to the section's header line rather than the padding above it.
   ($(".winbar", s) ?? s).scrollIntoView({ behavior: reducedMotion.matches ? "auto" : "smooth", block: "start" });
   history.replaceState(null, "", id === "top" ? location.pathname : `#${id}`);
   if (!quiet) message(`"${s.dataset.file}"`);
@@ -38,6 +38,24 @@ document.addEventListener("click", (e) => {
   e.preventDefault();
   goto(id, true);
 });
+
+// A link from another page (/#posts) lands on the section's header line. The
+// browser jumps there before the sections above it have finished building (the
+// fonts, the git log, the projects wheel and demo), and they push it down, so
+// keep it in place until the page settles or the reader starts scrolling.
+const landing = location.hash && sections.find((s) => `#${s.id}` === location.hash);
+if (landing && landing.id !== "top") {
+  const bar = $(".winbar", landing) ?? landing;
+  const ro = new ResizeObserver(() => bar.scrollIntoView({ behavior: "instant", block: "start" }));
+  const inputs = ["wheel", "touchstart", "keydown", "pointerdown"];
+  const stop = () => {
+    ro.disconnect();
+    for (const t of inputs) removeEventListener(t, stop, true);
+  };
+  for (const t of inputs) addEventListener(t, stop, { capture: true, passive: true });
+  ro.observe(document.body);
+  setTimeout(stop, 3000);
+}
 
 export function findSection(word = "") {
   const w = word.toLowerCase();

@@ -1,12 +1,13 @@
 ---
 name: jvm-compiler
+title: "Compiler to JVM bytecode"
 order: 4
 cat: sw
 demo: bytecode
 demoNote: "Only the last step, for arithmetic expressions, rewritten in JavaScript for this page. The JVM is a stack machine, so an expression compiles to instructions that push and pop an operand stack. Type one to see its bytecode and run it."
 summary: "A compiler in C for a custom language that targets the JVM."
 stack: "C, JVM bytecode, Jasmin"
-note: "Source private (computer architecture coursework)"
+note: "private (computer architecture coursework)"
 ---
 
 I wrote it for a computer architecture course. It reads a program in a small procedural language, with subroutines, arrays, `if` and `while` statements, input and output, and produces a class file the Java virtual machine can run.

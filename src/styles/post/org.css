@@ -47,7 +47,7 @@
 }
 
 .org-head .org-key {
-  color: var(--faint);
+  color: var(--dim);
 }
 
 .org-ts {
@@ -105,7 +105,7 @@
 }
 
 .post-body li::marker {
-  color: var(--faint);
+  color: var(--dim);
   font: 400 15px var(--mono);
 }
 
@@ -196,15 +196,41 @@
   content: "+";
 }
 
+/* A strike around whole paragraphs is a block, with its markers at the start
+   of the first paragraph and the end of the last instead of on lines of their own. */
+.post-body :is(s, del):has(> :is(p, ul, ol, blockquote)) {
+  display: block;
+}
+
+.post-body :is(s, del):has(> :is(p, ul, ol, blockquote))::before,
+.post-body :is(s, del):has(> :is(p, ul, ol, blockquote))::after {
+  content: none;
+}
+
+.post-body :is(s, del) > p:first-child::before,
+.post-body :is(s, del) > p:last-child::after {
+  content: "+";
+}
+
 .post-body :not(pre) > code::before,
 .post-body :not(pre) > code::after,
 .post-body :is(em, strong, s, del)::before,
-.post-body :is(em, strong, s, del)::after {
-  color: var(--faint);
+.post-body :is(em, strong, s, del)::after,
+.post-body :is(s, del) > p:first-child::before,
+.post-body :is(s, del) > p:last-child::after {
+  color: var(--dim);
   font-family: var(--mono);
   font-style: normal;
   font-weight: 400;
   text-decoration: none;
+}
+
+/* inline-block, so the strike's line doesn't run through its own markers */
+.post-body :is(s, del)::before,
+.post-body :is(s, del)::after,
+.post-body :is(s, del) > p:first-child::before,
+.post-body :is(s, del) > p:last-child::after {
+  display: inline-block;
 }
 
 .post-body kbd {
@@ -225,7 +251,7 @@
 .post-body pre::before,
 .post-body pre::after {
   display: block;
-  color: var(--faint);
+  color: var(--dim);
 }
 
 .post-body pre::before {
@@ -255,7 +281,7 @@
 .post-body blockquote::after {
   display: block;
   margin-left: -40px;
-  color: var(--faint);
+  color: var(--dim);
   font: 400 13px/1.6 var(--mono);
 }
 
@@ -282,7 +308,7 @@
 
 .post-body hr::before {
   content: "-----";
-  color: var(--faint);
+  color: var(--dim);
   font: 400 13px/1 var(--mono);
 }
 

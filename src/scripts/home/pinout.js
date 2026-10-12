@@ -1,5 +1,7 @@
 // Builds the DIP-16 pinout from the ordered list of pins in the HTML.
-// Pins 1–8 run down the left side, 9–16 run back up the right.
+// Pins 1–8 run down the left side, 9–16 run back up the right. VCC is the pin
+// shown to start with, and the readout is kept as tall as the longest pin's
+// text, so pointing at another pin never moves the page.
 
 import { $, $$ } from "../util.js";
 import { call } from "../emacs/index.js";
@@ -16,6 +18,7 @@ export function initPinout() {
   }));
   const half = pins.length / 2;
   const readout = $(".pin-readout", fig);
+  const btns = [];
 
   const chip = document.createElement("div");
   chip.className = "chip";
@@ -43,6 +46,7 @@ export function initPinout() {
     btn.addEventListener("pointerenter", () => show(p, btn));
     btn.addEventListener("focus", () => show(p, btn));
     btn.addEventListener("click", () => show(p, btn));
+    btns.push(btn);
     if (i < half) left.append(btn);
     else right.prepend(btn);
   });
@@ -50,9 +54,36 @@ export function initPinout() {
   $(".chip-wrap", fig).append(chip);
   fig.classList.add("is-built");
 
+  let current = pins[0];
   function show(p, btn) {
     $$(".pin.is-active", chip).forEach((b) => b.classList.remove("is-active"));
     btn.classList.add("is-active");
+    current = p;
+    render(p);
+  }
+
+  // Each pin's text in turn, measured at the readout's width; the tallest sets its height.
+  let width = 0;
+  function fit() {
+    if (readout.clientWidth === width) return;
+    width = readout.clientWidth;
+    readout.style.minHeight = "";
+    let tallest = 0;
+    for (const p of pins) {
+      render(p);
+      tallest = Math.max(tallest, readout.offsetHeight);
+    }
+    readout.style.minHeight = `${tallest}px`;
+    render(current);
+  }
+
+  show(pins[0], btns[0]);
+  fit();
+  new ResizeObserver(fit).observe(readout);
+  // announced from now on, not the VCC text shown on load
+  readout.setAttribute("aria-live", "polite");
+
+  function render(p) {
     if (p.ch) readout.dataset.cat = p.ch;
     else delete readout.dataset.cat;
     readout.innerHTML = "";

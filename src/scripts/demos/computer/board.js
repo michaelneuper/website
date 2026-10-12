@@ -24,12 +24,13 @@ let boost = 1;
 let boostTimer = 0;
 let current = null;
 
+// The controls go above the board so they're in sight with it; c, n and r are
+// in the buttons' tooltips and in M-x (commands.js).
 const TEMPLATE = `
-  <div class="board" role="group" aria-label="Simulated 8-bit breadboard computer"></div>
   <div class="sim-bar">
-    <button type="button" class="btn" data-sim="run" aria-pressed="false">run</button>
-    <button type="button" class="btn" data-sim="step">step</button>
-    <button type="button" class="btn" data-sim="reset">reset</button>
+    <button type="button" class="btn" data-sim="run" aria-pressed="false" title="Run or pause (c)" aria-keyshortcuts="c">run</button>
+    <button type="button" class="btn" data-sim="step" title="Step one clock cycle (n)" aria-keyshortcuts="n">step</button>
+    <button type="button" class="btn" data-sim="reset" title="Reset, keeping RAM (r)" aria-keyshortcuts="r">reset</button>
     <label class="sim-field"><span>program</span>
       <select data-sim="program">
         <option value="fibonacci">fibonacci</option>
@@ -43,7 +44,7 @@ const TEMPLATE = `
       <output>10 Hz</output>
     </label>
   </div>
-  <p class="sim-note">Simulated one clock cycle at a time. <kbd>c</kbd> runs or pauses, <kbd>n</kbd> steps one cycle, <kbd>r</kbd> resets. Click a bit in RAM to change the program, or the display to switch to signed.</p>`;
+  <div class="board" role="group" aria-label="Simulated 8-bit breadboard computer"></div>`;
 
 export function mount(host) {
   host.innerHTML = TEMPLATE;
@@ -445,7 +446,11 @@ export function mount(host) {
 
   load("fibonacci");
   setHz(+hzIn.value);
-  run(!reducedMotion.matches || boost > 1);
+  // It waits for run (or c) so it doesn't flicker beside the write-up, unless a coffee overclock is on.
+  run(boost > 1);
+  // Drawn once now, so the board is its full height before it scrolls into view
+  // (its values fill in, and the page under it would shift).
+  render();
   const api = { run, step, reset, load, board, halted: () => s.halted, running: () => running };
   current = api;
   return () => {

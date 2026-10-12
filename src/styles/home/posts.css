@@ -48,9 +48,10 @@
   color: var(--magenta);
 }
 
+/* the stars keep the heading's colour; the title itself is plain text */
 .org-h2 a {
   min-width: 0;
-  color: inherit;
+  color: var(--fg);
   text-decoration: none;
 }
 
@@ -86,7 +87,7 @@
 }
 
 .org-drawer .k {
-  color: var(--faint);
+  color: var(--dim);
 }
 
 .org-drawer .ts {
