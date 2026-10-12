@@ -1,5 +1,10 @@
-public/
-resources/
+# build output
+dist/
+# generated types
+.astro/
+# dependencies
 node_modules/
-.hugo_build.lock
+# logs
+npm-debug.log*
+# macOS
 .DS_Store

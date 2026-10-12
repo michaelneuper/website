@@ -1,0 +1,90 @@
+// Small shared helpers: DOM, maths, theme colours, one animation loop, notes.
+
+export const $ = (sel, root = document) => root.querySelector(sel);
+export const $$ = (sel, root = document) => [...root.querySelectorAll(sel)];
+
+export const clamp = (x, lo, hi) => Math.min(hi, Math.max(lo, x));
+export const lerp = (a, b, t) => a + (b - a) * t;
+export const ease = (t) => 1 - Math.pow(1 - clamp(t, 0, 1), 3);
+
+export const reducedMotion = matchMedia("(prefers-reduced-motion: reduce)");
+export const finePointer = matchMedia("(hover: hover) and (pointer: fine)");
+
+// ── events ────────────────────────────────────────────────────────────
+const bus = new EventTarget();
+export const emit = (type, detail) => bus.dispatchEvent(new CustomEvent(type, { detail }));
+export const on = (type, fn) => bus.addEventListener(type, (e) => fn(e.detail));
+
+// ── theme colours, for canvases ───────────────────────────────────────
+let colors = null;
+export function themeColors() {
+  if (colors) return colors;
+  const cs = getComputedStyle(document.documentElement);
+  const v = (n) => cs.getPropertyValue(n).trim();
+  colors = {
+    bg: v("--bg"), fg: v("--fg"), dim: v("--dim"), faint: v("--faint"), rule: v("--rule"), hl: v("--hl"),
+    red: v("--red"), orange: v("--orange"), yellow: v("--yellow"), green: v("--green"),
+    cyan: v("--cyan"), blue: v("--blue"), magenta: v("--magenta"),
+    light: v("--glow") === "0",
+  };
+  return colors;
+}
+on("theme", () => { colors = null; });
+
+// ── one requestAnimationFrame loop for everything ─────────────────────
+const subs = new Set();
+let raf = 0;
+let last = 0;
+function frame(now) {
+  const t = now / 1000;
+  const dt = last ? Math.min(0.1, t - last) : 1 / 60;
+  last = t;
+  for (const fn of subs) fn(t, dt);
+  raf = subs.size ? requestAnimationFrame(frame) : 0;
+  if (!raf) last = 0;
+}
+export function onFrame(fn) {
+  subs.add(fn);
+  if (!raf) raf = requestAnimationFrame(frame);
+  return () => subs.delete(fn);
+}
+
+// Run fn every frame only while el is on screen.
+export function frameWhileVisible(el, fn, margin = "80px") {
+  let off = null;
+  const io = new IntersectionObserver(([e]) => {
+    if (e.isIntersecting && !off) off = onFrame(fn);
+    else if (!e.isIntersecting && off) { off(); off = null; }
+  }, { rootMargin: margin });
+  io.observe(el);
+}
+
+// Size a canvas to its CSS box at device resolution. Returns true if it changed.
+export function fitCanvas(canvas, maxDpr = 2) {
+  const dpr = Math.min(maxDpr, window.devicePixelRatio || 1);
+  const w = canvas.clientWidth;
+  const h = canvas.clientHeight;
+  const pw = Math.round(w * dpr);
+  const ph = Math.round(h * dpr);
+  if (canvas.width === pw && canvas.height === ph) return false;
+  canvas.width = pw;
+  canvas.height = ph;
+  canvas.getContext("2d").setTransform(dpr, 0, 0, dpr, 0, 0);
+  return true;
+}
+
+export async function fontsReady() {
+  try {
+    await Promise.race([
+      Promise.all([document.fonts.load('12px "JetBrains Mono"'), document.fonts.load('40px "Computer Modern"')]),
+      new Promise((r) => setTimeout(r, 2500)),
+    ]);
+  } catch { /* fall back to whatever is there */ }
+}
+
+export function isTyping(e) {
+  const t = e.target;
+  return t instanceof HTMLElement && (t.isContentEditable || /^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName) && t.type !== "range");
+}
+
+export const hex = (n, w = 2) => n.toString(16).toUpperCase().padStart(w, "0");

@@ -1,0 +1,6 @@
+Note to self: robots.txt asks well-behaved crawlers to stay away from a path.
+It does nothing to stop anyone else from reading it.
+
+flag{robots_txt_is_not_access_control}
+
+Submit it with M-x submit-flag.
