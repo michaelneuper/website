@@ -1,0 +1,11 @@
+// Cloudflare: the site is static, so the Worker only serves dist/.
+// Build with `npm run build`, then deploy with `npx wrangler deploy`.
+{
+  // Must match the Worker's name in the Cloudflare dashboard.
+  "name": "website",
+  "compatibility_date": "2026-10-01",
+  "assets": {
+    "directory": "./dist",
+    "not_found_handling": "404-page"
+  }
+}

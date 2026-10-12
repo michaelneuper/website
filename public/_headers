@@ -1,0 +1,16 @@
+# Response headers, read by both Netlify and Cloudflare.
+
+/*
+  X-Content-Type-Options: nosniff
+
+# Astro puts a content hash in these file names, so browsers can keep them for good.
+/_astro/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# The comments' frame on giscus.app loads its stylesheet and our fonts from here.
+# The stylesheets are open to any origin, so `npm run dev` can use them too.
+/giscus/*
+  Access-Control-Allow-Origin: *
+
+/fonts/*
+  Access-Control-Allow-Origin: https://giscus.app
