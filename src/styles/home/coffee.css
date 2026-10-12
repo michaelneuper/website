@@ -90,8 +90,10 @@
   line-height: 1;
 }
 
-.coffee-close:hover {
-  color: var(--fg);
+@media (hover: hover) {
+  .coffee-close:hover {
+    color: var(--fg);
+  }
 }
 
 @media (max-width: 640px) {

@@ -116,9 +116,14 @@
   white-space: nowrap;
 }
 
-.pin:hover,
 .pin.is-active {
   color: var(--fg);
+}
+
+@media (hover: hover) {
+  .pin:hover {
+    color: var(--fg);
+  }
 }
 
 .pin.is-active .name {

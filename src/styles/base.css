@@ -17,6 +17,8 @@ html {
 
 body {
   margin: 0;
+  /* room at the end of the page, so the last lines clear the modeline */
+  padding-bottom: calc(var(--frame-h) + 96px);
   font: 400 13px/1.6 var(--mono);
   font-variant-ligatures: none;
   -webkit-font-smoothing: antialiased;
@@ -36,8 +38,10 @@ a {
   text-underline-offset: 0.2em;
 }
 
-a:hover {
-  text-decoration-color: currentColor;
+@media (hover: hover) {
+  a:hover {
+    text-decoration-color: currentColor;
+  }
 }
 
 button,
@@ -125,8 +129,10 @@ code {
   white-space: nowrap;
 }
 
-.btn:hover {
-  border-color: var(--fg);
+@media (hover: hover) {
+  .btn:hover {
+    border-color: var(--fg);
+  }
 }
 
 /* held down: phones have no hover, so this is what shows a tap landed.
@@ -156,8 +162,10 @@ select {
   appearance: none;
 }
 
-select:hover {
-  border-color: var(--fg);
+@media (hover: hover) {
+  select:hover {
+    border-color: var(--fg);
+  }
 }
 
 input[type="range"] {

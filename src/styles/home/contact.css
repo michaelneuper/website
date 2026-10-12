@@ -32,13 +32,16 @@
   text-underline-offset: 0.2em;
 }
 
-.linkish:hover {
-  text-decoration-color: currentColor;
+@media (hover: hover) {
+  .linkish:hover {
+    text-decoration-color: currentColor;
+  }
 }
 
 .contact-grid {
   display: grid;
-  grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+  /* wide enough for the import command on one line */
+  grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
   gap: 0 56px;
 }
 
@@ -64,7 +67,9 @@
   min-width: 0;
   margin: 0;
   padding: 7px 12px;
-  overflow-x: auto;
+  /* no scrollbar: where it doesn't fit, the command wraps onto another line */
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
   border: 1px solid var(--rule);
   background: var(--wash);
   font-size: 12px;

@@ -25,4 +25,27 @@ export function initContact() {
     }
     setTimeout(() => { copy.textContent = "copy address"; }, 2000);
   });
+
+  // <button data-copy="selector"> copies that element's text (the GPG import command)
+  for (const b of sec.querySelectorAll("[data-copy]")) {
+    const label = b.textContent;
+    b.addEventListener("click", async () => {
+      const src = $(b.dataset.copy, sec);
+      if (!src) return;
+      const text = src.textContent.trim();
+      try {
+        await navigator.clipboard.writeText(text);
+        b.textContent = "copied";
+        message(`Copied: ${text}`, "ok", 3000);
+      } catch {
+        // no clipboard access: select it, so the reader can copy it themselves
+        const r = document.createRange();
+        r.selectNodeContents(src);
+        getSelection().removeAllRanges();
+        getSelection().addRange(r);
+        b.textContent = "selected";
+      }
+      setTimeout(() => { b.textContent = label; }, 2000);
+    });
+  }
 }

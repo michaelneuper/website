@@ -19,8 +19,10 @@
   text-decoration: none;
 }
 
-.post-nav a:hover {
-  text-decoration: underline;
+@media (hover: hover) {
+  .post-nav a:hover {
+    text-decoration: underline;
+  }
 }
 
 .post-nav .dim {

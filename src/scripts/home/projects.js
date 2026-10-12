@@ -175,13 +175,16 @@ export function initProjects() {
   let dragged = false; // the click that ends a drag doesn't pick the card under it
   wheel.addEventListener("pointerdown", (e) => {
     if (!geo || e.button !== 0) return;
-    drag = { id: e.pointerId, x: e.clientX, y: e.clientY, from: pos, moved: false, v: 0, at: performance.now() };
+    // a finger wanders further than a mouse during a tap, so it has to move
+    // further before the tap becomes a drag and stops being a click
+    const slop = e.pointerType === "mouse" ? 6 : 14;
+    drag = { id: e.pointerId, x: e.clientX, y: e.clientY, from: pos, moved: false, v: 0, at: performance.now(), slop };
   });
   wheel.addEventListener("pointermove", (e) => {
     if (!drag || e.pointerId !== drag.id) return;
     const along = geo.flat ? e.clientX - drag.x : e.clientY - drag.y;
     if (!drag.moved) {
-      if (Math.abs(along) < 6) return;
+      if (Math.abs(along) < drag.slop) return;
       drag.moved = true;
       wheel.setPointerCapture(e.pointerId);
       wheel.classList.add("is-dragging");
@@ -232,9 +235,9 @@ export function initProjects() {
     const li = items[i];
     detail.dataset.cat = li.dataset.cat;
     detail.setAttribute("aria-labelledby", cards[i].id);
-    // The title and facts, the demo, then the write-up. With room, the demo
-    // stands beside the other two; without, it comes before the write-up, so
-    // a phone gets to it without scrolling through the text. The card already
+    // The title and facts, the write-up, then the demo. With room, the demo
+    // stands beside the other two; without, it comes after the write-up, so
+    // the project is explained before it is tried. The card already
     // shows the category and the slug, and the write-up says what the summary
     // says, so those stay in the list for when there's no wheel.
     const head = document.createElement("div");
@@ -264,7 +267,7 @@ export function initProjects() {
     const host = document.createElement("div");
     host.className = "demo";
     box.append(host);
-    head.after(box);
+    row.append(box);
     try {
       const { mount } = await import(`../demos/${demo}.js`);
       if (shown === i && host.isConnected) unmount = mount(host) ?? null;

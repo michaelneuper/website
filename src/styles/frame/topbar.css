@@ -50,9 +50,14 @@
   text-decoration: none;
 }
 
-.nav a:hover,
 .nav a[aria-current="true"] {
   color: var(--fg);
+}
+
+@media (hover: hover) {
+  .nav a:hover {
+    color: var(--fg);
+  }
 }
 
 .nav a[aria-current="true"] {
@@ -70,9 +75,11 @@
   font-size: 12px;
 }
 
-.theme-key:hover,
-.menu-key:hover {
-  color: var(--fg);
+@media (hover: hover) {
+  .theme-key:hover,
+  .menu-key:hover {
+    color: var(--fg);
+  }
 }
 
 .menu-key {

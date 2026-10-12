@@ -1,9 +1,8 @@
 ---
-// The Emacs frame every page shares: the head, the top line, the footer, the
-// modeline and minibuffer, and *Help*. Pages fill the default slot with <main>,
+// The Emacs frame every page shares: the head, the top line, the modeline and
+// minibuffer, and *Help*. Pages fill the default slot with <main>,
 // add to <head> through the "head" slot and list their own keys in "help".
 import TopBar from "../components/frame/TopBar.astro";
-import Footer from "../components/frame/Footer.astro";
 import Modeline from "../components/frame/Modeline.astro";
 import Help from "../components/frame/Help.astro";
 import Analytics from "../components/frame/Analytics.astro";
@@ -61,7 +60,6 @@ const {
 <a class="skip" href={skip}>Skip to content</a>
 <TopBar home={home} />
 <slot />
-<Footer />
 <Modeline buf={buf} mode={mode} />
 <Help><slot name="help" /></Help>
 </body>

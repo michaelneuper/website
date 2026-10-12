@@ -28,8 +28,10 @@
   text-decoration: none;
 }
 
-.post-toc a:hover {
-  color: var(--fg);
+@media (hover: hover) {
+  .post-toc a:hover {
+    color: var(--fg);
+  }
 }
 
 .post-toc a[aria-current="true"] {

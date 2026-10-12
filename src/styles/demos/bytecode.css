@@ -20,8 +20,10 @@
   font-size: 13px;
 }
 
-.bc-input input:hover {
-  border-color: var(--fg);
+@media (hover: hover) {
+  .bc-input input:hover {
+    border-color: var(--fg);
+  }
 }
 
 .bc-cols {

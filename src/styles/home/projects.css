@@ -74,8 +74,10 @@
   transition: border-color 150ms ease, color 150ms ease;
 }
 
-.pj-card:hover {
-  border-color: var(--faint);
+@media (hover: hover) {
+  .pj-card:hover {
+    border-color: var(--faint);
+  }
 }
 
 .pj-card[aria-selected="true"] {

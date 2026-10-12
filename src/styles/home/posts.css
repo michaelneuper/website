@@ -48,16 +48,18 @@
   color: var(--magenta);
 }
 
-/* the stars keep the heading's colour; the title itself is plain text */
+/* the title takes the heading's colour, like its stars */
 .org-h2 a {
   min-width: 0;
-  color: var(--fg);
+  color: inherit;
   text-decoration: none;
 }
 
-.org-h2 a:hover {
-  text-decoration: underline;
-  text-decoration-thickness: 1px;
+@media (hover: hover) {
+  .org-h2 a:hover {
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+  }
 }
 
 .org-h .count {

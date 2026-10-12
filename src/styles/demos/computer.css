@@ -178,9 +178,11 @@
   cursor: pointer;
 }
 
-.ram-row .led:hover {
-  outline: 1px solid var(--faint);
-  outline-offset: 1px;
+@media (hover: hover) {
+  .ram-row .led:hover {
+    outline: 1px solid var(--faint);
+    outline-offset: 1px;
+  }
 }
 
 /* An off bit gets a ring, so the zeros you can set still show: the off colour

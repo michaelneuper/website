@@ -43,7 +43,9 @@ export function initPinout() {
       s.textContent = parts[k];
       btn.append(s);
     }
-    btn.addEventListener("pointerenter", () => show(p, btn));
+    // Pointing shows a pin only with a mouse. A tap is a click: an iPhone takes a
+    // tap that changes the page on hover as the hover, and needs a second for the click.
+    btn.addEventListener("pointerenter", (e) => { if (e.pointerType === "mouse") show(p, btn); });
     btn.addEventListener("focus", () => show(p, btn));
     btn.addEventListener("click", () => show(p, btn));
     btns.push(btn);
