@@ -11,16 +11,16 @@ export function mount(host) {
   host.innerHTML = `
     <div class="demo-bar">
       <select aria-label="Scheduling policy">
-        <option value="rr">round robin, quantum ${QUANTUM}</option>
-        <option value="sjf">shortest job first</option>
         <option value="fcfs">first come, first served</option>
+        <option value="rr" selected>round robin, quantum ${QUANTUM}</option>
+        <option value="prio">preemptive priority</option>
       </select>
       <button type="button" class="btn" data-k="add">add process</button>
       <button type="button" class="btn" data-k="pause" aria-pressed="false">pause</button>
       <span class="dim" data-k="stats"></span>
     </div>
     <canvas height="150" aria-label="Gantt chart of processes running on four cores" role="img"></canvas>
-    <p class="cap">A small simulation written for this page: four cores share one ready queue. Round robin preempts a process after ${QUANTUM} ticks; the other two policies let it run to completion.</p>`;
+    <p class="cap">A small simulation written for this page: four cores share one ready queue. First come, first served runs each process to completion. Round robin preempts a process after ${QUANTUM} ticks. Preemptive priority always runs the highest-priority processes (p1 is highest), so a new arrival can take a core from a lower-priority one.</p>`;
   const cv = host.querySelector("canvas");
   const sel = host.querySelector("select");
   const stats = host.querySelector('[data-k="stats"]');
@@ -33,33 +33,57 @@ export function mount(host) {
   let hist = Array.from({ length: CORES }, () => []);
   let done = 0;
   let waitSum = 0;
+  let preempted = 0;
   let paused = false;
+  const prioOf = new Map();
 
   const spawn = () => {
     const burst = 2 + Math.floor(Math.random() * 10);
-    queue.push({ id: nextId++, burst, left: burst, arrive: t, waited: 0 });
+    const prio = 1 + Math.floor(Math.random() * 4);
+    prioOf.set(nextId, prio);
+    prioOf.delete(nextId - 200);
+    queue.push({ id: nextId++, burst, left: burst, prio, arrive: t, waited: 0 });
   };
   for (let i = 0; i < 7; i++) spawn();
 
   function tick() {
     const active = queue.length + cores.filter((c) => c.p).length;
-    if (active < 12 && Math.random() < 0.38) spawn();
+    if (active < 12 && Math.random() < 0.55) spawn();
     // preempt
     if (sel.value === "rr") {
       for (const c of cores) {
         if (c.p && c.slice >= QUANTUM && queue.length) {
           queue.push(c.p);
           c.p = null;
+          preempted++;
         }
       }
     }
+    // the first of the highest-priority waiting processes
+    const bestWaiting = () => {
+      let i = 0;
+      queue.forEach((p, j) => { if (p.prio < queue[i].prio) i = j; });
+      return i;
+    };
     // dispatch
     for (const c of cores) {
       if (c.p || !queue.length) continue;
-      let i = 0;
-      if (sel.value === "sjf") queue.forEach((p, j) => { if (p.left < queue[i].left) i = j; });
+      const i = sel.value === "prio" ? bestWaiting() : 0;
       c.p = queue.splice(i, 1)[0];
       c.slice = 0;
+    }
+    if (sel.value === "prio") {
+      // once every core is busy, a waiting process that outranks the lowest-priority
+      // running one takes its core
+      while (queue.length && cores.every((c) => c.p)) {
+        const i = bestWaiting();
+        const worst = cores.reduce((a, b) => (b.p.prio > a.p.prio ? b : a));
+        if (queue[i].prio >= worst.p.prio) break;
+        queue.push(worst.p);
+        worst.p = queue.splice(i, 1)[0];
+        worst.slice = 0;
+        preempted++;
+      }
     }
     // run one tick
     cores.forEach((c, k) => {
@@ -76,7 +100,8 @@ export function mount(host) {
     });
     for (const p of queue) p.waited++;
     t++;
-    stats.textContent = `t = ${t}, finished ${done}, mean wait ${done ? (waitSum / done).toFixed(1) : "0.0"} ticks`;
+    const pre = sel.value === "fcfs" ? "" : `, ${preempted} preempted`;
+    stats.textContent = `t = ${t}, finished ${done}, mean wait ${done ? (waitSum / done).toFixed(1) : "0.0"} ticks${pre}`;
   }
 
   function draw() {
@@ -114,7 +139,8 @@ export function mount(host) {
           g.globalAlpha = 0.85;
           g.fillRect(x, y, w, rh);
           g.globalAlpha = 1;
-          const label = `P${id}`;
+          const long = `P${id} p${prioOf.get(id)}`;
+          const label = sel.value === "prio" && g.measureText(long).width + 6 < w ? long : `P${id}`;
           if (g.measureText(label).width + 6 < w) {
             g.fillStyle = c.bg;
             g.fillText(label, x + 3, y + rh / 2);
@@ -128,8 +154,11 @@ export function mount(host) {
     g.fillStyle = c.dim;
     g.fillText("ready", 0, qy + 9);
     let x = lw;
-    for (const p of queue) {
-      const label = `P${p.id}·${p.left}`;
+    // under priority scheduling, show the queue in the order it will be served
+    const prio = sel.value === "prio";
+    const shown = prio ? [...queue].sort((a, b) => a.prio - b.prio) : queue;
+    for (const p of shown) {
+      const label = prio ? `P${p.id} p${p.prio}` : `P${p.id}·${p.left}`;
       const w = g.measureText(label).width + 10;
       if (x + w > W) break;
       g.strokeStyle = color(p.id);
@@ -160,6 +189,7 @@ export function mount(host) {
     hist = hist.map(() => []);
     done = 0;
     waitSum = 0;
+    preempted = 0;
   });
 
   return () => off();

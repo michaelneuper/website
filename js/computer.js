@@ -5,7 +5,7 @@
 // a 7-segment display, carry and zero flags, and microcode that drives sixteen
 // control lines over five steps per instruction.
 
-import { $, $$, hex, reducedMotion, frameWhileVisible, isTyping, on } from "./util.js";
+import { $, $$, hex, reducedMotion, onFrame, isTyping, on, emit } from "./util.js";
 import { defcommand, message, completingRead, setSegment } from "./shell.js";
 
 // Control lines, in the order the control-word LEDs show them.
@@ -128,14 +128,42 @@ const GLYPH = { 0: "abcdef", 1: "bc", 2: "abdeg", 3: "abcdg", 4: "bcfg", 5: "acd
 
 // ── UI ────────────────────────────────────────────────────────────────
 
-export function initComputer() {
-  const hero = $(".hero");
-  const board = $(".board", hero);
-  if (!board) return;
-  const runBtn = $('[data-sim="run"]', hero);
-  const progSel = $('[data-sim="program"]', hero);
-  const hzIn = $('[data-sim="hz"]', hero);
-  const hzOut = $("#sim-hz");
+const fmtHz = (f) => (f < 10 ? `${f.toFixed(1)} Hz` : `${Math.round(f)} Hz`);
+
+// State that outlives any one mounted board: the coffee overclock, and which
+// board is on the page (the 8-bit project's demo mounts and unmounts it).
+let boost = 1;
+let boostTimer = 0;
+let current = null;
+
+const TEMPLATE = `
+  <div class="board" role="group" aria-label="Simulated 8-bit breadboard computer"></div>
+  <div class="sim-bar">
+    <button type="button" class="btn" data-sim="run" aria-pressed="false">run</button>
+    <button type="button" class="btn" data-sim="step">step</button>
+    <button type="button" class="btn" data-sim="reset">reset</button>
+    <label class="sim-field"><span>program</span>
+      <select data-sim="program">
+        <option value="fibonacci">fibonacci</option>
+        <option value="multiply">multiply 7 × 6</option>
+        <option value="count">count up and down</option>
+        <option value="add">add 28 + 14</option>
+      </select>
+    </label>
+    <label class="sim-field"><span>clock</span>
+      <input type="range" min="0" max="100" value="43" data-sim="hz" aria-label="Clock speed">
+      <output>10 Hz</output>
+    </label>
+  </div>
+  <p class="sim-note">Simulated one clock cycle at a time. <kbd>c</kbd> runs or pauses, <kbd>n</kbd> steps one cycle, <kbd>r</kbd> resets. Click a bit in RAM to change the program, or the display to switch to signed.</p>`;
+
+export function mount(host) {
+  host.innerHTML = TEMPLATE;
+  const board = $(".board", host);
+  const runBtn = $('[data-sim="run"]', host);
+  const progSel = $('[data-sim="program"]', host);
+  const hzIn = $('[data-sim="hz"]', host);
+  const hzOut = $("output", host);
 
   const s = { ram: new Uint8Array(16) };
   resetState(s);
@@ -146,8 +174,7 @@ export function initComputer() {
   let phase = 0;
   let signed = false;
   let dirty = true;
-  let boost = 1; // M-x coffee-refill overclocks the clock for a while
-  let boostTimer = 0;
+  let lastBoost = boost;
   const effHz = () => Math.min(500, hz * boost);
 
   // ── build the board ────────────────────────────────────────────────
@@ -400,10 +427,13 @@ export function initComputer() {
     return { label, text: parts.join(", ") };
   }
 
-  const fmtHz = (f) => (f < 10 ? `${f.toFixed(1)} Hz` : `${Math.round(f)} Hz`);
 
   // ── simulation loop ────────────────────────────────────────────────
   function frame(t, dt) {
+    if (boost !== lastBoost) {
+      lastBoost = boost;
+      dirty = true;
+    }
     if (running && !s.halted) {
       acc += dt * effHz();
       phase = (phase + dt * effHz()) % 1;
@@ -465,8 +495,8 @@ export function initComputer() {
   }
 
   runBtn.addEventListener("click", () => run());
-  $('[data-sim="step"]', hero).addEventListener("click", step);
-  $('[data-sim="reset"]', hero).addEventListener("click", reset);
+  $('[data-sim="step"]', host).addEventListener("click", step);
+  $('[data-sim="reset"]', host).addEventListener("click", reset);
   progSel.addEventListener("change", () => {
     load(progSel.value);
     if (!reducedMotion.matches) run(true);
@@ -502,49 +532,77 @@ export function initComputer() {
 
   // c, n and r while the computer is on screen
   let visible = false;
-  new IntersectionObserver(([e]) => { visible = e.isIntersecting; }, { threshold: 0.25 }).observe(board);
-  document.addEventListener("keydown", (e) => {
+  let off = null;
+  const io = new IntersectionObserver(([e]) => {
+    visible = e.intersectionRatio >= 0.25;
+    if (e.isIntersecting && !off) off = onFrame(frame);
+    else if (!e.isIntersecting && off) { off(); off = null; }
+  }, { threshold: [0, 0.25] });
+  io.observe(board);
+  const onKey = (e) => {
     if (!visible || e.defaultPrevented || e.repeat || isTyping(e) || e.metaKey || e.ctrlKey || e.altKey) return;
     if (document.querySelector("dialog[open]")) return;
     const act = { c: () => run(), n: step, r: reset }[e.key];
     if (!act) return;
     e.preventDefault();
     act();
-  });
-
-  defcommand("computer-run", () => run(), { doc: "Run or pause the 8-bit computer", key: "c" });
-  defcommand("computer-step", step, { doc: "Advance the clock by one cycle", key: "n" });
-  defcommand("computer-reset", reset, { doc: "Reset the computer (RAM is kept)", key: "r" });
-  defcommand("computer-load-program", async () => {
-    const key = await completingRead("Load program: ", Object.entries(PROGRAMS).map(([k, p]) => ({ value: k, ann: p.title })));
-    if (key) {
-      load(key);
-      run(true);
-      document.getElementById("top").scrollIntoView({ behavior: reducedMotion.matches ? "auto" : "smooth" });
-    }
-  }, { doc: "Load one of the example programs into RAM", key: "SPC c l" });
-
-  on("caffeine", ({ factor, seconds }) => {
-    boost = factor;
-    if (s.halted) reset();
-    if (!running) run(true);
-    let left = seconds;
-    clearInterval(boostTimer);
-    setSegment("misc", `${factor}× clock ${left}s`);
-    boostTimer = setInterval(() => {
-      left--;
-      if (left > 0) return setSegment("misc", `${factor}× clock ${left}s`);
-      clearInterval(boostTimer);
-      boost = 1;
-      dirty = true;
-      setSegment("misc", "");
-      message(`The caffeine wore off. Clock back to ${fmtHz(hz)}.`);
-    }, 1000);
-    dirty = true;
-  });
+  };
+  document.addEventListener("keydown", onKey);
 
   load("fibonacci");
   setHz(+hzIn.value);
-  run(!reducedMotion.matches);
-  frameWhileVisible(board, frame, "0px");
+  run(!reducedMotion.matches || boost > 1);
+  const api = { run, step, reset, load, board, halted: () => s.halted, running: () => running };
+  current = api;
+  return () => {
+    io.disconnect();
+    off?.();
+    document.removeEventListener("keydown", onKey);
+    if (current === api) current = null;
+  };
 }
+
+// The 8-bit project's demo, opened and scrolled to if it isn't on the page yet.
+export async function showComputer() {
+  if (!current) {
+    emit("project", "8-bit-computer");
+    for (let i = 0; i < 90 && !current; i++) await new Promise((r) => requestAnimationFrame(r));
+  }
+  current?.board.scrollIntoView({ behavior: reducedMotion.matches ? "auto" : "smooth", block: "center" });
+  return current;
+}
+
+const withComputer = (fn) => async () => {
+  const c = current ?? (await showComputer());
+  if (c) fn(c);
+};
+defcommand("computer-run", withComputer((c) => c.run()), { doc: "Run or pause the 8-bit computer", key: "c" });
+defcommand("computer-step", withComputer((c) => c.step()), { doc: "Advance the clock by one cycle", key: "n" });
+defcommand("computer-reset", withComputer((c) => c.reset()), { doc: "Reset the computer (RAM is kept)", key: "r" });
+defcommand("computer-load-program", async () => {
+  const key = await completingRead("Load program: ", Object.entries(PROGRAMS).map(([k, p]) => ({ value: k, ann: p.title })));
+  if (!key) return;
+  const c = await showComputer();
+  c?.load(key);
+  c?.run(true);
+}, { doc: "Load one of the example programs into RAM", key: "SPC c l" });
+
+// M-x coffee-refill: four times the clock for a while.
+on("caffeine", ({ factor, seconds }) => {
+  boost = factor;
+  if (current) {
+    if (current.halted()) current.reset();
+    if (!current.running()) current.run(true);
+  }
+  let left = seconds;
+  clearInterval(boostTimer);
+  setSegment("misc", `${factor}× clock ${left}s`);
+  boostTimer = setInterval(() => {
+    left--;
+    if (left > 0) return setSegment("misc", `${factor}× clock ${left}s`);
+    clearInterval(boostTimer);
+    boost = 1;
+    setSegment("misc", "");
+    message("The caffeine wore off. The clock is back to normal.");
+  }, 1000);
+});

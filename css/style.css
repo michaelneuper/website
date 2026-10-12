@@ -367,6 +367,46 @@ code {
   letter-spacing: -0.015em;
 }
 
+/* On load the name decodes itself (js/decode.js): each letter starts as a byte
+   with a few bits flipped and changes one bit at a time until it is right. */
+
+.boot .hero-name {
+  visibility: hidden;
+  animation: boot-failsafe 0s 2.5s forwards;
+}
+
+@keyframes boot-failsafe {
+  to { visibility: visible; }
+}
+
+/* each letter sits in a box as wide as the final letter, and whatever
+   character it shows is centred in it */
+.hero-name.is-cells .bc {
+  display: inline-block;
+  text-align: center;
+}
+
+.hero-name.is-cells .bc-ch {
+  display: inline-block;
+  margin-inline: -1em;
+  white-space: pre;
+}
+
+.bc-word {
+  white-space: nowrap;
+}
+
+/* a wrong byte shows as a raw character in the mono face */
+.bc.is-wrong {
+  color: var(--dim);
+}
+
+.bc.is-wrong .bc-ch {
+  font-family: var(--mono);
+  font-size: 0.78em;
+  letter-spacing: 0;
+}
+
 .hero-lede {
   max-width: 44ch;
   margin: 0 0 20px;
@@ -394,6 +434,38 @@ code {
   margin-right: 1ch;
   background: var(--c, var(--fg));
   vertical-align: 0.06em;
+}
+
+/* landing: the MN-2026 pinout */
+
+.hero-chip {
+  justify-self: center;
+  width: min(100%, 460px);
+}
+
+.hero-chip .chip {
+  grid-template-columns: minmax(0, 1fr) 128px minmax(0, 1fr);
+  font-size: 13px;
+}
+
+.hero-chip .pin {
+  height: 34px;
+}
+
+.hero-chip .pin .leg {
+  height: 9px;
+}
+
+.hero-chip .pin-readout {
+  min-height: 6.5em;
+}
+
+/* the 8-bit computer, as the project's demo */
+
+.demo-wide {
+  margin-top: 40px;
+  padding-top: 28px;
+  border-top: 1px solid var(--rule);
 }
 
 .sim-bar {
@@ -835,6 +907,10 @@ input[type="range"]::-moz-range-thumb {
   grid-template-columns: minmax(0, 1fr) minmax(0, 400px);
   gap: 72px;
   align-items: start;
+}
+
+.ds-desc {
+  margin: 40px 0 0;
 }
 
 .ds-h {
@@ -1452,6 +1528,103 @@ input[type="range"]::-moz-range-thumb {
   white-space: pre;
 }
 
+/* othello */
+
+.oth {
+  display: grid;
+  grid-template-columns: repeat(8, minmax(0, 1fr));
+  gap: 2px;
+  width: min(100%, 336px);
+  aspect-ratio: 1;
+  padding: 2px;
+  background: color-mix(in srgb, var(--fg) 25%, var(--bg));
+}
+
+.oth-cell {
+  position: relative;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: color-mix(in srgb, var(--green) 28%, var(--bg));
+  cursor: default;
+}
+
+.oth-cell.legal {
+  cursor: pointer;
+}
+
+.oth-cell.legal::after {
+  content: "";
+  position: absolute;
+  inset: 40%;
+  border-radius: 50%;
+  background: var(--fg);
+  opacity: 0.4;
+}
+
+.oth-cell.last {
+  box-shadow: inset 0 0 0 2px var(--yellow);
+}
+
+.oth-cell .disc {
+  position: absolute;
+  inset: 12%;
+  border-radius: 50%;
+}
+
+.oth-cell .disc.b {
+  background: #1b1b1b;
+  box-shadow: 0 0 0 1px rgb(0 0 0 / 0.35);
+}
+
+.oth-cell .disc.w {
+  background: #f1efe8;
+  box-shadow: 0 0 0 1px rgb(0 0 0 / 0.15);
+}
+
+.oth-cell .heat {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: color-mix(in srgb, var(--blue) var(--hp, 0%), transparent);
+  color: var(--fg);
+  font-size: 10px;
+}
+
+.oth-cell .heat:empty {
+  background: none;
+}
+
+/* rbudp */
+
+.rb-canvas {
+  height: 200px;
+}
+
+.rb-log {
+  max-height: 9.8em;
+  margin: 10px 0 0;
+  padding: 8px 10px;
+  overflow-y: auto;
+  border: 1px solid var(--rule);
+  list-style: none;
+  font-size: 11.5px;
+  line-height: 1.6;
+}
+
+.rb-log li {
+  display: grid;
+  grid-template-columns: 8ch 5ch minmax(0, 1fr);
+  gap: 1ch;
+}
+
+.rb-proto {
+  color: var(--cyan);
+}
+
 .sched-legend {
   display: flex;
   flex-wrap: wrap;
@@ -1579,64 +1752,7 @@ input[type="range"]::-moz-range-thumb {
   color: var(--fg);
 }
 
-/* ───────────────────────────── uart / contact ───────────────────────────── */
-
-.uart {
-  margin: 0 0 48px;
-}
-
-.uart-scroll {
-  overflow-x: auto;
-  border: 1px solid var(--rule);
-}
-
-.uart-svg {
-  display: block;
-  font-family: var(--mono);
-}
-
-.uart-svg .trace {
-  fill: none;
-  stroke: var(--fg);
-  stroke-width: 1.5;
-}
-
-.uart-svg .frame rect {
-  fill: transparent;
-}
-
-.uart-svg .frame.is-hot rect {
-  fill: var(--wash);
-}
-
-.uart-svg .bubble {
-  fill: none;
-  stroke: var(--cyan);
-}
-
-.uart-svg .frame.is-hot .bubble {
-  fill: color-mix(in srgb, var(--cyan) 22%, transparent);
-}
-
-.uart-svg .lbl {
-  fill: var(--fg);
-  font-size: 12px;
-}
-
-.uart-svg .sub {
-  fill: var(--dim);
-  font-size: 10px;
-}
-
-.uart-svg .tick {
-  stroke: var(--rule);
-}
-
-.uart-frame {
-  min-height: 1.6em;
-  margin: 10px 0 0;
-  font-size: 12px;
-}
+/* ───────────────────────────── contact ───────────────────────────── */
 
 .contact {
   display: flex;

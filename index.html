@@ -17,6 +17,13 @@
     if (!known.test(t || "")) t = matchMedia("(prefers-color-scheme: light)").matches ? "doom-gruvbox-light" : "";
     if (t) document.documentElement.dataset.theme = t;
   } catch (e) {}
+  // Hide the name until js/decode.js has cut it into bands, so it never flashes whole first.
+  // CSS shows it anyway after a moment in case the script never runs.
+  try {
+    if (!matchMedia("(prefers-reduced-motion: reduce)").matches && (!location.hash || location.hash === "#top")) {
+      document.documentElement.classList.add("boot");
+    }
+  } catch (e) {}
 </script>
 <script type="module" src="js/main.js"></script>
 </head>
@@ -30,7 +37,7 @@
     <span>michael neuper</span>
   </a>
   <nav class="nav" id="nav" aria-label="Sections">
-    <a href="#top">computer</a>
+    <a href="#top">pinout</a>
     <a href="#about">about</a>
     <a href="#projects">projects</a>
     <a href="#posts">posts</a>
@@ -42,8 +49,8 @@
 
 <main>
 
-  <!-- ─────────────────────────── 8-bit computer ─────────────────────────── -->
-  <section class="hero" id="top" data-file="sap-1.asm" data-mode="Asm" aria-labelledby="hero-name">
+  <!-- ─────────────────────────── landing ─────────────────────────── -->
+  <section class="hero" id="top" data-file="mn-2026.kicad_sym" data-mode="Lisp Data" aria-labelledby="hero-name">
     <div class="hero-id">
       <h1 class="hero-name" id="hero-name">Michael Neuper</h1>
       <p class="hero-lede">Computer science student at Stellenbosch University. I like low-level software, electronics and the maths underneath both, and I do almost all of it in Emacs.</p>
@@ -55,46 +62,8 @@
       </ul>
     </div>
 
-    <div class="hero-sim">
-      <div class="board" role="group" aria-label="Simulated 8-bit breadboard computer"></div>
-      <div class="sim-bar">
-        <button type="button" class="btn" data-sim="run" aria-pressed="false">run</button>
-        <button type="button" class="btn" data-sim="step">step</button>
-        <button type="button" class="btn" data-sim="reset">reset</button>
-        <label class="sim-field"><span>program</span>
-          <select data-sim="program">
-            <option value="fibonacci">fibonacci</option>
-            <option value="multiply">multiply 7 × 6</option>
-            <option value="count">count up and down</option>
-            <option value="add">add 28 + 14</option>
-          </select>
-        </label>
-        <label class="sim-field"><span>clock</span>
-          <input type="range" min="0" max="100" value="43" data-sim="hz" aria-describedby="sim-hz">
-          <output id="sim-hz">10 Hz</output>
-        </label>
-      </div>
-      <p class="sim-note">The 8-bit breadboard computer I built from Ben Eater’s series, simulated one clock cycle at a time. <kbd>c</kbd> runs or pauses, <kbd>n</kbd> steps one cycle, <kbd>r</kbd> resets. Click a bit in RAM to change the program.</p>
-    </div>
-  </section>
-
-  <!-- ───────────────────────────── datasheet ───────────────────────────── -->
-  <section class="sec" id="about" data-file="whoami.pdf" data-mode="PDFView">
-    <p class="winbar"><span class="file">whoami.pdf</span><span class="rule" aria-hidden="true"></span><span class="meta">revised June 2026</span></p>
-
-    <header class="ds-head">
-      <p class="ds-part">MN-2026</p>
-      <h2 class="ds-title">Low-level, wide-bandwidth computer science student</h2>
-    </header>
-
-    <div class="ds-grid">
-      <div class="ds-text">
-        <h3 class="ds-h">1 Description</h3>
-        <p class="prose">I study computer science at Stellenbosch University and have been a teaching assistant for introductory computer science and computer architecture. I like understanding things all the way down, from a line of C to the gates that run it, and I’m happiest when that ends in something I built: a scheduler, a compiler, or a computer on breadboards. Away from that I’m a linguistics nerd and a free-software advocate.</p>
-      </div>
-
+    <div class="hero-chip">
       <figure class="pinout">
-        <h3 class="ds-h">2 Pin configuration and functions</h3>
         <div class="chip-wrap"><!-- built from the list below --></div>
         <div class="pin-readout" aria-live="polite"><p class="dim">Point at a pin to read its function.</p></div>
         <figcaption>Figure 1. MN-2026, DIP-16 package, top view.</figcaption>
@@ -117,8 +86,20 @@
           <li data-name="CAN" data-type="I/O">CAN bus, the network inside every car. Cars are my one interest that isn’t a computer, mostly.</li>
           <li data-name="NC" data-type="no connect">Reserved for the next obsession.</li>
         </ol>
-      </figure>
+        </figure>
     </div>
+  </section>
+
+  <!-- ───────────────────────────── datasheet ───────────────────────────── -->
+  <section class="sec" id="about" data-file="whoami.pdf" data-mode="PDFView">
+    <p class="winbar"><span class="file">whoami.pdf</span><span class="rule" aria-hidden="true"></span><span class="meta">revised June 2026</span></p>
+
+    <header class="ds-head">
+      <p class="ds-part">MN-2026</p>
+      <h2 class="ds-title">About</h2>
+    </header>
+
+    <p class="prose ds-desc">I study computer science at Stellenbosch University and have been a teaching assistant for introductory computer science and computer architecture. I like understanding things all the way down, from a line of C to the gates that run it, and I’m happiest when that ends in something I built: a scheduler, a compiler, or a computer on breadboards. Away from that I’m a linguistics nerd and a free-software advocate.</p>
 
     <!-- Experience, as the one-line git log that would print it: "<date> - (refs) <subject> <author>".
          data-lanes colours each graph character by branch: m main, u undergrad, t teaching-assistant,
@@ -160,15 +141,13 @@ yearly Vac Weeks.</div></div>
     </div>
     <p class="gitlog-hint dim">Click an underlined commit message to read the rest of it.</p>
 
-    <h3 class="ds-h">3 Ordering information</h3>
-    <p class="prose">Interested in systems programming, low-level software and security work. If that’s what you do, <a href="#contact">get in touch</a>.</p>
   </section>
 
   <!-- ──────────────────────────── memory map ──────────────────────────── -->
   <section class="sec" id="projects" data-file="memory.map" data-mode="Fundamental">
     <p class="winbar"><span class="file">memory.map</span><span class="rule" aria-hidden="true"></span><span class="meta" data-mm="meta"></span></p>
     <h2 class="h2">Projects</h2>
-    <p class="lede">Laid out like a linker map: each project is a region in memory holding its one-line summary, and the hexdump shows exactly those bytes. Select one to read about it; two of them run.</p>
+    <p class="lede">Laid out like a linker map: each project is a region in memory holding its one-line summary, and the hexdump shows exactly those bytes. Select one to read about it and try it out.</p>
 
     <div class="mm">
       <div class="mm-bar" aria-hidden="true"></div>
@@ -176,23 +155,35 @@ yearly Vac Weeks.</div></div>
         <div class="mm-table">
           <p class="mm-head" aria-hidden="true"><span>origin</span><span>length</span><span>name</span><span>source</span></p>
           <!-- Edit projects here. data-cat: hw, sw, math or sec. data-src: shown in the source column.
-               data-demo: scheduler or bytecode (optional). -->
+               data-demo: computer, scheduler, bytecode, othello or rbudp (optional); data-wide gives the
+               demo the full width under the list. -->
           <ol class="mm-list">
-            <li class="proj" data-cat="hw" data-src="built">
+            <li class="proj" data-cat="hw" data-src="built" data-demo="computer" data-wide>
               <h3 class="proj-name">8-bit-computer</h3>
               <p class="proj-sum">Ben Eater's 8-bit breadboard computer, built chip by chip.</p>
               <div class="proj-body">
                 <p>My most recent finished project: a programmable computer on breadboards, built from 74-series logic chips following Ben Eater’s video series. It has 16 bytes of RAM, an 8-bit bus, and microcode in EEPROMs that drives sixteen control lines.</p>
-                <p>The simulation at the top of this page runs the same instruction set and microcode, so you can step through it one control word at a time.</p>
+                <p>The simulation below runs the same instruction set and microcode, so you can step through a program one control word at a time.</p>
                 <p class="proj-stack">74HC logic, EEPROMs, breadboards, a lot of jumper wire</p>
-                <p class="proj-links"><a href="#top">Run it</a> <a href="https://eater.net/8bit">Ben Eater’s series</a></p>
+                <p class="proj-links"><a href="https://eater.net/8bit">Ben Eater’s series</a></p>
               </div>
             </li>
             <li class="proj" data-cat="sw" data-src="private" data-demo="scheduler">
               <h3 class="proj-name">os-scheduler</h3>
               <p class="proj-sum">A multicore operating system scheduler, for a concurrency course.</p>
               <div class="proj-body">
-                <p>The part of an operating system that decides which process runs on which core, and for how long. I wrote it for a concurrency course, so the source stays private, but the idea fits in a small simulation: processes arrive, wait in a shared ready queue, and get dispatched to cores under a scheduling policy.</p>
+                <p>The part of an operating system that decides which process runs on which core, and for how long. I wrote it for a concurrency course, so the source stays private, but the idea fits in a small simulation: processes arrive, wait in a shared ready queue, and get dispatched to cores under first come, first served, round robin or preemptive priority scheduling.</p>
+                <p class="proj-links dim">Source private (concurrency coursework)</p>
+              </div>
+            </li>
+            <li class="proj" data-cat="sw" data-src="private" data-demo="othello">
+              <h3 class="proj-name">othello-mcts</h3>
+              <p class="proj-sum">An Othello player in C that runs Monte Carlo tree search across MPI processes.</p>
+              <div class="proj-body">
+                <p>The player picks a move by running thousands of random games from the current position and keeping the move that was explored most, using UCT to balance trying new moves against improving promising ones. Each move gets one second.</p>
+                <p>The project was for a concurrency course, so the next step was to parallelise it with MPI, which I did in three ways: independent search trees combined at the end with <code>MPI_Allreduce</code>, trees that share their statistics every so often, and the same sharing done asynchronously with non-blocking sends. In ten-game matches on four processes, each version beat the one before it, except the asynchronous version, which won half its games against the synchronous one.</p>
+                <p>You can play a serial version, rewritten in JavaScript for this page, below. While it thinks, each legal move is shaded by how often the search tried it.</p>
+                <p class="proj-stack">C, MPI, Docker</p>
                 <p class="proj-links dim">Source private (concurrency coursework)</p>
               </div>
             </li>
@@ -203,6 +194,22 @@ yearly Vac Weeks.</div></div>
                 <p>I wrote it in C for a computer architecture course. It reads a small custom programming language and produces bytecode the Java virtual machine can run. The source stays private, but the last stage is easy to show: the JVM is a stack machine, so an expression compiles to instructions that push and pop an operand stack. Type one below to see the bytecode and run it.</p>
                 <p class="proj-stack">C, JVM bytecode</p>
                 <p class="proj-links dim">Source private (computer architecture coursework)</p>
+              </div>
+            </li>
+            <li class="proj" data-cat="sw" data-src="private" data-demo="rbudp">
+              <h3 class="proj-name">chat-voip-p2p</h3>
+              <p class="proj-sum">Four networking projects in Java: chat, fast UDP file transfer, voice calls and P2P sharing.</p>
+              <div class="proj-body">
+                <p>A series of networking projects built with my group for a university course:</p>
+                <ul>
+                  <li>A chat server that handles many clients at once, with a JavaFX client, load-tested with dozens of simultaneous users.</li>
+                  <li>File transfer over Reliable Blast UDP, measured against TCP across packet sizes, loss rates and file sizes from 1 to 100&nbsp;MB.</li>
+                  <li>The chat extended with voice calls and group calls streamed over UDP, plus voice notes.</li>
+                  <li>Peer-to-peer file sharing: a server brokers searches, then peers send files to each other directly over TCP, encrypted with AES-GCM keys exchanged using RSA, with pause and resume. We tested it across four machines over Tailscale.</li>
+                </ul>
+                <p>Below is the RBUDP transfer in miniature: blast every packet over UDP, ask over TCP which ones arrived, and resend the gaps.</p>
+                <p class="proj-stack">Java, JavaFX, TCP and UDP sockets, Java Sound, RSA, AES-GCM</p>
+                <p class="proj-links dim">Source private (coursework, group project)</p>
               </div>
             </li>
           </ol>
@@ -232,19 +239,14 @@ yearly Vac Weeks.</div></div>
   </section>
 
   <!-- ───────────────────────────── contact ───────────────────────────── -->
-  <section class="sec" id="contact" data-file="uart.log" data-mode="Fundamental">
-    <p class="winbar"><span class="file">uart.log</span><span class="rule" aria-hidden="true"></span><span class="meta">115200 8N1</span></p>
+  <section class="sec" id="contact" data-file="*unsent mail*" data-mode="Message">
+    <p class="winbar"><span class="file">*unsent mail*</span><span class="rule" aria-hidden="true"></span><span class="meta">draft</span></p>
     <h2 class="h2">Say hello</h2>
-    <p class="lede">Email works best. Here’s my address the way a logic analyser sees it on a serial line: 115200 baud, eight data bits, no parity, one stop bit.</p>
-
-    <div class="uart">
-      <div class="uart-scroll"><svg class="uart-svg" role="img" aria-label="UART waveform of my email address"></svg></div>
-      <p class="uart-frame dim" aria-live="polite">Point at a frame to decode it.</p>
-    </div>
+    <p class="lede">Email works best. For anything private, encrypt it with my GPG key below.</p>
 
     <div class="contact">
       <!-- The address is only ever put together in JavaScript, so scrapers reading this HTML don't see it.
-           The link, the copy button and the waveform all read data-user and data-host. -->
+           The link and the copy button read data-user and data-host. -->
       <a class="mail" href="#contact" data-user="michael" data-host="michaelneuper.com">michael<span class="at"> &lt;at&gt; </span>michaelneuper.com</a>
       <button type="button" class="btn" data-email="copy">copy address</button>
     </div>

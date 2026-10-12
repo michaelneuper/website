@@ -1,9 +1,10 @@
 // M-x coffee-refill: my GitHub bio, made to do something. A mug fills while
-// VCC (the datasheet's coffee supply pin) climbs back to 5 V, then the 8-bit
-// computer at the top of the page runs at four times its clock for 30 seconds.
+// VCC (the chip's coffee supply pin) climbs back to 5 V, then the 8-bit
+// computer in Projects runs at four times its clock for 30 seconds.
 
 import { $, emit, reducedMotion, isTyping } from "./util.js";
-import { defcommand, message, goto } from "./shell.js";
+import { defcommand, message } from "./shell.js";
+import { showComputer } from "./computer.js";
 
 const ROWS = 5;
 const WIDTH = 10;
@@ -63,7 +64,7 @@ export function initCoffee() {
   watch.className = "linkish";
   watch.textContent = "watch the computer";
   watch.hidden = true;
-  watch.addEventListener("click", () => goto("top"));
+  watch.addEventListener("click", () => showComputer());
   links.append(" ", watch);
 
   let raf = 0;
@@ -111,7 +112,7 @@ export function initCoffee() {
         : n <= 3 ? `Cup ${n} today, within the typical range.`
           : n === 4 ? "Cup 4 today, above typical."
             : "Cup 5 today: that’s the absolute maximum rating.";
-      msg.textContent = `${note} The computer at the top now runs at ${BOOST.factor}× clock for ${BOOST.seconds} seconds.`;
+      msg.textContent = `${note} The 8-bit computer in Projects now runs at ${BOOST.factor}× clock for ${BOOST.seconds} seconds.`;
       watch.hidden = false;
       emit("caffeine", BOOST);
       message(`Refilled. VCC 5.0 V, ${BOOST.factor}× clock for ${BOOST.seconds}s`, "ok");

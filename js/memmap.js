@@ -3,7 +3,7 @@
 // cumulative, and the hexdump shows the region's actual bytes. Projects with a
 // data-demo attribute mount a small interactive demo under their write-up.
 
-import { $, $$, hex, reducedMotion } from "./util.js";
+import { $, $$, hex, reducedMotion, on } from "./util.js";
 
 const GLYPHS = "░▒▓/\\<>+=*#%&@$0123456789ABCDEF";
 
@@ -23,6 +23,7 @@ export function initMemmap() {
       cat: li.dataset.cat,
       src: li.dataset.src || "",
       demo: li.dataset.demo || "",
+      wide: "wide" in li.dataset,
       name: $(".proj-name", li).textContent.trim(),
       sum,
       bytes: enc.encode(sum),
@@ -69,6 +70,7 @@ export function initMemmap() {
   let current = -1;
   let anim = 0;
   let unmount = null;
+  let wideHost = null;
 
   async function select(i, user = false) {
     const p = projects[i];
@@ -83,6 +85,8 @@ export function initMemmap() {
     });
     unmount?.();
     unmount = null;
+    wideHost?.remove();
+    wideHost = null;
     detail.dataset.cat = p.cat;
 
     const dump = document.createElement("pre");
@@ -97,8 +101,9 @@ export function initMemmap() {
 
     if (p.demo) {
       const host = document.createElement("div");
-      host.className = "demo";
-      detail.append(host);
+      host.className = p.wide ? "demo demo-wide" : "demo";
+      if (p.wide) wideHost = host;
+      placeDemo(host, p);
       try {
         const mod = await import(`./demos/${p.demo}.js`);
         if (current === i && host.isConnected) unmount = mod.mount(host) ?? null;
@@ -112,6 +117,8 @@ export function initMemmap() {
   function close() {
     unmount?.();
     unmount = null;
+    wideHost?.remove();
+    wideHost = null;
     projects[current]?.btn.setAttribute("aria-pressed", "false");
     projects[current]?.seg.classList.remove("is-active");
     detail.replaceChildren();
@@ -124,7 +131,20 @@ export function initMemmap() {
     if (!p) return;
     if (narrow.matches) p.li.append(detail);
     else $(".mm-cols", mm).append(detail);
+    if (wideHost) placeDemo(wideHost, p);
   }
+
+  // Most demos sit under the write-up; a wide one gets the full width under the list.
+  function placeDemo(host, p) {
+    if (p.wide && !narrow.matches) mm.append(host);
+    else detail.append(host);
+  }
+
+  // Other parts of the page can open a project by name (the computer commands do).
+  on("project", (name) => {
+    const i = projects.findIndex((q) => q.name === name);
+    if (i >= 0 && i !== current) select(i);
+  });
   narrow.addEventListener("change", place);
 
   function hexdump(pre, p) {
