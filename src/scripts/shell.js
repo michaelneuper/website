@@ -373,6 +373,7 @@ const KEYMAP = [
   { key: "p", desc: "projects", cmd: "goto-projects" },
   { key: "n", desc: "posts", cmd: "goto-posts" },
   { key: "m", desc: "mail me", cmd: "goto-contact" },
+  { key: "i", desc: "imenu", cmd: "imenu" },
   { key: "r", desc: "refill coffee", cmd: "coffee-refill" },
   { key: "b", desc: "buy me a coffee", cmd: "buy-me-a-coffee" },
   { key: "h", desc: "+help", map: [
@@ -392,8 +393,11 @@ const KEYMAP = [
 let leader = null; // { map, prefix }
 let wkTimer = 0;
 
+// Only the bindings whose command this page defines (posts have no computer).
+const bound = (map) => map.filter((b) => (b.map ? bound(b.map).length : commands.has(b.cmd)));
+
 function startLeader() {
-  leader = { map: KEYMAP, prefix: "SPC" };
+  leader = { map: bound(KEYMAP), prefix: "SPC" };
   message("SPC-", "", 0);
   clearTimeout(wkTimer);
   wkTimer = setTimeout(showWhichKey, 300);
@@ -431,7 +435,7 @@ function press(key) {
   const b = leader.map.find((x) => x.key === key);
   if (!b) return endLeader(`${leader.prefix} ${key} is undefined`);
   if (b.map) {
-    leader = { map: b.map, prefix: `${leader.prefix} ${key}` };
+    leader = { map: bound(b.map), prefix: `${leader.prefix} ${key}` };
     message(`${leader.prefix}-`, "", 0);
     showWhichKey();
     return;

@@ -2247,6 +2247,344 @@ input[type="range"]::-moz-range-thumb {
   margin-top: 28px;
 }
 
+/* ───────────────────────────── posts ─────────────────────────────
+   A post is its Markdown buffer: the front matter in mono, then the text in
+   the serif, with headings keeping their # markers the way markdown-mode
+   shows them. Code is coloured from the current theme through the variables
+   Shiki's css-variables theme reads. */
+
+:root {
+  --astro-code-foreground: var(--fg);
+  --astro-code-background: var(--hl);
+  --astro-code-token-comment: var(--dim);
+  --astro-code-token-keyword: var(--magenta);
+  --astro-code-token-string: var(--green);
+  --astro-code-token-string-expression: var(--green);
+  --astro-code-token-constant: var(--orange);
+  --astro-code-token-function: var(--blue);
+  --astro-code-token-parameter: var(--fg);
+  --astro-code-token-punctuation: var(--dim);
+  --astro-code-token-link: var(--cyan);
+}
+
+.post {
+  padding-top: 112px;
+}
+
+/* post file names are long; on a phone they're cut short rather than wrapped */
+.post > .winbar .file {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.post > .winbar .meta {
+  white-space: nowrap;
+}
+
+.fm {
+  margin: 0 0 32px;
+  color: var(--faint);
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+.fm p {
+  margin: 0;
+}
+
+.fm-k {
+  color: var(--blue);
+}
+
+.fm-ts {
+  color: var(--cyan);
+}
+
+.fm .t {
+  color: var(--tag, var(--dim));
+}
+
+.post-title {
+  max-width: 18em;
+  margin: 0 0 56px;
+  font: 400 clamp(34px, 4.8vw, 54px)/1.08 var(--serif);
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+
+.post-body {
+  max-width: 680px;
+  font: 400 19px/1.6 var(--serif);
+}
+
+.post-body > :first-child {
+  margin-top: 0;
+}
+
+.post-body p,
+.post-body ul,
+.post-body ol,
+.post-body dl {
+  margin: 0 0 1em;
+}
+
+.post-body ul,
+.post-body ol {
+  padding-left: 1.3em;
+}
+
+.post-body li {
+  margin: 0.25em 0;
+}
+
+.post-body li > p {
+  margin: 0;
+}
+
+.post-body h2,
+.post-body h3,
+.post-body h4 {
+  margin: 1.7em 0 0.5em;
+  font-family: var(--serif);
+  font-weight: 400;
+  line-height: 1.2;
+}
+
+.post-body h2 {
+  font-size: 30px;
+}
+
+.post-body h3 {
+  font-size: 24px;
+}
+
+.post-body h4 {
+  font-size: 20px;
+}
+
+.post-body :is(h2, h3, h4)::before {
+  margin-right: 0.6ch;
+  color: var(--faint);
+  font: 400 15px/1 var(--mono);
+  vertical-align: 0.2em;
+}
+
+.post-body h2::before { content: "##"; }
+.post-body h3::before { content: "###"; }
+.post-body h4::before { content: "####"; }
+
+.post-body :not(pre) > code {
+  padding: 0.05em 0.3em;
+  border-radius: 2px;
+  background: var(--hl);
+  font-size: 0.74em;
+}
+
+.post-body kbd {
+  font: 400 0.72em/1 var(--mono);
+  vertical-align: 0.1em;
+}
+
+.post-body pre {
+  margin: 1.4em 0;
+  padding: 14px 16px;
+  overflow-x: auto;
+  background: var(--hl);
+  font: 400 13px/1.6 var(--mono);
+  tab-size: 4;
+}
+
+.post-body pre code {
+  font-size: inherit;
+}
+
+.post-body blockquote {
+  margin: 1.4em 0;
+  padding-left: 1em;
+  border-left: 2px solid var(--rule);
+  color: var(--dim);
+}
+
+.post-body img,
+.post-body video {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin: 1.4em 0;
+}
+
+.post-body hr {
+  margin: 2.4em 0;
+  border: 0;
+  border-top: 1px solid var(--rule);
+}
+
+.post-body table {
+  display: block;
+  margin: 1.4em 0;
+  overflow-x: auto;
+  border-collapse: collapse;
+  font: 400 13px/1.5 var(--mono);
+}
+
+.post-body th,
+.post-body td {
+  padding: 6px 16px 6px 0;
+  border-bottom: 1px solid var(--rule);
+  text-align: left;
+  vertical-align: top;
+}
+
+.post-body th {
+  color: var(--dim);
+  font-weight: 400;
+}
+
+/* KaTeX's font is Computer Modern too, so it can match the text size. */
+.post-body .katex {
+  font-size: 1em;
+}
+
+.post-body .katex-display {
+  margin: 1.2em 0;
+  padding: 0.2em 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+.post-body .footnotes {
+  margin-top: 3em;
+  padding-top: 1em;
+  border-top: 1px solid var(--rule);
+  color: var(--dim);
+  font-size: 15px;
+}
+
+.post-body .footnotes ol {
+  margin: 0;
+}
+
+/* imenu-list: the post's headings in a window beside it */
+.post-toc {
+  margin: 0 0 48px;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.post-toc .winbar {
+  margin-bottom: 14px;
+}
+
+.post-toc ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.post-toc li.d3 {
+  padding-left: 2ch;
+}
+
+.post-toc a {
+  display: block;
+  padding: 3px 0 3px 1ch;
+  border-left: 2px solid transparent;
+  color: var(--dim);
+  text-decoration: none;
+}
+
+.post-toc a:hover {
+  color: var(--fg);
+}
+
+.post-toc a[aria-current="true"] {
+  border-left-color: var(--blue);
+  color: var(--fg);
+}
+
+.post-toc .mk {
+  color: var(--faint);
+}
+
+@media (min-width: 1100px) {
+  .post-cols.has-toc {
+    display: grid;
+    grid-template-columns: minmax(0, 680px) minmax(180px, 1fr);
+    column-gap: 64px;
+    align-items: start;
+  }
+
+  .post-cols.has-toc .post-body {
+    grid-row: 1;
+    grid-column: 1;
+  }
+
+  .post-cols.has-toc .post-toc {
+    position: sticky;
+    top: calc(var(--top-h) + 32px);
+    grid-row: 1;
+    grid-column: 2;
+    max-height: calc(100vh - var(--top-h) - var(--frame-h) - 64px);
+    margin: 0;
+    overflow-y: auto;
+  }
+}
+
+.post-nav {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  max-width: 680px;
+  margin: 96px 0 0;
+  padding-top: 20px;
+  border-top: 1px solid var(--rule);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.post-nav a {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  text-decoration: none;
+}
+
+.post-nav a:hover {
+  text-decoration: underline;
+}
+
+.post-nav .dim {
+  font-size: 12px;
+}
+
+.post-nav .newer {
+  grid-column: 2;
+  text-align: right;
+}
+
+.post-all {
+  margin: 20px 0 0;
+  font-size: 12px;
+}
+
+.giscus {
+  max-width: 760px;
+}
+
+.giscus-note {
+  margin: 16px 0 0;
+  font-size: 12px;
+}
+
+.missing-links {
+  display: flex;
+  gap: 3ch;
+  margin: 0;
+  font-size: 13px;
+}
+
 /* ───────────────────────────── responsive ───────────────────────────── */
 
 @media (max-width: 1100px) {

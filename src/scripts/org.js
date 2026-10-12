@@ -4,21 +4,9 @@
 
 import { $, $$ } from "./util.js";
 import { message } from "./shell.js";
+import { TAG_COLORS } from "./tags.js";
 
 const DAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-
-// One colour per tag, like org-tag-faces. Add an entry when you add a tag.
-const TAG_COLORS = {
-  emacs: "var(--magenta)",
-  org: "var(--green)",
-  latex: "var(--cyan)",
-  python: "var(--yellow)",
-  maths: "var(--blue)",
-  linux: "var(--orange)",
-  security: "var(--red)",
-  c: "var(--violet)",
-  web: "var(--fg)",
-};
 
 export function initOrg() {
   const sec = $("#posts");
