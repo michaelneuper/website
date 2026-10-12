@@ -1,0 +1,69 @@
+/* The *dungeon* buffer on the 404 page: a transcript, a > prompt, and buttons
+   for the usual commands so it plays on a phone too. */
+
+.dun {
+  margin: 72px 0 0;
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+.dun .winbar {
+  margin-bottom: 16px;
+}
+
+/* the winbar spans the buffer like *Messages*'s; the text keeps a readable width */
+.dun-log,
+.dun-prompt,
+.dun-keys,
+.dun-noscript {
+  max-width: 76ch;
+}
+
+.dun-log {
+  max-height: 18em;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.dun-log p {
+  margin: 0;
+}
+
+.dun-log strong {
+  font-weight: 600;
+}
+
+.dun-echo {
+  color: var(--dim);
+}
+
+.dun-prompt label {
+  display: flex;
+  align-items: baseline;
+}
+
+.dun-prompt input {
+  flex: 1;
+  min-width: 0;
+  padding: 0;
+  border: 0;
+  outline: none;
+  background: none;
+  caret-color: var(--fg);
+}
+
+.dun-prompt:focus-within {
+  background: var(--hl);
+}
+
+.dun-keys {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 16px 0 0;
+}
+
+.dun-noscript {
+  margin: 0;
+  color: var(--dim);
+}

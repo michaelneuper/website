@@ -9,7 +9,7 @@
 }
 
 .mail {
-  font: 400 clamp(26px, 4.4vw, 52px)/1.1 var(--serif);
+  font: 400 clamp(24px, 3.8vw, 44px)/1.1 var(--serif);
   overflow-wrap: anywhere;
 }
 

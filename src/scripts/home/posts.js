@@ -28,14 +28,13 @@ export function initPosts() {
   };
 
   const org = el("div", "org");
-  const kw = (tag, key, value, cls) => {
-    const p = el(tag, "org-kw");
+  const kw = (key, value, cls) => {
+    const p = el("p", "org-kw");
     const k = el("span", "org-key", `#+${key}: `);
-    if (tag === "h2") k.setAttribute("aria-hidden", "true");
     p.append(k, el("span", cls, value));
     return p;
   };
-  org.append(kw("h2", "title", "Posts", "org-title"), kw("p", "author", "Michael Neuper", "v"), kw("p", "startup", "content", "v"));
+  org.append(kw("title", "Posts", "org-title"), kw("author", "Michael Neuper", "v"), kw("startup", "content", "v"));
   if (intro) org.append(intro);
 
   const tree = el("ul", "org-tree");

@@ -45,19 +45,7 @@ const css = (tokens, light) => `/* giscus theme for michaelneuper.com, made from
   font-display: swap;
 }
 
-@font-face {
-  font-family: "Computer Modern";
-  src: url("/fonts/cm-regular.woff2") format("woff2");
-  font-weight: 400;
-  font-display: swap;
-}
 
-@font-face {
-  font-family: "Computer Modern";
-  src: url("/fonts/cm-italic.woff2") format("woff2");
-  font-style: italic;
-  font-display: swap;
-}
 
 main {
   color-scheme: ${light ? "light" : "dark"};
@@ -172,15 +160,10 @@ main *::after {
   box-shadow: none !important;
 }
 
-/* what people write reads in the serif, like the posts */
+/* comments are mono too, like the rest of the Emacs around them */
 main .markdown {
-  font-family: "Computer Modern", "Latin Modern Roman", Georgia, serif;
-  font-size: 17px;
-  line-height: 1.55;
-}
-
-main .markdown :is(code, pre, kbd, tt) {
-  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-family: "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace;
   font-size: 13px;
+  line-height: 1.7;
 }
 `;

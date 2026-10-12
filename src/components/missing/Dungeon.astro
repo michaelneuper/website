@@ -1,0 +1,33 @@
+---
+// A *dungeon* buffer on the 404 page, after M-x dunnet, the text adventure that
+// ships with Emacs and starts at a dead end. Here the dead end is the missing
+// page; digging turns up posts, closest to the requested address first
+// (src/scripts/missing/dungeon.js).
+import Winbar from "../frame/Winbar.astro";
+import { publishedPosts } from "../../lib/posts.js";
+import "../../styles/missing/dungeon.css";
+
+const posts = (await publishedPosts()).map((p) => ({ title: p.data.title, slug: p.id, href: `/posts/${p.id}/` }));
+---
+<div class="dun">
+  <Winbar file="*dungeon*" meta="M-x dunnet" />
+  <div class="dun-log" aria-live="polite"></div>
+  <form class="dun-prompt" autocomplete="off">
+    <label><span aria-hidden="true">&gt;</span><span class="sr-only">Command</span><input type="text" name="cmd" spellcheck="false" autocapitalize="off" enterkeyhint="send"></label>
+  </form>
+  <p class="dun-keys">
+    <button type="button" class="btn" data-cmd="look">look</button>
+    <button type="button" class="btn" data-cmd="take shovel">take shovel</button>
+    <button type="button" class="btn" data-cmd="dig">dig</button>
+    <button type="button" class="btn" data-cmd="inventory">inventory</button>
+    <button type="button" class="btn" data-cmd="east">east</button>
+  </p>
+  <noscript><p class="dun-noscript">The dungeon needs JavaScript. The path east leads <a href="/">home</a>.</p></noscript>
+  <script type="application/json" class="dun-posts" is:inline set:html={JSON.stringify(posts)}></script>
+</div>
+
+<script>
+  import { initDungeon } from "../../scripts/missing/dungeon.js";
+
+  initDungeon();
+</script>

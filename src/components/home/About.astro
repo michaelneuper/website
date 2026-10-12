@@ -1,16 +1,11 @@
 ---
-// About, as a datasheet for the MN-2026 part, with experience as the output of
-// git log --graph (src/scripts/home/gitlog.js colours it and expands commits).
+// About me, with experience as the output of git log --graph (src/scripts/home/gitlog.js colours it and expands commits).
 import Buffer from "../frame/Buffer.astro";
 import "../../styles/home/about.css";
 ---
 <Buffer id="about" file="whoami.pdf" mode="PDFView" meta="revised June 2026">
-    <header class="ds-head">
-      <p class="ds-part">MN-2026</p>
-      <h2 class="ds-title">About</h2>
-    </header>
-
-    <p class="prose ds-desc">I study computer science at Stellenbosch University and have been a teaching assistant for introductory computer science and computer architecture. I like understanding things all the way down, from a line of C to the gates that run it, and I’m happiest when that ends in something I built: a scheduler, a compiler, or a computer on breadboards. Away from that I’m a linguistics nerd and a free-software advocate.</p>
+    <h2 class="h2">About me</h2>
+    <p class="prose">I study computer science at Stellenbosch University and have been a teaching assistant for introductory computer science and computer architecture. I like understanding things all the way down, from a line of C to the gates that run it, and I’m happiest when that ends in something I built: a scheduler, a compiler, or a computer on breadboards. Away from that I’m a linguistics nerd and a free-software advocate.</p>
 
     {/* Experience, as the one-line git log that would print it: "<date> - (refs) <subject> <author>".
          data-lanes colours each graph character by branch: m main, u undergrad, t teaching-assistant,

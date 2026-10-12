@@ -13,7 +13,7 @@ const projects = await Promise.all(
     .map(async (p) => ({ ...p.data, Body: (await render(p)).Content })),
 );
 ---
-<Buffer id="projects" file="memory.map" mode="Fundamental" metaAttrs={{ "data-mm": "meta" }}>
+<Buffer id="projects" file="projects.map" mode="Fundamental" metaAttrs={{ "data-mm": "meta" }}>
   <h2 class="h2">Projects</h2>
   <p class="lede">Laid out like a linker map: each project is a region in memory holding its one-line summary, and the hexdump shows exactly those bytes. Select one to read about it and try it out.</p>
 

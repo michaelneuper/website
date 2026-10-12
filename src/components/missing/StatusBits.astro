@@ -1,0 +1,32 @@
+---
+// The 404 page's status code in binary, each bit under its weight. On load the
+// bits arrive with a few flipped and are corrected one at a time
+// (src/scripts/missing/status-bits.js).
+import "../../styles/missing/status-bits.css";
+
+interface Props {
+  code: number;
+}
+
+const { code } = Astro.props;
+const BITS = 9;
+const weights = Array.from({ length: BITS }, (_, i) => 2 ** (BITS - 1 - i));
+// a gap before each nibble, counting from the right: 1 1001 0100
+const nibbleStart = (i: number) => i > 0 && (BITS - i) % 4 === 0;
+---
+<div class="sb" data-code={code}>
+  <p class="sb-bits" aria-label={`${code} in binary: ${code.toString(2)}`}>
+    {weights.map((w, i) => (
+      <span class:list={["sb-bit", { "sb-nibble": nibbleStart(i), "is-on": (code & w) !== 0 }]} data-w={w} aria-hidden="true">
+        <span class="w">{w}</span>
+        <span class="d">{(code & w) !== 0 ? 1 : 0}</span>
+      </span>
+    ))}
+  </p>
+</div>
+
+<script>
+  import { initStatusBits } from "../../scripts/missing/status-bits.js";
+
+  initStatusBits();
+</script>

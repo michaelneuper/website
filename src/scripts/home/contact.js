@@ -1,4 +1,4 @@
-// The page only shows "michael <at> michaelneuper.com"; the address is put
+// The page only shows "michael [at] michaelneuper.com"; the address is put
 // together here so a scraper reading the HTML never sees it whole.
 
 import { $ } from "../util.js";

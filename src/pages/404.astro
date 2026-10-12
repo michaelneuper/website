@@ -1,22 +1,29 @@
 ---
 import Base from "../layouts/Base.astro";
 import Buffer from "../components/frame/Buffer.astro";
+import StatusBits from "../components/missing/StatusBits.astro";
+import Dungeon from "../components/missing/Dungeon.astro";
 ---
 <Base title="Not found - Michael Neuper" buf="*Messages*" mode="Messages" skip="#missing">
+  <Fragment slot="head">
+    <script is:inline>
+      // Hide the bits until src/scripts/missing/status-bits.js has flipped some, so 404 never shows whole first.
+      // CSS shows them anyway after a moment in case the script never runs.
+      try {
+        if (!matchMedia("(prefers-reduced-motion: reduce)").matches) document.documentElement.classList.add("sb-boot");
+      } catch (e) {}
+    </script>
+  </Fragment>
+  <Fragment slot="help">
+    <div><dt><code>dunnet</code></dt><dd>play the text adventure at this dead end</dd></div>
+  </Fragment>
+
   <main>
     <Buffer id="missing" file="*Messages*" mode="Messages" meta="404" labelledby="missing-title">
-      <h1 class="h2" id="missing-title">No such file</h1>
-      <p class="lede">Nothing lives at this address. If it was a page on my old site, it didn't make the move, but every post did, at the same address as before.</p>
-      <p class="links"><a href="/">Home</a> <a href="/#posts">Posts</a></p>
+      <h1 class="sr-only" id="missing-title">404: nothing here</h1>
+      <StatusBits code={404} />
+      <p class="lede">Nothing lives at this address.</p>
+      <Dungeon />
     </Buffer>
   </main>
 </Base>
-
-<style>
-  .links {
-    display: flex;
-    gap: 3ch;
-    margin: 0;
-    font-size: 13px;
-  }
-</style>

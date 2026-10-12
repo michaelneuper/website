@@ -1,29 +1,4 @@
-/* About, as a datasheet, with experience as git log --graph output */
-
-.ds-head {
-  display: grid;
-  grid-template-columns: 14ch minmax(0, 1fr);
-  gap: 8px 2ch;
-  align-items: baseline;
-  padding-top: 16px;
-  border-top: 2px solid var(--fg);
-}
-
-.ds-part {
-  margin: 0;
-  font-weight: 600;
-  font-size: 15px;
-}
-
-.ds-title {
-  max-width: 19em;
-  margin: 0;
-  font: 400 clamp(28px, 3.8vw, 44px)/1.1 var(--serif);
-}
-
-.ds-desc {
-  margin: 40px 0 0;
-}
+/* About me, with experience as git log --graph output */
 
 /* experience as git log --graph --color */
 
@@ -119,10 +94,6 @@
 }
 
 @media (max-width: 640px) {
-  .ds-head {
-    grid-template-columns: minmax(0, 1fr);
-  }
-
   .gitlog {
     padding: 12px;
     font-size: 11.5px;

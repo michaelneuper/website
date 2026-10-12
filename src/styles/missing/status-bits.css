@@ -1,0 +1,74 @@
+/* The 404 page's status code in binary: each bit under its weight, 1s lit and
+   0s dim. */
+
+.sb {
+  margin: 0 0 56px;
+}
+
+.sb-bits {
+  display: flex;
+  align-items: flex-end;
+  gap: 0.06em;
+  margin: 0;
+  font: 400 clamp(52px, 12.5vw, 150px)/1 var(--serif);
+}
+
+.sb-bit {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.14em;
+  padding: 0 0.04em;
+  color: var(--faint);
+  font-variant-numeric: tabular-nums;
+  transition: color 120ms ease;
+}
+
+.sb-bit.sb-nibble {
+  margin-left: 0.22em;
+}
+
+.sb-bit.is-on {
+  color: var(--fg);
+}
+
+.sb-bit .w {
+  color: var(--faint);
+  font: 400 clamp(9px, 1.2vw, 12px)/1 var(--mono);
+}
+
+.sb-bit .d {
+  display: block;
+}
+
+.sb-bit.is-flipping .d {
+  animation: sb-flip 140ms ease-out;
+}
+
+@keyframes sb-flip {
+  from {
+    transform: perspective(400px) rotateX(90deg);
+  }
+
+  to {
+    transform: none;
+  }
+}
+
+/* Before the script corrects the bits, they stay hidden (CSS shows them after a moment anyway). */
+.sb-boot .sb-bit .d {
+  visibility: hidden;
+  animation: sb-failsafe 0s 2s forwards;
+}
+
+@keyframes sb-failsafe {
+  to {
+    visibility: visible;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sb-bit.is-flipping .d {
+    animation: none;
+  }
+}
