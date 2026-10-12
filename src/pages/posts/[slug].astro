@@ -1,7 +1,8 @@
 ---
-// One post, shown as its Markdown buffer: front matter, then the text, with an
-// imenu-list window of its headings beside it when the post asks for a table of
-// contents, and the giscus comments from the old site below.
+// One post, shown as an Org buffer: #+ keywords, then the text under starred
+// headings that fold like Org's, with an imenu-list window of the headings
+// beside it when the post asks for a table of contents, and the giscus
+// comments from the old site below. The posts are Markdown underneath.
 import { render } from "astro:content";
 import "katex/dist/katex.min.css";
 import Base from "../../layouts/Base.astro";
@@ -19,37 +20,37 @@ export async function getStaticPaths() {
 const { post, newer, older } = Astro.props;
 const { Content, headings } = await render(post);
 const { title, date, tags, toc } = post.data;
-const file = `${post.id}.md`;
+const file = `${post.id}.org`;
 const words = wordCount(post.body ?? "");
 const minutes = Math.max(1, Math.round(words / 230));
 // (the footnotes' heading is only there for screen readers)
 const outline = toc ? headings.filter((h) => (h.depth === 2 || h.depth === 3) && h.slug !== "footnote-label") : [];
 ---
-<Base title={`${title} - Michael Neuper`} description={summary(post.body ?? "")} buf={file} mode="Markdown" skip="#post">
+<Base title={`${title} - Michael Neuper`} description={summary(post.body ?? "")} buf={file} mode="Org" skip="#post">
   <Fragment slot="head">
     <script src="../../scripts/page.js"></script>
   </Fragment>
   <Fragment slot="help">
-    <div><dt><code>imenu</code></dt><dd>jump to a heading in this post</dd></div>
+    <div><dt><kbd>TAB</kbd></dt><dd>fold the heading whose stars you clicked</dd></div>
+    <div><dt><kbd>S-TAB</kbd></dt><dd>cycle the whole buffer: overview, contents, show all</dd></div>
+    <div><dt><kbd>SPC i</kbd></dt><dd>imenu: jump to a heading</dd></div>
     <div><dt><kbd>SPC n</kbd></dt><dd>back to the list of posts</dd></div>
   </Fragment>
 
   <main>
-    <section class="sec post" id="post" data-file={file} data-mode="Markdown" aria-labelledby="post-title">
+    <section class="sec post" id="post" data-file={file} data-mode="Org" aria-labelledby="post-title">
       <p class="winbar"><span class="file">{file}</span><span class="rule" aria-hidden="true"></span><span class="meta">{words.toLocaleString("en")} words, {minutes} min</span></p>
 
-      <div class="fm">
-        <p class="fm-fence" aria-hidden="true">---</p>
-        <p><span class="fm-k">date:</span> <time class="fm-ts" datetime={ymd(date)}>{ymd(date)} {weekday(date)}</time></p>
+      <header class="org-head">
+        <h1 class="post-title" id="post-title"><span class="org-key" aria-hidden="true">#+title:</span> {title}</h1>
+        <p class="org-kw"><span class="org-key">#+author:</span> <span class="v">Michael Neuper</span></p>
+        <p class="org-kw"><span class="org-key">#+date:</span> <time class="org-ts" datetime={ymd(date)}>&lt;{ymd(date)} {weekday(date)}&gt;</time></p>
         {tags.length > 0 && (
-          <p><span class="fm-k">tags:</span> [{tags.map((t, i) => (
-            <Fragment>{i > 0 && ", "}<span class="t" style={`--tag: ${TAG_COLORS[t] ?? "var(--dim)"}`}>{t}</span></Fragment>
-          ))}]</p>
+          <p class="org-kw"><span class="org-key">#+filetags:</span> <span class="org-filetags">:{tags.map((t) => (
+            <Fragment><span class="t" style={`--tag: ${TAG_COLORS[t] ?? "var(--dim)"}`}>{t}</span>:</Fragment>
+          ))}</span></p>
         )}
-        <p class="fm-fence" aria-hidden="true">---</p>
-      </div>
-
-      <h1 class="post-title" id="post-title">{title}</h1>
+      </header>
 
       <div class:list={["post-cols", { "has-toc": outline.length > 0 }]}>
         {outline.length > 0 && (
@@ -57,7 +58,7 @@ const outline = toc ? headings.filter((h) => (h.depth === 2 || h.depth === 3) &&
             <p class="winbar"><span class="file" id="toc-title">*Ilist*</span><span class="rule" aria-hidden="true"></span><span class="meta">contents</span></p>
             <ol>
               {outline.map((h) => (
-                <li class={`d${h.depth}`}><a href={`#${h.slug}`}><span class="mk" aria-hidden="true">{"#".repeat(h.depth)}</span> {h.text}</a></li>
+                <li class={`d${h.depth}`}><a href={`#${h.slug}`}><span class="mk" aria-hidden="true">{"*".repeat(h.depth - 1)}</span> {h.text}</a></li>
               ))}
             </ol>
           </aside>
@@ -80,8 +81,5 @@ const outline = toc ? headings.filter((h) => (h.depth === 2 || h.depth === 3) &&
       <p class="dim giscus-note">Comments load from GitHub Discussions through giscus.<noscript> They need JavaScript.</noscript></p>
     </section>
 
-    <footer class="foot">
-      <p class="dim">Press <kbd>SPC</kbd> for commands or <kbd>M-x</kbd> to run one by name.</p>
-    </footer>
   </main>
 </Base>

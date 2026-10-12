@@ -2248,10 +2248,11 @@ input[type="range"]::-moz-range-thumb {
 }
 
 /* ───────────────────────────── posts ─────────────────────────────
-   A post is its Markdown buffer: the front matter in mono, then the text in
-   the serif, with headings keeping their # markers the way markdown-mode
-   shows them. Code is coloured from the current theme through the variables
-   Shiki's css-variables theme reads. */
+   A post is an Org buffer the way Doom shows one with mixed-pitch-mode: #+
+   keywords and markup in mono, the text in the serif, starred headings in
+   the org-level colours (the same as the posts list on the home page), and
+   code between #+begin_src and #+end_src. Code is coloured from the current
+   theme through the variables Shiki's css-variables theme reads. */
 
 :root {
   --astro-code-foreground: var(--fg);
@@ -2283,35 +2284,37 @@ input[type="range"]::-moz-range-thumb {
   white-space: nowrap;
 }
 
-.fm {
-  margin: 0 0 32px;
-  color: var(--faint);
+.org-head {
+  margin: 0 0 56px;
   font-size: 13px;
-  line-height: 1.7;
+  line-height: 1.75;
 }
 
-.fm p {
-  margin: 0;
+.org-head .org-key {
+  color: var(--faint);
 }
 
-.fm-k {
-  color: var(--blue);
-}
-
-.fm-ts {
+.org-ts {
   color: var(--cyan);
 }
 
-.fm .t {
+.org-filetags .t {
   color: var(--tag, var(--dim));
 }
 
 .post-title {
   max-width: 18em;
-  margin: 0 0 56px;
+  margin: 0 0 20px;
   font: 400 clamp(34px, 4.8vw, 54px)/1.08 var(--serif);
   letter-spacing: -0.01em;
   text-wrap: balance;
+}
+
+.post-title .org-key {
+  margin-right: 0.3ch;
+  font: 400 15px/1 var(--mono);
+  letter-spacing: 0;
+  vertical-align: 0.5em;
 }
 
 .post-body {
@@ -2335,14 +2338,24 @@ input[type="range"]::-moz-range-thumb {
   padding-left: 1.3em;
 }
 
+.post-body ul {
+  list-style-type: "- ";
+}
+
 .post-body li {
   margin: 0.25em 0;
+}
+
+.post-body li::marker {
+  color: var(--faint);
+  font: 400 15px var(--mono);
 }
 
 .post-body li > p {
   margin: 0;
 }
 
+/* headings, coloured like org-level-1, -2 and -3 */
 .post-body h2,
 .post-body h3,
 .post-body h4 {
@@ -2353,33 +2366,83 @@ input[type="range"]::-moz-range-thumb {
 }
 
 .post-body h2 {
+  color: var(--blue);
   font-size: 30px;
 }
 
 .post-body h3 {
+  color: var(--magenta);
   font-size: 24px;
 }
 
 .post-body h4 {
+  color: var(--violet);
   font-size: 20px;
 }
 
-.post-body :is(h2, h3, h4)::before {
+/* The stars. page.js swaps them for buttons that fold the heading. */
+.post-body :is(h2, h3, h4)::before,
+.post-body .org-stars {
   margin-right: 0.6ch;
-  color: var(--faint);
   font: 400 15px/1 var(--mono);
   vertical-align: 0.2em;
 }
 
-.post-body h2::before { content: "##"; }
-.post-body h3::before { content: "###"; }
-.post-body h4::before { content: "####"; }
+.post-body h2::before { content: "*"; }
+.post-body h3::before { content: "**"; }
+.post-body h4::before { content: "***"; }
 
+.post-body .has-stars::before {
+  content: none;
+}
+
+.post-body .org-stars {
+  cursor: pointer;
+}
+
+.post-body .org-ellipsis {
+  margin-left: 0.5ch;
+  font: 400 15px/1 var(--mono);
+}
+
+.post-body .is-folded-away {
+  display: none !important;
+}
+
+/* emphasis keeps its Org markers: ~code~ /italic/ *bold* +strike+ */
 .post-body :not(pre) > code {
-  padding: 0.05em 0.3em;
-  border-radius: 2px;
-  background: var(--hl);
+  color: var(--orange);
   font-size: 0.74em;
+}
+
+.post-body :not(pre) > code::before,
+.post-body :not(pre) > code::after {
+  content: "~";
+}
+
+.post-body em::before,
+.post-body em::after {
+  content: "/";
+}
+
+.post-body strong::before,
+.post-body strong::after {
+  content: "*";
+}
+
+.post-body :is(s, del)::before,
+.post-body :is(s, del)::after {
+  content: "+";
+}
+
+.post-body :not(pre) > code::before,
+.post-body :not(pre) > code::after,
+.post-body :is(em, strong, s, del)::before,
+.post-body :is(em, strong, s, del)::after {
+  color: var(--faint);
+  font-style: normal;
+  font-weight: 400;
+  text-decoration: none;
 }
 
 .post-body kbd {
@@ -2387,13 +2450,34 @@ input[type="range"]::-moz-range-thumb {
   vertical-align: 0.1em;
 }
 
+/* #+begin_src lang ... #+end_src */
 .post-body pre {
   margin: 1.4em 0;
-  padding: 14px 16px;
+  padding: 0 16px;
   overflow-x: auto;
   background: var(--hl);
   font: 400 13px/1.6 var(--mono);
   tab-size: 4;
+}
+
+.post-body pre::before,
+.post-body pre::after {
+  display: block;
+  color: var(--faint);
+}
+
+.post-body pre::before {
+  content: "#+begin_src " attr(data-language);
+  padding-top: 8px;
+}
+
+.post-body pre[data-language="py"]::before {
+  content: "#+begin_src python";
+}
+
+.post-body pre::after {
+  content: "#+end_src";
+  padding-bottom: 8px;
 }
 
 .post-body pre code {
@@ -2402,9 +2486,23 @@ input[type="range"]::-moz-range-thumb {
 
 .post-body blockquote {
   margin: 1.4em 0;
-  padding-left: 1em;
-  border-left: 2px solid var(--rule);
   color: var(--dim);
+}
+
+.post-body blockquote::before,
+.post-body blockquote::after {
+  display: block;
+  margin-left: -40px;
+  color: var(--faint);
+  font: 400 13px/1.6 var(--mono);
+}
+
+.post-body blockquote::before {
+  content: "#+begin_quote";
+}
+
+.post-body blockquote::after {
+  content: "#+end_quote";
 }
 
 .post-body img,
@@ -2416,11 +2514,17 @@ input[type="range"]::-moz-range-thumb {
 }
 
 .post-body hr {
-  margin: 2.4em 0;
+  margin: 2em 0;
   border: 0;
-  border-top: 1px solid var(--rule);
 }
 
+.post-body hr::before {
+  content: "-----";
+  color: var(--faint);
+  font: 400 13px/1 var(--mono);
+}
+
+/* org tables: | a | b | */
 .post-body table {
   display: block;
   margin: 1.4em 0;
@@ -2431,14 +2535,14 @@ input[type="range"]::-moz-range-thumb {
 
 .post-body th,
 .post-body td {
-  padding: 6px 16px 6px 0;
-  border-bottom: 1px solid var(--rule);
+  padding: 4px 1ch;
+  border: 1px solid var(--rule);
   text-align: left;
   vertical-align: top;
 }
 
 .post-body th {
-  color: var(--dim);
+  color: var(--blue);
   font-weight: 400;
 }
 
@@ -2454,16 +2558,58 @@ input[type="range"]::-moz-range-thumb {
   overflow-y: hidden;
 }
 
+/* [fn:1] references, and the notes under a * Footnotes heading */
+.post-body sup:has(> a[data-footnote-ref]) {
+  font: 400 13px/1 var(--mono);
+  vertical-align: baseline;
+}
+
+.post-body a[data-footnote-ref] {
+  color: var(--cyan);
+  text-decoration: none;
+}
+
+.post-body a[data-footnote-ref]::before {
+  content: "[fn:";
+}
+
+.post-body a[data-footnote-ref]::after {
+  content: "]";
+}
+
 .post-body .footnotes {
-  margin-top: 3em;
-  padding-top: 1em;
-  border-top: 1px solid var(--rule);
-  color: var(--dim);
-  font-size: 15px;
+  margin-top: 1.7em;
+  font-size: 17px;
+}
+
+.post-body .footnotes h2.sr-only {
+  position: static;
+  width: auto;
+  height: auto;
+  overflow: visible;
+  clip-path: none;
+  white-space: normal;
 }
 
 .post-body .footnotes ol {
   margin: 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: fn;
+}
+
+.post-body .footnotes li {
+  counter-increment: fn;
+}
+
+.post-body .footnotes li::before {
+  content: "[fn:" counter(fn) "] ";
+  color: var(--cyan);
+  font: 400 13px var(--mono);
+}
+
+.post-body .footnotes li > p {
+  display: inline;
 }
 
 /* imenu-list: the post's headings in a window beside it */

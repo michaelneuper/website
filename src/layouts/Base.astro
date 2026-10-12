@@ -25,6 +25,9 @@ const {
   skip,
 } = Astro.props;
 const at = home ? "" : "/";
+// Google Analytics, as on the Hugo site: production builds only, so local work isn't counted.
+const GA_ID = "G-BLX24KP7CS";
+const year = new Date().getFullYear();
 ---
 <!doctype html>
 <html lang="en" data-theme="doom-gruvbox">
@@ -47,6 +50,17 @@ const at = home ? "" : "/";
     if (t) document.documentElement.dataset.theme = t;
   } catch (e) {}
 </script>
+{import.meta.env.PROD && (
+  <Fragment>
+    <script is:inline async src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}></script>
+    <script is:inline define:vars={{ GA_ID }}>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() { dataLayer.push(arguments); }
+      gtag("js", new Date());
+      gtag("config", GA_ID);
+    </script>
+  </Fragment>
+)}
 <slot name="head" />
 </head>
 <!-- Reading the source? Good instinct. flag{view_source_is_recon} -->
@@ -59,7 +73,6 @@ const at = home ? "" : "/";
     <span>michael neuper</span>
   </a>
   <nav class="nav" id="nav" aria-label="Sections">
-    <a href={`${at}#top`}>pinout</a>
     <a href={`${at}#about`}>about</a>
     <a href={`${at}#projects`}>projects</a>
     <a href={`${at}#posts`}>posts</a>
@@ -70,6 +83,10 @@ const at = home ? "" : "/";
 </header>
 
 <slot />
+
+<footer class="foot">
+  <p>© {year} Michael Neuper</p>
+</footer>
 
 <!-- ───────────────────────── modeline and minibuffer ───────────────────────── -->
 <div class="which-key" hidden aria-live="polite"></div>
