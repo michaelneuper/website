@@ -1,0 +1,16 @@
+---
+// The comments under a post, from GitHub Discussions through giscus
+// (src/scripts/post/comments.js loads them as you scroll near).
+import Buffer from "../frame/Buffer.astro";
+import "../../styles/post/comments.css";
+---
+<Buffer id="comments" class="post-comments" file="*comments*" mode="giscus" meta="GitHub Discussions" labelledby="comments-title" fileId="comments-title">
+  <div class="giscus"></div>
+  <p class="dim giscus-note">Comments load from GitHub Discussions through giscus.<noscript> They need JavaScript.</noscript></p>
+</Buffer>
+
+<script>
+  import { initComments } from "../../scripts/post/comments.js";
+
+  initComments();
+</script>

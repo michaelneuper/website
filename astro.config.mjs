@@ -24,7 +24,7 @@ export default defineConfig({
   devToolbar: { enabled: false },
   markdown: {
     processor: satteri({ features: { math: true }, mdastPlugins: [renderMath] }),
-    // Code takes its colours from the current Emacs theme (see .astro-code in style.css).
+    // Code takes its colours from the current Emacs theme (the --astro-code-* variables in src/styles/post/org.css).
     shikiConfig: { theme: "css-variables" },
   },
   // Pages from the Hugo site that now live on the home page.

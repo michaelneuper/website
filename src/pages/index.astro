@@ -1,264 +1,37 @@
 ---
 import Base from "../layouts/Base.astro";
-import { publishedPosts, ymd } from "../lib/posts.js";
-
-const posts = await publishedPosts();
+import Hero from "../components/home/Hero.astro";
+import About from "../components/home/About.astro";
+import Projects from "../components/home/Projects.astro";
+import Posts from "../components/home/Posts.astro";
+import Contact from "../components/home/Contact.astro";
+import Coffee from "../components/home/Coffee.astro";
 ---
 <Base home buf="sap-1.asm" mode="Asm" skip="#about">
-<Fragment slot="head">
-<script is:inline>
-  // Hide the name until src/scripts/decode.js has split it into letters, so it never flashes whole first.
-  // CSS shows it anyway after a moment in case the script never runs.
-  try {
-    if (!matchMedia("(prefers-reduced-motion: reduce)").matches && (!location.hash || location.hash === "#top")) {
-      document.documentElement.classList.add("boot");
-    }
-  } catch (e) {}
-</script>
-<script src="../scripts/main.js"></script>
-</Fragment>
-<Fragment slot="help">
-  <div><dt><kbd>c</kbd> <kbd>n</kbd> <kbd>r</kbd></dt><dd>computer: run or pause, step, reset</dd></div>
-  <div><dt><kbd>TAB</kbd></dt><dd>fold the Org heading under focus</dd></div>
-  <div><dt><kbd>S-TAB</kbd></dt><dd>cycle the whole Org buffer</dd></div>
-  <div><dt><code>coffee-refill</code></dt><dd>top up VCC and overclock the computer</dd></div>
-</Fragment>
+  <Fragment slot="head">
+    <script is:inline>
+      // Hide the name until src/scripts/home/decode.js has split it into letters, so it never flashes whole first.
+      // CSS shows it anyway after a moment in case the script never runs.
+      try {
+        if (!matchMedia("(prefers-reduced-motion: reduce)").matches && (!location.hash || location.hash === "#top")) {
+          document.documentElement.classList.add("boot");
+        }
+      } catch (e) {}
+    </script>
+  </Fragment>
+  <Fragment slot="help">
+    <div><dt><kbd>c</kbd> <kbd>n</kbd> <kbd>r</kbd></dt><dd>computer: run or pause, step, reset</dd></div>
+    <div><dt><kbd>TAB</kbd></dt><dd>fold the Org heading under focus</dd></div>
+    <div><dt><kbd>S-TAB</kbd></dt><dd>cycle the whole Org buffer</dd></div>
+    <div><dt><code>coffee-refill</code></dt><dd>top up VCC and overclock the computer</dd></div>
+  </Fragment>
 
-<main>
-
-  <!-- ─────────────────────────── landing ─────────────────────────── -->
-  <section class="hero" id="top" data-file="mn-2026.kicad_sym" data-mode="Lisp Data" aria-labelledby="hero-name">
-    <div class="hero-id">
-      <h1 class="hero-name" id="hero-name">Michael Neuper</h1>
-      <p class="hero-lede">Computer science student at Stellenbosch University. I like low-level software, electronics and the maths underneath both, and I do almost all of it in Emacs.</p>
-      <ul class="legend" aria-label="Colour key used across the site">
-        <li data-cat="hw">hardware</li>
-        <li data-cat="sw">software</li>
-        <li data-cat="math">maths</li>
-        <li data-cat="sec">security</li>
-      </ul>
-    </div>
-
-    <div class="hero-chip">
-      <figure class="pinout">
-        <div class="chip-wrap"><!-- built from the list below --></div>
-        <div class="pin-readout" aria-live="polite"><p class="dim">Point at a pin to read its function.</p></div>
-        <figcaption>Figure 1. MN-2026, DIP-16 package, top view.</figcaption>
-        <!-- Edit the pins here. data-cat: hw, sw, math or sec. "M-x some-command" in a description becomes a button. -->
-        <ol class="pin-list">
-          <li data-name="VCC" data-type="power">Supply input: coffee. Top it up with M-x coffee-refill.</li>
-          <li data-name="C" data-type="I/O" data-cat="sw">Most of what I write, from a compiler to terminal toys like a spinning cube and the Game of Life.</li>
-          <li data-name="ASM" data-type="I/O" data-cat="sw">Assembly, starting with the 8-bit computer’s eleven instructions.</li>
-          <li data-name="JVM" data-type="output" data-cat="sw">The target of my compiler, so I read javap output for fun.</li>
-          <li data-name="LINUX" data-type="I/O" data-cat="sw">Daily driver. Dotfiles on GitHub, and posts on packaging formats and turning a window manager into a desktop.</li>
-          <li data-name="TTL" data-type="I/O" data-cat="hw">74-series logic. The 8-bit computer is dozens of these chips on breadboards.</li>
-          <li data-name="SEC" data-type="input" data-cat="sec">Security: a consulting internship, a web application assessment, and the habit of asking how things break.</li>
-          <li data-name="GND" data-type="power">Return path. Sleep, when the config is finished (it is never finished).</li>
-          <li data-name="RST" data-type="input">Active low. Asserted by a walk without a laptop.</li>
-          <li data-name="TA" data-type="output" data-cat="hw">Teaching assistant for introductory computer science and computer architecture.</li>
-          <li data-name="TEX" data-type="output" data-cat="math">Notes, templates and maths typeset in LaTeX, usually from Emacs.</li>
-          <li data-name="ORG" data-type="I/O" data-cat="sw">Org mode and org-roam for notes, literate configs, and replacing Jupyter.</li>
-          <li data-name="EMACS" data-type="I/O" data-cat="sw">Doom Emacs, with a literate config of over a thousand lines. Location: ~/.config/emacs/.</li>
-          <li data-name="MATH" data-type="input" data-cat="math">Project Euler, discrete maths, and modelling things in Python.</li>
-          <li data-name="CAN" data-type="I/O">CAN bus, the network inside every car. Cars are my one interest that isn’t a computer, mostly.</li>
-          <li data-name="NC" data-type="no connect">Reserved for the next obsession.</li>
-        </ol>
-        </figure>
-    </div>
-  </section>
-
-  <!-- ───────────────────────────── datasheet ───────────────────────────── -->
-  <section class="sec" id="about" data-file="whoami.pdf" data-mode="PDFView">
-    <p class="winbar"><span class="file">whoami.pdf</span><span class="rule" aria-hidden="true"></span><span class="meta">revised June 2026</span></p>
-
-    <header class="ds-head">
-      <p class="ds-part">MN-2026</p>
-      <h2 class="ds-title">About</h2>
-    </header>
-
-    <p class="prose ds-desc">I study computer science at Stellenbosch University and have been a teaching assistant for introductory computer science and computer architecture. I like understanding things all the way down, from a line of C to the gates that run it, and I’m happiest when that ends in something I built: a scheduler, a compiler, or a computer on breadboards. Away from that I’m a linguistics nerd and a free-software advocate.</p>
-
-    <!-- Experience, as the one-line git log that would print it: "<date> - (refs) <subject> <author>".
-         data-lanes colours each graph character by branch: m main, u undergrad, t teaching-assistant,
-         b bbd-software, i mwr-internship (the colours are set in src/styles/style.css). data-cont is the graph that continues below a commit, and a
-         .gl-desc becomes its expandable description. data-branch colours the date; data-tip makes the
-         * bold for a branch that's still going; data-today swaps in the current month when the page loads.
-         Without JavaScript this shows as plain text. -->
-    <h3 class="ds-h gitlog-cmd"><span class="prompt" aria-hidden="true">$ </span>git log --graph --all --color \
-    --date=format:'%Y-%m' \
-    --format='%ad -%C(auto)%d%C(reset) %s %C(blue)&lt;%an&gt;%C(reset)'</h3>
-    <div class="gitlog" aria-label="Experience, newest first">
-<div class="gl-line" data-lanes="  b u t " data-cont="| | | | " data-cont-lanes="m b u t " data-branch="m" data-tip data-today>* | | | 2026-10 - (HEAD -&gt; main)</div>
-<div class="gl-line" data-lanes="m   u t " data-cont="| | | | " data-cont-lanes="m b u t " data-branch="b" data-tip>| * | | 2026-06 - (bbd-software) Vac Week 2026 &lt;BBD Software&gt;<div class="gl-desc">Built an online foosball game: players steer the rods by
-tilting their phones, using the gyroscope. Designed and
-presented as a full-stack web app with a small team.</div></div>
-<div class="gl-line" data-lanes="m b u   " data-cont="| | | | " data-cont-lanes="m b u t " data-branch="t" data-tip>| | | * 2026-06 - (teaching-assistant) Teach computer architecture as a TA &lt;Stellenbosch University&gt;</div>
-<div class="gl-line" data-lanes="m b u t">| | | |</div>
-<div class="gl-line" data-lanes="m b u   " data-cont="| | | | " data-cont-lanes="m b u t " data-branch="t">| | | * 2026-02 - Teach introductory computer science as a TA &lt;Stellenbosch University&gt;</div>
-<div class="gl-line" data-lanes="m   u t " data-cont="| | | | " data-cont-lanes="m b u t " data-branch="b">| * | | 2025-06 - Vac Week 2025 &lt;BBD Software&gt;<div class="gl-desc">Built an online laser tag game: computer vision finds players
-in the camera feed and tags them. Designed and presented as a
-full-stack web app with a small team.</div></div>
-<div class="gl-line" data-lanes="m b u t">| | | |</div>
-<div class="gl-line" data-lanes="m   u t " data-cont="| | | | " data-cont-lanes="m b u t " data-branch="b">| * | | 2025-01 - Join BBD Software as a bursar &lt;BBD Software&gt;<div class="gl-desc">Part of the Bursary &amp; Beyond Programme, which includes the
-yearly Vac Weeks.</div></div>
-<div class="gl-line" data-lanes="mb  u t">|/  | |</div>
-<div class="gl-line" data-lanes="m   u t">|   | |</div>
-<div class="gl-line" data-lanes="mi  u t">|\  | |</div>
-<div class="gl-line" data-lanes="m   u t " data-cont="| | | | " data-cont-lanes="m i u t " data-branch="i">| * | | 2024-12 - (mwr-internship) Complete a cybersecurity consultant internship &lt;MWR CyberSec&gt;<div class="gl-desc">- Completed cybersecurity training with labs on TryHackMe.
-- Assessed a web application end to end, documenting each
-  vulnerability with its risk and how to fix it.
-- Wrote a professional report and presented it, client-style,
-  to a panel of industry professionals.</div></div>
-<div class="gl-line" data-lanes="mi  u t">|/  | |</div>
-<div class="gl-line" data-lanes="m   ut">|   |/</div>
-<div class="gl-line" data-lanes="m     " data-cont="|   | " data-cont-lanes="m   u " data-branch="u" data-tip>|   * 2024-01 - (undergrad) Start an undergraduate degree in computer science &lt;Stellenbosch University&gt;</div>
-<div class="gl-line" data-lanes="m  u">|  /</div>
-<div class="gl-line" data-lanes="mu">|/</div>
-<div class="gl-line" data-lanes="  " data-cont="  " data-cont-lanes="  " data-branch="m">* 2005-06 - Initial commit &lt;Michael Neuper&gt;</div>
-    </div>
-    <p class="gitlog-hint dim">Click an underlined commit message to read the rest of it.</p>
-
-  </section>
-
-  <!-- ──────────────────────────── memory map ──────────────────────────── -->
-  <section class="sec" id="projects" data-file="memory.map" data-mode="Fundamental">
-    <p class="winbar"><span class="file">memory.map</span><span class="rule" aria-hidden="true"></span><span class="meta" data-mm="meta"></span></p>
-    <h2 class="h2">Projects</h2>
-    <p class="lede">Laid out like a linker map: each project is a region in memory holding its one-line summary, and the hexdump shows exactly those bytes. Select one to read about it and try it out.</p>
-
-    <div class="mm">
-      <div class="mm-bar" aria-hidden="true"></div>
-      <div class="mm-cols">
-        <div class="mm-table">
-          <p class="mm-head" aria-hidden="true"><span>origin</span><span>length</span><span>name</span><span>source</span></p>
-          <!-- Edit projects here. data-cat: hw, sw, math or sec. data-src: shown in the source column.
-               data-demo: computer, scheduler, bytecode, othello or rbudp (optional); data-wide gives the
-               demo the full width under the list. -->
-          <ol class="mm-list">
-            <li class="proj" data-cat="hw" data-src="built" data-demo="computer" data-wide>
-              <h3 class="proj-name">8-bit-computer</h3>
-              <p class="proj-sum">Ben Eater's 8-bit breadboard computer, built chip by chip.</p>
-              <div class="proj-body">
-                <p>My most recent finished project: a programmable computer on breadboards, built from 74-series logic chips following Ben Eater’s video series. It has 16 bytes of RAM, an 8-bit bus, and microcode in EEPROMs that drives sixteen control lines.</p>
-                <p>The simulation below runs the same instruction set and microcode, so you can step through a program one control word at a time.</p>
-                <p class="proj-stack">74HC logic, EEPROMs, breadboards, a lot of jumper wire</p>
-                <p class="proj-links"><a href="https://eater.net/8bit">Ben Eater’s series</a></p>
-              </div>
-            </li>
-            <li class="proj" data-cat="sw" data-src="private" data-demo="scheduler">
-              <h3 class="proj-name">os-scheduler</h3>
-              <p class="proj-sum">A multicore operating system scheduler, for a concurrency course.</p>
-              <div class="proj-body">
-                <p>The part of an operating system that decides which process runs on which core, and for how long. I wrote it for a concurrency course, so the source stays private, but the idea fits in a small simulation: processes arrive, wait in a shared ready queue, and get dispatched to cores under first come, first served, round robin or preemptive priority scheduling.</p>
-                <p class="proj-links dim">Source private (concurrency coursework)</p>
-              </div>
-            </li>
-            <li class="proj" data-cat="sw" data-src="private" data-demo="othello">
-              <h3 class="proj-name">othello-mcts</h3>
-              <p class="proj-sum">An Othello player in C that runs Monte Carlo tree search across MPI processes.</p>
-              <div class="proj-body">
-                <p>The player picks a move by running thousands of random games from the current position and keeping the move that was explored most, using UCT to balance trying new moves against improving promising ones. Each move gets one second.</p>
-                <p>The project was for a concurrency course, so the next step was to parallelise it with MPI, which I did in three ways: independent search trees combined at the end with <code>MPI_Allreduce</code>, trees that share their statistics every so often, and the same sharing done asynchronously with non-blocking sends. In ten-game matches on four processes, each version beat the one before it, except the asynchronous version, which won half its games against the synchronous one.</p>
-                <p>You can play a serial version, rewritten in JavaScript for this page, below. While it thinks, each legal move is shaded by how often the search tried it.</p>
-                <p class="proj-stack">C, MPI, Docker</p>
-                <p class="proj-links dim">Source private (concurrency coursework)</p>
-              </div>
-            </li>
-            <li class="proj" data-cat="sw" data-src="private" data-demo="bytecode">
-              <h3 class="proj-name">jvm-compiler</h3>
-              <p class="proj-sum">A compiler in C for a custom language that targets the JVM.</p>
-              <div class="proj-body">
-                <p>I wrote it in C for a computer architecture course. It reads a small custom programming language and produces bytecode the Java virtual machine can run. The source stays private, but the last stage is easy to show: the JVM is a stack machine, so an expression compiles to instructions that push and pop an operand stack. Type one below to see the bytecode and run it.</p>
-                <p class="proj-stack">C, JVM bytecode</p>
-                <p class="proj-links dim">Source private (computer architecture coursework)</p>
-              </div>
-            </li>
-            <li class="proj" data-cat="sw" data-src="private" data-demo="rbudp">
-              <h3 class="proj-name">chat-voip-p2p</h3>
-              <p class="proj-sum">Four networking projects in Java: chat, fast UDP file transfer, voice calls and P2P sharing.</p>
-              <div class="proj-body">
-                <p>A series of networking projects built with my group for a university course:</p>
-                <ul>
-                  <li>A chat server that handles many clients at once, with a JavaFX client, load-tested with dozens of simultaneous users.</li>
-                  <li>File transfer over Reliable Blast UDP, measured against TCP across packet sizes, loss rates and file sizes from 1 to 100&nbsp;MB.</li>
-                  <li>The chat extended with voice calls and group calls streamed over UDP, plus voice notes.</li>
-                  <li>Peer-to-peer file sharing: a server brokers searches, then peers send files to each other directly over TCP, encrypted with AES-GCM keys exchanged using RSA, with pause and resume. We tested it across four machines over Tailscale.</li>
-                </ul>
-                <p>Below is the RBUDP transfer in miniature: blast every packet over UDP, ask over TCP which ones arrived, and resend the gaps.</p>
-                <p class="proj-stack">Java, JavaFX, TCP and UDP sockets, Java Sound, RSA, AES-GCM</p>
-                <p class="proj-links dim">Source private (coursework, group project)</p>
-              </div>
-            </li>
-          </ol>
-        </div>
-        <article class="mm-detail" aria-live="polite"></article>
-      </div>
-    </div>
-  </section>
-
-  <!-- ────────────────────────────── posts ────────────────────────────── -->
-  <section class="sec" id="posts" data-file="posts.org" data-mode="Org">
-    <p class="winbar"><span class="file">posts.org</span><span class="rule" aria-hidden="true"></span><span class="meta" data-org="meta"></span></p>
-    <p class="org-p">From my blog at michaelneuper.com, shown the way I read them. <kbd>TAB</kbd> on a heading folds it, <kbd>S-TAB</kbd> cycles the whole buffer, and clicking a heading’s stars does the same.</p>
-
-    <!-- Built from the posts in src/content/posts. data-tags are space separated; each tag gets its own colour (see TAG_COLORS in src/scripts/tags.js). -->
-    <ol class="posts">
-      {posts.map((p) => (
-        <li data-date={ymd(p.data.date)} data-tags={p.data.tags.join(" ")} data-cat={p.data.cat}><a href={`/posts/${p.id}/`}>{p.data.title}</a></li>
-      ))}
-    </ol>
-  </section>
-
-  <!-- ───────────────────────────── contact ───────────────────────────── -->
-  <section class="sec" id="contact" data-file="*unsent mail*" data-mode="Message">
-    <p class="winbar"><span class="file">*unsent mail*</span><span class="rule" aria-hidden="true"></span><span class="meta">draft</span></p>
-    <h2 class="h2">Say hello</h2>
-    <p class="lede">Email works best. For anything private, encrypt it with my GPG key below.</p>
-
-    <div class="contact">
-      <!-- The address is only ever put together in JavaScript, so scrapers reading this HTML don't see it.
-           The link and the copy button read data-user and data-host. -->
-      <a class="mail" href="#contact" data-user="michael" data-host="michaelneuper.com">michael<span class="at"> &lt;at&gt; </span>michaelneuper.com</a>
-      <button type="button" class="btn" data-email="copy">copy address</button>
-    </div>
-
-    <div class="contact-grid">
-      <div class="gpg">
-        <h3 class="ds-h">Encrypt it</h3>
-        <p class="gpg-fp"><span class="dim">fingerprint</span><code>4E7B F800 0D86 182D F484 5C37 508B CF84 373C 8930</code></p>
-        <div class="gpg-cmd">
-          <pre><code>curl -sL https://michaelneuper.com/michaelneuper.gpg | gpg --import</code></pre>
-          <button type="button" class="btn" data-copy=".gpg-cmd code">copy</button>
-        </div>
-      </div>
-      <div>
-        <h3 class="ds-h">Elsewhere</h3>
-        <ul class="elsewhere">
-          <li><a href="https://github.com/michaelneuper">GitHub</a></li>
-          <li><a href="https://www.linkedin.com/in/michaelneuper/">LinkedIn</a></li>
-          <li><a href="https://buymeacoffee.com/michaelneuper" target="_blank" rel="noopener">Buy me a coffee</a></li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="ctf">
-      <h3 class="ds-h">Capture the flag</h3>
-      <p>Three flags are hidden on this site, the kind you would find in a beginner CTF. They look like <code>{"flag{…}"}</code>. Found one? Run <kbd>M-x</kbd> <code>submit-flag</code>, or use the button.</p>
-      <p class="ctf-row"><button type="button" class="btn" data-ctf="submit">submit a flag</button><span class="ctf-progress" aria-live="polite">0 of 3 found</span></p>
-    </div>
-  </section>
-
-</main>
-
-<!-- ───────────────────────── coffee ───────────────────────── -->
-<div class="coffee" hidden role="dialog" aria-label="Coffee refill">
-  <pre class="mug" aria-hidden="true"></pre>
-  <div class="coffee-info">
-    <p class="winbar"><span class="file">*coffee*</span><span class="rule" aria-hidden="true"></span><span class="meta">q to close</span></p>
-    <p class="vcc"><span class="dim">VCC</span><span class="vbar" aria-hidden="true"></span><span class="volts">2.6 V</span></p>
-    <p class="coffee-msg" aria-live="polite">brewing…</p>
-    <p class="coffee-links"><a href="https://buymeacoffee.com/michaelneuper" target="_blank" rel="noopener">That one was simulated. Buy me an actual coffee</a></p>
-  </div>
-  <button type="button" class="coffee-close" aria-label="Close">×</button>
-</div>
+  <main>
+    <Hero />
+    <About />
+    <Projects />
+    <Posts />
+    <Contact />
+  </main>
+  <Coffee />
 </Base>

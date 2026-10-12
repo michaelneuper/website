@@ -1,0 +1,106 @@
+/* M-x coffee-refill: a mug filling up while VCC climbs back to 5 V */
+
+.coffee {
+  position: fixed;
+  right: 2ch;
+  bottom: calc(var(--frame-h) + 12px);
+  z-index: 28;
+  display: flex;
+  gap: 3ch;
+  width: min(620px, calc(100% - 4ch));
+  padding: 16px 20px 18px;
+  border: 1px solid var(--faint);
+  background: var(--bg);
+  box-shadow: 0 12px 40px rgb(0 0 0 / 0.35);
+  font-size: 12px;
+}
+
+.coffee[hidden] {
+  display: none;
+}
+
+.mug {
+  flex: none;
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.25;
+  color: var(--fg);
+}
+
+.mug .steam {
+  color: var(--dim);
+}
+
+.mug .brew {
+  color: var(--orange);
+}
+
+.mug .crema {
+  color: var(--yellow);
+}
+
+.coffee-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.coffee-info .winbar {
+  margin: 0 28px 14px 0;
+}
+
+.coffee-info p {
+  margin: 0 0 10px;
+}
+
+.vcc {
+  display: flex;
+  gap: 1.5ch;
+  font-variant-numeric: tabular-nums;
+}
+
+.vbar {
+  color: var(--green);
+  letter-spacing: -0.05em;
+}
+
+.coffee.is-over .vbar,
+.coffee.is-over .volts {
+  color: var(--red);
+}
+
+.coffee-msg {
+  min-height: 3.2em;
+}
+
+.coffee-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 2ch;
+}
+
+.coffee-close {
+  position: absolute;
+  top: 6px;
+  right: 8px;
+  padding: 2px 6px;
+  border: 0;
+  background: none;
+  color: var(--dim);
+  font-size: 16px;
+  line-height: 1;
+}
+
+.coffee-close:hover {
+  color: var(--fg);
+}
+
+@media (max-width: 640px) {
+  .coffee {
+    right: 0;
+    left: 0;
+    width: auto;
+    margin: 0 8px;
+    flex-direction: column;
+    gap: 8px;
+  }
+}

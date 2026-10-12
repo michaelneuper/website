@@ -1,0 +1,89 @@
+/* jvm-compiler: an expression, its bytecode and the operand stack */
+
+.bc-input {
+  display: flex;
+  align-items: center;
+  gap: 1ch;
+  margin-bottom: 12px;
+}
+
+.bc-input input {
+  flex: 1;
+  min-width: 0;
+  min-height: 30px;
+  padding: 0 10px;
+  border: 1px solid var(--faint);
+  border-radius: 0;
+  background: none;
+  font-size: 13px;
+}
+
+.bc-input input:focus {
+  border-color: var(--fg);
+  outline: none;
+}
+
+.bc-cols {
+  display: grid;
+  grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
+  gap: 16px;
+}
+
+.bc-code {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-variant-numeric: tabular-nums;
+}
+
+.bc-code li {
+  display: grid;
+  grid-template-columns: 4ch 1fr;
+  gap: 1ch;
+  padding: 1px 6px;
+}
+
+.bc-code li.is-pc {
+  background: var(--hl);
+}
+
+.bc-code .off {
+  color: var(--dim);
+  text-align: right;
+}
+
+.bc-code .op {
+  color: var(--blue);
+}
+
+.bc-stack {
+  display: flex;
+  flex-direction: column-reverse;
+  justify-content: flex-start;
+  gap: 2px;
+  min-height: 120px;
+  padding: 6px;
+  border: 1px solid var(--rule);
+  border-top: 0;
+}
+
+.bc-stack span {
+  padding: 2px 8px;
+  border: 1px solid var(--faint);
+  text-align: right;
+}
+
+.bc-stack span:last-child {
+  border-color: var(--fg);
+}
+
+.bc-err {
+  color: var(--red);
+  white-space: pre;
+}
+
+@media (max-width: 640px) {
+  .bc-cols {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

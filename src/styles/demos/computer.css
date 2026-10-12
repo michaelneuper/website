@@ -1,0 +1,334 @@
+/* The 8-bit computer: Ben Eater's layout, with its controls underneath */
+
+.sim-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 10px;
+  margin-top: 16px;
+  font-size: 12px;
+}
+
+.sim-note {
+  max-width: 78ch;
+  margin: 12px 0 0;
+  font-size: 12px;
+  line-height: 1.6;
+  color: var(--dim);
+}
+
+/* board: Ben Eater's layout, two columns of modules either side of the bus */
+
+.board {
+  --led: 10px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 64px minmax(0, 1fr);
+  grid-template-areas:
+    "left bus right"
+    "ctrl ctrl ctrl";
+  gap: 10px;
+  font-size: 11.5px;
+  font-variant-numeric: tabular-nums;
+}
+
+.col {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.col-l { grid-area: left; }
+.col-r { grid-area: right; }
+
+.mod {
+  padding: 7px 10px 9px;
+  border: 1px solid var(--rule);
+  background: color-mix(in srgb, var(--bg) 92%, var(--fg));
+}
+
+.mod.is-out {
+  border-color: var(--red);
+}
+
+.mod.is-in {
+  border-color: var(--green);
+}
+
+.mod-head {
+  display: flex;
+  align-items: baseline;
+  gap: 1ch;
+  margin-bottom: 6px;
+  color: var(--dim);
+  white-space: nowrap;
+}
+
+.mod-name {
+  margin-right: auto;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sig {
+  padding: 0 0.4ch;
+  border-radius: 2px;
+  color: var(--faint);
+  font-size: 10.5px;
+}
+
+.sig.on {
+  background: var(--blue);
+  color: var(--bg);
+}
+
+.mod-body {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1ch;
+}
+
+.mod-val {
+  color: var(--fg);
+  white-space: nowrap;
+}
+
+.leds {
+  display: flex;
+  gap: calc(var(--led) * 0.45);
+}
+
+.led {
+  display: block;
+  flex: none;
+  width: var(--led);
+  height: var(--led);
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: var(--led-off);
+  --lc: var(--red);
+}
+
+.led.on {
+  background: var(--lc);
+  box-shadow: 0 0 calc(var(--glow) * 7px) calc(var(--glow) * 1px) color-mix(in srgb, var(--lc) 70%, transparent);
+}
+
+.led.g { --lc: var(--green); }
+.led.y { --lc: var(--yellow); }
+.led.b { --lc: var(--blue); }
+
+.leds .gap {
+  width: calc(var(--led) * 0.4);
+}
+
+/* RAM: the whole 16-byte memory as a matrix you can edit */
+
+.ram-rows {
+  display: grid;
+  gap: 1px;
+}
+
+.ram-row {
+  --led: 8px;
+  display: grid;
+  grid-template-columns: 1.5ch 2ch auto minmax(0, 1fr);
+  align-items: center;
+  gap: 0.8ch;
+  padding: 1px 4px;
+  margin: 0 -4px;
+  line-height: 14px;
+}
+
+.ram-row.is-mar {
+  background: var(--hl);
+}
+
+.ram-row .pc {
+  color: var(--green);
+}
+
+.ram-row .addr {
+  color: var(--dim);
+}
+
+.ram-row .dis {
+  overflow: hidden;
+  color: var(--dim);
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.ram-row.is-mar .dis {
+  color: var(--fg);
+}
+
+.ram-row .led {
+  cursor: pointer;
+}
+
+.ram-row .led:hover {
+  outline: 1px solid var(--faint);
+  outline-offset: 1px;
+}
+
+/* the bus: eight lanes down the middle */
+
+.bus {
+  grid-area: bus;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 7px 0 9px;
+  border: 1px solid var(--rule);
+}
+
+.bus .mod-head {
+  margin-bottom: 4px;
+}
+
+.bus-val {
+  margin-bottom: 8px;
+}
+
+.lanes {
+  display: flex;
+  flex: 1;
+  gap: 4px;
+}
+
+.lane {
+  width: 2px;
+  background: var(--led-off);
+}
+
+.lane.on {
+  background: var(--red);
+  box-shadow: 0 0 calc(var(--glow) * 6px) color-mix(in srgb, var(--red) 70%, transparent);
+}
+
+/* output: a 7-segment display */
+
+.seg7 {
+  display: flex;
+  gap: 6px;
+}
+
+.seg7 svg {
+  width: 22px;
+  height: 38px;
+  overflow: visible;
+}
+
+.seg7 path {
+  fill: var(--led-off);
+}
+
+.seg7 path.on {
+  fill: var(--red);
+  filter: drop-shadow(0 0 calc(var(--glow) * 3px) color-mix(in srgb, var(--red) 80%, transparent));
+}
+
+.mod-out .mod-body {
+  cursor: pointer;
+}
+
+/* control word */
+
+.ctrl {
+  grid-area: ctrl;
+}
+
+.ctrl-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 8px 18px;
+}
+
+.cw {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.cw-bit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  width: 3.4ch;
+  color: var(--faint);
+  font-size: 10px;
+}
+
+.cw-bit.on {
+  color: var(--fg);
+}
+
+.ustep {
+  margin-top: 8px;
+  color: var(--dim);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ustep b {
+  color: var(--fg);
+  font-weight: 600;
+}
+
+@media (max-width: 640px) {
+  .board {
+    --led: 8px;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    grid-template-areas:
+      "bus bus"
+      "left right"
+      "ctrl ctrl";
+    font-size: 10.5px;
+  }
+
+  .bus {
+    flex-direction: row;
+    gap: 1.5ch;
+    padding: 6px 10px;
+  }
+
+  .bus .mod-head,
+  .bus-val {
+    margin: 0;
+  }
+
+  .lanes {
+    flex-direction: column;
+    justify-content: center;
+    height: 26px;
+    gap: 1px;
+  }
+
+  .lane {
+    width: auto;
+    height: 2px;
+  }
+
+  .mod {
+    padding: 6px 8px 8px;
+  }
+
+  .ram-row {
+    --led: 6px;
+    grid-template-columns: 1.5ch 2ch auto;
+  }
+
+  .ram-row .dis {
+    display: none;
+  }
+
+  .seg7 svg {
+    width: 16px;
+    height: 28px;
+  }
+}

@@ -1,0 +1,110 @@
+/* Themes: real Emacs themes. Each sets a background, a modeline background,
+   a foreground and seven accents; everything else is mixed from those.
+   Keep the names in sync with src/scripts/themes.js and the script in src/layouts/Base.astro. */
+
+:root {
+  color-scheme: dark;
+  --mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  --serif: "Computer Modern", "Latin Modern Roman", "CMU Serif", Georgia, serif;
+
+  --gutter: clamp(16px, 4.5vw, 56px);
+  --top-h: 44px;
+  --frame-h: 46px;
+  --col: 1088px;
+
+  --bg: #282828;
+  --bg-alt: #3c3836;
+  --fg: #ebdbb2;
+  --red: #fb4934;
+  --orange: #fe8019;
+  --yellow: #fabd2f;
+  --green: #b8bb26;
+  --cyan: #8ec07c;
+  --blue: #83a598;
+  --magenta: #d3869b;
+  --glow: 1;
+
+  --dim: color-mix(in srgb, var(--fg) 64%, var(--bg));
+  --faint: color-mix(in srgb, var(--fg) 34%, var(--bg));
+  --rule: color-mix(in srgb, var(--fg) 15%, var(--bg));
+  --hl: color-mix(in srgb, var(--fg) 10%, var(--bg));
+  --wash: color-mix(in srgb, var(--fg) 5%, transparent);
+  --led-off: color-mix(in srgb, var(--fg) 13%, var(--bg));
+  --violet: color-mix(in oklch, var(--blue) 50%, var(--magenta));
+
+  --c-hw: var(--yellow);
+  --c-sw: var(--blue);
+  --c-math: var(--magenta);
+  --c-sec: var(--red);
+}
+
+:root[data-theme="doom-gruvbox-light"] {
+  color-scheme: light;
+  --bg: #fbf1c7; --bg-alt: #ebdbb2; --fg: #3c3836;
+  --red: #9d0006; --orange: #af3a03; --yellow: #b57614; --green: #79740e;
+  --cyan: #427b58; --blue: #076678; --magenta: #8f3f71;
+  --glow: 0;
+}
+
+:root[data-theme="doom-one"] {
+  --bg: #282c34; --bg-alt: #21242b; --fg: #bbc2cf;
+  --red: #ff6c6b; --orange: #da8548; --yellow: #ecbe7b; --green: #98be65;
+  --cyan: #46d9ff; --blue: #51afef; --magenta: #c678dd;
+}
+
+:root[data-theme="atom-one-dark"] {
+  --bg: #282c34; --bg-alt: #21252b; --fg: #abb2bf;
+  --red: #e06c75; --orange: #d19a66; --yellow: #e5c07b; --green: #98c379;
+  --cyan: #56b6c2; --blue: #61afef; --magenta: #c678dd;
+}
+
+:root[data-theme="modus-vivendi"] {
+  --bg: #000000; --bg-alt: #1e1e1e; --fg: #ffffff;
+  --red: #ff5f59; --orange: #fec43f; --yellow: #d0bc00; --green: #44bc44;
+  --cyan: #00d3d0; --blue: #2fafff; --magenta: #feacd0;
+}
+
+:root[data-theme="modus-operandi"] {
+  color-scheme: light;
+  --bg: #ffffff; --bg-alt: #f2f2f2; --fg: #000000;
+  --red: #a60000; --orange: #884900; --yellow: #6f5500; --green: #006800;
+  --cyan: #005e8b; --blue: #0031a9; --magenta: #721045;
+  --glow: 0;
+}
+
+:root[data-theme="doom-dracula"] {
+  --bg: #282a36; --bg-alt: #1e2029; --fg: #f8f8f2;
+  --red: #ff5555; --orange: #ffb86c; --yellow: #f1fa8c; --green: #50fa7b;
+  --cyan: #8be9fd; --blue: #61bfff; --magenta: #ff79c6;
+}
+
+:root[data-theme="doom-nord"] {
+  --bg: #2e3440; --bg-alt: #3b4252; --fg: #eceff4;
+  --red: #bf616a; --orange: #d08770; --yellow: #ebcb8b; --green: #a3be8c;
+  --cyan: #88c0d0; --blue: #81a1c1; --magenta: #b48ead;
+}
+
+:root[data-theme="catppuccin"] {
+  --bg: #1e1e2e; --bg-alt: #181825; --fg: #cdd6f4;
+  --red: #f38ba8; --orange: #fab387; --yellow: #f9e2af; --green: #a6e3a1;
+  --cyan: #94e2d5; --blue: #89b4fa; --magenta: #cba6f7;
+}
+
+:root[data-theme="doom-tokyo-night"] {
+  --bg: #1a1b26; --bg-alt: #16161e; --fg: #c0caf5;
+  --red: #f7768e; --orange: #ff9e64; --yellow: #e0af68; --green: #9ece6a;
+  --cyan: #7dcfff; --blue: #7aa2f7; --magenta: #bb9af7;
+}
+
+:root[data-theme="doom-solarized-light"] {
+  color-scheme: light;
+  --bg: #fdf6e3; --bg-alt: #eee8d5; --fg: #556b72;
+  --red: #dc322f; --orange: #cb4b16; --yellow: #b58900; --green: #859900;
+  --cyan: #2aa198; --blue: #268bd2; --magenta: #d33682;
+  --glow: 0;
+}
+
+[data-cat="hw"] { --c: var(--c-hw); }
+[data-cat="sw"] { --c: var(--c-sw); }
+[data-cat="math"] { --c: var(--c-math); }
+[data-cat="sec"] { --c: var(--c-sec); }

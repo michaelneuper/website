@@ -1,0 +1,27 @@
+---
+// The top line: the name (back to the top), links to the home page's sections,
+// load-theme, and the menu button that shows the links on phones.
+import "../../styles/frame/topbar.css";
+
+interface Props {
+  /** On the home page the links scroll; elsewhere they go back to it. */
+  home?: boolean;
+}
+
+const { home = false } = Astro.props;
+const at = home ? "" : "/";
+---
+<header class="top">
+  <a class="brand" href={home ? "#top" : "/"} aria-label={home ? "Michael Neuper, back to top" : "Michael Neuper, home"}>
+    <svg class="logo" viewBox="0 0 32 16" aria-hidden="true"><path d="M1 14H3V2H9V14H11V2H17V14H20V2H26V14H31"/></svg>
+    <span>michael neuper</span>
+  </a>
+  <nav class="nav" id="nav" aria-label="Sections">
+    <a href={`${at}#about`}>about</a>
+    <a href={`${at}#projects`}>projects</a>
+    <a href={`${at}#posts`}>posts</a>
+    <a href={`${at}#contact`}>contact</a>
+  </nav>
+  <button class="theme-key" type="button" title="SPC h t">load-theme</button>
+  <button class="menu-key" type="button" aria-expanded="false" aria-controls="nav">menu</button>
+</header>

@@ -1,0 +1,43 @@
+---
+// The bottom of the frame: which-key, doom-modeline, the minibuffer and the echo
+// area. Its script starts the Emacs (src/scripts/emacs) and the CTF.
+import "../../styles/frame/modeline.css";
+
+interface Props {
+  /** Buffer name and major mode until a section scrolls into view. */
+  buf: string;
+  mode: string;
+}
+
+const { buf, mode } = Astro.props;
+---
+<div class="which-key" hidden aria-live="polite"></div>
+<div class="frame-bottom">
+  <div class="modeline">
+    <span class="ml-evil" title="evil state">&lt;N&gt;</span>
+    <span class="ml-buf">{buf}</span>
+    <span class="ml-pos" aria-hidden="true">1:0</span>
+    <span class="ml-pct" aria-hidden="true">Top</span>
+    <span class="ml-spacer"></span>
+    <span class="ml-misc" aria-live="polite"></span>
+    <span class="ml-flags" aria-hidden="true"></span>
+    <span class="ml-mode">{mode}</span>
+    <span class="ml-enc" aria-hidden="true">LF UTF-8</span>
+    <span class="ml-vc" aria-hidden="true">master</span>
+    <span class="ml-time" aria-hidden="true"></span>
+  </div>
+  <div class="mini" hidden>
+    <form class="mini-prompt" autocomplete="off">
+      <label><span class="mini-count"></span><span class="mini-ps"></span><input type="text" spellcheck="false" autocapitalize="off" role="combobox" aria-expanded="true" aria-controls="mini-list" aria-autocomplete="list"></label>
+    </form>
+    <ul class="mini-list" id="mini-list" role="listbox"></ul>
+  </div>
+  <div class="echo" role="status"></div>
+</div>
+
+<script>
+  import "../../scripts/emacs/index.js";
+  import { initCtf } from "../../scripts/ctf.js";
+
+  initCtf();
+</script>

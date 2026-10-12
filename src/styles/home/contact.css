@@ -1,0 +1,110 @@
+/* Contact, as an *unsent mail* buffer: the address, the GPG key and the CTF */
+
+.contact {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 16px 32px;
+  margin-bottom: 8px;
+}
+
+.mail {
+  font: 400 clamp(26px, 4.4vw, 52px)/1.1 var(--serif);
+  overflow-wrap: anywhere;
+}
+
+.mail .at {
+  font: 400 0.42em/1 var(--mono);
+  color: var(--dim);
+  vertical-align: 0.35em;
+  white-space: pre;
+}
+
+.linkish {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-decoration-color: var(--faint);
+  text-underline-offset: 0.2em;
+}
+
+.linkish:hover {
+  text-decoration-color: currentColor;
+}
+
+.contact-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+  gap: 0 56px;
+}
+
+.gpg-fp {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 2ch;
+  margin: 0 0 12px;
+}
+
+.gpg-fp code {
+  letter-spacing: 0.02em;
+}
+
+.gpg-cmd {
+  display: flex;
+  align-items: stretch;
+  gap: 8px;
+}
+
+.gpg-cmd pre {
+  flex: 1;
+  min-width: 0;
+  margin: 0;
+  padding: 7px 12px;
+  overflow-x: auto;
+  border: 1px solid var(--rule);
+  background: var(--wash);
+  font-size: 12px;
+}
+
+.elsewhere {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 3ch;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.ctf {
+  max-width: 70ch;
+  margin-top: 16px;
+}
+
+.ctf p {
+  margin: 0 0 12px;
+}
+
+.ctf-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px 2ch;
+}
+
+.ctf-progress {
+  color: var(--dim);
+}
+
+.ctf-progress.done {
+  color: var(--green);
+}
+
+@media (max-width: 920px) {
+  .contact-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

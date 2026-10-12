@@ -1,0 +1,66 @@
+/* imenu-list: the post's headings in a *Ilist* window beside it */
+
+.post-toc {
+  margin: 0 0 48px;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.post-toc .winbar {
+  margin-bottom: 14px;
+}
+
+.post-toc ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.post-toc li.d3 {
+  padding-left: 2ch;
+}
+
+.post-toc a {
+  display: block;
+  padding: 3px 0 3px 1ch;
+  border-left: 2px solid transparent;
+  color: var(--dim);
+  text-decoration: none;
+}
+
+.post-toc a:hover {
+  color: var(--fg);
+}
+
+.post-toc a[aria-current="true"] {
+  border-left-color: var(--blue);
+  color: var(--fg);
+}
+
+.post-toc .mk {
+  color: var(--faint);
+}
+
+@media (min-width: 1100px) {
+  .post-cols.has-toc {
+    display: grid;
+    grid-template-columns: minmax(0, 680px) minmax(180px, 1fr);
+    column-gap: 64px;
+    align-items: start;
+  }
+
+  .post-cols.has-toc .post-body {
+    grid-row: 1;
+    grid-column: 1;
+  }
+
+  .post-cols.has-toc .post-toc {
+    position: sticky;
+    top: calc(var(--top-h) + 32px);
+    grid-row: 1;
+    grid-column: 2;
+    max-height: calc(100vh - var(--top-h) - var(--frame-h) - 64px);
+    margin: 0;
+    overflow-y: auto;
+  }
+}

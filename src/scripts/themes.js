@@ -1,6 +1,6 @@
-// Themes for M-x load-theme. The colours live in src/styles/style.css under
+// Themes for M-x load-theme. The colours live in src/styles/themes.css under
 // :root[data-theme="…"]; keep this list, that CSS and the inline script in
-// src/pages/index.astro in sync.
+// src/layouts/Base.astro in sync.
 
 export const THEMES = [
   { id: "doom-gruvbox", desc: "Gruvbox, medium contrast. The theme my own Emacs uses" },

@@ -2,7 +2,7 @@
 // SHA-256 hashes, so reading it shows how flags are checked without giving them away.
 
 import { $ } from "./util.js";
-import { defcommand, message, completingRead, setSegment, call } from "./shell.js";
+import { defcommand, message, completingRead, setSegment, call } from "./emacs/index.js";
 
 const HASHES = [
   "7a80f308e7d3c86589ac38394f24154bf36149b8ad833f728c9e0ddeed29693e",

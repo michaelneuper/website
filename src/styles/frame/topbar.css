@@ -1,0 +1,103 @@
+/* The top line: name, section links, load-theme and the menu button on phones */
+
+.top {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  gap: 3ch;
+  height: var(--top-h);
+  padding: 0 var(--gutter);
+  font-size: 12px;
+  border-bottom: 1px solid transparent;
+  transition: background-color 200ms ease, border-color 200ms ease;
+}
+
+.is-scrolled .top {
+  background: color-mix(in srgb, var(--bg) 90%, transparent);
+  border-bottom-color: var(--rule);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 1.5ch;
+  margin-right: auto;
+  text-decoration: none;
+}
+
+.logo {
+  width: 22px;
+  height: 11px;
+  overflow: visible;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.6;
+}
+
+.nav {
+  display: flex;
+  gap: 2.5ch;
+}
+
+.nav a {
+  color: var(--dim);
+  text-decoration: none;
+}
+
+.nav a:hover,
+.nav a[aria-current="true"] {
+  color: var(--fg);
+}
+
+.nav a[aria-current="true"] {
+  text-decoration: underline;
+  text-decoration-color: var(--fg);
+  text-underline-offset: 6px;
+}
+
+.theme-key,
+.menu-key {
+  padding: 8px 0;
+  border: 0;
+  background: none;
+  color: var(--dim);
+  font-size: 12px;
+}
+
+.theme-key:hover,
+.menu-key:hover {
+  color: var(--fg);
+}
+
+.menu-key {
+  display: none;
+}
+
+@media (max-width: 920px) {
+  .nav {
+    display: none;
+  }
+
+  .nav.is-open {
+    position: absolute;
+    top: calc(var(--top-h) - 4px);
+    right: var(--gutter);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    min-width: 18ch;
+    padding: 14px 18px;
+    border: 1px solid var(--faint);
+    background: var(--bg);
+  }
+
+  .menu-key {
+    display: block;
+  }
+}

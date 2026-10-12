@@ -1,0 +1,10 @@
+/* The comments under a post (giscus, styled by src/pages/giscus/[theme].css.js) */
+
+.giscus {
+  max-width: 760px;
+}
+
+.giscus-note {
+  margin: 16px 0 0;
+  font-size: 12px;
+}

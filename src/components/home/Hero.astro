@@ -1,0 +1,42 @@
+---
+// The landing section: the name, which decodes itself bit by bit on load
+// (src/scripts/home/decode.js), and the MN-2026 chip, whose pins are in
+// src/data/pins.js.
+import { PINS } from "../../data/pins.js";
+import "../../styles/home/hero.css";
+import "../../styles/home/pinout.css";
+---
+<section class="hero" id="top" data-file="mn-2026.kicad_sym" data-mode="Lisp Data" aria-labelledby="hero-name">
+  <div class="hero-id">
+    <h1 class="hero-name" id="hero-name">Michael Neuper</h1>
+    <p class="hero-lede">Computer science student at Stellenbosch University. I like low-level software, electronics and the maths underneath both, and I do almost all of it in Emacs.</p>
+    <ul class="legend" aria-label="Colour key used across the site">
+      <li data-cat="hw">hardware</li>
+      <li data-cat="sw">software</li>
+      <li data-cat="math">maths</li>
+      <li data-cat="sec">security</li>
+    </ul>
+  </div>
+
+  <div class="hero-chip">
+    <figure class="pinout">
+      <div class="chip-wrap"></div>
+      <div class="pin-readout" aria-live="polite"><p class="dim">Point at a pin to read its function.</p></div>
+      <figcaption>Figure 1. MN-2026, DIP-16 package, top view.</figcaption>
+      <ol class="pin-list">
+        {PINS.map((p) => <li data-name={p.name} data-type={p.type} data-cat={p.cat}>{p.text}</li>)}
+      </ol>
+    </figure>
+  </div>
+</section>
+
+<script>
+  import { initDecode } from "../../scripts/home/decode.js";
+  import { initPinout } from "../../scripts/home/pinout.js";
+
+  initDecode().catch((err) => {
+    console.error(err);
+    document.documentElement.classList.remove("boot");
+  });
+  initPinout();
+</script>

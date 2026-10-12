@@ -3,6 +3,8 @@
 // at the end of the think time. While it thinks, each candidate move is shaded
 // by its share of the search.
 
+import "../../styles/demos/othello.css";
+
 const C = 1;
 const DIRS = [[-1, -1], [-1, 0], [-1, 1], [0, -1], [0, 1], [1, -1], [1, 0], [1, 1]];
 const BLACK = 1; // you

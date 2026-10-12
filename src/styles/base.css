@@ -1,0 +1,186 @@
+/* Base: page, links, keys, buttons and form controls */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  background: var(--bg);
+  color: var(--fg);
+  scroll-behavior: smooth;
+  scroll-snap-type: y proximity;
+  scroll-padding-top: calc(var(--top-h) + 24px);
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  font: 400 13px/1.6 var(--mono);
+  font-variant-ligatures: none;
+  -webkit-font-smoothing: antialiased;
+  transition: background-color 200ms ease, color 200ms ease;
+}
+
+::selection {
+  background: color-mix(in srgb, var(--blue) 35%, var(--bg));
+  color: var(--fg);
+}
+
+a {
+  color: inherit;
+  text-decoration-line: underline;
+  text-decoration-thickness: 1px;
+  text-decoration-color: var(--faint);
+  text-underline-offset: 0.2em;
+}
+
+a:hover {
+  text-decoration-color: currentColor;
+}
+
+button,
+input,
+output,
+select {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+:focus-visible {
+  outline: 1px solid var(--fg);
+  outline-offset: 2px;
+}
+
+kbd {
+  font: inherit;
+  font-size: 0.95em;
+  padding: 0 0.45ch;
+  border: 1px solid var(--faint);
+  border-radius: 3px;
+}
+
+code {
+  font-family: var(--mono);
+  font-size: 0.95em;
+}
+
+.dim {
+  color: var(--dim);
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.skip {
+  position: absolute;
+  left: 8px;
+  top: -100px;
+  z-index: 50;
+  padding: 6px 12px;
+  background: var(--fg);
+  color: var(--bg);
+}
+
+.skip:focus {
+  top: 8px;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  min-height: 30px;
+  padding: 0 14px;
+  border: 1px solid var(--faint);
+  border-radius: 0;
+  background: none;
+  font-size: 12px;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.btn:hover {
+  border-color: var(--fg);
+}
+
+.btn[aria-pressed="true"] {
+  border-color: var(--fg);
+  background: var(--fg);
+  color: var(--bg);
+}
+
+/* form controls, as the demos use them */
+
+select {
+  min-height: 30px;
+  padding: 0 28px 0 10px;
+  border: 1px solid var(--faint);
+  border-radius: 0;
+  background: var(--bg) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23888'/%3E%3C/svg%3E") no-repeat right 10px center;
+  color: var(--fg);
+  font-size: 12px;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+input[type="range"] {
+  width: 120px;
+  height: 22px;
+  margin: 0;
+  background: transparent;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+input[type="range"]::-webkit-slider-runnable-track {
+  height: 1px;
+  background: var(--faint);
+}
+
+input[type="range"]::-moz-range-track {
+  height: 1px;
+  background: var(--faint);
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  width: 9px;
+  height: 18px;
+  margin-top: -9px;
+  border: 0;
+  border-radius: 0;
+  background: var(--fg);
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+input[type="range"]::-moz-range-thumb {
+  width: 9px;
+  height: 18px;
+  border: 0;
+  border-radius: 0;
+  background: var(--fg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    transition: none !important;
+  }
+}

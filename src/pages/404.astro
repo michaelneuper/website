@@ -1,17 +1,22 @@
 ---
 import Base from "../layouts/Base.astro";
+import Buffer from "../components/frame/Buffer.astro";
 ---
 <Base title="Not found - Michael Neuper" buf="*Messages*" mode="Messages" skip="#missing">
-  <Fragment slot="head">
-    <script src="../scripts/page.js"></script>
-  </Fragment>
-
   <main>
-    <section class="sec" id="missing" data-file="*Messages*" data-mode="Messages" aria-labelledby="missing-title">
-      <p class="winbar"><span class="file">*Messages*</span><span class="rule" aria-hidden="true"></span><span class="meta">404</span></p>
+    <Buffer id="missing" file="*Messages*" mode="Messages" meta="404" labelledby="missing-title">
       <h1 class="h2" id="missing-title">No such file</h1>
       <p class="lede">Nothing lives at this address. If it was a page on my old site, it didn't make the move, but every post did, at the same address as before.</p>
-      <p class="missing-links"><a href="/">Home</a> <a href="/#posts">Posts</a></p>
-    </section>
+      <p class="links"><a href="/">Home</a> <a href="/#posts">Posts</a></p>
+    </Buffer>
   </main>
 </Base>
+
+<style>
+  .links {
+    display: flex;
+    gap: 3ch;
+    margin: 0;
+    font-size: 13px;
+  }
+</style>

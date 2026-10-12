@@ -1,0 +1,28 @@
+---
+// *Help* (? or SPC h h): the keys every page has, then the page's own in the slot.
+import Winbar from "./Winbar.astro";
+import "../../styles/frame/help.css";
+---
+<dialog class="help" aria-labelledby="help-title">
+  <Winbar file="*Help*" fileId="help-title" meta="q or esc to close" />
+  <div class="help-cols">
+    <div>
+      <h3>Keys</h3>
+      <dl>
+        <div><dt><kbd>SPC</kbd></dt><dd>leader key: shows every command</dd></div>
+        <div><dt><kbd>M-x</kbd></dt><dd>run a command by name (Alt+x or Option+x)</dd></div>
+        <div><dt><kbd>SPC h t</kbd></dt><dd>load a theme, with live preview</dd></div>
+        <div><dt><kbd>:</kbd></dt><dd>evil ex commands, like <code>:q</code></dd></div>
+        <div><dt><kbd>C-g</kbd></dt><dd>cancel (so does <kbd>esc</kbd>)</dd></div>
+      </dl>
+    </div>
+    <div>
+      <h3>On this page</h3>
+      <dl>
+        <slot />
+        <div><dt><code>submit-flag</code></dt><dd>check a CTF flag</dd></div>
+      </dl>
+    </div>
+  </div>
+  <form method="dialog"><button class="btn" type="submit">close</button></form>
+</dialog>

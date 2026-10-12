@@ -1,0 +1,26 @@
+---
+// imenu-list: the post's headings in an *Ilist* window, beside the text on wide
+// screens and above it on narrow ones. It marks the heading you're reading.
+import Winbar from "../frame/Winbar.astro";
+import "../../styles/post/outline.css";
+
+interface Props {
+  headings: { depth: number; slug: string; text: string }[];
+}
+
+const { headings } = Astro.props;
+---
+<aside class="post-toc" aria-labelledby="toc-title">
+  <Winbar file="*Ilist*" fileId="toc-title" meta="contents" />
+  <ol>
+    {headings.map((h) => (
+      <li class={`d${h.depth}`}><a href={`#${h.slug}`}><span class="mk" aria-hidden="true">{"*".repeat(h.depth - 1)}</span> {h.text}</a></li>
+    ))}
+  </ol>
+</aside>
+
+<script>
+  import { initOutline } from "../../scripts/post/outline.js";
+
+  initOutline();
+</script>

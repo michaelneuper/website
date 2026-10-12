@@ -1,0 +1,64 @@
+/* Project demos: the frame each one mounts into, and its bar of controls */
+
+.demo-wide {
+  margin-top: 40px;
+  padding-top: 28px;
+  border-top: 1px solid var(--rule);
+}
+
+.sim-field {
+  display: inline-flex;
+  align-items: center;
+  gap: 1.2ch;
+  margin-left: 1.5ch;
+  color: var(--dim);
+}
+
+.sim-field output {
+  min-width: 7ch;
+  color: var(--fg);
+  font-variant-numeric: tabular-nums;
+}
+
+.demo {
+  margin-top: 22px;
+  padding-top: 18px;
+  border-top: 1px solid var(--rule);
+  font-size: 12px;
+}
+
+.demo-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.demo-bar .dim {
+  margin-left: auto;
+}
+
+.demo canvas {
+  display: block;
+  width: 100%;
+}
+
+.demo pre {
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.2;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.demo .cap {
+  margin: 10px 0 0;
+  color: var(--dim);
+}
+
+@media (max-width: 640px) {
+  .sim-field {
+    margin-left: 0;
+  }
+}

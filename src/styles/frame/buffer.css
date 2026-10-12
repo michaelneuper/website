@@ -1,0 +1,78 @@
+/* A buffer: a section of the page with its winbar (file name, a rule, and a note) */
+
+.sec {
+  max-width: var(--col);
+  margin: 0 auto;
+  padding: 136px var(--gutter) 0;
+}
+
+.hero,
+.sec > .winbar {
+  scroll-snap-align: start;
+}
+
+.winbar {
+  display: flex;
+  align-items: center;
+  gap: 1.5ch;
+  margin: 0 0 56px;
+  font-size: 12px;
+  line-height: 1;
+  color: var(--dim);
+}
+
+.winbar .file {
+  color: var(--fg);
+}
+
+.winbar .rule {
+  flex: 1;
+  height: 1px;
+  background: var(--rule);
+}
+
+.h2 {
+  max-width: 17em;
+  margin: 0 0 20px;
+  font: 400 clamp(36px, 5.4vw, 62px)/1.04 var(--serif);
+  letter-spacing: -0.01em;
+}
+
+.lede,
+.prose {
+  max-width: 34em;
+  margin: 0 0 48px;
+  font: 400 19px/1.55 var(--serif);
+}
+
+.prose {
+  margin-bottom: 0;
+}
+
+.lede kbd {
+  font: 400 13px/1 var(--mono);
+  vertical-align: 0.15em;
+}
+
+/* a small heading inside a section, like a datasheet's */
+.ds-h {
+  margin: 48px 0 16px;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+@media (max-width: 640px) {
+  .sec {
+    padding-top: 104px;
+  }
+
+  .winbar {
+    margin-bottom: 40px;
+  }
+
+  .lede,
+  .prose {
+    font-size: 17px;
+  }
+}

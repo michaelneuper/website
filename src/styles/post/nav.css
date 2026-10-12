@@ -1,0 +1,38 @@
+/* Older and newer posts, under a post */
+
+.post-nav {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  max-width: 680px;
+  margin: 96px 0 0;
+  padding-top: 20px;
+  border-top: 1px solid var(--rule);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.post-nav a {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  text-decoration: none;
+}
+
+.post-nav a:hover {
+  text-decoration: underline;
+}
+
+.post-nav .dim {
+  font-size: 12px;
+}
+
+.post-nav .newer {
+  grid-column: 2;
+  text-align: right;
+}
+
+.post-all {
+  margin: 20px 0 0;
+  font-size: 12px;
+}

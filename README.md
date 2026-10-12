@@ -20,15 +20,29 @@ npm run preview    # serves dist/ at http://localhost:4321
 
 ## Where things are
 
-| Path                           | What it is                                                                   |
-|--------------------------------|------------------------------------------------------------------------------|
-| `src/pages/index.astro`        | the home page                                                                |
-| `src/pages/posts/[slug].astro` | the page every post uses                                                     |
-| `src/layouts/Base.astro`       | head, top line, modeline and `*Help*`, shared by all pages                   |
-| `src/content/posts/`           | the posts, in Markdown                                                       |
-| `src/scripts/`                 | the JavaScript: `main.js` for the home page, `page.js` for the others        |
-| `src/styles/style.css`         | all the styles, including the themes                                         |
-| `public/`                      | files served as they are: fonts, favicon, GPG key, `robots.txt`, post videos |
+| Path                       | What it is                                                                    |
+|----------------------------|-------------------------------------------------------------------------------|
+| `src/pages/`               | the pages: home, `posts/[slug]` for every post, 404, the RSS feeds and the giscus themes |
+| `src/layouts/Base.astro`   | the frame every page shares                                                   |
+| `src/components/frame/`    | the Emacs around each page: top line, modeline, `*Help*`, footer, and `Buffer`, a section with its winbar |
+| `src/components/home/`     | the home page's sections: hero, about, projects, posts, contact, and the coffee |
+| `src/components/post/`     | a post as an Org buffer: keywords, text, the `*Ilist*` outline, comments      |
+| `src/content/posts/`       | the posts, in Markdown                                                        |
+| `src/content/projects/`    | the projects in the memory map, one Markdown file each                        |
+| `src/data/pins.js`         | the pins on the MN-2026 chip                                                  |
+| `src/scripts/emacs/`       | M-x, the minibuffer, which-key, the modeline and load-theme                   |
+| `src/scripts/home/`, `post/`, `demos/` | what each component and demo does in the browser                  |
+| `src/styles/`              | the styles, laid out like the components; `themes.css` has the colours       |
+| `public/`                  | files served as they are: fonts, favicon, GPG key, `robots.txt`, post videos  |
+
+Each component imports its own styles and starts its own script, so a section's
+markup, CSS and JavaScript are named after it in `components/`, `styles/` and `scripts/`.
+
+## Adding a project
+
+Add `src/content/projects/<name>.md`. The front matter has its place in the list
+(`order`), colour (`cat`), one-line `summary` (its size in the memory map),
+and optionally a `demo` from `src/scripts/demos/`; the text is the write-up.
 
 ## Writing a post
 

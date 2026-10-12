@@ -1,8 +1,15 @@
 ---
-// The Emacs frame every page shares: head, top line, modeline, minibuffer and
-// the *Help* window. Pages fill the default slot with <main>, add page scripts
-// to the "head" slot and their keys to the "help" slot.
-import "../styles/style.css";
+// The Emacs frame every page shares: the head, the top line, the footer, the
+// modeline and minibuffer, and *Help*. Pages fill the default slot with <main>,
+// add to <head> through the "head" slot and list their own keys in "help".
+import TopBar from "../components/frame/TopBar.astro";
+import Footer from "../components/frame/Footer.astro";
+import Modeline from "../components/frame/Modeline.astro";
+import Help from "../components/frame/Help.astro";
+import Analytics from "../components/frame/Analytics.astro";
+import "../styles/fonts.css";
+import "../styles/themes.css";
+import "../styles/base.css";
 
 interface Props {
   title?: string;
@@ -24,10 +31,6 @@ const {
   mode,
   skip,
 } = Astro.props;
-const at = home ? "" : "/";
-// Google Analytics, as on the Hugo site: production builds only, so local work isn't counted.
-const GA_ID = "G-BLX24KP7CS";
-const year = new Date().getFullYear();
 ---
 <!doctype html>
 <html lang="en" data-theme="doom-gruvbox">
@@ -50,91 +53,16 @@ const year = new Date().getFullYear();
     if (t) document.documentElement.dataset.theme = t;
   } catch (e) {}
 </script>
-{import.meta.env.PROD && (
-  <Fragment>
-    <script is:inline async src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}></script>
-    <script is:inline define:vars={{ GA_ID }}>
-      window.dataLayer = window.dataLayer || [];
-      function gtag() { dataLayer.push(arguments); }
-      gtag("js", new Date());
-      gtag("config", GA_ID);
-    </script>
-  </Fragment>
-)}
+<Analytics />
 <slot name="head" />
 </head>
 <!-- Reading the source? Good instinct. flag{view_source_is_recon} -->
 <body>
 <a class="skip" href={skip}>Skip to content</a>
-
-<header class="top">
-  <a class="brand" href={home ? "#top" : "/"} aria-label={home ? "Michael Neuper, back to top" : "Michael Neuper, home"}>
-    <svg class="logo" viewBox="0 0 32 16" aria-hidden="true"><path d="M1 14H3V2H9V14H11V2H17V14H20V2H26V14H31"/></svg>
-    <span>michael neuper</span>
-  </a>
-  <nav class="nav" id="nav" aria-label="Sections">
-    <a href={`${at}#about`}>about</a>
-    <a href={`${at}#projects`}>projects</a>
-    <a href={`${at}#posts`}>posts</a>
-    <a href={`${at}#contact`}>contact</a>
-  </nav>
-  <button class="theme-key" type="button" title="SPC h t">load-theme</button>
-  <button class="menu-key" type="button" aria-expanded="false" aria-controls="nav">menu</button>
-</header>
-
+<TopBar home={home} />
 <slot />
-
-<footer class="foot">
-  <p>© {year} Michael Neuper</p>
-</footer>
-
-<!-- ───────────────────────── modeline and minibuffer ───────────────────────── -->
-<div class="which-key" hidden aria-live="polite"></div>
-<div class="frame-bottom">
-  <div class="modeline">
-    <span class="ml-evil" title="evil state">&lt;N&gt;</span>
-    <span class="ml-buf">{buf}</span>
-    <span class="ml-pos" aria-hidden="true">1:0</span>
-    <span class="ml-pct" aria-hidden="true">Top</span>
-    <span class="ml-spacer"></span>
-    <span class="ml-misc" aria-live="polite"></span>
-    <span class="ml-flags" aria-hidden="true"></span>
-    <span class="ml-mode">{mode}</span>
-    <span class="ml-enc" aria-hidden="true">LF UTF-8</span>
-    <span class="ml-vc" aria-hidden="true">master</span>
-    <span class="ml-time" aria-hidden="true"></span>
-  </div>
-  <div class="mini" hidden>
-    <form class="mini-prompt" autocomplete="off">
-      <label><span class="mini-count"></span><span class="mini-ps"></span><input type="text" spellcheck="false" autocapitalize="off" role="combobox" aria-expanded="true" aria-controls="mini-list" aria-autocomplete="list"></label>
-    </form>
-    <ul class="mini-list" id="mini-list" role="listbox"></ul>
-  </div>
-  <div class="echo" role="status"></div>
-</div>
-
-<dialog class="help" aria-labelledby="help-title">
-  <p class="winbar"><span class="file" id="help-title">*Help*</span><span class="rule" aria-hidden="true"></span><span class="meta">q or esc to close</span></p>
-  <div class="help-cols">
-    <div>
-      <h3>Keys</h3>
-      <dl>
-        <div><dt><kbd>SPC</kbd></dt><dd>leader key: shows every command</dd></div>
-        <div><dt><kbd>M-x</kbd></dt><dd>run a command by name (Alt+x or Option+x)</dd></div>
-        <div><dt><kbd>SPC h t</kbd></dt><dd>load a theme, with live preview</dd></div>
-        <div><dt><kbd>:</kbd></dt><dd>evil ex commands, like <code>:q</code></dd></div>
-        <div><dt><kbd>C-g</kbd></dt><dd>cancel (so does <kbd>esc</kbd>)</dd></div>
-      </dl>
-    </div>
-    <div>
-      <h3>On this page</h3>
-      <dl>
-        <slot name="help" />
-        <div><dt><code>submit-flag</code></dt><dd>check a CTF flag</dd></div>
-      </dl>
-    </div>
-  </div>
-  <form method="dialog"><button class="btn" type="submit">close</button></form>
-</dialog>
+<Footer />
+<Modeline buf={buf} mode={mode} />
+<Help><slot name="help" /></Help>
 </body>
 </html>

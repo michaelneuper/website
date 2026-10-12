@@ -1,0 +1,26 @@
+---
+// The posts on the home page, as an Org buffer: src/scripts/home/posts.js turns
+// this list into years and posts with tags and property drawers that fold.
+import Buffer from "../frame/Buffer.astro";
+import { publishedPosts, ymd } from "../../lib/posts.js";
+import "../../styles/org.css";
+import "../../styles/home/posts.css";
+
+const posts = await publishedPosts();
+---
+<Buffer id="posts" file="posts.org" mode="Org" metaAttrs={{ "data-org": "meta" }}>
+  <p class="org-p">From my blog at michaelneuper.com, shown the way I read them. <kbd>TAB</kbd> on a heading folds it, <kbd>S-TAB</kbd> cycles the whole buffer, and clicking a heading’s stars does the same.</p>
+
+  {/* data-tags are space separated; each tag gets its colour from TAG_COLORS in src/scripts/tags.js. */}
+  <ol class="posts">
+    {posts.map((p) => (
+      <li data-date={ymd(p.data.date)} data-tags={p.data.tags.join(" ")} data-cat={p.data.cat}><a href={`/posts/${p.id}/`}>{p.data.title}</a></li>
+    ))}
+  </ol>
+</Buffer>
+
+<script>
+  import { initPosts } from "../../scripts/home/posts.js";
+
+  initPosts();
+</script>

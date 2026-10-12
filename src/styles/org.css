@@ -1,0 +1,26 @@
+/* Org basics shared by the posts list on the home page and the posts: #+keyword
+   lines, heading stars (buttons that fold) and the ellipsis on a folded heading. */
+
+.org-kw {
+  margin: 0;
+  font: inherit;
+  color: var(--dim);
+}
+
+.org-kw .v {
+  color: var(--fg);
+}
+
+.org-stars {
+  flex: none;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+}
+
+.org-ellipsis {
+  color: var(--dim);
+  font-weight: 400;
+}

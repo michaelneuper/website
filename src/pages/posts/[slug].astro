@@ -1,13 +1,18 @@
 ---
 // One post, shown as an Org buffer: #+ keywords, then the text under starred
-// headings that fold like Org's, with an imenu-list window of the headings
-// beside it when the post asks for a table of contents, and the giscus
-// comments from the old site below. The posts are Markdown underneath.
+// headings that fold, with an *Ilist* window of its headings when the post asks
+// for a table of contents, and the giscus comments from the old site below.
+// The posts themselves are Markdown in src/content/posts.
 import { render } from "astro:content";
 import "katex/dist/katex.min.css";
 import Base from "../../layouts/Base.astro";
-import { publishedPosts, summary, wordCount, weekday, ymd } from "../../lib/posts.js";
-import { TAG_COLORS } from "../../scripts/tags.js";
+import Buffer from "../../components/frame/Buffer.astro";
+import OrgHeader from "../../components/post/OrgHeader.astro";
+import OrgBody from "../../components/post/OrgBody.astro";
+import Outline from "../../components/post/Outline.astro";
+import PostNav from "../../components/post/PostNav.astro";
+import Comments from "../../components/post/Comments.astro";
+import { publishedPosts, summary, wordCount } from "../../lib/posts.js";
 
 export async function getStaticPaths() {
   const posts = await publishedPosts();
@@ -27,9 +32,6 @@ const minutes = Math.max(1, Math.round(words / 230));
 const outline = toc ? headings.filter((h) => (h.depth === 2 || h.depth === 3) && h.slug !== "footnote-label") : [];
 ---
 <Base title={`${title} - Michael Neuper`} description={summary(post.body ?? "")} buf={file} mode="Org" skip="#post">
-  <Fragment slot="head">
-    <script src="../../scripts/page.js"></script>
-  </Fragment>
   <Fragment slot="help">
     <div><dt><kbd>TAB</kbd></dt><dd>fold the heading whose stars you clicked</dd></div>
     <div><dt><kbd>S-TAB</kbd></dt><dd>cycle the whole buffer: overview, contents, show all</dd></div>
@@ -38,48 +40,14 @@ const outline = toc ? headings.filter((h) => (h.depth === 2 || h.depth === 3) &&
   </Fragment>
 
   <main>
-    <section class="sec post" id="post" data-file={file} data-mode="Org" aria-labelledby="post-title">
-      <p class="winbar"><span class="file">{file}</span><span class="rule" aria-hidden="true"></span><span class="meta">{words.toLocaleString("en")} words, {minutes} min</span></p>
-
-      <header class="org-head">
-        <h1 class="post-title" id="post-title"><span class="org-key" aria-hidden="true">#+title:</span> {title}</h1>
-        <p class="org-kw"><span class="org-key">#+author:</span> <span class="v">Michael Neuper</span></p>
-        <p class="org-kw"><span class="org-key">#+date:</span> <time class="org-ts" datetime={ymd(date)}>&lt;{ymd(date)} {weekday(date)}&gt;</time></p>
-        {tags.length > 0 && (
-          <p class="org-kw"><span class="org-key">#+filetags:</span> <span class="org-filetags">:{tags.map((t) => (
-            <Fragment><span class="t" style={`--tag: ${TAG_COLORS[t] ?? "var(--dim)"}`}>{t}</span>:</Fragment>
-          ))}</span></p>
-        )}
-      </header>
-
+    <Buffer id="post" class="post" file={file} mode="Org" meta={`${words.toLocaleString("en")} words, ${minutes} min`} labelledby="post-title">
+      <OrgHeader title={title} date={date} tags={tags} />
       <div class:list={["post-cols", { "has-toc": outline.length > 0 }]}>
-        {outline.length > 0 && (
-          <aside class="post-toc" aria-labelledby="toc-title">
-            <p class="winbar"><span class="file" id="toc-title">*Ilist*</span><span class="rule" aria-hidden="true"></span><span class="meta">contents</span></p>
-            <ol>
-              {outline.map((h) => (
-                <li class={`d${h.depth}`}><a href={`#${h.slug}`}><span class="mk" aria-hidden="true">{"*".repeat(h.depth - 1)}</span> {h.text}</a></li>
-              ))}
-            </ol>
-          </aside>
-        )}
-        <article class="post-body">
-          <Content />
-        </article>
+        {outline.length > 0 && <Outline headings={outline} />}
+        <OrgBody><Content /></OrgBody>
       </div>
-
-      <nav class="post-nav" aria-label="More posts">
-        {older ? <a class="older" href={`/posts/${older.id}/`}><span class="dim">older</span>{older.data.title}</a> : <span></span>}
-        {newer && <a class="newer" href={`/posts/${newer.id}/`}><span class="dim">newer</span>{newer.data.title}</a>}
-      </nav>
-      <p class="post-all"><a href="/#posts">All posts</a></p>
-    </section>
-
-    <section class="sec post-comments" id="comments" data-file="*comments*" data-mode="giscus" aria-labelledby="comments-title">
-      <p class="winbar"><span class="file" id="comments-title">*comments*</span><span class="rule" aria-hidden="true"></span><span class="meta">GitHub Discussions</span></p>
-      <div class="giscus"></div>
-      <p class="dim giscus-note">Comments load from GitHub Discussions through giscus.<noscript> They need JavaScript.</noscript></p>
-    </section>
-
+      <PostNav older={older} newer={newer} />
+    </Buffer>
+    <Comments />
   </main>
 </Base>

@@ -1,0 +1,17 @@
+---
+// The older and newer posts, and a way back to the list.
+import "../../styles/post/nav.css";
+
+type Link = { id: string; data: { title: string } } | undefined;
+interface Props {
+  older: Link;
+  newer: Link;
+}
+
+const { older, newer } = Astro.props;
+---
+<nav class="post-nav" aria-label="More posts">
+  {older ? <a class="older" href={`/posts/${older.id}/`}><span class="dim">older</span>{older.data.title}</a> : <span></span>}
+  {newer && <a class="newer" href={`/posts/${newer.id}/`}><span class="dim">newer</span>{newer.data.title}</a>}
+</nav>
+<p class="post-all"><a href="/#posts">All posts</a></p>

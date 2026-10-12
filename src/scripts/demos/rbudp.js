@@ -3,6 +3,7 @@
 // TRANSFER_DONE), and blast just the missing ones until nothing is missing.
 
 import { fitCanvas, themeColors, onFrame, reducedMotion } from "../util.js";
+import "../../styles/demos/rbudp.css";
 
 const PACKETS = 64;
 const FLIGHT = 0.7; // seconds for a datagram to cross

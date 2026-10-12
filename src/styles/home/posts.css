@@ -1,0 +1,104 @@
+/* The posts list on the home page, as an Org buffer */
+
+.org {
+  max-width: 880px;
+  font-size: 13px;
+  line-height: 1.75;
+}
+
+.org-title {
+  color: var(--fg);
+  font-weight: 600;
+}
+
+.org-p {
+  max-width: 76ch;
+  margin: 20px 0 0;
+  font-size: 13px;
+  line-height: 1.75;
+}
+
+.org > .org-tree {
+  margin-top: 20px;
+}
+
+.org-tree {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.org-h {
+  display: flex;
+  align-items: baseline;
+  gap: 1ch;
+}
+
+.org-h:focus-visible {
+  outline: none;
+  background: var(--hl);
+}
+
+.org-h1 > .org-h {
+  color: var(--blue);
+  font-weight: 600;
+}
+
+.org-h2 > .org-h {
+  color: var(--magenta);
+}
+
+.org-h2 a {
+  min-width: 0;
+  color: inherit;
+  text-decoration: none;
+}
+
+.org-h2 a:hover {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+}
+
+.org-h .count {
+  color: var(--dim);
+  font-weight: 400;
+}
+
+.org-tags {
+  flex: none;
+  margin-left: auto;
+  padding-left: 2ch;
+  color: var(--dim);
+  white-space: nowrap;
+}
+
+.org-tags .t {
+  color: var(--tag, var(--dim));
+}
+
+.org-drawer {
+  margin: 0 0 6px 3ch;
+  overflow-x: auto;
+  color: var(--dim);
+  font-size: 12px;
+  line-height: 1.6;
+  white-space: pre;
+}
+
+.org-drawer .k {
+  color: var(--faint);
+}
+
+.org-drawer .ts {
+  color: var(--cyan);
+}
+
+.org-drawer a {
+  color: var(--fg);
+}
+
+@media (max-width: 640px) {
+  .org-tags {
+    display: none;
+  }
+}

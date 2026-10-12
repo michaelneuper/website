@@ -1,0 +1,22 @@
+---
+// M-x coffee-refill (my GitHub bio, made to do something): a mug fills while
+// VCC climbs back to 5 V, then the 8-bit computer runs four times as fast.
+import Winbar from "../frame/Winbar.astro";
+import "../../styles/home/coffee.css";
+---
+<div class="coffee" hidden role="dialog" aria-label="Coffee refill">
+  <pre class="mug" aria-hidden="true"></pre>
+  <div class="coffee-info">
+    <Winbar file="*coffee*" meta="q to close" />
+    <p class="vcc"><span class="dim">VCC</span><span class="vbar" aria-hidden="true"></span><span class="volts">2.6 V</span></p>
+    <p class="coffee-msg" aria-live="polite">brewing…</p>
+    <p class="coffee-links"><a href="https://buymeacoffee.com/michaelneuper" target="_blank" rel="noopener">That one was simulated. Buy me an actual coffee</a></p>
+  </div>
+  <button type="button" class="coffee-close" aria-label="Close">×</button>
+</div>
+
+<script>
+  import { initCoffee } from "../../scripts/home/coffee.js";
+
+  initCoffee();
+</script>

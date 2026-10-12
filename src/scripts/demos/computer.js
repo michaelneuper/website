@@ -1,1 +1,1 @@
-export { mount } from "../computer.js";
+export { mount } from "./computer/board.js";

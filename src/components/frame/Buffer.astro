@@ -1,0 +1,24 @@
+---
+// A buffer: one section of a page, with a winbar on top. Its file name and
+// major mode go in the modeline while it's on screen (src/scripts/emacs/buffers.js).
+import Winbar from "./Winbar.astro";
+import "../../styles/frame/buffer.css";
+
+interface Props {
+  id: string;
+  file: string;
+  mode: string;
+  meta?: string;
+  class?: string;
+  /** The id of the heading that names the section. */
+  labelledby?: string;
+  fileId?: string;
+  metaAttrs?: Record<string, string>;
+}
+
+const { id, file, mode, meta, class: className, labelledby, fileId, metaAttrs } = Astro.props;
+---
+<section class:list={["sec", className]} id={id} data-file={file} data-mode={mode} aria-labelledby={labelledby}>
+  <Winbar file={file} meta={meta} fileId={fileId} metaAttrs={metaAttrs} />
+  <slot />
+</section>

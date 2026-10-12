@@ -1,0 +1,99 @@
+/* The landing section: the name (which decodes itself on load), a lede and the colour key */
+
+.hero {
+  display: grid;
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+  gap: 32px clamp(32px, 4vw, 64px);
+  align-items: center;
+  min-height: 100vh;
+  min-height: 100svh;
+  padding: calc(var(--top-h) + 28px) var(--gutter) calc(var(--frame-h) + 32px);
+  max-width: 1440px;
+  margin: 0 auto;
+}
+
+.hero-name {
+  margin: 0 0 20px -0.04em;
+  font: 400 clamp(46px, 6.4vw, 96px)/0.94 var(--serif);
+  letter-spacing: -0.015em;
+}
+
+/* On load the name decodes itself (src/scripts/home/decode.js): each letter starts as a byte
+   with a few bits flipped and changes one bit at a time until it is right. */
+
+.boot .hero-name {
+  visibility: hidden;
+  animation: boot-failsafe 0s 2.5s forwards;
+}
+
+@keyframes boot-failsafe {
+  to { visibility: visible; }
+}
+
+/* each letter sits in a box as wide as the final letter, and whatever
+   character it shows is centred in it */
+.hero-name.is-cells .bc {
+  display: inline-block;
+  text-align: center;
+}
+
+.hero-name.is-cells .bc-ch {
+  display: inline-block;
+  margin-inline: -1em;
+  white-space: pre;
+}
+
+.bc-word {
+  white-space: nowrap;
+}
+
+/* a wrong byte shows as a raw character in the mono face */
+.bc.is-wrong {
+  color: var(--dim);
+}
+
+.bc.is-wrong .bc-ch {
+  font-family: var(--mono);
+  font-size: 0.78em;
+  letter-spacing: 0;
+}
+
+.hero-lede {
+  max-width: 44ch;
+  margin: 0 0 20px;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 2.5ch;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 12px;
+  color: var(--dim);
+}
+
+.legend li::before,
+.features li::before {
+  content: "";
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  margin-right: 1ch;
+  background: var(--c, var(--fg));
+  vertical-align: 0.06em;
+}
+
+@media (max-width: 1100px) {
+  .hero {
+    grid-template-columns: minmax(0, 1fr);
+    align-items: start;
+  }
+
+  .hero-id {
+    max-width: 640px;
+  }
+}

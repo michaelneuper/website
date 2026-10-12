@@ -1,0 +1,134 @@
+/* About, as a datasheet, with experience as git log --graph output */
+
+.ds-head {
+  display: grid;
+  grid-template-columns: 14ch minmax(0, 1fr);
+  gap: 8px 2ch;
+  align-items: baseline;
+  padding-top: 16px;
+  border-top: 2px solid var(--fg);
+}
+
+.ds-part {
+  margin: 0;
+  font-weight: 600;
+  font-size: 15px;
+}
+
+.ds-title {
+  max-width: 19em;
+  margin: 0;
+  font: 400 clamp(28px, 3.8vw, 44px)/1.1 var(--serif);
+}
+
+.ds-desc {
+  margin: 40px 0 0;
+}
+
+/* experience as git log --graph --color */
+
+.gitlog-cmd {
+  margin-bottom: 12px;
+  font-weight: 400;
+  color: var(--fg);
+  line-height: 1.5;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.gitlog-cmd .prompt {
+  color: var(--green);
+}
+
+.gitlog {
+  padding: 16px 18px;
+  overflow-x: auto;
+  border: 1px solid var(--rule);
+  font-size: 12px;
+  line-height: 1.7;
+  color: var(--fg);
+}
+
+.gl-line {
+  width: max-content;
+  white-space: pre;
+}
+
+/* one colour per branch */
+.gitlog .lm { color: var(--magenta); } /* main */
+.gitlog .lu { color: var(--green); }   /* undergrad */
+.gitlog .lt { color: var(--yellow); }  /* teaching-assistant */
+.gitlog .lb { color: var(--red); }     /* bbd-software */
+.gitlog .li { color: var(--blue); }    /* mwr-internship */
+
+.gl-tip {
+  color: var(--fg);
+  font-weight: 600;
+}
+
+.gl-refs {
+  color: var(--yellow);
+}
+
+.gl-head {
+  color: var(--cyan);
+  font-weight: 600;
+}
+
+.gl-branch {
+  color: var(--green);
+  font-weight: 600;
+}
+
+.gl-author {
+  color: var(--blue);
+}
+
+.gl-subj {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  white-space: pre;
+  text-decoration: underline dotted;
+  text-decoration-color: var(--faint);
+  text-underline-offset: 0.25em;
+}
+
+.gl-subj:hover,
+.gl-subj[aria-expanded="true"] {
+  text-decoration-style: solid;
+  text-decoration-color: currentColor;
+}
+
+.gl-body,
+.gl-desc {
+  color: var(--dim);
+}
+
+/* before the script runs (or without it), descriptions show under their commit */
+.gl-desc {
+  display: block;
+  padding-left: 4ch;
+}
+
+.gitlog-hint {
+  margin: 8px 0 0;
+  font-size: 12px;
+}
+
+@media (max-width: 640px) {
+  .ds-head {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .gitlog {
+    padding: 12px;
+    font-size: 11.5px;
+  }
+
+  .gitlog-cmd {
+    font-size: 11.5px;
+  }
+}

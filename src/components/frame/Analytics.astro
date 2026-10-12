@@ -1,0 +1,16 @@
+---
+// Google Analytics, as on the Hugo site: production builds only, so local work
+// isn't counted.
+const GA_ID = "G-BLX24KP7CS";
+---
+{import.meta.env.PROD && (
+  <Fragment>
+    <script is:inline async src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}></script>
+    <script is:inline define:vars={{ GA_ID }}>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() { dataLayer.push(arguments); }
+      gtag("js", new Date());
+      gtag("config", GA_ID);
+    </script>
+  </Fragment>
+)}

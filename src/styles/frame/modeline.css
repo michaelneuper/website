@@ -1,0 +1,247 @@
+/* The bottom of the frame: doom-modeline, the echo area, the minibuffer and which-key */
+
+.frame-bottom {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 30;
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+  background: var(--bg);
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.modeline {
+  display: flex;
+  align-items: stretch;
+  height: 24px;
+  line-height: 24px;
+  background: var(--bg-alt);
+  color: var(--fg);
+}
+
+/* doom-modeline's bar */
+.modeline::before {
+  content: "";
+  flex: none;
+  width: 4px;
+  background: var(--blue);
+}
+
+.modeline > span {
+  flex: none;
+  padding: 0 1ch;
+}
+
+.ml-evil {
+  color: var(--green);
+  font-weight: 600;
+}
+
+.modeline[data-evil="I"] .ml-evil { color: var(--yellow); }
+.modeline[data-evil="V"] .ml-evil { color: var(--magenta); }
+.modeline[data-evil="E"] .ml-evil { color: var(--cyan); }
+
+/* a long buffer name gives way first, so the mode and clock stay on screen */
+.modeline > .ml-buf {
+  flex: 0 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 600;
+}
+
+.ml-pos,
+.ml-pct,
+.ml-enc,
+.ml-time {
+  color: var(--dim);
+}
+
+.modeline > .ml-spacer {
+  flex: 1;
+  padding: 0;
+}
+
+.ml-flags {
+  color: var(--green);
+}
+
+.ml-mode {
+  color: var(--blue);
+  font-weight: 600;
+}
+
+.ml-vc {
+  color: var(--green);
+}
+
+.echo {
+  height: 22px;
+  padding: 0 1ch;
+  overflow: hidden;
+  line-height: 22px;
+  color: var(--dim);
+  text-overflow: ellipsis;
+}
+
+.echo.is-error {
+  color: var(--red);
+}
+
+.echo.is-ok {
+  color: var(--green);
+}
+
+.mini:not([hidden]) ~ .echo {
+  display: none;
+}
+
+.mini-prompt {
+  margin: 0;
+}
+
+.mini-prompt label {
+  display: flex;
+  height: 22px;
+  padding: 0 1ch;
+  line-height: 22px;
+}
+
+.mini-count {
+  min-width: 6ch;
+  color: var(--dim);
+}
+
+.mini-ps {
+  color: var(--blue);
+  white-space: pre;
+}
+
+.mini-prompt input {
+  flex: 1;
+  min-width: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  background: none;
+  color: var(--fg);
+  caret-color: var(--fg);
+  font-size: 12px;
+  line-height: 22px;
+}
+
+.mini-list {
+  max-height: calc(10 * 21px);
+  margin: 0;
+  padding: 0;
+  overflow-y: auto;
+  list-style: none;
+}
+
+.mini-list:empty {
+  display: none;
+}
+
+.mini-list li {
+  display: flex;
+  gap: 2ch;
+  height: 21px;
+  padding: 0 1ch;
+  line-height: 21px;
+  cursor: pointer;
+}
+
+.mini-list li[aria-selected="true"] {
+  background: var(--hl);
+}
+
+.mini-list .cand {
+  flex: none;
+  min-width: 24ch;
+  color: var(--fg);
+}
+
+.mini-list .cand mark {
+  background: none;
+  color: var(--magenta);
+  font-weight: 600;
+}
+
+.mini-list .ann {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  color: var(--dim);
+  text-overflow: ellipsis;
+}
+
+.mini-list .key {
+  flex: none;
+  color: var(--blue);
+}
+
+.which-key {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: var(--frame-h);
+  z-index: 29;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(26ch, 1fr));
+  gap: 2px 2ch;
+  padding: 10px 2ch 12px;
+  border-top: 1px solid var(--rule);
+  background: var(--bg-alt);
+  font-size: 12px;
+}
+
+.which-key[hidden] {
+  display: none;
+}
+
+.wk-title {
+  grid-column: 1 / -1;
+  margin-bottom: 4px;
+  color: var(--dim);
+}
+
+.wk-item {
+  display: flex;
+  gap: 1ch;
+  white-space: nowrap;
+}
+
+.wk-key {
+  min-width: 3ch;
+  color: var(--magenta);
+  font-weight: 600;
+}
+
+.wk-arrow {
+  color: var(--faint);
+}
+
+.wk-desc {
+  color: var(--fg);
+}
+
+.wk-desc.group {
+  color: var(--blue);
+}
+
+@media (max-width: 920px) {
+  .ml-enc,
+  .ml-vc,
+  .ml-time,
+  .ml-pos {
+    display: none;
+  }
+}
+
+@media (max-width: 640px) {
+  .ml-pct {
+    display: none;
+  }
+}

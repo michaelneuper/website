@@ -1,0 +1,69 @@
+/* othello-mcts: the board, with each move shaded by how much the search tried it */
+
+.oth {
+  display: grid;
+  grid-template-columns: repeat(8, minmax(0, 1fr));
+  gap: 2px;
+  width: min(100%, 336px);
+  aspect-ratio: 1;
+  padding: 2px;
+  background: color-mix(in srgb, var(--fg) 25%, var(--bg));
+}
+
+.oth-cell {
+  position: relative;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: color-mix(in srgb, var(--green) 28%, var(--bg));
+  cursor: default;
+}
+
+.oth-cell.legal {
+  cursor: pointer;
+}
+
+.oth-cell.legal::after {
+  content: "";
+  position: absolute;
+  inset: 40%;
+  border-radius: 50%;
+  background: var(--fg);
+  opacity: 0.4;
+}
+
+.oth-cell.last {
+  box-shadow: inset 0 0 0 2px var(--yellow);
+}
+
+.oth-cell .disc {
+  position: absolute;
+  inset: 12%;
+  border-radius: 50%;
+}
+
+.oth-cell .disc.b {
+  background: #1b1b1b;
+  box-shadow: 0 0 0 1px rgb(0 0 0 / 0.35);
+}
+
+.oth-cell .disc.w {
+  background: #f1efe8;
+  box-shadow: 0 0 0 1px rgb(0 0 0 / 0.15);
+}
+
+.oth-cell .heat {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: color-mix(in srgb, var(--blue) var(--hp, 0%), transparent);
+  color: var(--fg);
+  font-size: 10px;
+}
+
+.oth-cell .heat:empty {
+  background: none;
+}

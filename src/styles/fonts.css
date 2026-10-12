@@ -1,0 +1,32 @@
+/* Fonts: JetBrains Mono for the Emacs, a serif for prose */
+
+@font-face {
+  font-family: "JetBrains Mono";
+  src: url("/fonts/jetbrains-mono-regular.woff2") format("woff2");
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "JetBrains Mono";
+  src: url("/fonts/jetbrains-mono-semibold.woff2") format("woff2");
+  font-weight: 600;
+  font-display: swap;
+}
+
+/* Computer Modern, via KaTeX's build of it: the same family as Latin Modern */
+@font-face {
+  font-family: "Computer Modern";
+  src: url("/fonts/cm-regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Computer Modern";
+  src: url("/fonts/cm-italic.woff2") format("woff2");
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}

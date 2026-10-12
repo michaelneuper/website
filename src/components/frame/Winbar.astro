@@ -1,0 +1,16 @@
+---
+// An Emacs window's header line: the buffer's file name, a rule, and a note.
+import "../../styles/frame/buffer.css";
+
+interface Props {
+  file: string;
+  meta?: string;
+  /** An id for the file name, for whatever it labels. */
+  fileId?: string;
+  /** Attributes for the note, when a script fills it in. */
+  metaAttrs?: Record<string, string>;
+}
+
+const { file, meta = "", fileId, metaAttrs = {} } = Astro.props;
+---
+<p class="winbar"><span class="file" id={fileId}>{file}</span><span class="rule" aria-hidden="true"></span><span class="meta" {...metaAttrs}>{meta}</span></p>

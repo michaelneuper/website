@@ -1,0 +1,205 @@
+/* Projects, as a linker memory map: a bar of regions, the list, and a hexdump of the one you pick */
+
+.mm {
+  --mm-cols: 8ch 8ch minmax(0, 1fr) 8ch;
+}
+
+.mm-bar {
+  display: flex;
+  height: 36px;
+  margin-bottom: 32px;
+  border: 1px solid var(--rule);
+}
+
+.mm-seg {
+  min-width: 3px;
+  padding: 0 6px;
+  overflow: hidden;
+  border-right: 1px solid var(--bg);
+  background: color-mix(in srgb, var(--c) 20%, transparent);
+  box-shadow: inset 0 2px 0 var(--c);
+  font-size: 11px;
+  line-height: 34px;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background-color 120ms ease;
+}
+
+.mm-seg:last-child {
+  border-right: 0;
+}
+
+.mm-seg:hover {
+  background: color-mix(in srgb, var(--c) 34%, transparent);
+}
+
+.mm-seg.is-active {
+  background: var(--c);
+  color: var(--bg);
+}
+
+.mm-cols {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+  gap: 48px;
+  align-items: start;
+}
+
+.mm-head {
+  display: grid;
+  grid-template-columns: var(--mm-cols);
+  gap: 1.5ch;
+  margin: 0;
+  padding: 0 0 8px 12px;
+  border-bottom: 1px solid var(--rule);
+  font-size: 12px;
+  color: var(--dim);
+}
+
+.mm-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.proj-name {
+  margin: 0;
+  font: inherit;
+}
+
+.proj-row {
+  display: grid;
+  grid-template-columns: var(--mm-cols);
+  gap: 1.5ch;
+  align-items: baseline;
+  width: 100%;
+  padding: 11px 0 11px 12px;
+  border: 0;
+  border-bottom: 1px solid var(--rule);
+  background: none;
+  text-align: left;
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+}
+
+.proj-row:hover {
+  background: var(--wash);
+}
+
+.proj-row .o,
+.proj-row .l,
+.proj-row .y {
+  font-size: 12px;
+  color: var(--dim);
+}
+
+.proj-row .n {
+  font-weight: 600;
+}
+
+.proj-row .n::before {
+  content: "";
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  margin-right: 1.2ch;
+  background: var(--c);
+  vertical-align: 0.06em;
+}
+
+.proj-row .s {
+  display: block;
+  margin-top: 2px;
+  font-weight: 400;
+  color: var(--dim);
+}
+
+.proj-row[aria-pressed="true"] {
+  background: var(--wash);
+  box-shadow: inset 2px 0 0 var(--c);
+}
+
+.proj-row[aria-pressed="true"] .o,
+.proj-row[aria-pressed="true"] .l {
+  color: var(--c);
+}
+
+.mm.is-built .proj-sum,
+.mm.is-built .proj > .proj-body {
+  display: none;
+}
+
+.mm-detail {
+  min-height: 320px;
+  padding-left: 32px;
+  border-left: 1px solid var(--rule);
+}
+
+.mm-detail:empty {
+  display: none;
+}
+
+.hex {
+  margin: 0 0 22px;
+  overflow-x: auto;
+  font-size: 11.5px;
+  line-height: 1.55;
+  color: var(--dim);
+  white-space: pre;
+}
+
+.hex .a {
+  color: var(--fg);
+}
+
+.hex .addr {
+  color: var(--c);
+}
+
+.mm-detail h3 {
+  margin: 0 0 14px;
+  font: 400 32px/1.1 var(--serif);
+}
+
+.mm-detail .proj-body p {
+  margin: 0 0 14px;
+  font: 400 17px/1.55 var(--serif);
+}
+
+.mm-detail .proj-body .proj-stack,
+.mm-detail .proj-body .proj-links {
+  font: 400 12px/1.6 var(--mono);
+}
+
+.proj-stack {
+  color: var(--dim);
+}
+
+.proj-links a {
+  margin-right: 2ch;
+}
+
+@media (max-width: 920px) {
+  .mm-cols {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .mm-detail {
+    min-height: 0;
+    margin: 4px 0 8px;
+    padding: 20px 0 20px 12px;
+    border-left: 0;
+    border-bottom: 1px solid var(--rule);
+  }
+}
+
+@media (max-width: 640px) {
+  .mm {
+    --mm-cols: 7ch 6ch minmax(0, 1fr);
+  }
+
+  .mm-head span:last-child,
+  .proj-row .y {
+    display: none;
+  }
+}

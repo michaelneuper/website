@@ -1,0 +1,26 @@
+---
+// A post's #+ keywords, as at the top of an Org file: the title (big), then the
+// author, date and tags.
+import { ymd, weekday } from "../../lib/posts.js";
+import { TAG_COLORS } from "../../scripts/tags.js";
+import "../../styles/org.css";
+import "../../styles/post/org.css";
+
+interface Props {
+  title: string;
+  date: Date;
+  tags: string[];
+}
+
+const { title, date, tags } = Astro.props;
+---
+<header class="org-head">
+  <h1 class="post-title" id="post-title"><span class="org-key" aria-hidden="true">#+title:</span> {title}</h1>
+  <p class="org-kw"><span class="org-key">#+author:</span> <span class="v">Michael Neuper</span></p>
+  <p class="org-kw"><span class="org-key">#+date:</span> <time class="org-ts" datetime={ymd(date)}>&lt;{ymd(date)} {weekday(date)}&gt;</time></p>
+  {tags.length > 0 && (
+    <p class="org-kw"><span class="org-key">#+filetags:</span> <span class="org-filetags">:{tags.map((t) => (
+      <Fragment><span class="t" style={`--tag: ${TAG_COLORS[t] ?? "var(--dim)"}`}>{t}</span>:</Fragment>
+    ))}</span></p>
+  )}
+</header>

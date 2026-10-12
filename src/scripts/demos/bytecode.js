@@ -2,6 +2,7 @@
 // with Java's int semantics (wrap-around, truncating division, / by zero).
 
 import { reducedMotion } from "../util.js";
+import "../../styles/demos/bytecode.css";
 
 const LOCALS = { x: 6, y: 7, z: -2 }; // slots 0, 1, 2 of a static method
 const SLOT = { x: 0, y: 1, z: 2 };

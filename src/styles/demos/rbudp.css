@@ -1,0 +1,26 @@
+/* chat-voip-p2p: Reliable Blast UDP, packets crossing and the TCP log */
+
+.rb-canvas {
+  height: 200px;
+}
+
+.rb-log {
+  max-height: 9.8em;
+  margin: 10px 0 0;
+  padding: 8px 10px;
+  overflow-y: auto;
+  border: 1px solid var(--rule);
+  list-style: none;
+  font-size: 11.5px;
+  line-height: 1.6;
+}
+
+.rb-log li {
+  display: grid;
+  grid-template-columns: 8ch 5ch minmax(0, 1fr);
+  gap: 1ch;
+}
+
+.rb-proto {
+  color: var(--cyan);
+}

@@ -1,0 +1,17 @@
+---
+// A post's text. Its headings get stars that fold them, as in Org
+// (src/scripts/post/folding.js), and M-x imenu jumps between them.
+import "../../styles/org.css";
+import "../../styles/post/org.css";
+---
+<article class="post-body">
+  <slot />
+</article>
+
+<script>
+  import { initFolding } from "../../scripts/post/folding.js";
+  import { initImenu } from "../../scripts/post/imenu.js";
+
+  initFolding();
+  initImenu();
+</script>
