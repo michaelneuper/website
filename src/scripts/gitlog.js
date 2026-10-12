@@ -2,7 +2,7 @@
 //   <date> - (refs) <subject> <author>
 // with the date standing in for the hash and the company as the author.
 //
-// The rows are plain text in index.html, so they read fine without JavaScript.
+// The rows are plain text in src/pages/index.astro, so they read fine without JavaScript.
 // This colours the graph by branch (data-lanes), colours the date, refs and
 // author, and turns subjects that have a .gl-desc into buttons that expand it.
 // Lanes: m main, u undergrad, t teaching-assistant, b bbd-software, i mwr-internship.

@@ -1,3 +1,6 @@
+---
+import "../styles/style.css";
+---
 <!doctype html>
 <html lang="en" data-theme="doom-gruvbox">
 <head>
@@ -5,19 +8,19 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Michael Neuper</title>
 <meta name="description" content="Computer science student at Stellenbosch University. Low-level software, electronics, a little security, and a lot of Emacs.">
-<link rel="icon" href="favicon.svg" type="image/svg+xml">
-<link rel="preload" href="fonts/jetbrains-mono-regular.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="fonts/cm-regular.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="css/style.css">
-<script>
-  // Pick the theme before first paint so there is no flash. Keep this list in sync with js/themes.js.
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="/fonts/jetbrains-mono-regular.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/cm-regular.woff2" as="font" type="font/woff2" crossorigin>
+{/* is:inline: Astro ships this script as written instead of bundling it, so it still runs before first paint. */}
+<script is:inline>
+  // Pick the theme before first paint so there is no flash. Keep this list in sync with src/scripts/themes.js.
   try {
     var t = localStorage.getItem("theme");
     var known = /^(doom-gruvbox|doom-gruvbox-light|doom-one|atom-one-dark|modus-vivendi|modus-operandi|doom-dracula|doom-nord|catppuccin|doom-tokyo-night|doom-solarized-light)$/;
     if (!known.test(t || "")) t = matchMedia("(prefers-color-scheme: light)").matches ? "doom-gruvbox-light" : "";
     if (t) document.documentElement.dataset.theme = t;
   } catch (e) {}
-  // Hide the name until js/decode.js has cut it into bands, so it never flashes whole first.
+  // Hide the name until src/scripts/decode.js has split it into letters, so it never flashes whole first.
   // CSS shows it anyway after a moment in case the script never runs.
   try {
     if (!matchMedia("(prefers-reduced-motion: reduce)").matches && (!location.hash || location.hash === "#top")) {
@@ -25,7 +28,7 @@
     }
   } catch (e) {}
 </script>
-<script type="module" src="js/main.js"></script>
+<script src="../scripts/main.js"></script>
 </head>
 <!-- Reading the source? Good instinct. flag{view_source_is_recon} -->
 <body>
@@ -103,7 +106,7 @@
 
     <!-- Experience, as the one-line git log that would print it: "<date> - (refs) <subject> <author>".
          data-lanes colours each graph character by branch: m main, u undergrad, t teaching-assistant,
-         b bbd-software, i mwr-internship (the colours are set in css/style.css). data-cont is the graph that continues below a commit, and a
+         b bbd-software, i mwr-internship (the colours are set in src/styles/style.css). data-cont is the graph that continues below a commit, and a
          .gl-desc becomes its expandable description. data-branch colours the date; data-tip makes the
          * bold for a branch that's still going; data-today swaps in the current month when the page loads.
          Without JavaScript this shows as plain text. -->
@@ -224,7 +227,7 @@ yearly Vac Weeks.</div></div>
     <p class="winbar"><span class="file">posts.org</span><span class="rule" aria-hidden="true"></span><span class="meta" data-org="meta"></span></p>
     <p class="org-p">From my blog at michaelneuper.com, shown the way I read them. <kbd>TAB</kbd> on a heading folds it, <kbd>S-TAB</kbd> cycles the whole buffer, and clicking a heading’s stars does the same.</p>
 
-    <!-- Edit posts here. data-tags are space separated; each tag gets its own colour (see TAG_COLORS in js/org.js). -->
+    <!-- Edit posts here. data-tags are space separated; each tag gets its own colour (see TAG_COLORS in src/scripts/org.js). -->
     <ol class="posts">
       <li data-date="2024-11-22" data-tags="emacs org" data-cat="sw"><a href="https://michaelneuper.com/posts/how-i-use-org-roam-to-takes-notes-for-cs/">How I Use Org-Roam to Take Notes for CS</a></li>
       <li data-date="2023-11-15" data-tags="emacs latex" data-cat="math"><a href="https://michaelneuper.com/posts/efficient-latex-editing-with-emacs/">Efficient LaTeX Editing With Emacs</a></li>
@@ -273,7 +276,7 @@ yearly Vac Weeks.</div></div>
 
     <div class="ctf">
       <h3 class="ds-h">Capture the flag</h3>
-      <p>Three flags are hidden on this site, the kind you would find in a beginner CTF. They look like <code>flag{…}</code>. Found one? Run <kbd>M-x</kbd> <code>submit-flag</code>, or use the button.</p>
+      <p>Three flags are hidden on this site, the kind you would find in a beginner CTF. They look like <code>{"flag{…}"}</code>. Found one? Run <kbd>M-x</kbd> <code>submit-flag</code>, or use the button.</p>
       <p class="ctf-row"><button type="button" class="btn" data-ctf="submit">submit a flag</button><span class="ctf-progress" aria-live="polite">0 of 3 found</span></p>
     </div>
   </section>

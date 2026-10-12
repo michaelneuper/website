@@ -2,14 +2,14 @@
 
 @font-face {
   font-family: "JetBrains Mono";
-  src: url("../fonts/jetbrains-mono-regular.woff2") format("woff2");
+  src: url("/fonts/jetbrains-mono-regular.woff2") format("woff2");
   font-weight: 400;
   font-display: swap;
 }
 
 @font-face {
   font-family: "JetBrains Mono";
-  src: url("../fonts/jetbrains-mono-semibold.woff2") format("woff2");
+  src: url("/fonts/jetbrains-mono-semibold.woff2") format("woff2");
   font-weight: 600;
   font-display: swap;
 }
@@ -17,7 +17,7 @@
 /* Computer Modern, via KaTeX's build of it: the same family as Latin Modern */
 @font-face {
   font-family: "Computer Modern";
-  src: url("../fonts/cm-regular.woff2") format("woff2");
+  src: url("/fonts/cm-regular.woff2") format("woff2");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -25,7 +25,7 @@
 
 @font-face {
   font-family: "Computer Modern";
-  src: url("../fonts/cm-italic.woff2") format("woff2");
+  src: url("/fonts/cm-italic.woff2") format("woff2");
   font-weight: 400;
   font-style: italic;
   font-display: swap;
@@ -34,7 +34,7 @@
 /* ───────────────────────────── themes ─────────────────────────────
    Real Emacs themes. Each sets a background, a modeline background,
    a foreground and seven accents; everything else is mixed from those.
-   Keep the names in sync with js/themes.js and the script in index.html. */
+   Keep the names in sync with src/scripts/themes.js and the script in src/pages/index.astro. */
 
 :root {
   color-scheme: dark;
@@ -367,7 +367,7 @@ code {
   letter-spacing: -0.015em;
 }
 
-/* On load the name decodes itself (js/decode.js): each letter starts as a byte
+/* On load the name decodes itself (src/scripts/decode.js): each letter starts as a byte
    with a few bits flipped and changes one bit at a time until it is right. */
 
 .boot .hero-name {
