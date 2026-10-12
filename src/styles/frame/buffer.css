@@ -11,6 +11,15 @@
   scroll-snap-align: start;
 }
 
+/* On the home page each section is at least a screen tall from its winbar down,
+   so with its winbar at the top (where scrolling snaps it) the next one is out of
+   sight. Every section has the same padding above its winbar, so that padding
+   cancels out. lvh: tall enough when a phone's toolbars are hidden too. */
+.hero ~ .sec {
+  min-height: calc(100vh - var(--top-h) - 24px);
+  min-height: calc(100lvh - var(--top-h) - 24px);
+}
+
 .winbar {
   display: flex;
   align-items: center;

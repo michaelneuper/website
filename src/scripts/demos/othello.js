@@ -166,7 +166,7 @@ export function mount(host) {
       const h = heat?.get(i);
       const hs = cell.querySelector(".heat");
       hs.textContent = h ? `${Math.round(h * 100)}` : "";
-      hs.style.setProperty("--hp", h ? `${Math.round(15 + h * 75)}%` : "0%");
+      hs.style.setProperty("--hp", h ? `${Math.round(35 + h * 60)}%` : "0%");
       cell.setAttribute("aria-label", `${name(i)}, ${v === BLACK ? "black" : v === WHITE ? "white" : legal.has(i) ? "legal move" : "empty"}`);
     });
     scoreEl.textContent = `black ${b}, white ${w}`;

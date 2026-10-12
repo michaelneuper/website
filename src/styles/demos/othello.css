@@ -1,13 +1,23 @@
 /* othello-mcts: the board, with each move shaded by how much the search tried it */
 
+/* The board in the theme's colours: squares like the computer's modules, ruled
+   between, and discs like its LEDs, white lit in the theme's text colour and black
+   unlit (swapped round in light themes, so black stays the dark one). Legal moves
+   are faint dots, the last disc played has a red dot, and the search's candidate
+   moves are ghost white discs, more solid the more it tried them. */
 .oth {
+  --felt: color-mix(in srgb, var(--bg) 92%, var(--fg));
+  --felt-line: var(--rule);
+  --disc-dark: light-dark(var(--fg), color-mix(in oklch, var(--bg) 55%, #000));
+  --disc-light: light-dark(color-mix(in oklch, var(--bg) 35%, #fff), var(--fg));
   display: grid;
   grid-template-columns: repeat(8, minmax(0, 1fr));
-  gap: 2px;
+  gap: 1px;
   width: min(100%, 336px);
   aspect-ratio: 1;
-  padding: 2px;
-  background: color-mix(in srgb, var(--fg) 25%, var(--bg));
+  padding: 0;
+  border: 1px solid var(--faint);
+  background: var(--felt-line);
 }
 
 .oth-cell {
@@ -15,7 +25,7 @@
   padding: 0;
   border: 0;
   border-radius: 0;
-  background: color-mix(in srgb, var(--green) 28%, var(--bg));
+  background: var(--felt);
   cursor: default;
 }
 
@@ -26,42 +36,53 @@
 .oth-cell.legal::after {
   content: "";
   position: absolute;
-  inset: 40%;
+  inset: 42%;
   border-radius: 50%;
-  background: var(--fg);
-  opacity: 0.4;
+  background: var(--faint);
 }
 
-.oth-cell.last {
-  box-shadow: inset 0 0 0 2px var(--yellow);
+.oth-cell.legal:hover::after {
+  inset: 13%;
+  background: color-mix(in srgb, var(--disc-dark) 55%, transparent);
+  box-shadow: inset 0 0 0 1px var(--faint);
 }
 
 .oth-cell .disc {
   position: absolute;
-  inset: 12%;
+  inset: 13%;
   border-radius: 50%;
 }
 
 .oth-cell .disc.b {
-  background: #1b1b1b;
-  box-shadow: 0 0 0 1px rgb(0 0 0 / 0.35);
+  background: var(--disc-dark);
+  box-shadow: inset 0 0 0 1px light-dark(transparent, var(--faint));
 }
 
 .oth-cell .disc.w {
-  background: #f1efe8;
-  box-shadow: 0 0 0 1px rgb(0 0 0 / 0.15);
+  background: var(--disc-light);
+  box-shadow: inset 0 0 0 1px light-dark(var(--faint), transparent);
+}
+
+.oth-cell.last .disc::after {
+  content: "";
+  position: absolute;
+  inset: 38%;
+  border-radius: 50%;
+  background: var(--red);
 }
 
 .oth-cell .heat {
   position: absolute;
-  inset: 0;
+  inset: 13%;
   z-index: 1;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: color-mix(in srgb, var(--blue) var(--hp, 0%), transparent);
-  color: var(--fg);
+  border-radius: 50%;
+  background: color-mix(in oklch, var(--disc-light) var(--hp, 0%), transparent);
+  color: var(--disc-dark);
   font-size: 10px;
+  font-weight: 600;
 }
 
 .oth-cell .heat:empty {

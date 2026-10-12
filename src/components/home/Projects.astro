@@ -1,54 +1,63 @@
 ---
-// Projects, laid out as a linker memory map (src/scripts/home/memmap.js builds
-// the map, the rows and the hexdump from this list). Each project is a file in
-// src/content/projects; its demo is src/scripts/demos/<demo>.js.
+// Projects: a wheel of cards, out in the margin on wide screens, and the
+// project picked on it, written up with its demo. Each project is a file in
+// src/content/projects; src/scripts/home/projects.js turns the wheel, and a
+// project's demo is src/scripts/demos/<demo>.js. Without JavaScript the
+// projects are a plain list.
 import { getCollection, render } from "astro:content";
 import Buffer from "../frame/Buffer.astro";
+import ProjectThumb from "./ProjectThumb.astro";
 import "../../styles/home/projects.css";
 import "../../styles/demos/demo.css";
 
+const CATS: Record<string, string> = { hw: "hardware", sw: "software", math: "maths", sec: "security" };
 const projects = await Promise.all(
   (await getCollection("projects"))
     .sort((a, b) => a.data.order - b.data.order)
     .map(async (p) => ({ ...p.data, Body: (await render(p)).Content })),
 );
 ---
-<Buffer id="projects" file="projects.map" mode="Fundamental" metaAttrs={{ "data-mm": "meta" }}>
+<Buffer id="projects" file="projects.map" mode="Fundamental" metaAttrs={{ "data-pj": "meta" }}>
   <h2 class="h2">Projects</h2>
-  <p class="lede">Laid out like a linker map: each project is a region in memory holding its one-line summary, and the hexdump shows exactly those bytes. Select one to read about it and try it out.</p>
 
-  <div class="mm">
-    <div class="mm-bar" aria-hidden="true"></div>
-    <div class="mm-cols">
-      <div class="mm-table">
-        <p class="mm-head" aria-hidden="true"><span>origin</span><span>length</span><span>name</span><span>source</span></p>
-        <ol class="mm-list">
-          {projects.map((p) => (
-            <li class="proj" data-cat={p.cat} data-src={p.src} data-demo={p.demo} data-wide={p.wide || undefined}>
-              <h3 class="proj-name">{p.name}</h3>
-              <p class="proj-sum">{p.summary}</p>
-              <div class="proj-body">
-                <p.Body />
-                {p.stack && <p class="proj-stack">{p.stack}</p>}
-                {p.links.length > 0 && <p class="proj-links">{p.links.map((l) => <a href={l.href}>{l.text}</a>)}</p>}
-                {p.note && <p class="proj-links dim">{p.note}</p>}
-              </div>
-            </li>
-          ))}
-        </ol>
+  <div class="pj">
+    <div class="pj-wheel">
+      <svg class="pj-spine" aria-hidden="true"><path /></svg>
+      <div class="pj-cards" role="tablist" aria-label="Projects" aria-orientation="vertical">
+        {projects.map((p, i) => (
+          <button type="button" class="pj-card" id={`pj-${p.name}`} role="tab" data-cat={p.cat} aria-selected={i === 0 ? "true" : "false"} aria-controls="project-detail" tabindex={i === 0 ? 0 : -1}>
+            <span class="pj-thumb"><ProjectThumb demo={p.demo} /></span>
+            <span class="pj-label">{p.name}</span>
+          </button>
+        ))}
       </div>
-      <article class="mm-detail" aria-live="polite"></article>
+      <p class="pj-hint" aria-hidden="true">scroll, drag or <kbd>↑</kbd> <kbd>↓</kbd></p>
     </div>
+
+    <article class="pj-detail" id="project-detail" role="tabpanel" aria-live="polite"></article>
+
+    <ol class="pj-list">
+      {projects.map((p) => (
+        <li class="proj" data-cat={p.cat} data-demo={p.demo} data-demo-note={p.demoNote}>
+          <p class="proj-cat">{CATS[p.cat] ?? p.cat}</p>
+          <h3 class="proj-name">{p.name}</h3>
+          <p class="proj-sum">{p.summary}</p>
+          <div class="proj-body">
+            <p.Body />
+            {p.stack && <p class="proj-stack">{p.stack}</p>}
+            {p.links.length > 0 && <p class="proj-links">{p.links.map((l) => <a href={l.href}>{l.text}</a>)}</p>}
+            {p.note && <p class="proj-links dim">{p.note}</p>}
+          </div>
+        </li>
+      ))}
+    </ol>
   </div>
 </Buffer>
 
 <script>
-  import { fontsReady } from "../../scripts/util.js";
-  import { initMemmap } from "../../scripts/home/memmap.js";
+  import { initProjects } from "../../scripts/home/projects.js";
   // the 8-bit computer's M-x commands; its project mounts the board as a demo
   import "../../scripts/demos/computer/commands.js";
 
-  // The hexdump measures character widths, so wait for the mono font.
-  await fontsReady();
-  initMemmap();
+  initProjects();
 </script>

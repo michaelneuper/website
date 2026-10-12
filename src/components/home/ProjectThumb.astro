@@ -1,0 +1,115 @@
+---
+// A small drawing of a project's demo for its card on the projects wheel, in
+// the theme's colours: the computer's LEDs, the scheduler's cores, an Othello
+// board mid-search, a compiled expression, and packets crossing over UDP.
+
+interface Props {
+  demo: string;
+}
+
+const { demo } = Astro.props;
+const range = (n: number) => Array.from({ length: n }, (_, i) => i);
+const bits = (byte: number) => range(8).map((k) => (byte >> (7 - k)) & 1);
+
+// the first few bytes of the Fibonacci program the computer starts with
+const RAM = [0x51, 0x4f, 0x50, 0xe0, 0x2f, 0x70, 0x4e];
+// cores in the scheduler: [start, length, colour] blocks
+const CORES = [
+  [[0, 5, "yellow"], [5, 4, "red"], [9, 3, "yellow"]],
+  [[0, 3, "orange"], [3, 6, "cyan"], [9, 3, "orange"]],
+  [[0, 7, "magenta"], [7, 3, "green"], [10, 2, "magenta"]],
+  [[0, 2, "green"], [2, 5, "red"], [7, 5, "blue"]],
+];
+const QUEUE = ["orange", "red", "cyan", "green", "yellow"];
+// an Othello position: 1 is the player's disc, 2 the opponent's; shade is how
+// often the search tried each legal move
+const BOARD = [
+  "........",
+  "...2....",
+  "..1222..",
+  "..2112..",
+  "..1221..",
+  "...112..",
+  "....2...",
+  "........",
+];
+const SHADE: Record<string, number> = { "1,2": 0.25, "2,6": 0.7, "6,3": 0.4, "5,6": 0.15 };
+const CODE = ["iload_0", "iconst_2", "imul", "iconst_1", "iadd", "ireturn"];
+// packets: 1 arrived, 0 lost and waiting to be resent
+const GOT = [1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1];
+---
+<svg class="th" viewBox="0 0 160 96" aria-hidden="true">
+  {demo === "computer" && (
+    <g>
+      <rect class="th-box" x="4.5" y="4.5" width="64" height="14" />
+      {range(4).map((k) => <circle class="th-on" cx={12 + k * 7} cy="11.5" r="2.2" />)}
+      <rect class="th-box" x="4.5" y="22.5" width="64" height="54" />
+      {RAM.map((b, r) => bits(b).map((on, k) => <circle class={on ? "th-red" : "th-off"} cx={12 + k * 7} cy={29.5 + r * 7} r="2.2" />))}
+      <rect class="th-box" x="4.5" y="80.5" width="64" height="11" />
+      {[0, 1, 0, 1, 1, 1, 1, 0].map((on, k) => <circle class={on ? "th-on" : "th-off"} cx={12 + k * 7} cy="86" r="2" />)}
+      <rect class="th-box" x="74.5" y="4.5" width="11" height="87" />
+      {range(4).map((k) => <line class="th-line" x1={77 + k * 2} y1="8" x2={77 + k * 2} y2="88" />)}
+      <rect class="th-box" x="91.5" y="4.5" width="64" height="14" />
+      {[0, 1, 1, 0].map((on, k) => <circle class={on ? "th-on" : "th-off"} cx={99 + k * 7} cy="11.5" r="2.2" />)}
+      <rect class="th-box" x="91.5" y="22.5" width="64" height="14" />
+      {bits(0x2a).map((on, k) => <circle class={on ? "th-red" : "th-off"} cx={99 + k * 7} cy="29.5" r="2.2" />)}
+      <rect class="th-box" x="91.5" y="40.5" width="64" height="14" />
+      {bits(0x15).map((on, k) => <circle class={on ? "th-red" : "th-off"} cx={99 + k * 7} cy="47.5" r="2.2" />)}
+      <rect class="th-box" x="91.5" y="58.5" width="64" height="33" />
+      {/* the output, a seven-segment 42 */}
+      <path class="th-seg-off" d="M112 64h8M112 75h8M112 86h8M111 65v9M121 65v9M111 76v9M121 76v9M126 64h8M126 75h8M126 86h8M125 65v9M135 65v9M125 76v9M135 76v9" />
+      <path class="th-seg" d="M111 65v9M121 65v9M112 75h8M121 76v9M126 64h8M135 65v9M126 75h8M125 76v9M126 86h8" />
+    </g>
+  )}
+
+  {demo === "scheduler" && (
+    <g>
+      {CORES.map((blocks, r) => (
+        <g>
+          <rect class="th-off" x="4" y={6 + r * 18} width="152" height="13" />
+          {blocks.map(([s, len, c]) => <rect x={64 + (s as number) * 7.67} y={6 + r * 18} width={(len as number) * 7.67 - 1} height="13" style={`fill: var(--${c})`} />)}
+        </g>
+      ))}
+      {QUEUE.map((c, k) => <rect class="th-q" x={4.5 + k * 22} y="80.5" width="18" height="10" style={`stroke: var(--${c})`} />)}
+    </g>
+  )}
+
+  {demo === "othello" && (
+    <g>
+      <rect class="th-box" x="36.5" y="4.5" width="87" height="87" />
+      {range(7).map((k) => <line class="th-line" x1={47.375 + k * 10.875} y1="5" x2={47.375 + k * 10.875} y2="91" />)}
+      {range(7).map((k) => <line class="th-line" x1="37" y1={15.375 + k * 10.875} x2="123" y2={15.375 + k * 10.875} />)}
+      {Object.entries(SHADE).map(([at, a]) => {
+        const [r, c] = at.split(",").map(Number);
+        return <rect class="th-on" x={37 + c * 10.875} y={5 + r * 10.875} width="10.4" height="10.4" style={`opacity: ${a}`} />;
+      })}
+      {BOARD.map((row, r) => [...row].map((ch, c) => ch !== "." && (
+        <circle class={ch === "1" ? "th-disc" : "th-disc-o"} cx={42.4 + c * 10.875} cy={10.4 + r * 10.875} r="3.6" />
+      )))}
+    </g>
+  )}
+
+  {demo === "bytecode" && (
+    <g>
+      <text class="th-src" x="6" y="15">x * 2 + 1</text>
+      {CODE.map((op, k) => <text class:list={["th-op", { "is-at": k === 2 }]} x="6" y={32 + k * 11}>{op}</text>)}
+      {[["2", 70.5], ["x", 54.5]].map(([v, y]) => (
+        <g>
+          <rect class="th-box" x="112.5" y={y} width="40" height="13" />
+          <text class="th-op" x="128" y={(y as number) + 9.5}>{v}</text>
+        </g>
+      ))}
+      <line class="th-line" x1="108" y1="87.5" x2="156" y2="87.5" />
+    </g>
+  )}
+
+  {demo === "rbudp" && (
+    <g>
+      {range(25).map((k) => <rect class="th-dim" x={6 + (k % 5) * 8} y={14 + Math.floor(k / 5) * 8} width="6" height="6" />)}
+      {range(25).map((k) => <rect class={GOT[k] ? "th-on" : "th-off"} x={114 + (k % 5) * 8} y={14 + Math.floor(k / 5) * 8} width="6" height="6" />)}
+      {[[58, 30], [72, 22], [86, 42], [97, 34]].map(([x, y]) => <rect class="th-on" x={x} y={y} width="6" height="6" style="opacity: 0.6" />)}
+      <line class="th-line th-dash" x1="6" y1="70.5" x2="154" y2="70.5" />
+      <path class="th-line" d="M100 77l-6 3.5 6 3.5" />
+    </g>
+  )}
+</svg>

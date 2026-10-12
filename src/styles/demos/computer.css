@@ -23,9 +23,7 @@
   --led: 10px;
   display: grid;
   grid-template-columns: minmax(0, 1fr) 64px minmax(0, 1fr);
-  grid-template-areas:
-    "left bus right"
-    "ctrl ctrl ctrl";
+  grid-template-areas: "left bus right";
   gap: 10px;
   font-size: 11.5px;
   font-variant-numeric: tabular-nums;
@@ -39,6 +37,19 @@
 
 .col-l { grid-area: left; }
 .col-r { grid-area: right; }
+
+/* the clock with the microstep counter beside it, and the program counter with
+   the flags; short of room, their control lines go under their names */
+.mod-pair {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 10px;
+}
+
+.mod-pair .mod-head {
+  flex-wrap: wrap;
+  row-gap: 2px;
+}
 
 .mod {
   padding: 7px 10px 9px;
@@ -67,6 +78,11 @@
   margin-right: auto;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.sigs {
+  display: flex;
+  gap: 1ch;
 }
 
 .sig {
@@ -234,18 +250,7 @@
   cursor: pointer;
 }
 
-/* control word */
-
-.ctrl {
-  grid-area: ctrl;
-}
-
-.ctrl-row {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: flex-end;
-  gap: 8px 18px;
-}
+/* the microstep counter and the control word */
 
 .cw {
   display: flex;
@@ -267,12 +272,17 @@
   color: var(--fg);
 }
 
+/* what the step does, kept to two lines so the board doesn't jump as it changes */
 .ustep {
-  margin-top: 8px;
-  color: var(--dim);
-  white-space: nowrap;
+  display: -webkit-box;
+  min-height: 3em;
+  margin: 8px 0 0;
   overflow: hidden;
-  text-overflow: ellipsis;
+  color: var(--dim);
+  line-height: 1.5;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
 }
 
 .ustep b {
@@ -280,14 +290,21 @@
   font-weight: 600;
 }
 
-@media (max-width: 640px) {
+/* on a phone the pairs stack */
+@container demo (max-width: 440px) {
+  .mod-pair {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* narrow: beside a project's text, or on a phone */
+@container demo (max-width: 600px) {
   .board {
     --led: 8px;
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
     grid-template-areas:
       "bus bus"
-      "left right"
-      "ctrl ctrl";
+      "left right";
     font-size: 10.5px;
   }
 

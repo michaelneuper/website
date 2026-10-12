@@ -18,21 +18,20 @@ const posts = defineCollection({
   }),
 });
 
-// Projects in the memory map on the home page, one file each, listed by order.
-// Each one's region holds its summary as UTF-8, so the summary sets its size.
+// Projects on the home page's wheel, one file each, listed by order.
 const projects = defineCollection({
   loader: glob({ pattern: "*.md", base: "./src/content/projects" }),
   schema: z.object({
     name: z.string(),
     order: z.number(),
     cat: z.enum(["hw", "sw", "math", "sec"]),
-    // Shown in the source column: built, private, a repo...
-    src: z.string(),
     summary: z.string(),
-    // computer, scheduler, bytecode, othello or rbudp (src/scripts/demos/<demo>.js)
+    // computer, scheduler, bytecode, othello or rbudp (src/scripts/demos/<demo>.js);
+    // it also picks the drawing on the project's card (src/components/home/ProjectThumb.astro)
     demo: z.string().optional(),
-    // The demo gets the full width under the list.
-    wide: z.boolean().default(false),
+    // A line or two over the demo on what it is: the demos are written for the
+    // page, so this says how one differs from the project itself.
+    demoNote: z.string().optional(),
     stack: z.string().optional(),
     links: z.array(z.object({ text: z.string(), href: z.string() })).default([]),
     // A line in place of links, like "Source private (coursework)".

@@ -76,11 +76,12 @@ export function mount(host) {
   const mod = (key, name, sigs = []) => {
     const m = el("section", `mod mod-${key}`);
     const head = el("div", "mod-head");
-    head.append(el("span", "mod-name", name));
+    const lines = el("span", "sigs");
+    head.append(el("span", "mod-name", name), lines);
     for (const sig of sigs) {
       const t = el("span", "sig", LABEL[sig] ?? sig);
       t.dataset.sig = sig;
-      head.append(t);
+      lines.append(t);
     }
     const body = el("div", "mod-body");
     m.append(head, body);
@@ -138,8 +139,8 @@ export function mount(host) {
 
   const ir = mod("ir", "instruction", ["II", "IO"]);
   ir.body.append(leds(ir, 8, "", 4), value(ir));
-  ir.leds.forEach((l, i) => l.classList.add(i < 4 ? "b" : "y"));
-  left.append(clk.m, mar.m, ram.m, ir.m);
+  // the opcode nibble in green, the operand in yellow
+  ir.leds.forEach((l, i) => l.classList.add(i < 4 ? "g" : "y"));
 
   const pc = mod("pc", "program counter", ["CO", "J", "CE"]);
   pc.body.append(leds(pc, 4, "g"), value(pc));
@@ -179,7 +180,8 @@ export function mount(host) {
   fl.append(cfLed, el("span", "dim", "C"), el("span", "gap"), zfLed, el("span", "dim", "Z"));
   fl.style.alignItems = "center";
   flags.body.append(fl, value(flags));
-  right.append(pc.m, a.m, sum.m, b.m, out.m, flags.m);
+  const pcRow = el("div", "mod-pair");
+  pcRow.append(pc.m, flags.m);
 
   const bus = el("div", "bus");
   const busHead = el("div", "mod-head");
@@ -194,32 +196,36 @@ export function mount(host) {
   }
   bus.append(busHead, busVal, lanesWrap);
 
-  const ctrl = mod("ctrl", "control word", []);
-  ctrl.m.classList.add("ctrl");
-  const ctrlRow = el("div", "ctrl-row");
+  // the microstep counter beside the clock it counts, and the control word that step sets
+  const stepMod = mod("step", "microstep counter", []);
   const stepWrap = el("div", "cw");
   const stepLeds = [];
   for (let i = 0; i < 5; i++) {
     const bit = el("span", "cw-bit");
-    const l = el("span", "led");
+    const l = el("span", "led g");
     bit.append(l, el("span", "", `T${i}`));
     stepWrap.append(bit);
     stepLeds.push([bit, l]);
   }
+  stepMod.body.replaceWith(stepWrap);
+  const ctrl = mod("ctrl", "control word", []);
   const cwWrap = el("div", "cw");
   const cwBits = LINES.map((n) => {
     const bit = el("span", "cw-bit");
-    const l = el("span", "led b");
+    const l = el("span", "led y");
     bit.append(l, el("span", "", LABEL[n] ?? n));
     cwWrap.append(bit);
     return [bit, l];
   });
-  ctrlRow.append(stepWrap, cwWrap);
   const ustep = el("p", "ustep");
-  ctrl.body.replaceWith(ctrlRow);
+  ctrl.body.replaceWith(cwWrap);
   ctrl.m.append(ustep);
+  const clkRow = el("div", "mod-pair");
+  clkRow.append(clk.m, stepMod.m);
+  left.append(clkRow, mar.m, ram.m, ir.m);
+  right.append(pcRow, a.m, sum.m, b.m, out.m, ctrl.m);
 
-  board.replaceChildren(left, bus, right, ctrl.m);
+  board.replaceChildren(left, bus, right);
 
   // ── render ─────────────────────────────────────────────────────────
   const setBits = (list, v, n = list.length) => {

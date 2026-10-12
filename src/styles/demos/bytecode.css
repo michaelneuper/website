@@ -82,7 +82,7 @@
   white-space: pre;
 }
 
-@media (max-width: 640px) {
+@container demo (max-width: 600px) {
   .bc-cols {
     grid-template-columns: minmax(0, 1fr);
   }
