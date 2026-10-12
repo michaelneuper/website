@@ -120,20 +120,23 @@ function exec(ins, stack) {
 export function mount(host) {
   host.innerHTML = `
     <div class="bc-input">
-      <input type="text" value="(x + 3) * y - 10 / z" spellcheck="false" autocapitalize="off" aria-label="Expression to compile">
+      <input type="text" name="expression" value="(x + 3) * y - 10 / z" autocomplete="off" spellcheck="false" autocapitalize="off" aria-label="Expression to compile">
       <button type="button" class="btn" data-k="step">step</button>
       <button type="button" class="btn" data-k="run">run</button>
     </div>
     <p class="dim" style="margin:0 0 12px">int x = 6, y = 7, z = -2 (local variable slots 0 to 2)</p>
     <div class="bc-cols">
-      <div><div class="dim">javap -c</div><ol class="bc-code"></ol></div>
-      <div><div class="dim">operand stack</div><div class="bc-stack"></div><p class="dim" data-k="result" style="margin:8px 0 0"></p></div>
+      <div><div class="dim">javap -c</div><ol class="bc-code" translate="no"></ol></div>
+      <div><div class="dim">operand stack</div><div class="bc-stack"></div><p class="dim" data-k="result" aria-live="polite" style="margin:8px 0 0"></p></div>
     </div>`;
   const input = host.querySelector("input");
   const list = host.querySelector(".bc-code");
   const stackEl = host.querySelector(".bc-stack");
+  // Only the outcome is announced: what it returns, the exception, or why it
+  // won't compile when you try to step or run it (not on every keystroke).
   const result = host.querySelector('[data-k="result"]');
   let code = [];
+  let error = "";
   let pc = 0;
   let stack = [];
   let timer = 0;
@@ -144,6 +147,7 @@ export function mount(host) {
     pc = 0;
     stack = [];
     finished = false;
+    error = "";
     try {
       code = codegen(parse(input.value));
       list.replaceChildren(...code.map((c) => {
@@ -154,9 +158,10 @@ export function mount(host) {
       result.textContent = "";
     } catch (e) {
       code = [];
+      error = `error: ${e.message}`;
       const pre = document.createElement("li");
       pre.className = "bc-err";
-      pre.textContent = `error: ${e.message}\n  ${input.value}\n  ${" ".repeat(e.pos ?? 0)}^`;
+      pre.textContent = `${error}\n  ${input.value}\n  ${" ".repeat(e.pos ?? 0)}^`;
       list.replaceChildren(pre);
       result.textContent = "";
     }
@@ -164,7 +169,10 @@ export function mount(host) {
   }
 
   function paint() {
-    [...list.children].forEach((li, i) => li.classList.toggle("is-pc", i === pc && !finished && code.length > 0));
+    [...list.children].forEach((li, i) => {
+      if (i === pc && !finished && code.length > 0) li.setAttribute("aria-current", "step");
+      else li.removeAttribute("aria-current");
+    });
     stackEl.replaceChildren(...stack.map((v) => {
       const s = document.createElement("span");
       s.textContent = v;
@@ -173,7 +181,10 @@ export function mount(host) {
   }
 
   function step() {
-    if (!code.length) return false;
+    if (!code.length) {
+      result.textContent = error;
+      return false;
+    }
     if (finished) { pc = 0; stack = []; finished = false; result.textContent = ""; }
     try {
       const r = exec(code[pc], stack);
@@ -191,6 +202,8 @@ export function mount(host) {
 
   function run() {
     clearInterval(timer);
+    // nothing compiled: step says why
+    if (!code.length) { step(); return; }
     if (finished) step();
     if (reducedMotion.matches) {
       while (step()) { /* run to the end */ }
@@ -201,9 +214,10 @@ export function mount(host) {
 
   let debounce = 0;
   input.addEventListener("input", () => { clearTimeout(debounce); debounce = setTimeout(compile, 180); });
-  input.addEventListener("keydown", (e) => { if (e.key === "Enter") { e.preventDefault(); compile(); run(); } });
+  // Enter compiles now, so a compile still pending from typing mustn't stop the run
+  input.addEventListener("keydown", (e) => { if (e.key === "Enter") { e.preventDefault(); clearTimeout(debounce); compile(); run(); } });
   host.querySelector('[data-k="step"]').addEventListener("click", () => { clearInterval(timer); step(); });
   host.querySelector('[data-k="run"]').addEventListener("click", run);
   compile();
-  return () => clearInterval(timer);
+  return () => { clearInterval(timer); clearTimeout(debounce); };
 }

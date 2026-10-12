@@ -28,8 +28,10 @@
   margin-bottom: 12px;
 }
 
+/* the bar's running stats, in figures that keep their width as they change */
 .demo-bar .dim {
   margin-left: auto;
+  font-variant-numeric: tabular-nums;
 }
 
 .demo canvas {

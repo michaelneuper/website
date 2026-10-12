@@ -4,7 +4,7 @@ title: "8-bit breadboard computer"
 order: 1
 cat: hw
 demo: computer
-demoNote: "A JavaScript simulation of the board, with the build’s instructions and microcode. Click a bit in RAM to change the program, or the display for signed numbers."
+demoNote: "A JavaScript simulation of the board, with the build’s instructions and microcode. Flip a bit in RAM to change the program, or select the display for signed numbers."
 summary: "Ben Eater's 8-bit breadboard computer, built chip by chip."
 stack: "74HC logic, EEPROMs, breadboards, a lot of jumper wire"
 links:

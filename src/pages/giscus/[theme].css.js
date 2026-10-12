@@ -17,7 +17,7 @@ function block(selector) {
   return Object.fromEntries([...(m?.[1] ?? "").matchAll(/(--[\w-]+|color-scheme):\s*([^;]+);/g)].map((d) => [d[1], d[2].trim()]));
 }
 
-const TOKENS = ["--bg", "--bg-alt", "--fg", "--red", "--orange", "--yellow", "--green", "--cyan", "--blue", "--magenta"];
+const TOKENS = ["--bg", "--bg-alt", "--fg", "--red", "--orange", "--yellow", "--green", "--cyan", "--blue", "--magenta", "--dim-mix"];
 
 export function GET({ params }) {
   const base = block(":root");
@@ -50,8 +50,11 @@ const css = (tokens, light) => `/* giscus theme for michaelneuper.com, made from
 main {
   color-scheme: ${light ? "light" : "dark"};
 ${tokens}
-  --dim: ${mix("--fg", 64, "--bg")};
+  /* as themes.css has them: --dim mixed per theme to stay over 4.5:1, and
+     --control the resting border of buttons, over 3:1 */
+  --dim: color-mix(in srgb, var(--fg) var(--dim-mix), var(--bg));
   --faint: ${mix("--fg", 34, "--bg")};
+  --control: color-mix(in srgb, var(--dim) 75%, var(--bg));
   --rule: ${mix("--fg", 15, "--bg")};
   --hl: ${mix("--fg", 10, "--bg")};
 
@@ -88,7 +91,7 @@ ${tokens}
 
   --color-btn-text: var(--fg);
   --color-btn-bg: transparent;
-  --color-btn-border: var(--faint);
+  --color-btn-border: var(--control);
   --color-btn-shadow: none;
   --color-btn-inset-shadow: none;
   --color-btn-hover-bg: var(--hl);
@@ -115,7 +118,7 @@ ${tokens}
 
   --color-fg-default: var(--fg);
   --color-fg-muted: var(--dim);
-  --color-fg-subtle: var(--faint);
+  --color-fg-subtle: var(--dim);
   --color-canvas-default: transparent;
   --color-canvas-overlay: var(--bg-alt);
   --color-canvas-inset: var(--hl);

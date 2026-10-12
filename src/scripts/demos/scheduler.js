@@ -1,13 +1,15 @@
 // A toy multicore scheduler: processes arrive, wait in one shared ready queue,
 // and get dispatched to four cores under the chosen policy. Drawn as a Gantt chart.
 
-import { fitCanvas, themeColors, onFrame } from "../util.js";
+import { fitCanvasOnResize, frameWhileVisible, themeColors, reducedMotion, on } from "../util.js";
 
 const CORES = 4;
 const SPAN = 48;
 const QUANTUM = 3;
 
 export function mount(host) {
+  // with reduced motion the chart starts still, until you unpause it
+  let paused = reducedMotion.matches;
   host.innerHTML = `
     <div class="demo-bar">
       <select aria-label="Scheduling policy">
@@ -16,7 +18,7 @@ export function mount(host) {
         <option value="prio">preemptive priority</option>
       </select>
       <button type="button" class="btn" data-k="add">add process</button>
-      <button type="button" class="btn" data-k="pause" aria-pressed="false">pause</button>
+      <button type="button" class="btn" data-k="pause" aria-pressed="${paused}">pause</button>
       <span class="dim" data-k="stats"></span>
     </div>
     <canvas height="150" style="height:150px" aria-label="Gantt chart of processes running on four cores" role="img"></canvas>
@@ -34,7 +36,6 @@ export function mount(host) {
   let done = 0;
   let waitSum = 0;
   let preempted = 0;
-  let paused = false;
   const prioOf = new Map();
 
   const spawn = () => {
@@ -100,16 +101,20 @@ export function mount(host) {
     });
     for (const p of queue) p.waited++;
     t++;
+    showStats();
+  }
+
+  function showStats() {
     const pre = sel.value === "fcfs" ? "" : `, ${preempted} preempted`;
     stats.textContent = `t = ${t}, finished ${done}, mean wait ${done ? (waitSum / done).toFixed(1) : "0.0"} ticks${pre}`;
   }
 
+  // the canvas's CSS size, kept up to date by fitCanvasOnResize below
+  let W = 0;
+  let H = 0;
   function draw() {
-    if (!cv.isConnected) return;
-    fitCanvas(cv);
+    if (!W) return;
     const g = cv.getContext("2d");
-    const W = cv.clientWidth;
-    const H = cv.clientHeight;
     const c = themeColors();
     const palette = [c.blue, c.green, c.yellow, c.magenta, c.cyan, c.orange, c.red];
     const color = (id) => palette[id % palette.length];
@@ -169,28 +174,39 @@ export function mount(host) {
     }
   }
 
+  // A still chart opens on a full window of history rather than an empty one.
+  if (paused) for (let i = 0; i < SPAN; i++) tick();
+  showStats();
+
+  // Four ticks a second, drawn as they happen. The loop parks while paused and
+  // stops while the chart is off screen.
   let acc = 0;
-  const off = onFrame((now, dt) => {
-    if (!host.isConnected) { off(); return; }
-    if (!paused) {
-      acc += dt;
-      while (acc > 0.25) { tick(); acc -= 0.25; }
-    }
+  const loop = frameWhileVisible(cv, (now, dt) => {
+    if (paused) return false;
+    acc += dt;
+    if (acc <= 0.25) return true;
+    while (acc > 0.25) { tick(); acc -= 0.25; }
     draw();
+    return true;
   });
+  const unfit = fitCanvasOnResize(cv, (w, h) => { W = w; H = h; draw(); });
+  const offTheme = on("theme", () => draw());
 
   host.querySelector('[data-k="add"]').addEventListener("click", () => { spawn(); draw(); });
+  // a toggle button keeps its label; aria-pressed says whether it is paused
   pauseBtn.addEventListener("click", () => {
     paused = !paused;
     pauseBtn.setAttribute("aria-pressed", String(paused));
-    pauseBtn.textContent = paused ? "resume" : "pause";
+    if (!paused) loop.wake();
   });
   sel.addEventListener("change", () => {
     hist = hist.map(() => []);
     done = 0;
     waitSum = 0;
     preempted = 0;
+    showStats();
+    draw();
   });
 
-  return () => off();
+  return () => { loop.stop(); unfit(); offTheme(); };
 }

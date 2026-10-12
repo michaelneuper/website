@@ -52,6 +52,21 @@ button {
   cursor: pointer;
 }
 
+/* On touch, act on the first tap rather than waiting to see if it is a
+   double-tap zoom. The tap flash takes the theme's colours instead of the
+   browser's grey: plenty of controls have no pressed state of their own, so it
+   is what shows a tap landed. */
+a,
+button,
+input,
+select,
+summary,
+label,
+[role="button"] {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: color-mix(in srgb, var(--fg) 15%, transparent);
+}
+
 :focus-visible {
   outline: 1px solid var(--fg);
   outline-offset: 2px;
@@ -102,7 +117,7 @@ code {
   align-items: center;
   min-height: 30px;
   padding: 0 14px;
-  border: 1px solid var(--faint);
+  border: 1px solid var(--control);
   border-radius: 0;
   background: none;
   font-size: 12px;
@@ -112,6 +127,13 @@ code {
 
 .btn:hover {
   border-color: var(--fg);
+}
+
+/* held down: phones have no hover, so this is what shows a tap landed.
+   Before the pressed rule, so a toggle that is on keeps its fill */
+.btn:active {
+  border-color: var(--fg);
+  background: var(--hl);
 }
 
 .btn[aria-pressed="true"] {
@@ -125,13 +147,17 @@ code {
 select {
   min-height: 30px;
   padding: 0 28px 0 10px;
-  border: 1px solid var(--faint);
+  border: 1px solid var(--control);
   border-radius: 0;
   background: var(--bg) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23888'/%3E%3C/svg%3E") no-repeat right 10px center;
   color: var(--fg);
   font-size: 12px;
   -webkit-appearance: none;
   appearance: none;
+}
+
+select:hover {
+  border-color: var(--fg);
 }
 
 input[type="range"] {
@@ -143,14 +169,15 @@ input[type="range"] {
   appearance: none;
 }
 
+/* the track is the slider's outline, so it gets the control border colour */
 input[type="range"]::-webkit-slider-runnable-track {
   height: 1px;
-  background: var(--faint);
+  background: var(--control);
 }
 
 input[type="range"]::-moz-range-track {
   height: 1px;
-  background: var(--faint);
+  background: var(--control);
 }
 
 input[type="range"]::-webkit-slider-thumb {

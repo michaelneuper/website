@@ -7,20 +7,21 @@
   margin-bottom: 12px;
 }
 
+/* bordered like the buttons beside it, and like them it takes the site's focus
+   ring from base.css */
 .bc-input input {
   flex: 1;
   min-width: 0;
   min-height: 30px;
   padding: 0 10px;
-  border: 1px solid var(--faint);
+  border: 1px solid var(--control);
   border-radius: 0;
   background: none;
   font-size: 13px;
 }
 
-.bc-input input:focus {
+.bc-input input:hover {
   border-color: var(--fg);
-  outline: none;
 }
 
 .bc-cols {
@@ -43,7 +44,7 @@
   padding: 1px 6px;
 }
 
-.bc-code li.is-pc {
+.bc-code li[aria-current="step"] {
   background: var(--hl);
 }
 
@@ -65,6 +66,7 @@
   padding: 6px;
   border: 1px solid var(--rule);
   border-top: 0;
+  font-variant-numeric: tabular-nums;
 }
 
 .bc-stack span {

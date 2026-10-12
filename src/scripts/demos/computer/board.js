@@ -16,7 +16,8 @@ const GLYPH = { 0: "abcdef", 1: "bc", 2: "abdeg", 3: "abcdg", 4: "bcfg", 5: "acd
 
 // ── UI ────────────────────────────────────────────────────────────────
 
-const fmtHz = (f) => (f < 10 ? `${f.toFixed(1)} Hz` : `${Math.round(f)} Hz`);
+// with a non-breaking space, so the unit never wraps away from its number
+const fmtHz = (f) => (f < 10 ? `${f.toFixed(1)} Hz` : `${Math.round(f)} Hz`);
 
 // State that outlives any one mounted board: the coffee overclock, and which
 // board is on the page (the 8-bit project's demo mounts and unmounts it).
@@ -41,7 +42,7 @@ const TEMPLATE = `
     </label>
     <label class="sim-field"><span>clock</span>
       <input type="range" min="0" max="100" value="43" data-sim="hz" aria-label="Clock speed">
-      <output>10 Hz</output>
+      <output>10&nbsp;Hz</output>
     </label>
   </div>
   <div class="board" role="group" aria-label="Simulated 8-bit breadboard computer"></div>`;
@@ -62,6 +63,8 @@ export function mount(host) {
   let acc = 0;
   let phase = 0;
   let signed = false;
+  let touch = false; // a coarse pointer: RAM rows are the targets, not bits
+  let editing = -1; // the address open in the row editor
   let dirty = true;
   let lastBoost = boost;
   const effHz = () => Math.min(500, hz * boost);
@@ -117,6 +120,7 @@ export function mount(host) {
   const ramRows = [];
   for (let a = 0; a < 16; a++) {
     const row = el("div", "ram-row");
+    row.dataset.addr = a;
     const pcMark = el("span", "pc");
     const addr = el("span", "addr", hex(a, 1));
     const bits = el("span", "leds");
@@ -134,9 +138,35 @@ export function mount(host) {
     const dis = el("span", "dis");
     row.append(pcMark, addr, bits, dis);
     rows.append(row);
-    ramRows.push({ row, pcMark, cells, dis });
+    ramRows.push({ row, pcMark, bits, cells, dis });
   }
   ram.body.replaceWith(rows);
+
+  // A bit is too small to tap, so on a coarse pointer each row is the target and
+  // opens this editor for its byte. It goes over the board under the row (above
+  // it near the bottom), so nothing on the board moves as it opens and closes.
+  const editor = el("div", "mod ram-edit");
+  editor.setAttribute("role", "dialog");
+  editor.hidden = true;
+  const edHead = el("div", "mod-head");
+  const edAddr = el("span", "mod-name");
+  const edDis = el("span", "mod-val");
+  const edClose = el("button", "btn", "close");
+  edClose.type = "button";
+  edHead.append(edAddr, edDis, edClose);
+  const edBits = el("div", "ram-edit-bits");
+  const edCells = [];
+  for (let b = 7; b >= 0; b--) {
+    const t = el("button", "ram-edit-bit");
+    t.type = "button";
+    t.dataset.bit = b;
+    t.setAttribute("aria-label", `Bit ${b}`);
+    t.append(el("span", "led"), el("span", "", String(b)));
+    edBits.append(t);
+    edCells.push(t);
+  }
+  editor.append(edHead, edBits);
+  ram.m.append(editor);
 
   const ir = mod("ir", "instruction", ["II", "IO"]);
   ir.body.append(leds(ir, 8, "", 4), value(ir));
@@ -171,9 +201,15 @@ export function mount(host) {
     seg.append(svg);
     digits.push(segs);
   }
+  // The display is a toggle for signed numbers. The number it shows is read out
+  // from outLabel beside it, so the button's name stays put as the number changes.
   const outLabel = el("span", "sr-only");
-  out.body.append(seg, value(out), outLabel);
-  out.body.title = "Click to switch between unsigned and signed";
+  const outBtn = el("button", "mod-body");
+  outBtn.type = "button";
+  outBtn.title = "Click to switch between unsigned and signed";
+  outBtn.setAttribute("aria-label", "Signed numbers");
+  outBtn.append(seg, value(out));
+  out.body.replaceWith(outLabel, outBtn);
   const flags = mod("flags", "flags", ["FI"]);
   const fl = el("div", "leds");
   const cfLed = el("span", "led g");
@@ -235,6 +271,15 @@ export function mount(host) {
   const setText = (node, text) => {
     if (node.textContent !== text) node.textContent = text;
   };
+  const setAttr = (node, name, v) => {
+    if (node.getAttribute(name) !== v) node.setAttribute(name, v);
+  };
+  // bit i of a byte counting from bit 7, the order the LEDs are laid out in
+  const bitOn = (byte, i) => ((byte >> (7 - i)) & 1) === 1;
+  const disText = (addr) => {
+    const data = program.data[addr];
+    return data ? `${data[0]} = ${s.ram[addr]}` : disasm(s.ram[addr]);
+  };
 
   let lastRam = "";
   function render() {
@@ -267,6 +312,7 @@ export function mount(host) {
     });
     setText(out.val, signed ? "signed" : "");
     setText(outLabel, `output ${o}`);
+    setAttr(outBtn, "aria-pressed", String(signed));
 
     // control word and step
     cwBits.forEach(([bit, l], i) => {
@@ -296,13 +342,30 @@ export function mount(host) {
     if (key !== lastRam) {
       lastRam = key;
       ramRows.forEach((rr, addr) => {
-        setBits(rr.cells, s.ram[addr]);
+        rr.cells.forEach((c, i) => {
+          const on = bitOn(s.ram[addr], i);
+          c.classList.toggle("on", on);
+          setAttr(c, "aria-pressed", String(on));
+        });
         rr.row.classList.toggle("is-mar", addr === s.mar);
         setText(rr.pcMark, addr === s.pc ? "▸" : "");
-        const data = program.data[addr];
-        setText(rr.dis, data ? `${data[0]} = ${s.ram[addr]}` : disasm(s.ram[addr]));
+        const text = disText(addr);
+        setText(rr.dis, text);
+        if (touch) setAttr(rr.row, "aria-label", `Address ${addr}, ${text}`);
       });
+      paintEditor();
     }
+  }
+
+  function paintEditor() {
+    if (editing < 0) return;
+    setText(edAddr, `address ${hex(editing, 1)}`);
+    setText(edDis, disText(editing));
+    edCells.forEach((t, i) => {
+      const on = bitOn(s.ram[editing], i);
+      t.firstChild.classList.toggle("on", on);
+      setAttr(t, "aria-pressed", String(on));
+    });
   }
 
   function describe(st, cw) {
@@ -351,9 +414,9 @@ export function mount(host) {
     message(`HLT: ${program.title} finished with ${s.out} on the display. Press r to reset.`, "", 6000);
   }
 
+  // a toggle keeps its label, as the scheduler's pause does: pressed means running
   function paintRun() {
     runBtn.setAttribute("aria-pressed", String(running));
-    runBtn.textContent = running ? "pause" : "run";
   }
 
   // ── controls ───────────────────────────────────────────────────────
@@ -385,7 +448,10 @@ export function mount(host) {
   }
   function setHz(v) {
     hz = 0.5 * Math.pow(1000, v / 100);
-    hzOut.value = fmtHz(hz);
+    const text = fmtHz(hz);
+    hzOut.value = text;
+    // the slider's own 0 to 100 means nothing read out, so it gives the speed
+    hzIn.setAttribute("aria-valuetext", text);
     dirty = true;
   }
 
@@ -397,14 +463,20 @@ export function mount(host) {
     if (!reducedMotion.matches) run(true);
   });
   hzIn.addEventListener("input", () => setHz(+hzIn.value));
-  out.body.addEventListener("click", () => {
+  outBtn.addEventListener("click", () => {
     signed = !signed;
     dirty = true;
     message(signed ? "Output shows signed two’s complement" : "Output shows unsigned");
   });
 
-  // Edit RAM by clicking bits; arrow keys move around the matrix.
+  // Edit RAM by clicking bits; arrow keys move around the matrix. On touch a tap
+  // on a row opens the row editor instead, and the arrow keys move between rows.
   rows.addEventListener("click", (e) => {
+    if (touch) {
+      const row = e.target.closest(".ram-row");
+      if (row) toggleEditor(+row.dataset.addr);
+      return;
+    }
     const btn = e.target.closest(".led");
     if (!btn) return;
     s.ram[+btn.dataset.addr] ^= 1 << +btn.dataset.bit;
@@ -412,6 +484,7 @@ export function mount(host) {
     dirty = true;
   });
   rows.addEventListener("keydown", (e) => {
+    if (touch) return rowKey(e);
     const btn = e.target.closest(".led");
     const d = { ArrowUp: [-1, 0], ArrowDown: [1, 0], ArrowLeft: [0, 1], ArrowRight: [0, -1] }[e.key];
     if (!btn || !d) return;
@@ -425,7 +498,107 @@ export function mount(host) {
     c.focus({ preventScroll: true });
   }
 
-  // c, n and r while the computer is on screen
+  // ── touch: rows and the row editor ─────────────────────────────────
+  // On a coarse pointer each row is a button, and the bits in it are inert, so a
+  // tap anywhere on the row lands on the row.
+  const coarse = matchMedia("(pointer: coarse)");
+  function setTouch(on) {
+    closeEditor(false);
+    touch = on;
+    board.classList.toggle("is-touch", on);
+    ramRows.forEach((rr, addr) => {
+      rr.bits.inert = on;
+      if (on) {
+        rr.row.setAttribute("role", "button");
+        rr.row.setAttribute("aria-haspopup", "dialog");
+        rr.row.setAttribute("aria-expanded", "false");
+        rr.row.tabIndex = addr === 0 ? 0 : -1;
+      } else {
+        for (const name of ["role", "aria-haspopup", "aria-expanded", "aria-label", "tabindex"]) rr.row.removeAttribute(name);
+      }
+    });
+    // render() labels the rows
+    lastRam = "";
+    dirty = true;
+  }
+  const onPointer = () => setTouch(coarse.matches);
+  coarse.addEventListener("change", onPointer);
+
+  function rowKey(e) {
+    const row = e.target.closest(".ram-row");
+    if (!row) return;
+    const addr = +row.dataset.addr;
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      toggleEditor(addr);
+    } else if (e.key === "ArrowUp" || e.key === "ArrowDown") {
+      e.preventDefault();
+      focusRow((addr + (e.key === "ArrowUp" ? 15 : 1)) % 16);
+    }
+  }
+  // the rows are one tab stop, on the row last used
+  const roveTo = (addr) => ramRows.forEach((rr, i) => { rr.row.tabIndex = i === addr ? 0 : -1; });
+  function focusRow(addr) {
+    roveTo(addr);
+    ramRows[addr].row.focus({ preventScroll: true });
+  }
+
+  function toggleEditor(addr) {
+    if (editing === addr) return closeEditor(true);
+    closeEditor(false);
+    editing = addr;
+    roveTo(addr);
+    ramRows[addr].row.setAttribute("aria-expanded", "true");
+    editor.setAttribute("aria-label", `Edit address ${addr}`);
+    editor.hidden = false;
+    paintEditor();
+    place();
+    // Focus moves in without scrolling, which would slide the bits out from
+    // under a finger; the page only scrolls if the editor runs off screen.
+    edCells[0].focus({ preventScroll: true });
+    editor.scrollIntoView({ block: "nearest" });
+    document.addEventListener("pointerdown", onOutside);
+  }
+  function closeEditor(refocus) {
+    if (editing < 0) return;
+    const row = ramRows[editing].row;
+    editing = -1;
+    editor.hidden = true;
+    row.setAttribute("aria-expanded", "false");
+    document.removeEventListener("pointerdown", onOutside);
+    if (refocus) row.focus({ preventScroll: true });
+  }
+  // a tap anywhere else closes it, as a popup would
+  const onOutside = (e) => {
+    if (!editor.contains(e.target) && !rows.contains(e.target)) closeEditor(false);
+  };
+  // under its row, or above it if it would run past the bottom of the board
+  function place() {
+    if (editing < 0) return;
+    const row = ramRows[editing].row;
+    const below = row.offsetTop + row.offsetHeight;
+    editor.style.top = `${below + editor.offsetHeight > board.clientHeight ? row.offsetTop - editor.offsetHeight : below}px`;
+  }
+  const ro = new ResizeObserver(place);
+  ro.observe(board);
+
+  editor.addEventListener("click", (e) => {
+    const t = e.target.closest("button");
+    if (t === edClose) closeEditor(true);
+    else if (t) {
+      s.ram[editing] ^= 1 << +t.dataset.bit;
+      render();
+    }
+  });
+  editor.addEventListener("keydown", (e) => {
+    if (e.key !== "Escape") return;
+    e.preventDefault();
+    closeEditor(true);
+  });
+
+  // The loop runs while the board is on screen. c, n and r work while focus is
+  // in the demo, or on nothing at all with at least a quarter of the board in
+  // view, so a key meant for something else on the page never resets it.
   let visible = false;
   let off = null;
   const io = new IntersectionObserver(([e]) => {
@@ -435,7 +608,9 @@ export function mount(host) {
   }, { threshold: [0, 0.25] });
   io.observe(board);
   const onKey = (e) => {
-    if (!visible || e.defaultPrevented || e.repeat || isTyping(e) || e.metaKey || e.ctrlKey || e.altKey) return;
+    if (e.defaultPrevented || e.repeat || isTyping(e) || e.metaKey || e.ctrlKey || e.altKey) return;
+    const focus = document.activeElement;
+    if (!host.contains(focus) && !(visible && (!focus || focus === document.body))) return;
     if (document.querySelector("dialog[open]")) return;
     const act = { c: () => run(), n: step, r: reset }[e.key];
     if (!act) return;
@@ -446,6 +621,7 @@ export function mount(host) {
 
   load("fibonacci");
   setHz(+hzIn.value);
+  setTouch(coarse.matches);
   // It waits for run (or c) so it doesn't flicker beside the write-up, unless a coffee overclock is on.
   run(boost > 1);
   // Drawn once now, so the board is its full height before it scrolls into view
@@ -455,8 +631,11 @@ export function mount(host) {
   current = api;
   return () => {
     io.disconnect();
+    ro.disconnect();
     off?.();
     document.removeEventListener("keydown", onKey);
+    document.removeEventListener("pointerdown", onOutside);
+    coarse.removeEventListener("change", onPointer);
     if (current === api) current = null;
   };
 }

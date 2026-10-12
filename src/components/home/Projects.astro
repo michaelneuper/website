@@ -28,13 +28,15 @@ const projects = await Promise.all(
           <button type="button" class="pj-card" id={`pj-${p.name}`} role="tab" data-cat={p.cat} aria-selected={i === 0 ? "true" : "false"} aria-controls="project-detail" tabindex={i === 0 ? 0 : -1}>
             <span class="pj-thumb"><ProjectThumb demo={p.demo} /></span>
             <span class="pj-label">{p.name}</span>
+            {/* the category, which the card shows only as the colour of its swatch */}
+            <span class="sr-only">, {CATS[p.cat] ?? p.cat}</span>
           </button>
         ))}
       </div>
-      <p class="pj-hint" aria-hidden="true">scroll, drag or <kbd>↑</kbd> <kbd>↓</kbd></p>
+      <p class="pj-hint" aria-hidden="true">drag or <kbd>↑</kbd> <kbd>↓</kbd></p>
     </div>
 
-    <article class="pj-detail" id="project-detail" role="tabpanel" aria-live="polite"></article>
+    <article class="pj-detail" id="project-detail" role="tabpanel"></article>
 
     <ol class="pj-list">
       {projects.map((p) => (

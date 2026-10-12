@@ -13,6 +13,8 @@
 
 .board {
   --led: 10px;
+  /* the RAM row editor is placed over it */
+  position: relative;
   display: grid;
   grid-template-columns: minmax(0, 1fr) 64px minmax(0, 1fr);
   grid-template-areas: "left bus right";
@@ -81,7 +83,7 @@
   padding: 0 0.4ch;
   border-radius: 2px;
   color: var(--dim);
-  font-size: 10.5px;
+  font-size: 11px;
 }
 
 .sig.on {
@@ -181,6 +183,85 @@
   outline-offset: 1px;
 }
 
+/* An off bit gets a ring, so the zeros you can set still show: the off colour
+   alone is about 1.1:1 on the module. A lit bit stays a filled dot. */
+.ram-row .led:not(.on),
+.ram-edit .led:not(.on) {
+  box-shadow: inset 0 0 0 1px var(--dim);
+}
+
+/* touch: a bit is too small to tap, so the row is the target, tall enough for
+   a finger, and opens the row editor */
+.board.is-touch .ram-row {
+  min-height: 24px;
+  cursor: pointer;
+}
+
+/* and the clock slider tall enough to tap too */
+@media (pointer: coarse) {
+  .sim-bar input[type="range"] {
+    height: 32px;
+  }
+}
+
+/* the row editor: the byte's eight bits as buttons big enough to tap, over the
+   board under the row it edits (board.js places it) */
+.ram-edit {
+  position: absolute;
+  left: 0;
+  right: 0;
+  z-index: 1;
+  border-color: var(--dim);
+  box-shadow: 0 8px 24px rgb(0 0 0 / 0.3);
+}
+
+.ram-edit .mod-head {
+  align-items: center;
+}
+
+.ram-edit .mod-name {
+  margin-right: 0;
+}
+
+.ram-edit .btn {
+  margin-left: auto;
+}
+
+.ram-edit-bits {
+  display: flex;
+  gap: 4px;
+}
+
+.ram-edit-bit {
+  --led: 10px;
+  display: flex;
+  flex: 1 1 0;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  min-width: 0;
+  min-height: 40px;
+  padding: 0;
+  border: 1px solid var(--rule);
+  background: none;
+  color: var(--dim);
+}
+
+/* the nibbles apart, as on the instruction register */
+.ram-edit-bit:nth-child(5) {
+  margin-left: 6px;
+}
+
+.ram-edit-bit:active {
+  background: var(--hl);
+}
+
+.ram-edit-bit[aria-pressed="true"] {
+  color: var(--fg);
+  font-weight: 600;
+}
+
 /* the bus: eight lanes down the middle */
 
 .bus {
@@ -238,8 +319,13 @@
   filter: drop-shadow(0 0 calc(var(--glow) * 3px) color-mix(in srgb, var(--red) 80%, transparent));
 }
 
+/* the display is a button that switches between unsigned and signed */
 .mod-out .mod-body {
-  cursor: pointer;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: none;
+  text-align: inherit;
 }
 
 /* the microstep counter and the control word */
@@ -255,9 +341,10 @@
   flex-direction: column;
   align-items: center;
   gap: 3px;
-  width: 3.4ch;
+  /* just wider than a three-letter line, so eight fit across the narrow board */
+  width: 3.2ch;
   color: var(--dim);
-  font-size: 10px;
+  font-size: 11px;
 }
 
 .cw-bit.on {
@@ -298,7 +385,10 @@
     grid-template-areas:
       "bus bus"
       "left right";
-    font-size: 10.5px;
+    /* no text under 11px, with lines a little tighter so the board keeps the
+       height it had at 10.5px */
+    font-size: 11px;
+    line-height: 1.5;
   }
 
   .bus {

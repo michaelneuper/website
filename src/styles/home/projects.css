@@ -3,8 +3,10 @@
    (src/scripts/home/projects.js) */
 
 .pj {
-  /* the wheel's height, and the least a project's split takes */
-  --pj-h: min(620px, calc(100svh - var(--top-h) - var(--frame-h) - 72px));
+  /* The wheel's height, and the least a project's split takes: as tall as the
+     tallest project (the 8-bit computer, about 721px), so picking another one
+     doesn't move the page, unless the window is too short to show that much. */
+  --pj-h: min(724px, calc(100svh - var(--top-h) - var(--frame-h) - 72px));
 }
 
 /* with room beside the content column, the wheel stands out in the margin */
@@ -26,7 +28,8 @@
   position: sticky;
   top: calc(var(--top-h) + 24px);
   height: var(--pj-h);
-  touch-action: none;
+  /* a finger moving up or down scrolls the page, even over the wheel */
+  touch-action: pan-y;
   -webkit-user-select: none;
   user-select: none;
 }
@@ -170,7 +173,7 @@
 }
 
 .pj-hint kbd {
-  font-size: 10px;
+  font-size: 11px;
 }
 
 /* ── the drawings on the cards ────────────────────────────────────── */
@@ -354,9 +357,11 @@
   }
 }
 
-/* the demo, under a header line of its own: *demo*, a rule, then a note on what it is */
+/* the demo, under a header line of its own: *demo*, a rule, then a note on what
+   it is. Without room beside the write-up, it comes between the facts and the
+   write-up, with space either side. */
 .pj-demo {
-  margin-top: 36px;
+  margin: 36px 0;
   font-size: 12px;
 }
 
@@ -380,15 +385,24 @@
   color: var(--dim);
 }
 
-/* with room, the two windows sit side by side */
+/* with room, the two windows sit side by side: the title, facts and write-up
+   on the left, and the demo the whole height of the right */
 @container pj-detail (min-width: 820px) {
   .pj-row {
-    display: flex;
+    display: grid;
+    grid-template-columns: 50% minmax(0, 1fr);
+    grid-template-rows: auto 1fr;
+    grid-template-areas: "head demo" "body demo";
     min-height: var(--pj-h);
   }
 
-  .pj-row > .pj-text {
-    flex: 0 0 50%;
+  .pj-row > .pj-head {
+    grid-area: head;
+    padding-right: 32px;
+  }
+
+  .pj-row > .proj-body {
+    grid-area: body;
     padding-right: 32px;
   }
 
@@ -399,9 +413,9 @@
   }
 
   .pj-row > .pj-demo {
-    flex: 1;
+    grid-area: demo;
     min-width: 0;
-    margin-top: 0;
+    margin: 0;
     padding-left: 32px;
     border-left: 1px solid var(--rule);
   }
@@ -439,7 +453,6 @@
     height: 200px;
     margin: 0 calc(-1 * var(--gutter)) 36px;
     overflow: hidden;
-    touch-action: pan-y;
   }
 
   .pj-card {

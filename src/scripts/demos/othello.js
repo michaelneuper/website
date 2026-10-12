@@ -3,6 +3,7 @@
 // at the end of the think time. While it thinks, each candidate move is shaded
 // by its share of the search.
 
+import { clamp } from "../util.js";
 import "../../styles/demos/othello.css";
 
 const C = 1;
@@ -11,6 +12,7 @@ const BLACK = 1; // you
 const WHITE = -1; // the search
 const PASS = -1;
 const name = (i) => "abcdefgh"[i % 8] + (Math.floor(i / 8) + 1);
+const num = new Intl.NumberFormat(); // in the reader's locale
 
 function flips(b, i, p) {
   if (b[i]) return [];
@@ -110,29 +112,48 @@ export function mount(host) {
       <button type="button" class="btn" data-k="new">new game</button>
       <label class="sim-field" style="margin:0"><span>think time</span>
         <select data-k="time">
-          <option value="250">0.25 s</option>
-          <option value="600" selected>0.6 s</option>
-          <option value="1000">1 s</option>
+          <option value="250">0.25&nbsp;s</option>
+          <option value="600" selected>0.6&nbsp;s</option>
+          <option value="1000">1&nbsp;s</option>
         </select>
       </label>
       <span class="dim" data-k="score"></span>
     </div>
     <div class="oth" role="grid" aria-label="Othello board, you play black"></div>
-    <p class="cap" data-k="status" aria-live="polite"></p>`;
+    <p class="cap"><span data-k="status" aria-live="polite"></span> <span class="oth-count" data-k="count"></span></p>`;
   const grid = host.querySelector(".oth");
+  // Only moves, passes and the end of the game are announced; the running count
+  // of the search sits beside the live region, not in it.
   const status = host.querySelector('[data-k="status"]');
+  const countEl = host.querySelector('[data-k="count"]');
   const scoreEl = host.querySelector('[data-k="score"]');
   const timeSel = host.querySelector('[data-k="time"]');
 
-  const cells = Array.from({ length: 64 }, (_, i) => {
-    const b = document.createElement("button");
-    b.type = "button";
-    b.className = "oth-cell";
-    b.dataset.i = i;
-    b.innerHTML = '<span class="heat"></span><span class="disc"></span>';
-    grid.append(b);
-    return b;
-  });
+  // A grid of rows of cells with a single tab stop, which the arrow keys move.
+  const cells = [];
+  for (let r = 0; r < 8; r++) {
+    const row = document.createElement("div");
+    row.className = "oth-row";
+    row.setAttribute("role", "row");
+    for (let c = 0; c < 8; c++) {
+      const cell = document.createElement("div");
+      cell.className = "oth-cell";
+      cell.setAttribute("role", "gridcell");
+      cell.tabIndex = -1;
+      cell.dataset.i = r * 8 + c;
+      cell.innerHTML = '<span class="heat" aria-hidden="true"></span><span class="disc" aria-hidden="true"></span>';
+      row.append(cell);
+      cells.push(cell);
+    }
+    grid.append(row);
+  }
+  let focused = 0;
+  function rove(i, focus = false) {
+    cells[focused].tabIndex = -1;
+    focused = i;
+    cells[i].tabIndex = 0;
+    if (focus) cells[i].focus();
+  }
 
   let board;
   let turn;
@@ -140,14 +161,18 @@ export function mount(host) {
   let thinking = false;
   let alive = true;
   let heat = null;
+  let game = 0; // so a search can tell a new game has started under it
 
   function reset() {
+    game++;
+    thinking = false;
     board = new Int8Array(64);
     board[27] = board[36] = WHITE;
     board[28] = board[35] = BLACK;
     turn = BLACK;
     last = -1;
     heat = null;
+    countEl.textContent = "";
     status.textContent = "Your move: you play black. Legal moves are dotted.";
     paint();
   }
@@ -167,7 +192,9 @@ export function mount(host) {
       const hs = cell.querySelector(".heat");
       hs.textContent = h ? `${Math.round(h * 100)}` : "";
       hs.style.setProperty("--hp", h ? `${Math.round(35 + h * 60)}%` : "0%");
-      cell.setAttribute("aria-label", `${name(i)}, ${v === BLACK ? "black" : v === WHITE ? "white" : legal.has(i) ? "legal move" : "empty"}`);
+      const label = `${name(i)}, ${v === BLACK ? "black" : v === WHITE ? "white" : legal.has(i) ? "empty, legal move" : "empty"}${i === last ? ", last move" : ""}`;
+      // paint runs every few milliseconds during a search; leave unchanged labels be
+      if (cell.getAttribute("aria-label") !== label) cell.setAttribute("aria-label", label);
     });
     scoreEl.textContent = `black ${b}, white ${w}`;
   }
@@ -182,21 +209,22 @@ export function mount(host) {
   }
 
   async function think() {
+    const g = game;
     thinking = true;
     paint();
     const root = node(null, null, board.slice(), WHITE);
     const budget = +timeSel.value;
     const t0 = performance.now();
-    while (alive && performance.now() - t0 < budget) {
+    while (performance.now() - t0 < budget) {
       const slice = performance.now() + 14;
       while (performance.now() < slice) iterate(root);
       const total = root.visits || 1;
       heat = new Map(root.children.filter((c) => c.move !== PASS).map((c) => [c.move, c.visits / total]));
-      status.textContent = `Searching: ${root.visits.toLocaleString("en")} random games so far.`;
+      countEl.textContent = `Searching: ${num.format(root.visits)} random games so far.`;
       paint();
       await new Promise((r) => setTimeout(r, 0));
+      if (!alive || g !== game) return;
     }
-    if (!alive) return;
     let best = root.children[0];
     for (const c of root.children) if (c.visits > best.visits) best = c;
     play(board, best.move, WHITE);
@@ -204,24 +232,23 @@ export function mount(host) {
     heat?.delete(best.move);
     thinking = false;
     turn = BLACK;
+    countEl.textContent = "";
     const pct = Math.round((best.wins / best.visits) * 100);
-    status.textContent = `White played ${name(best.move)} after ${root.visits.toLocaleString("en")} random games, expecting to win ${pct}% of them.`;
+    let msg = `White played ${name(best.move)} after ${num.format(root.visits)} random games, expecting to win ${pct}% of them.`;
     paint();
     if (over()) return;
     if (!moves(board, BLACK).length) {
-      status.textContent += " You have no legal move, so you pass.";
+      msg += " You have no legal move, so you pass.";
       turn = WHITE;
-      setTimeout(() => alive && think(), 700);
+      setTimeout(() => alive && g === game && think(), 700);
     }
+    status.textContent = msg;
     heat = null;
     setTimeout(() => alive && !thinking && paint(), 1200);
   }
 
-  grid.addEventListener("click", (e) => {
-    const cell = e.target.closest(".oth-cell");
-    if (!cell || turn !== BLACK || thinking) return;
-    const i = +cell.dataset.i;
-    if (!flips(board, i, BLACK).length) return;
+  function playAt(i) {
+    if (turn !== BLACK || thinking || !flips(board, i, BLACK).length) return;
     play(board, i, BLACK);
     last = i;
     heat = null;
@@ -229,16 +256,43 @@ export function mount(host) {
     if (over()) return;
     if (moves(board, WHITE).length) {
       turn = WHITE;
+      status.textContent = `You played ${name(i)}.`;
       think();
     } else {
-      status.textContent = "White has no legal move and passes. Your move again.";
+      status.textContent = `You played ${name(i)}. White has no legal move and passes. Your move again.`;
       paint();
     }
+  }
+
+  grid.addEventListener("click", (e) => {
+    const cell = e.target.closest(".oth-cell");
+    if (cell) playAt(+cell.dataset.i);
   });
-  host.querySelector('[data-k="new"]').addEventListener("click", () => {
-    if (!thinking) reset();
+  grid.addEventListener("focusin", (e) => {
+    const cell = e.target.closest(".oth-cell");
+    if (cell) rove(+cell.dataset.i);
   });
+  grid.addEventListener("keydown", (e) => {
+    if (e.altKey || e.metaKey) return;
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      playAt(focused);
+      return;
+    }
+    const r = Math.floor(focused / 8);
+    const c = focused % 8;
+    const to = {
+      ArrowLeft: [r, c - 1], ArrowRight: [r, c + 1], ArrowUp: [r - 1, c], ArrowDown: [r + 1, c],
+      Home: e.ctrlKey ? [0, 0] : [r, 0], End: e.ctrlKey ? [7, 7] : [r, 7],
+    }[e.key];
+    if (!to) return;
+    e.preventDefault();
+    rove(clamp(to[0], 0, 7) * 8 + clamp(to[1], 0, 7), true);
+  });
+  // a new game also abandons a search in progress
+  host.querySelector('[data-k="new"]').addEventListener("click", reset);
 
   reset();
+  rove(moves(board, BLACK)[0]);
   return () => { alive = false; };
 }

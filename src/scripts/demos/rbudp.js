@@ -2,7 +2,7 @@
 // over UDP, send BLAST_COMPLETE over TCP, get back MISSING_PACKETS (or
 // TRANSFER_DONE), and blast just the missing ones until nothing is missing.
 
-import { fitCanvas, themeColors, onFrame, reducedMotion } from "../util.js";
+import { fitCanvasOnResize, frameWhileVisible, themeColors, reducedMotion, on } from "../util.js";
 import "../../styles/demos/rbudp.css";
 
 const PACKETS = 64;
@@ -37,10 +37,14 @@ export function mount(host) {
   let clock = 0;
   const loss = () => +lossIn.value / 100;
 
+  // Protocol and message names (UDP, BLAST_COMPLETE) are code, so page
+  // translators should leave them alone.
+  const code = (s) => Object.assign(document.createElement("span"), { textContent: s, translate: false });
   const line = (r, proto, text) => {
     const li = document.createElement("li");
-    li.innerHTML = `<span class="dim">round ${r}</span><span class="rb-proto">${proto}</span><span></span>`;
-    li.lastChild.textContent = text;
+    li.innerHTML = `<span class="dim">round ${r}</span><span class="rb-proto"${proto === "done" ? "" : ' translate="no"'}>${proto}</span><span></span>`;
+    // the odd parts are the message names
+    li.lastChild.append(...text.split(/\b([A-Z]+(?:_[A-Z]+)+)\b/).map((s, i) => (i % 2 ? code(s) : s)));
     log.append(li);
     log.scrollTop = log.scrollHeight;
   };
@@ -52,6 +56,9 @@ export function mount(host) {
     datagrams = 0;
     log.replaceChildren();
     blast();
+    draw();
+    // with reduced motion the whole transfer has already happened
+    if (moving()) loop.wake();
   }
 
   function blast() {
@@ -112,12 +119,12 @@ export function mount(host) {
     }
   }
 
+  // the canvas's CSS size, kept up to date by fitCanvasOnResize below
+  let W = 0;
+  let H = 0;
   function draw() {
-    if (!cv.isConnected) return;
-    fitCanvas(cv);
+    if (!W) return;
     const g = cv.getContext("2d");
-    const W = cv.clientWidth;
-    const H = cv.clientHeight;
     const c = themeColors();
     g.clearRect(0, 0, W, H);
     g.font = "11px 'JetBrains Mono', monospace";
@@ -196,11 +203,16 @@ export function mount(host) {
   host.querySelector('[data-k="send"]').addEventListener("click", start);
   lossIn.addEventListener("input", () => { lossOut.value = `${lossIn.value}%`; });
 
-  const off = onFrame((t, dt) => {
-    if (!host.isConnected) { off(); return; }
+  // Frames only while packets or a TCP message are in flight and the canvas is
+  // on screen; otherwise it is drawn once per change.
+  const moving = () => phase === "blast" || phase === "tcp";
+  const loop = frameWhileVisible(cv, (t, dt) => {
     step(dt);
     draw();
+    return moving();
   });
+  const unfit = fitCanvasOnResize(cv, (w, h) => { W = w; H = h; draw(); });
+  const offTheme = on("theme", () => draw());
   stats.textContent = "64 packets ready to send";
-  return () => off();
+  return () => { loop.stop(); unfit(); offTheme(); };
 }

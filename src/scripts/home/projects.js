@@ -1,8 +1,10 @@
 // The projects wheel. The cards sit on a ring and turn along it: the picked one
 // at the ring's outermost point, upright and framed, the others tilted along
-// the arc and fading towards the far side. Scroll over the wheel, drag it, or
-// use the arrow keys on a card. The card that stops at the pointer opens in
-// the detail, with its demo.
+// the arc and fading towards the far side. Drag the wheel, scroll it sideways,
+// or use the arrow keys on a card; scrolling up and down over it scrolls the
+// page, so it never traps the reader. The card that stops at the pointer opens
+// in the detail, with its demo, and goes in the address (#projects/<slug>), so
+// a link can open a project.
 //
 // On wide screens the wheel stands in the left margin, bulging towards the
 // content; on narrower ones it lies across the top of the section, so the
@@ -59,7 +61,7 @@ export function initProjects() {
     const ox = list.offsetLeft;
     const flat = across.matches;
     list.setAttribute("aria-orientation", flat ? "horizontal" : "vertical");
-    hint.innerHTML = flat ? "drag or <kbd>←</kbd> <kbd>→</kbd>" : "scroll, drag or <kbd>↑</kbd> <kbd>↓</kbd>";
+    hint.innerHTML = flat ? "drag or <kbd>←</kbd> <kbd>→</kbd>" : "drag or <kbd>↑</kbd> <kbd>↓</kbd>";
     if (flat) {
       // centre below the wheel; the picked card at the top of the arc
       const R = Math.max(W * 1.15, 560);
@@ -107,7 +109,8 @@ export function initProjects() {
 
   // ── turning ──────────────────────────────────────────────────────────
 
-  function go(p, { now = false, focus = false } = {}) {
+  // quiet: leave the address alone, for the project the page opens on
+  function go(p, { now = false, focus = false, quiet = false } = {}) {
     target = Math.round(p);
     const i = mod(target);
     cards.forEach((c, j) => {
@@ -116,10 +119,15 @@ export function initProjects() {
     });
     if (focus) cards[i].focus({ preventScroll: true });
     turn();
-    // the detail follows once the wheel stops, so spinning past cards doesn't start their demos
+    // the detail and the address follow once the wheel stops, so spinning past
+    // cards doesn't start their demos
     clearTimeout(settle);
-    if (now || reducedMotion.matches) show(i);
-    else settle = setTimeout(() => show(i), 260);
+    const open = () => {
+      show(i);
+      if (!quiet) link(i);
+    };
+    if (now || reducedMotion.matches) open();
+    else settle = setTimeout(open, 260);
   }
 
   // turn to card i, the short way round
@@ -144,28 +152,16 @@ export function initProjects() {
     });
   }
 
-  // Scrolling turns the wheel one card per notch, or per 60px of trackpad. A
-  // scroll that started on the page keeps scrolling the page when the wheel
-  // comes under the pointer; only one that starts over the wheel turns it.
+  // Sideways scrolling turns the wheel one card per notch, or per 60px of
+  // trackpad. Scrolling up and down is left to the page, even over the wheel.
   let acc = 0;
   let lock = 0;
-  let pageScroll = -1e9;
-  addEventListener("wheel", (e) => {
-    if (!wheel.contains(e.target)) pageScroll = performance.now();
-  }, { passive: true, capture: true });
   wheel.addEventListener("wheel", (e) => {
-    if (!geo) return;
-    const now = performance.now();
-    if (now - pageScroll < 300) {
-      pageScroll = now;
-      return;
-    }
-    // lying flat, the wheel only takes sideways scrolling
-    if (geo.flat && Math.abs(e.deltaX) <= Math.abs(e.deltaY)) return;
-    const delta = geo.flat ? e.deltaX : e.deltaY;
-    if (!delta) return;
+    if (!geo || Math.abs(e.deltaX) <= Math.abs(e.deltaY)) return;
     e.preventDefault();
+    const now = performance.now();
     if (now < lock) return;
+    const delta = e.deltaX;
     acc += e.deltaMode === 1 ? delta * 32 : e.deltaMode === 2 ? delta * 400 : delta;
     if (Math.abs(acc) >= 60) {
       go(target + Math.sign(acc));
@@ -205,7 +201,9 @@ export function initProjects() {
     wheel.classList.remove("is-dragging");
     dragged = true;
     setTimeout(() => { dragged = false; });
-    go(pos + clamp(d.v * 140, -2, 2));
+    // a cancelled drag (the browser took a finger's swipe to scroll the page) turns back
+    if (e.type === "pointercancel") turn();
+    else go(pos + clamp(d.v * 140, -2, 2));
   };
   wheel.addEventListener("pointerup", release);
   wheel.addEventListener("pointercancel", release);
@@ -234,15 +232,17 @@ export function initProjects() {
     const li = items[i];
     detail.dataset.cat = li.dataset.cat;
     detail.setAttribute("aria-labelledby", cards[i].id);
-    // the write-up, and the demo beside it (or under it when there isn't room);
-    // the card already shows the category and the slug, and the write-up says
-    // what the summary says, so those stay in the list for when there's no wheel
-    const text = document.createElement("div");
-    text.className = "pj-text";
-    text.append(...[".proj-name", ".proj-facts", ".proj-body"].map((s) => $(s, li).cloneNode(true)));
+    // The title and facts, the demo, then the write-up. With room, the demo
+    // stands beside the other two; without, it comes before the write-up, so
+    // a phone gets to it without scrolling through the text. The card already
+    // shows the category and the slug, and the write-up says what the summary
+    // says, so those stay in the list for when there's no wheel.
+    const head = document.createElement("div");
+    head.className = "pj-head";
+    head.append($(".proj-name", li).cloneNode(true), $(".proj-facts", li).cloneNode(true));
     const row = document.createElement("div");
     row.className = "pj-row";
-    row.append(text);
+    row.append(head, $(".proj-body", li).cloneNode(true));
     detail.replaceChildren(row);
     if (meta) meta.textContent = `${i + 1}/${n}`;
     if (!reducedMotion.matches) {
@@ -264,7 +264,7 @@ export function initProjects() {
     const host = document.createElement("div");
     host.className = "demo";
     box.append(host);
-    row.append(box);
+    head.after(box);
     try {
       const { mount } = await import(`../demos/${demo}.js`);
       if (shown === i && host.isConnected) unmount = mount(host) ?? null;
@@ -280,8 +280,61 @@ export function initProjects() {
     if (i >= 0) goTo(i, { now: true });
   });
 
+  // ── the address ──────────────────────────────────────────────────────
+
+  // The picked project goes in the address, so it can be linked to. It
+  // replaces the entry rather than adding one, so switching projects doesn't
+  // fill the history.
+  function link(i) {
+    const hash = `#projects/${items[i].dataset.name}`;
+    if (location.hash === hash) return;
+    try {
+      history.replaceState(null, "", hash);
+    } catch {
+      // browsers refuse it when it's called too often; the next pick tries again
+    }
+  }
+
+  // the project an address like #projects/<slug> links to, or -1
+  const linked = () => items.findIndex((li) => location.hash === `#projects/${li.dataset.name}`);
+
+  // A link to a project brings the section into view on its header line, as
+  // the menu does. On load the browser has no element with that id to jump
+  // to, and the sections above are still building (the fonts, the git log)
+  // and push it down, so it's held there until the page settles or the reader
+  // starts scrolling, as src/scripts/emacs/buffers.js does for #projects.
+  const section = root.closest("section");
+  const bar = $(".winbar", section) ?? section;
+  function reveal(landing) {
+    if (!landing) {
+      bar.scrollIntoView({ behavior: reducedMotion.matches ? "auto" : "smooth", block: "start" });
+      return;
+    }
+    const ro = new ResizeObserver(() => bar.scrollIntoView({ behavior: "instant", block: "start" }));
+    const inputs = ["wheel", "touchstart", "keydown", "pointerdown"];
+    const stop = () => {
+      ro.disconnect();
+      for (const t of inputs) removeEventListener(t, stop, true);
+    };
+    for (const t of inputs) addEventListener(t, stop, { capture: true, passive: true });
+    ro.observe(document.body);
+    setTimeout(stop, 3000);
+  }
+
+  addEventListener("hashchange", () => {
+    const i = linked();
+    if (i < 0) return;
+    goTo(i, { now: true });
+    reveal(false);
+  });
+
   new ResizeObserver(layout).observe(wheel);
   across.addEventListener("change", layout);
+  // The page opens on the linked project, already turned to it, or on the
+  // first; either way the address stays as it is.
+  const start = linked();
+  pos = Math.max(start, 0);
   layout();
-  go(0, { now: true });
+  go(pos, { now: true, quiet: true });
+  if (start >= 0) reveal(true);
 }

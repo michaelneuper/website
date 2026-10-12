@@ -19,8 +19,9 @@
   align-items: center;
   gap: 0.14em;
   padding: 0 0.04em;
-  /* unlit 0s, dimmer than the labels but still 3:1 against the background, as large text needs */
-  color: color-mix(in srgb, var(--fg) 48%, var(--bg));
+  /* unlit 0s, dimmer than the labels but still 3:1 against the background, as
+     large text needs: the controls' border colour, which themes.css keeps there */
+  color: var(--control);
   font-variant-numeric: tabular-nums;
   transition: color 120ms ease;
 }

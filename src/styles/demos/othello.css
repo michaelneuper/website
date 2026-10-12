@@ -3,15 +3,16 @@
 /* The board in the theme's colours: squares like the computer's modules, ruled
    between, and discs like its LEDs, white lit in the theme's text colour and black
    unlit (swapped round in light themes, so black stays the dark one). Legal moves
-   are faint dots, the last disc played has a red dot, and the search's candidate
-   moves are ghost white discs, more solid the more it tried them. */
+   are small dots in --dim, over 3:1 on the felt in every theme; the last disc
+   played has a red dot, and the search's candidate moves are ghost white discs,
+   more solid the more it tried them. */
 .oth {
   --felt: color-mix(in srgb, var(--bg) 92%, var(--fg));
   --felt-line: var(--rule);
   --disc-dark: light-dark(var(--fg), color-mix(in oklch, var(--bg) 55%, #000));
   --disc-light: light-dark(color-mix(in oklch, var(--bg) 35%, #fff), var(--fg));
   display: grid;
-  grid-template-columns: repeat(8, minmax(0, 1fr));
+  grid-template-rows: repeat(8, minmax(0, 1fr));
   gap: 1px;
   width: min(100%, 336px);
   aspect-ratio: 1;
@@ -20,13 +21,22 @@
   background: var(--felt-line);
 }
 
+.oth-row {
+  display: grid;
+  grid-template-columns: repeat(8, minmax(0, 1fr));
+  gap: 1px;
+}
+
 .oth-cell {
   position: relative;
-  padding: 0;
-  border: 0;
-  border-radius: 0;
   background: var(--felt);
   cursor: default;
+}
+
+/* lift the focused square over its neighbours, which would otherwise cover
+   the parts of its ring that reach into them */
+.oth-cell:focus-visible {
+  z-index: 2;
 }
 
 .oth-cell.legal {
@@ -38,7 +48,7 @@
   position: absolute;
   inset: 42%;
   border-radius: 50%;
-  background: var(--faint);
+  background: var(--dim);
 }
 
 .oth-cell.legal:hover::after {
@@ -87,4 +97,8 @@
 
 .oth-cell .heat:empty {
   background: none;
+}
+
+.oth-count {
+  font-variant-numeric: tabular-nums;
 }

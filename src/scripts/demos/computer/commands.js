@@ -1,5 +1,6 @@
-// M-x commands for the 8-bit computer (c, n and r while it's on screen, or
-// SPC c). They open the 8-bit project first if its demo isn't showing.
+// M-x commands for the 8-bit computer (c, n and r with focus in its demo, or on
+// nothing while it's on screen, or SPC c from anywhere). They open the 8-bit
+// project first if its demo isn't showing.
 
 import { reducedMotion, emit } from "../../util.js";
 import { defcommand, completingRead } from "../../emacs/index.js";
