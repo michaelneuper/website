@@ -7,11 +7,13 @@ interface Props {
   /** Buffer name and major mode until a section scrolls into view. */
   buf: string;
   mode: string;
+  /** The back-to-top button. The home page leaves it out; gg still works there. */
+  toTop?: boolean;
 }
 
-const { buf, mode } = Astro.props;
+const { buf, mode, toTop = true } = Astro.props;
 ---
-<button class="btn to-top" type="button" title="Back to the top (gg)" hidden>back to top</button>
+{toTop && <button class="btn to-top" type="button" title="Back to the top (gg)" hidden>back to top</button>}
 <div class="which-key" hidden aria-live="polite"></div>
 <div class="frame-bottom">
   <div class="modeline">

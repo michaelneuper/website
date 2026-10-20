@@ -45,7 +45,7 @@
   --c-sec: var(--red);
 }
 
-:root[data-theme="doom-gruvbox-light"] {
+:root[data-theme="gruvbox-light"] {
   color-scheme: light;
   --bg: #fbf1c7; --bg-alt: #ebdbb2; --fg: #3c3836;
   --red: #9d0006; --orange: #af3a03; --yellow: #b57614; --green: #79740e;
@@ -84,14 +84,14 @@
   --glow: 0;
 }
 
-:root[data-theme="doom-dracula"] {
+:root[data-theme="dracula"] {
   --bg: #282a36; --bg-alt: #1e2029; --fg: #f8f8f2;
   --red: #ff5555; --orange: #ffb86c; --yellow: #f1fa8c; --green: #50fa7b;
   --cyan: #8be9fd; --blue: #61bfff; --magenta: #ff79c6;
   --dim-mix: 64%;
 }
 
-:root[data-theme="doom-nord"] {
+:root[data-theme="nord"] {
   --bg: #2e3440; --bg-alt: #3b4252; --fg: #eceff4;
   --red: #bf616a; --orange: #d08770; --yellow: #ebcb8b; --green: #a3be8c;
   --cyan: #88c0d0; --blue: #81a1c1; --magenta: #b48ead;
@@ -105,7 +105,7 @@
   --dim-mix: 68%;
 }
 
-:root[data-theme="doom-tokyo-night"] {
+:root[data-theme="tokyo-night"] {
   --bg: #1a1b26; --bg-alt: #16161e; --fg: #c0caf5;
   --red: #f7768e; --orange: #ff9e64; --yellow: #e0af68; --green: #9ece6a;
   --cyan: #7dcfff; --blue: #7aa2f7; --magenta: #bb9af7;
@@ -115,7 +115,7 @@
 /* doom's foreground, #556b72, is only 5.2:1 on this cream, which leaves no room
    for a lighter --dim that still reads. So the text is darkened a fifth towards
    base03 (#002b36), and --dim lands about where the old text colour was. */
-:root[data-theme="doom-solarized-light"] {
+:root[data-theme="solarized-light"] {
   color-scheme: light;
   --bg: #fdf6e3; --bg-alt: #eee8d5; --fg: #445e66;
   --red: #dc322f; --orange: #cb4b16; --yellow: #b58900; --green: #859900;
@@ -126,11 +126,11 @@
 
 /* gruvbox's blue is a grey-green beside its yellow, purple and red, so the
    software colour pulls it towards blue, keeping a little of its own tone */
-:root[data-theme="doom-gruvbox"] {
+:root[data-theme="gruvbox"] {
   --c-sw: color-mix(in oklch, var(--blue) 20%, oklch(0.7 0.11 242));
 }
 
-:root[data-theme="doom-gruvbox-light"] {
+:root[data-theme="gruvbox-light"] {
   --c-sw: color-mix(in oklch, var(--blue) 40%, oklch(0.47 0.11 245));
 }
 

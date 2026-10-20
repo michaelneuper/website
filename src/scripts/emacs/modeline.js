@@ -27,9 +27,10 @@ document.addEventListener("focusin", evilState);
 document.addEventListener("focusout", () => setTimeout(evilState));
 document.addEventListener("selectionchange", evilState);
 
-// back to top, once the reader is a screen down; gg does the same
+// back to top, once the reader is a screen down; gg does the same. The home
+// page has no button.
 const toTop = $(".to-top");
-toTop.addEventListener("click", () => {
+toTop?.addEventListener("click", () => {
   scrollTo({ top: 0, behavior: reducedMotion.matches ? "instant" : "smooth" });
   // the button hides at the top, so focus goes to the first link on the page
   $(".brand")?.focus({ preventScroll: true });
@@ -41,7 +42,7 @@ function onScroll() {
   ml.pct.textContent = y <= 2 ? "Top" : y >= max - 2 ? "Bot" : `${Math.round((y / max) * 100)}%`;
   ml.pos.textContent = `${Math.floor(y / 21) + 1}:0`;
   root.classList.toggle("is-scrolled", y > 24);
-  toTop.hidden = y < innerHeight;
+  if (toTop) toTop.hidden = y < innerHeight;
 }
 addEventListener("scroll", onScroll, { passive: true });
 onScroll();
