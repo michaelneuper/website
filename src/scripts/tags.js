@@ -1,5 +1,6 @@
 // One colour per post tag, like org-tag-faces. The posts list on the home page
-// (org.js) and the post pages both use it. Add an entry when you add a tag.
+// (src/scripts/home/posts.js) and the post pages both use it. Add an entry
+// when you add a tag.
 export const TAG_COLORS = {
   emacs: "var(--magenta)",
   org: "var(--green)",

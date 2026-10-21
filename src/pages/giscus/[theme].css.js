@@ -1,8 +1,8 @@
 // giscus themes made from the site's own colours: /giscus/<theme>.css for each
 // Emacs theme, so the comments under a post match whichever one is loaded.
-// The colours are read from themes.css, so a theme only has to be defined there.
+// The colours are read from themes.css, so a new theme needs nothing added here.
 // giscus loads this (and the fonts it names) from inside its own frame, so
-// netlify.toml allows giscus.app to fetch both.
+// public/_headers allows giscus.app to fetch both.
 
 import styles from "../../styles/themes.css?raw";
 import { THEMES, DEFAULT_THEME } from "../../scripts/themes.js";

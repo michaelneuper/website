@@ -360,8 +360,8 @@
 }
 
 /* the demo, under a header line of its own: *demo*, a rule, then a note on what
-   it is. Without room beside the write-up, it comes between the facts and the
-   write-up, with space either side. */
+   it is. Without room beside the write-up, the demo comes under it, with space
+   either side. */
 .pj-demo {
   margin: 36px 0;
   font-size: 12px;

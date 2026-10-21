@@ -24,11 +24,12 @@ npm run preview    # serves dist/ at http://localhost:4321
 |----------------------------|-------------------------------------------------------------------------------|
 | `src/pages/`               | the pages: home, `posts/[slug]` for every post, 404, the RSS feeds and the giscus themes |
 | `src/layouts/Base.astro`   | the frame every page shares                                                   |
-| `src/components/frame/`    | the Emacs around each page: top line, modeline, `*Help*`, footer, and `Buffer`, a section with its winbar |
-| `src/components/home/`     | the home page's sections: hero, about, projects, posts, contact, and the coffee |
+| `src/components/frame/`    | the Emacs around each page: top line, modeline, `*Help*`, and `Buffer`, a section with its winbar |
+| `src/components/home/`     | the home page's sections: hero (on a circuit board routed from the chip's pins), about, projects, posts, contact, and the coffee |
 | `src/components/post/`     | a post as an Org buffer: keywords, text, the `*Ilist*` outline, comments      |
+| `src/components/missing/`  | the 404 page: its status code in binary, and the `*dungeon*` text adventure   |
 | `src/content/posts/`       | the posts, in Markdown                                                        |
-| `src/content/projects/`    | the projects in the memory map, one Markdown file each                        |
+| `src/content/projects/`    | the projects on the wheel, one Markdown file each                             |
 | `src/data/pins.js`         | the pins on the MN-2026 chip                                                  |
 | `src/scripts/emacs/`       | M-x, the minibuffer, which-key, the modeline and load-theme                   |
 | `src/scripts/home/`, `post/`, `demos/` | what each component and demo does in the browser                  |
@@ -40,9 +41,12 @@ markup, CSS and JavaScript are named after it in `components/`, `styles/` and `s
 
 ## Adding a project
 
-Add `src/content/projects/<name>.md`. The front matter has its place in the list
-(`order`), colour (`cat`), one-line `summary` (its size in the memory map),
-and optionally a `demo` from `src/scripts/demos/`; the text is the write-up.
+Add `src/content/projects/<name>.md`. The front matter has the slug shown on its
+card (`name`), the heading (`title`), its place in the list (`order`), colour
+(`cat`), one-line `summary`, and optionally a `demo` from
+`src/scripts/demos/` with a `demoNote` on how the demo differs from the project;
+the text is the write-up. The drawing on its card comes from
+`src/components/home/ProjectThumb.astro`, picked by `demo`.
 
 ## Writing a post
 
@@ -63,4 +67,10 @@ Maths goes between `$...$` or `$$...$$` and is rendered with KaTeX when the site
 
 ## Deploying
 
-Netlify builds the site with the settings in `netlify.toml`: it runs `npm run build` and publishes `dist/`.
+The site is static: `npm run build` writes it to `dist/`.
+
+- **Cloudflare**: build command `npm run build`, deploy command `npx wrangler deploy`. `wrangler.jsonc` serves `dist/`, and its `name` has to match the Worker's name in the dashboard.
+- **Netlify**: `netlify.toml` runs the build and publishes `dist/`.
+
+Both read the response headers from `public/_headers`. The `/giscus/*` and `/fonts/*` headers there let the comments load their theme, so keep them on any host.
+
