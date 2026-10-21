@@ -3,7 +3,7 @@ title: "Which Linux Packaging Format Should You Use?"
 date: 2023-01-09T13:36:52+02:00
 tags: [linux]
 cat: sw
-draft: false
+draft: true
 ---
 
 ## Introduction

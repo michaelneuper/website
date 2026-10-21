@@ -1,5 +1,5 @@
 ---
-title: "A Guide to Building Your Own Desktop Environment"
+title: "Turn Your Window Manager Into a Desktop Environment"
 date: 2022-12-11T21:31:27+02:00
 tags: [linux]
 cat: sw
@@ -8,221 +8,145 @@ draft: false
 
 <!-- TODO add notification daemon-->
 
-## Introduction
+A desktop environment like GNOME, KDE Plasma or Xfce is a set of programs that come together: a window manager, a panel, a login screen, a settings app, a file manager, and the background services that let them talk to each other.
+A window manager on its own only places and draws windows.
+Everything else is up to you.
 
-If you're a Linux user, you're probably familiar with the concept of window managers and desktop environments.
-These programs are responsible for managing the appearance and functionality of your desktop, providing the tools and features that you need to interact with your operating system.
+That means more setting up, but you choose every part, and the result is usually lighter and faster than a full desktop.
+Most of the parts are small programs you start when you log in, so it's less work than it sounds.
 
-But what's the difference between a window manager and a desktop environment? 
-And why might someone want to turn a window manager into a desktop environment?
+## The window manager
 
-In this blog post, we'll explore these questions and more. 
-I'll provide a step-by-step guide on how to turn a window manager into a desktop environment, along with tips and tricks for customizing your window manager and making it more user-friendly.
-We'll also discuss the benefits and drawbacks of using a window manager as a desktop environment, and compare popular window managers and desktop environments.
+The window manager decides where windows go and lets you move, resize, close and switch between them.
+Tiling window managers arrange windows so they fill the screen without overlapping.
+Stacking (or floating) ones let windows overlap, the way a desktop environment does.
 
-So let's dive in and learn more about the fascinating world of window managers and desktop environments!
+These are some of the popular ones:
 
-## Turning a window manager into a desktop environment
+- i3 is a manual tiling window manager: you choose where the next window goes, and any group of windows can be switched to tabs or a stack.
+  It's configured in a plain text file, comes with its own bar, and has very good documentation, which makes it a common first choice.
+- bspwm tiles windows automatically, splitting the screen in two each time a window opens.
+  It doesn't handle the keyboard at all: a separate program, sxhkd, runs your keybindings, and bspwm's own config is a shell script.
+- dwm, from suckless, is small and fast.
+  You configure it by editing its C source (`config.h`) and recompiling, and it has a built-in bar that shows your tags, the layout and a line of status text you set yourself.
+- xmonad is written in Haskell and configured in Haskell too.
+  That makes it very flexible, as long as you're happy to learn a bit of the language.
+- Openbox is a stacking window manager, the one LXDE is built on.
+  It has right-click menus and themes and is configured with XML files.
+  It has no panel, so it's often paired with tint2.
 
-If you want to turn a window manager into a desktop environment, the first thing you need to do is install the necessary components. 
-This typically includes the window manager itself, a display manager, and additional utilities and applications.
+If you've never used a tiling window manager, start with i3.
+If you'd rather keep overlapping windows, try Openbox.
 
-Let's explore some of these components:
+## Starting your session
 
-### Window Manager
+A display manager is the login screen that starts your session once you sign in.
+LightDM, GDM (GNOME's) and SDDM (KDE Plasma's) are the common ones, and any of them can start a window manager instead of a desktop environment.
 
-A window manager is a program that manages the placement and appearance of windows on a computer's desktop.
-It is responsible for providing the "frame" around each window, allowing the user to move, resize, and minimize windows. 
-A window manager also provides the ability to switch between windows and to tile them on the desktop in various ways.
+You can also do without one: log in on the console and run `startx`, which runs your `~/.xinitrc`.
+For i3 that file can be a single line:
 
-There are many different window managers available for Linux and other operating systems. 
-Some of the most popular ones include the following:
+```shell
+exec i3
+```
 
-1. **i3**: i3 is a tiling window manager that is designed to be fast and efficient. It is easy to configure and customize, and it provides a number of advanced features for power users.
+The programs in the rest of this post have to be started with your session too.
+Put them in `~/.xinitrc` before the `exec` line, or in your window manager's own autostart, like an `exec` line in i3's config or `bspwmrc` for bspwm.
 
-2. **Openbox**: Openbox is a lightweight and flexible window manager that is easy to customize. It provides a minimalistic interface and a wide range of options for advanced users.
+## Compositor
 
-3. **bspwm**: bspwm is a tiling window manager that is based on binary space partitioning. It is lightweight and efficient, and it provides a number of advanced features, such as automatic tiling and support for multiple monitors.
+On X, window managers don't composite: there's no transparency, no shadows or fading, and some programs tear while they redraw.
+A compositor adds all of that, and none of the window managers above has one built in.
 
-3. **dwm**: dwm is a dynamic window manager that is written in the C programming language. It is fast and lightweight, and it provides a number of advanced features, such as support for multiple monitors and a customizable status bar.
+picom is the usual choice.
+It started as a fork of compton, which is no longer maintained.
+xcompmgr is a much simpler one.
+Start it with your session:
 
-4. **xmonad**: xmonad is a tiling window manager that is written in the Haskell programming language. It is highly configurable and customizable, and it provides a number of advanced features, such as support for multiple workspaces and automatic tiling.
+```shell
+picom &
+```
 
-Each window manager has its own unique features and capabilities, and the right one for you will depend on your personal preferences and needs.
-Some of the pros and cons of using different window managers are as follows:
+On an old or slow machine you can leave the compositor out.
 
-- **i3**: i3 is a powerful and customizable window manager that is well-suited for users who want a highly efficient and flexible desktop environment. It has a steep learning curve, but once you master it, you can achieve a high level of productivity. Some of the pros of using i3 are its tiling capabilities, its support for multiple workspaces, and its ability to run on low-end hardware. Some of the cons are its lack of a built-in panel or application launcher, and its reliance on keyboard shortcuts.
+## The other pieces
 
-- **Openbox**: Openbox is a lightweight and flexible window manager that is easy to customize. It provides a minimalistic interface and a wide range of options for advanced users. Some of the pros of using Openbox are its low resource usage, its support for desktop icons, and its ability to integrate with other desktop environments. Some of the cons are its lack of tiling capabilities, its reliance on external utilities for certain features, and its lack of a built-in system tray.
+### Wallpaper
 
-- **bspwm**: bspwm is a tiling window manager that is based on binary space partitioning. It is lightweight and efficient, and it provides a number of advanced features, such as automatic tiling and support for multiple monitors. Some of the pros of using bspwm are its low resource usage, its advanced tiling capabilities, and its support for multiple monitors. Some of the cons are its lack of a built-in panel or application launcher, and its reliance on external utilities for certain features.
+nitrogen is a small program with a window: open it and pick an image.
+To set the same image again when you log in, run:
 
-- **dwm**: dwm is a dynamic window manager that is written in the C programming language. It is fast and lightweight, and it provides a number of advanced features, such as support for multiple monitors and a customizable status bar. Some of the pros of using dwm are its low resource usage, its fast performance, and its customizable status bar. Some of the cons are its lack of a built-in panel or application launcher, and its reliance on keyboard shortcuts.
+```shell
+nitrogen --restore
+```
 
-- **xmonad**: xmonad is a tiling window manager that is written in the Haskell programming language. It is highly configurable and customizable, and it provides a number of advanced features, such as support for multiple workspaces and automatic tiling. Some of the pros of using xmonad are its advanced tiling capabilities, its support for multiple workspaces, and its high level of configurability. Some of the cons are its steep learning curve, its lack of a built-in panel or application launcher, and its reliance on external utilities for certain features.
+feh is an image viewer that can also set the wallpaper from the command line:
 
-### Display Manager
+```shell
+feh --bg-fill /path/to/image.jpg
+```
 
-A display manager is a program that manages the login and display of the desktop environment on a computer. 
-It is responsible for providing the login screen, allowing the user to enter their username and password, and then starting the desktop environment and managing its display.
+feh saves the command it used to `~/.fehbg`, so run that file when you log in.
 
-Some common examples of display managers include LightDM, GDM, and SDDM. 
-LightDM is a cross-platform display manager that is lightweight and customizable. 
-GDM is the default display manager on the GNOME desktop environment, and it provides a user-friendly login screen and a range of options for advanced users. 
-SDDM is the default display manager on the KDE desktop environment, and it provides a modern and attractive login screen.
+### Bar
 
-When you install a desktop environment on your computer, it typically includes a default display manager. 
-However, you can also choose to install and use a different display manager if you prefer. 
-For example, if you are using the Xfce desktop environment, you could choose to use LightDM instead of the default XDM display manager.
+A bar shows your workspaces and whatever status you want next to them: the time, the battery, the volume, the network.
 
-### Compositor
+- i3 comes with i3bar, which reads its status line from i3status or i3blocks.
+- dwm has its own bar, and dwmblocks fills in its status text in small blocks that each update on their own.
+- xmobar is the bar most xmonad setups use.
+- polybar works with any window manager and has ready-made modules for i3 and bspwm workspaces.
+- lemonbar is the minimal option: a bar that shows whatever text you pipe into it.
 
-A compositor is a program that is responsible for combining the outputs of multiple applications and displaying them on the screen.
-It is typically used to provide advanced graphical effects, such as transparency, animations, and 3D transformations.
+### Application launcher
 
-On Linux, a compositor is typically used in conjunction with a window manager to provide a desktop environment. 
-The window manager is responsible for managing the placement and appearance of windows on the desktop, while the compositor provides the graphical effects. 
-Some window managers, such as xmonad and i3, include a built-in compositor, while others, such as Openbox, dwm and bspwm, require the use of an external compositor.
+Without a start menu, you open programs with a launcher.
+dmenu, also from suckless, lists the programs that match as you type and runs the one you pick; i3's default config uses it.
+rofi does the same with more options, and can also switch between windows and run commands.
+albert is a launcher with plugins, closer to Spotlight on a Mac.
 
-There are many compositors available for Linux, and the right one for you will depend on your personal preferences and needs. 
-Some popular compositors include compton, picom, and xcompmgr. Compton is a feature-rich compositor that provides a wide range of options and effects, picom is a lightweight and efficient compositor, and xcompmgr is a simple compositor that provides basic graphical effects.
+### System tray
 
-To choose a compositor, you can consider the following factors:
+Some programs put an icon in the system tray, like nm-applet for NetworkManager or a volume or Bluetooth applet.
+polybar and i3bar can show a tray.
+If your bar can't, stalonetray or trayer gives you one on its own.
 
-1. **Features**: Different compositors provide different sets of features and capabilities. Consider which features are most important to you, and choose a compositor that provides them.
+### Polkit
 
-2. **Performance**: Compositors can have a significant impact on the performance of your desktop environment. If you are using a low-end computer or you have a lot of applications running, you may want to choose a lightweight compositor that uses fewer resources.
+Polkit decides whether a program you run as yourself may do something that needs root, like mounting a drive or changing network settings, and asks for your password when it needs to.
+The asking is done by an authentication agent, which every desktop environment starts for you and a window manager doesn't.
+Without one, the password prompt never appears and the action fails.
 
-3. **Compatibility**: Some compositors are compatible with only certain window managers or desktop environments. If you are using a specific window manager or desktop environment, make sure the compositor you choose is compatible with it.
+Start an agent with your session, for example GNOME's:
 
-### Additional Utilities
+```shell
+/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
+```
 
-#### Wallpaper Setter
+The path depends on your distribution, and [the Arch wiki's page on polkit](https://wiki.archlinux.org/title/Polkit) lists the agents you can use.
 
-You can use a program such as nitrogen or feh to set your wallpaper.
-Nitrogen and feh are two popular programs that allow you to browse and select an image to use as your wallpaper, and then set it as the background for your desktop.
+## Customizing it
 
-To use nitrogen or feh to set your wallpaper, follow these steps:
+Everything about a window manager is in its configuration.
+i3 has its own plain text format, bspwm uses a shell script (and sxhkd's file for the keys), Openbox uses XML, awesome uses Lua, and dwm and xmonad are configured in their own source code.
 
-1. Install nitrogen or feh on your system. You can use your package manager to install the program, or you can download and compile the source code from the program's website.
+The things you'll probably change first:
 
-2. Run nitrogen or feh. This will open a window that allows you to browse and select an image to use as your wallpaper.
+- colors, fonts, borders and the gaps between windows
+- keybindings, like a key to open a terminal or lock the screen
+- where new windows go, which get focus, and which programs float instead of tiling
+- what starts when you log in
 
-3. Browse to the location of the image you want to use as your wallpaper, and select it.
+Each window manager's documentation covers its options, and the Arch wiki has a page on each of the ones above.
 
-4. Once you have selected the image, click on the "Set as wallpaper" button (in nitrogen) or the "Apply" button (in feh) to set the image as your wallpaper.
+## Window manager or desktop environment?
 
-5. The selected image will now be displayed as your wallpaper.
+A window manager uses less memory and CPU than a desktop environment, starts faster, and does only what you configure it to do.
+You can also mix programs from different desktops, like Xfce's file manager, Thunar, with nothing else from Xfce.
 
-6. Add a line to your startup script to set the wallpaper. 
-If you're using nitrogen add: 
-    ```shell
-    nitrogen --restore
-    ```
-    If you're using feh add:
-    ```shell
-    feh --bg-scale /path/to/image.jpg
-    ```
+What you give up is the integration.
+Nothing comes set up for you: the settings app, mounting USB drives when you plug them in, the network applet and the password prompts are all things you add yourself, and you notice a missing one the first time you need it.
+Getting it all working takes a while, and you'll keep adjusting it long after.
 
-#### Bar
-
-A bar on Linux is a program that displays information on the desktop, such as the current time and date, the system load, and the status of various system services. 
-A bar is typically used in conjunction with a window manager or desktop environment, and it provides a convenient way to access important information without needing to open a separate application.
-
-There are many bars available for Linux, and the right one for you will depend on your personal preferences and the desktop environment you are using. 
-Some popular bars include polybar, lemonbar, i3bar, xmobar, and dwmblocks. 
-These bars are designed to be used with specific desktop environments or window managers, and they provide a range of features and customization options.
-
-For example, polybar and lemonbar are general-purpose bars that can be used with any desktop environment or window manager. 
-They provide a wide range of features, such as support for multiple monitors and custom colors and fonts, and they are highly customizable. 
-i3bar is the default bar for the i3 window manager, and it provides a minimalistic interface and support for displaying information from i3 modules. 
-xmobar is the default bar for the xmonad window manager, and it provides a customizable interface and support for displaying information from xmonad plugins. 
-dwmblocks is the default bar for the dwm window manager, and it provides a minimalist interface and support for displaying information from dwm status commands.
-
-To choose a bar, you can consider the following factors:
-
-1. **Compatibility**: Some bars are designed to be used with specific desktop environments or window managers. If you are using a specific desktop environment or window manager, make sure the bar you choose is compatible with it.
-
-2. **Features**: Different bars provide different sets of features and capabilities. Consider which features are most important to you, and choose a bar that provides them.
-
-3. **Customization**: Some bars are highly customizable, allowing you to change the appearance and behaviour of the bar to suit your preferences. If you want a bar that you can tailor to your specific needs, choose a bar that provides a high degree of customization. Polybar is a popular choice.
-
-#### Application Launcher
-
-An application launcher is a program that allows you to quickly search for and launch applications on your Linux system. 
-An application launcher typically provides a search bar or a menu that allows you to enter the name of the application you want to launch, and it displays a list of matching applications that you can select from.
-
-Some popular application launchers include rofi, dmenu, and albert. 
-
-1. **Rofi** is a flexible and customizable application launcher that allows you to search for and launch applications, as well as perform a range of other actions, such as opening a terminal or running a command. 
-
-3. **Dmenu** is a simple and lightweight application launcher that provides a minimalistic interface and support for fuzzy search.
-
-4. **Albert** is a fast and efficient application launcher that uses a customizable keyboard shortcut to launch applications and perform other actions.
-
-#### System Tray
-
-A system tray (also known as a notification area) is a part of the graphical user interface (GUI) on Linux (and other operating systems) that displays icons for system and application notifications. 
-The system tray is typically located at the bottom or side of the screen, and it provides a convenient way for applications to display important information and notifications without disrupting the user's work.
-
-For example, the system tray might display an icon for a network manager application, which shows the current network status and allows the user to manage their network connections. 
-It might also display an icon for a battery manager application, which shows the current battery level and allows the user to manage their power settings.
-
-#### Polkit
-
-Polkit (formerly known as PolicyKit) is a framework for defining and managing administrative policies on Linux. 
-It provides a mechanism for controlling access to system-wide privileges, and it allows users to perform privileged tasks without needing to log in as the root user.
-
-Polkit consists of a number of components, including a daemon (polkitd), a command-line tool (polkit), and a library (libpolkit). 
-The polkit daemon runs in the background and listens for requests from applications that need to perform privileged tasks. 
-The polkit command-line tool allows administrators to manage and configure polkit policies.
-The libpolkit library provides a convenient interface for developers to integrate polkit into their applications.
-
-See [the arch wiki](https://wiki.archlinux.org/title/Polkit) for more information.
-
-## Customizing your window manager
-
-Most window managers on Linux allow for customization to some extent. 
-Customizing your window manager can allow you to tailor the appearance and behaviour of your desktop environment to suit your preferences and needs.
-
-To customize your window manager, you will need to edit the window manager's configuration files. 
-These files are typically written in a scripting language, such as Lua or Shell, and they control the various aspects of the window manager's behaviour and appearance.
-
-Here are some examples of the types of things you can customize in your window manager:
-
-- **Appearance**: You can customize the appearance of your window manager by changing the colors, fonts, and other visual elements. For example, you might change the color of the window borders, the font used for window titles, or the size of gaps between windows.
-
-- **Keybindings**: You can customize the keybindings of your window manager to define which keys perform which actions. For example, you might bind the "Alt + Tab" keys to switch between windows, or the "Super + L" keys to lock the screen.
-
-- **Behaviour**: You can customize the behaviour of your window manager to control how windows are managed and displayed. For example, you might change the default layout of windows on the screen, or the way windows are focused when they are opened.
-
-- **Autostart**: You can customize the autostart of your window manager to define which applications are automatically launched when you log in. For example, you might specify that your web browser, email client, and music player are automatically started when you log in.
-
-To customize your window manager, you will need to edit the appropriate configuration files and specify the desired changes. 
-The exact steps for doing this will depend on the specific window manager you are using. 
-You can find instructions for customizing your window manager in the documentation or online forums for your window manager.
-
-## Benefits and drawbacks
-
-There are both benefits and drawbacks to using a window manager instead of a full desktop environment on Linux.
-
-As said before, a window manager is a program that provides the basic functions for managing windows on the desktop, such as opening, closing, minimizing, and maximizing windows. 
-A full desktop environment, on the other hand, is a complete graphical user interface (GUI) that includes not only a window manager, but also a range of other applications and utilities, such as a taskbar, a system tray, a file manager, and a desktop background.
-
-Here are some of the benefits of using a window manager instead of a full desktop environment on Linux:
-
-- **Lightweight**: Window managers are typically much lighter and more efficient than full desktop environments. This means they use fewer system resources, such as memory and CPU, and they can run on lower-powered hardware.
-
-- **Customizable**: Window managers are typically highly customizable, allowing users to tailor the appearance and behavior of their desktop environment to their preferences. This is because window managers typically have simple, modular architectures, with configuration files that are easy to edit and modify.
-
-- **Flexible**: Window managers are typically more flexible than full desktop environments, allowing users to mix and match different applications and utilities from different desktop environments. For example, a user might use the window manager from one desktop environment, but the file manager from another.
-Here are some of the drawbacks of using a window manager instead of a full desktop environment on Linux:
-
-- **Less user-friendly**: Window managers are typically less user-friendly than full desktop environments, because they do not include many of the applications and utilities that users expect in a GUI. This can make it more difficult for new users to get started with a window manager, and it can limit the functionality of the desktop environment.
-
-- **Less integrated**: Window managers are typically less integrated than full desktop environments, because they do not include many of the applications and utilities that are designed to work together. This can lead to a less cohesive and consistent user experience, and it can make it more difficult to perform certain tasks.
-
-- **More complex**: Window managers are typically more complex than full desktop environments, because they require the user to manually configure and manage many of the components of the desktop environment. This can be a challenge for inexperienced users, and it can require more time and effort to set up and maintain a window manager.
-
-Overall, whether to use a window manager or a full desktop environment on Linux depends on your personal preferences and needs. 
-Some users may prefer the lightweight, customizable, and flexible nature of window managers, while others may prefer the user-friendly, integrated, and simple nature of full desktop environments.
+If you like knowing what every program on your machine is for, a window manager is a good fit.
+If you'd rather everything worked straight after installing, stay with a desktop environment.
