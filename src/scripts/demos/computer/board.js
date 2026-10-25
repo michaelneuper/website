@@ -2,9 +2,10 @@
 // machine in machine.js, with RAM you can edit, the bus, the control word and a
 // 7-segment display. The 8-bit project mounts it as its demo.
 
-import { $, $$, hex, reducedMotion, onFrame, isTyping, on } from "../../util.js";
-import { message, setSegment } from "../../emacs/index.js";
+import { $, $$, hex, reducedMotion, onFrame, isTyping } from "../../util.js";
+import { message } from "../../emacs/index.js";
 import { LINES, L, LABEL, OPS, PROGRAMS, controlWord, alu, busValue, tick, resetState, disasm, assemble } from "./machine.js";
+import { clockBoost, currentBoard, setCurrentBoard } from "./commands.js";
 import "../../../styles/demos/computer.css";
 
 // ── 7-segment digits ──────────────────────────────────────────────────
@@ -18,12 +19,6 @@ const GLYPH = { 0: "abcdef", 1: "bc", 2: "abdeg", 3: "abcdg", 4: "bcfg", 5: "acd
 
 // with a non-breaking space, so the unit never wraps away from its number
 const fmtHz = (f) => (f < 10 ? `${f.toFixed(1)} Hz` : `${Math.round(f)} Hz`);
-
-// State that outlives any one mounted board: the coffee overclock, and which
-// board is on the page (the 8-bit project's demo mounts and unmounts it).
-let boost = 1;
-let boostTimer = 0;
-let current = null;
 
 // The controls go above the board so they're in sight with it; c, n and r are
 // in the buttons' tooltips and in M-x (commands.js).
@@ -66,8 +61,8 @@ export function mount(host) {
   let touch = false; // a coarse pointer: RAM rows are the targets, not bits
   let editing = -1; // the address open in the row editor
   let dirty = true;
-  let lastBoost = boost;
-  const effHz = () => Math.min(500, hz * boost);
+  let lastBoost = clockBoost();
+  const effHz = () => Math.min(500, hz * clockBoost());
 
   // ── build the board ────────────────────────────────────────────────
   const el = (tag, cls, text) => {
@@ -301,7 +296,7 @@ export function mount(host) {
 
     // clock
     clk.leds[0].classList.toggle("on", running && !s.halted && (effHz() > 24 || phase < 0.5));
-    setText(clk.val, s.halted ? "halted" : running ? (boost > 1 ? `${fmtHz(effHz())} (${boost}×)` : fmtHz(hz)) : "paused");
+    setText(clk.val, s.halted ? "halted" : running ? (clockBoost() > 1 ? `${fmtHz(effHz())} (${clockBoost()}×)` : fmtHz(hz)) : "paused");
 
     // output display
     const o = signed && s.out > 127 ? -(256 - s.out) : s.out;
@@ -388,8 +383,8 @@ export function mount(host) {
 
   // ── simulation loop ────────────────────────────────────────────────
   function frame(t, dt) {
-    if (boost !== lastBoost) {
-      lastBoost = boost;
+    if (clockBoost() !== lastBoost) {
+      lastBoost = clockBoost();
       dirty = true;
     }
     if (running && !s.halted) {
@@ -623,12 +618,12 @@ export function mount(host) {
   setHz(+hzIn.value);
   setTouch(coarse.matches);
   // It waits for run (or c) so it doesn't flicker beside the write-up, unless a coffee overclock is on.
-  run(boost > 1);
+  run(clockBoost() > 1);
   // Drawn once now, so the board is its full height before it scrolls into view
   // (its values fill in, and the page under it would shift).
   render();
   const api = { run, step, reset, load, board, halted: () => s.halted, running: () => running };
-  current = api;
+  setCurrentBoard(api);
   return () => {
     io.disconnect();
     ro.disconnect();
@@ -636,29 +631,6 @@ export function mount(host) {
     document.removeEventListener("keydown", onKey);
     document.removeEventListener("pointerdown", onOutside);
     coarse.removeEventListener("change", onPointer);
-    if (current === api) current = null;
+    if (currentBoard() === api) setCurrentBoard(null);
   };
 }
-
-/** The board on the page, if one is mounted. */
-export const currentBoard = () => current;
-
-// M-x coffee-refill: four times the clock for a while.
-on("caffeine", ({ factor, seconds }) => {
-  boost = factor;
-  if (current) {
-    if (current.halted()) current.reset();
-    if (!current.running()) current.run(true);
-  }
-  let left = seconds;
-  clearInterval(boostTimer);
-  setSegment("misc", `${factor}× clock ${left}s`);
-  boostTimer = setInterval(() => {
-    left--;
-    if (left > 0) return setSegment("misc", `${factor}× clock ${left}s`);
-    clearInterval(boostTimer);
-    boost = 1;
-    setSegment("misc", "");
-    message("The caffeine wore off. The clock is back to normal.");
-  }, 1000);
-});

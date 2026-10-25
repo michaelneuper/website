@@ -2,6 +2,10 @@
 // A small drawing of a project's demo for its card on the projects wheel, in
 // the theme's colours: the computer's LEDs, the scheduler's cores, an Othello
 // board mid-search, a compiled expression, and packets crossing over UDP.
+//
+// Shapes that look alike are joined into one path, so a card is a handful of
+// elements rather than a hundred: the page's first style and layout pass takes
+// longer the more elements there are, and Lighthouse counts it.
 
 interface Props {
   demo: string;
@@ -10,6 +14,22 @@ interface Props {
 const { demo } = Astro.props;
 const range = (n: number) => Array.from({ length: n }, (_, i) => i);
 const bits = (byte: number) => range(8).map((k) => (byte >> (7 - k)) & 1);
+const num = (v: number) => +v.toFixed(3);
+
+// path data for circles [cx, cy, r], rectangles [x, y, w, h] and lines [x1, y1, x2, y2]
+const dots = (list: number[][]) => list.map(([cx, cy, r]) => `M${num(cx - r)} ${num(cy)}a${r} ${r} 0 1 0 ${num(2 * r)} 0a${r} ${r} 0 1 0 ${num(-2 * r)} 0`).join("");
+const boxes = (list: number[][]) => list.map(([x, y, w, h]) => `M${num(x)} ${num(y)}h${num(w)}v${num(h)}h${num(-w)}z`).join("");
+const lines = (list: number[][]) => list.map(([x1, y1, x2, y2]) => `M${num(x1)} ${num(y1)}L${num(x2)} ${num(y2)}`).join("");
+
+// Sort shapes into a list per class (or colour), keeping the order they're added in.
+function sorter() {
+  const by = new Map<string, number[][]>();
+  const add = (key: string, shape: number[]) => {
+    if (!by.has(key)) by.set(key, []);
+    by.get(key)!.push(shape);
+  };
+  return { by, add };
+}
 
 // the first few bytes of the Fibonacci program the computer starts with
 const RAM = [0x51, 0x4f, 0x50, 0xe0, 0x2f, 0x70, 0x4e];
@@ -37,25 +57,41 @@ const SHADE: Record<string, number> = { "1,2": 0.25, "2,6": 0.7, "6,3": 0.4, "5,
 const CODE = ["iload_0", "iconst_2", "imul", "iconst_1", "iadd", "ireturn"];
 // packets: 1 arrived, 0 lost and waiting to be resent
 const GOT = [1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1];
+
+// the computer: its modules' outlines, the bus, and LEDs by colour
+const leds = sorter();
+const led = (on: number, lit: string, cx: number, cy: number, r = 2.2) => leds.add(on ? lit : "th-off", [cx, cy, r]);
+range(4).forEach((k) => led(1, "th-on", 12 + k * 7, 11.5));
+RAM.forEach((b, r) => bits(b).forEach((on, k) => led(on, "th-red", 12 + k * 7, 29.5 + r * 7)));
+[0, 1, 0, 1, 1, 1, 1, 0].forEach((on, k) => led(on, "th-on", 12 + k * 7, 86, 2));
+[0, 1, 1, 0].forEach((on, k) => led(on, "th-on", 99 + k * 7, 11.5));
+bits(0x2a).forEach((on, k) => led(on, "th-red", 99 + k * 7, 29.5));
+bits(0x15).forEach((on, k) => led(on, "th-red", 99 + k * 7, 47.5));
+const MODULES = [[4.5, 4.5, 64, 14], [4.5, 22.5, 64, 54], [4.5, 80.5, 64, 11], [74.5, 4.5, 11, 87],
+  [91.5, 4.5, 64, 14], [91.5, 22.5, 64, 14], [91.5, 40.5, 64, 14], [91.5, 58.5, 64, 33]];
+
+// the scheduler: each core's lane, then its blocks by colour
+const blocks = sorter();
+CORES.forEach((row, r) => row.forEach(([s, len, c]) => blocks.add(c as string, [64 + (s as number) * 7.67, 6 + r * 18, (len as number) * 7.67 - 1, 13])));
+
+// Othello: the grid, then the discs by side
+const discs = sorter();
+BOARD.forEach((row, r) => [...row].forEach((ch, c) => {
+  if (ch !== ".") discs.add(ch === "1" ? "th-disc" : "th-disc-o", [42.4 + c * 10.875, 10.4 + r * 10.875, 3.6]);
+}));
+const GRID = range(7).flatMap((k) => [[47.375 + k * 10.875, 5, 47.375 + k * 10.875, 91], [37, 15.375 + k * 10.875, 123, 15.375 + k * 10.875]]);
+
+// the packets: sent, then received or lost
+const cell = (x0: number, k: number) => [x0 + (k % 5) * 8, 14 + Math.floor(k / 5) * 8, 6, 6];
+const got = sorter();
+range(25).forEach((k) => got.add(GOT[k] ? "th-on" : "th-off", cell(114, k)));
 ---
 <svg class="th" viewBox="0 0 160 96" aria-hidden="true">
   {demo === "computer" && (
     <g>
-      <rect class="th-box" x="4.5" y="4.5" width="64" height="14" />
-      {range(4).map((k) => <circle class="th-on" cx={12 + k * 7} cy="11.5" r="2.2" />)}
-      <rect class="th-box" x="4.5" y="22.5" width="64" height="54" />
-      {RAM.map((b, r) => bits(b).map((on, k) => <circle class={on ? "th-red" : "th-off"} cx={12 + k * 7} cy={29.5 + r * 7} r="2.2" />))}
-      <rect class="th-box" x="4.5" y="80.5" width="64" height="11" />
-      {[0, 1, 0, 1, 1, 1, 1, 0].map((on, k) => <circle class={on ? "th-on" : "th-off"} cx={12 + k * 7} cy="86" r="2" />)}
-      <rect class="th-box" x="74.5" y="4.5" width="11" height="87" />
-      {range(4).map((k) => <line class="th-line" x1={77 + k * 2} y1="8" x2={77 + k * 2} y2="88" />)}
-      <rect class="th-box" x="91.5" y="4.5" width="64" height="14" />
-      {[0, 1, 1, 0].map((on, k) => <circle class={on ? "th-on" : "th-off"} cx={99 + k * 7} cy="11.5" r="2.2" />)}
-      <rect class="th-box" x="91.5" y="22.5" width="64" height="14" />
-      {bits(0x2a).map((on, k) => <circle class={on ? "th-red" : "th-off"} cx={99 + k * 7} cy="29.5" r="2.2" />)}
-      <rect class="th-box" x="91.5" y="40.5" width="64" height="14" />
-      {bits(0x15).map((on, k) => <circle class={on ? "th-red" : "th-off"} cx={99 + k * 7} cy="47.5" r="2.2" />)}
-      <rect class="th-box" x="91.5" y="58.5" width="64" height="33" />
+      <path class="th-box" d={boxes(MODULES)} />
+      <path class="th-line" d={lines(range(4).map((k) => [77 + k * 2, 8, 77 + k * 2, 88]))} />
+      {[...leds.by].map(([cls, list]) => <path class={cls} d={dots(list)} />)}
       {/* the output, a seven-segment 42 */}
       <path class="th-seg-off" d="M112 64h8M112 75h8M112 86h8M111 65v9M121 65v9M111 76v9M121 76v9M126 64h8M126 75h8M126 86h8M125 65v9M135 65v9M125 76v9M135 76v9" />
       <path class="th-seg" d="M111 65v9M121 65v9M112 75h8M121 76v9M126 64h8M135 65v9M126 75h8M125 76v9M126 86h8" />
@@ -64,12 +100,8 @@ const GOT = [1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1
 
   {demo === "scheduler" && (
     <g>
-      {CORES.map((blocks, r) => (
-        <g>
-          <rect class="th-off" x="4" y={6 + r * 18} width="152" height="13" />
-          {blocks.map(([s, len, c]) => <rect x={64 + (s as number) * 7.67} y={6 + r * 18} width={(len as number) * 7.67 - 1} height="13" style={`fill: var(--${c})`} />)}
-        </g>
-      ))}
+      <path class="th-off" d={boxes(range(4).map((r) => [4, 6 + r * 18, 152, 13]))} />
+      {[...blocks.by].map(([c, list]) => <path d={boxes(list)} style={`fill: var(--${c})`} />)}
       {QUEUE.map((c, k) => <rect class="th-q" x={4.5 + k * 22} y="80.5" width="18" height="10" style={`stroke: var(--${c})`} />)}
     </g>
   )}
@@ -77,15 +109,12 @@ const GOT = [1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1
   {demo === "othello" && (
     <g>
       <rect class="th-box" x="36.5" y="4.5" width="87" height="87" />
-      {range(7).map((k) => <line class="th-line" x1={47.375 + k * 10.875} y1="5" x2={47.375 + k * 10.875} y2="91" />)}
-      {range(7).map((k) => <line class="th-line" x1="37" y1={15.375 + k * 10.875} x2="123" y2={15.375 + k * 10.875} />)}
+      <path class="th-line" d={lines(GRID)} />
       {Object.entries(SHADE).map(([at, a]) => {
         const [r, c] = at.split(",").map(Number);
         return <rect class="th-on" x={37 + c * 10.875} y={5 + r * 10.875} width="10.4" height="10.4" style={`opacity: ${a}`} />;
       })}
-      {BOARD.map((row, r) => [...row].map((ch, c) => ch !== "." && (
-        <circle class={ch === "1" ? "th-disc" : "th-disc-o"} cx={42.4 + c * 10.875} cy={10.4 + r * 10.875} r="3.6" />
-      )))}
+      {[...discs.by].map(([cls, list]) => <path class={cls} d={dots(list)} />)}
     </g>
   )}
 
@@ -105,9 +134,9 @@ const GOT = [1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1
 
   {demo === "rbudp" && (
     <g>
-      {range(25).map((k) => <rect class="th-dim" x={6 + (k % 5) * 8} y={14 + Math.floor(k / 5) * 8} width="6" height="6" />)}
-      {range(25).map((k) => <rect class={GOT[k] ? "th-on" : "th-off"} x={114 + (k % 5) * 8} y={14 + Math.floor(k / 5) * 8} width="6" height="6" />)}
-      {[[58, 30], [72, 22], [86, 42], [97, 34]].map(([x, y]) => <rect class="th-on" x={x} y={y} width="6" height="6" style="opacity: 0.6" />)}
+      <path class="th-dim" d={boxes(range(25).map((k) => cell(6, k)))} />
+      {[...got.by].map(([cls, list]) => <path class={cls} d={boxes(list)} />)}
+      <path class="th-on" d={boxes([[58, 30], [72, 22], [86, 42], [97, 34]].map(([x, y]) => [x, y, 6, 6]))} style="opacity: 0.6" />
       <line class="th-line th-dash" x1="6" y1="70.5" x2="154" y2="70.5" />
       <path class="th-line" d="M100 77l-6 3.5 6 3.5" />
     </g>

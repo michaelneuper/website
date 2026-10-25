@@ -4,13 +4,24 @@
 const GA_ID = "G-BLX24KP7CS";
 ---
 {import.meta.env.PROD && (
-  <Fragment>
-    <script is:inline async src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}></script>
-    <script is:inline define:vars={{ GA_ID }}>
-      window.dataLayer = window.dataLayer || [];
-      function gtag() { dataLayer.push(arguments); }
-      gtag("js", new Date());
-      gtag("config", GA_ID);
-    </script>
-  </Fragment>
+  <script is:inline define:vars={{ GA_ID }}>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag("js", new Date());
+    gtag("config", GA_ID);
+    // gtag.js is about 180 KB compressed, several times the page's own scripts, so
+    // it's only fetched once the page has loaded and gone idle, rather than
+    // competing with the page's files for the network and the CPU.
+    // The calls above wait in dataLayer until then. A visit that leaves sooner
+    // isn't counted.
+    const load = () => {
+      const s = document.createElement("script");
+      s.async = true;
+      s.src = `https://www.googletagmanager.com/gtag/js?id=${GA_ID}`;
+      document.head.append(s);
+    };
+    const idle = () => (window.requestIdleCallback ? requestIdleCallback(load, { timeout: 2000 }) : setTimeout(load, 300));
+    if (document.readyState === "complete") idle();
+    else addEventListener("load", idle, { once: true });
+  </script>
 )}

@@ -11,11 +11,11 @@
 // applies while compositing; a change redraws only what it touched (a line, the
 // line numbers, a window's modeline, or a whole window when it scrolls); nothing
 // runs between changes, as a timer wakes the wall when the next one is due; and
-// it isn't even built until the page has loaded and gone quiet.
+// it isn't even built until the page has loaded and gone quiet. The C itself is
+// fetched then too, so it doesn't hold up the scripts the page needs first.
 
 import { $, clamp, on, reducedMotion, themeColors, fitCanvas, fontsReady } from "../util.js";
 import { setSegment } from "../emacs/index.js";
-import { WALL } from "../../data/wall.js";
 
 const FONT_PX = 12;
 const FONT = `${FONT_PX}px "JetBrains Mono", ui-monospace, monospace`;
@@ -161,6 +161,7 @@ export async function initWall() {
 
   await fontsReady();
   await settled();
+  const { WALL } = await import("../../data/wall.js");
   const ctx = canvas.getContext("2d");
   ctx.font = FONT;
   const cw = ctx.measureText("M").width;

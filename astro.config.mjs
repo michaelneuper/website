@@ -20,6 +20,9 @@ export default defineConfig({
   // The default ("jsx") drops line breaks between text and inline elements, which
   // glues words to links. true only removes whitespace that doesn't render.
   compressHTML: true,
+  // Each page's CSS goes in its <head> instead of in files of its own, so the
+  // first paint doesn't wait for a second round of requests after the HTML.
+  build: { inlineStylesheets: "always" },
   // The toolbar would sit on top of the modeline and echo area.
   devToolbar: { enabled: false },
   markdown: {
