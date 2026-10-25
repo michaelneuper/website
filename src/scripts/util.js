@@ -27,7 +27,7 @@ export function themeColors() {
   const cs = getComputedStyle(document.documentElement);
   const v = (n) => cs.getPropertyValue(n).trim();
   colors = {
-    bg: v("--bg"), fg: v("--fg"), dim: v("--dim"), faint: v("--faint"), rule: v("--rule"), hl: v("--hl"),
+    bg: v("--bg"), bgAlt: v("--bg-alt"), fg: v("--fg"), dim: v("--dim"), faint: v("--faint"), rule: v("--rule"), hl: v("--hl"),
     red: v("--red"), orange: v("--orange"), yellow: v("--yellow"), green: v("--green"),
     cyan: v("--cyan"), blue: v("--blue"), magenta: v("--magenta"),
     light: v("--glow") === "0",

@@ -1,5 +1,3 @@
-# michaelneuper.com
-
 My personal site built with [Astro](https://astro.build).
 
 ## Running it
@@ -20,21 +18,21 @@ npm run preview    # serves dist/ at http://localhost:4321
 
 ## Where things are
 
-| Path                       | What it is                                                                    |
-|----------------------------|-------------------------------------------------------------------------------|
-| `src/pages/`               | the pages: home, `posts/[slug]` for every post, 404, the RSS feeds and the giscus themes |
-| `src/layouts/Base.astro`   | the frame every page shares                                                   |
-| `src/components/frame/`    | the Emacs around each page: top line, modeline, `*Help*`, and `Buffer`, a section with its winbar |
-| `src/components/home/`     | the home page's sections: hero (on a circuit board routed from the chip's pins), about, projects, posts, contact, and the coffee |
-| `src/components/post/`     | a post as an Org buffer: keywords, text, the `*Ilist*` outline, comments      |
-| `src/components/missing/`  | the 404 page: its status code in binary, and the `*dungeon*` text adventure   |
-| `src/content/posts/`       | the posts, in Markdown                                                        |
-| `src/content/projects/`    | the projects on the wheel, one Markdown file each                             |
-| `src/data/pins.js`         | the pins on the MN-2026 chip                                                  |
-| `src/scripts/emacs/`       | M-x, the minibuffer, which-key, the modeline and load-theme                   |
-| `src/scripts/home/`, `post/`, `demos/` | what each component and demo does in the browser                  |
-| `src/styles/`              | the styles, laid out like the components; `themes.css` has the colours       |
-| `public/`                  | files served as they are: fonts, favicon, GPG key, `robots.txt`, post videos  |
+| Path                                   | What it is                                                                                                                       |
+|----------------------------------------|----------------------------------------------------------------------------------------------------------------------------------|
+| `src/pages/`                           | the pages: home, `posts/[slug]` for every post, 404, the RSS feeds and the giscus themes                                         |
+| `src/layouts/Base.astro`               | the frame every page shares                                                                                                      |
+| `src/components/frame/`                | the Emacs around each page: top line, modeline, `*Help*`, and `Buffer`, a section with its winbar                                |
+| `src/components/home/`                 | the home page's sections: hero (my name in front of a wall of my C), about, projects, posts, contact, and the coffee             |
+| `src/components/post/`                 | a post as an Org buffer: keywords, text, the `*Ilist*` outline, comments                                                         |
+| `src/components/missing/`              | the 404 page: its status code in binary, and the `*dungeon*` text adventure                                                      |
+| `src/content/posts/`                   | the posts, in Markdown                                                                                                           |
+| `src/content/projects/`                | the projects on the wheel, one Markdown file each                                                                                |
+| `src/data/wall.js`                     | the C on the wall behind the name, copied into `src/data/wall/` from my repos                                                    |
+| `src/scripts/emacs/`                   | M-x, the minibuffer, which-key, the modeline and load-theme                                                                      |
+| `src/scripts/home/`, `post/`, `demos/` | what each component and demo does in the browser                                                                                 |
+| `src/styles/`                          | the styles, laid out like the components; `themes.css` has the colours                                                           |
+| `public/`                              | files served as they are: fonts, favicon, GPG key, `robots.txt`, post videos                                                     |
 
 Each component imports its own styles and starts its own script, so a section's
 markup, CSS and JavaScript are named after it in `components/`, `styles/` and `scripts/`.

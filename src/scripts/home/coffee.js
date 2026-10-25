@@ -1,5 +1,5 @@
 // M-x coffee-refill: my GitHub bio, made to do something. A mug fills while
-// VCC (the chip's coffee supply pin) climbs back to 5 V, then the 8-bit
+// VCC (my coffee supply) climbs back to 5 V, then the 8-bit
 // computer in Projects runs at four times its clock for 30 seconds.
 
 import { $, emit, reducedMotion, isTyping } from "../util.js";
