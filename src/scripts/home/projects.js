@@ -47,6 +47,19 @@ export function initProjects() {
   let settle = 0;
   let unmount = null;
 
+  // A demo is built the first time the section comes within a screen of view,
+  // not on load: the 8-bit computer alone is some 500 elements, and building it
+  // held up a page that opens on the name. Anything that asks for a project
+  // (the computer's commands) builds it at once.
+  let wakeDemos;
+  const demosNear = new Promise((resolve) => { wakeDemos = resolve; });
+  const near = new IntersectionObserver((entries) => {
+    if (!entries.some((e) => e.isIntersecting)) return;
+    near.disconnect();
+    wakeDemos();
+  }, { rootMargin: "100% 0px" });
+  near.observe(root);
+
   const mod = (k) => ((k % n) + n) % n;
   // how far card i is from position p, the short way round: -n/2 to n/2
   const offset = (i, p) => mod(i - p + n / 2) - n / 2;
@@ -269,6 +282,7 @@ export function initProjects() {
     box.append(host);
     row.append(box);
     try {
+      await demosNear;
       const { mount } = await import(`../demos/${demo}.js`);
       if (shown === i && host.isConnected) unmount = mount(host) ?? null;
     } catch (err) {
@@ -280,7 +294,9 @@ export function initProjects() {
   // Other parts of the page can open a project by its slug (the computer commands do).
   on("project", (name) => {
     const i = items.findIndex((li) => li.dataset.name === name);
-    if (i >= 0) goTo(i, { now: true });
+    if (i < 0) return;
+    wakeDemos();
+    goTo(i, { now: true });
   });
 
   // ── the address ──────────────────────────────────────────────────────

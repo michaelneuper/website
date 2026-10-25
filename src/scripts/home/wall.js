@@ -1,11 +1,15 @@
 // The code wall behind the name: three Emacs windows of my C (src/data/wall.js),
-// after the wall on hancore.dev. Each window scrolls at its own pace, and now
-// and then a ghost evil cursor changes a word, makes a typo, fixes it and undoes
-// the change. With a mouse, pointing at a line lights it. The wall is only
-// decoration: the canvas is aria-hidden, and without JavaScript the landing
-// section is the name and lede on their own.
+// after the wall on hancore.dev. Each window scrolls a line at a time at its own
+// pace, and now and then a ghost evil cursor changes a word, makes a typo, fixes
+// it and undoes the change. With a mouse, pointing at a line lights it. The wall
+// is only decoration: the canvas is aria-hidden, and without JavaScript the
+// landing section is the name and lede on their own.
+//
+// It's drawn only when something changes, and only the window that changed:
+// a full redraw on every frame kept slower phones busy enough to count against
+// the page's load time.
 
-import { $, clamp, ease, on, reducedMotion, themeColors, frameWhileVisible, fitCanvas, fontsReady } from "../util.js";
+import { $, clamp, on, reducedMotion, themeColors, frameWhileVisible, fitCanvas, fontsReady } from "../util.js";
 import { setSegment } from "../emacs/index.js";
 import { WALL } from "../../data/wall.js";
 
@@ -17,6 +21,7 @@ const GAP = 4; // blank lines between the end of a file and its start again
 const NARROW = 920; // one window below the width where the nav becomes a menu
 const FEATHER = 160; // how far the calm patch around the name fades out
 const CALM = 0.03; // what's left of the wall behind the name
+const MASK = 8; // the calm patch is worked out on a grid this many px apart
 const TAB = 4; // the files' tab-width
 
 // doom-gruvbox's font-lock, faint: [colour, alpha]
@@ -169,9 +174,8 @@ export async function initWall() {
       tokens: lines.map((l, i) => tokenize(l, src.inBlock[i])),
       len: lines.length,
       top: w.top,
-      anim: null,
       period: 2.3 + n * 0.65,
-      next: 1.5 + n * 0.9,
+      next: 0,
       point: w.top + 4,
       col: 0,
       mode: "N",
@@ -182,21 +186,44 @@ export async function initWall() {
   let H = 0;
   let wins = [];
   let calm = { l: 0, t: 0, r: 0, b: 0 };
+  let mask = null; // how much of the wall shows at each point, MASK px apart
   let wall = 1; // how strong the wall is: fainter with one window, and in light themes
   let hover = null; // { win, k, idx }
-  let dirty = true;
+  const dirty = new Set(); // the windows to draw again
 
   // Each window has a modeline at the bottom, except the one window on a small
   // screen, where it would sit right on top of the page's own.
   const bodyTop = () => LH + 6;
   const bodyBottom = () => (wins.length > 1 ? H - LH - 2 : H);
   const bodyRows = () => Math.max(1, Math.floor((bodyBottom() - bodyTop()) / LH));
+  const winOf = (v) => wins.find((w) => w.view === v);
+  const touch = (v) => {
+    const win = v && winOf(v);
+    if (win) dirty.add(win);
+  };
 
   // How much of the wall shows at (x, y): almost none behind the name and lede.
   function fadeAt(x, y) {
     const dx = Math.max(calm.l - x, 0, x - calm.r);
     const dy = Math.max(calm.t - y, 0, y - calm.b);
     return CALM + (1 - CALM) * smooth(Math.hypot(dx, dy) / FEATHER);
+  }
+
+  // The fade as an image, worked out once per layout: each window is drawn at
+  // full strength and then multiplied by it, which is far cheaper than fading
+  // every piece of text by where it sits.
+  function makeMask() {
+    const mw = Math.ceil(W / MASK) + 1;
+    const mh = Math.ceil(H / MASK) + 1;
+    mask = document.createElement("canvas");
+    mask.width = mw;
+    mask.height = mh;
+    const m = mask.getContext("2d");
+    const img = m.createImageData(mw, mh);
+    for (let y = 0; y < mh; y++) {
+      for (let x = 0; x < mw; x++) img.data[(y * mw + x) * 4 + 3] = Math.round(255 * fadeAt(x * MASK, y * MASK));
+    }
+    m.putImageData(img, 0, 0);
   }
 
   function layout() {
@@ -209,8 +236,11 @@ export async function initWall() {
     const n = W < NARROW ? 1 : 3;
     const w = (W - (n - 1)) / n;
     wins = Array.from({ length: n }, (_, i) => ({ x: Math.round(i * (w + 1)), w: Math.round(w), view: views[i] }));
-    for (const win of wins) keepPointInView(win.view);
-    dirty = true;
+    for (const win of wins) {
+      keepPointInView(win.view);
+      dirty.add(win);
+    }
+    makeMask();
   }
 
   function keepPointInView(v) {
@@ -220,129 +250,111 @@ export async function initWall() {
 
   // ── drawing ─────────────────────────────────────────────────────────
 
-  // Text in short pieces, so each fades by where it sits.
-  function run(text, x, y, [colour, a]) {
+  function text(s, x, y, [colour, a]) {
     ctx.fillStyle = themeColors()[colour];
-    for (let i = 0; i < text.length; i += 4) {
-      const piece = text.slice(i, i + 4);
-      if (!piece.trim()) continue;
-      const px = x + i * cw;
-      const f = a * wall * fadeAt(px + piece.length * cw / 2, y);
-      if (f < 0.015) continue;
-      ctx.globalAlpha = f;
-      ctx.fillText(piece, px, y);
-    }
-    ctx.globalAlpha = 1;
-  }
-
-  // A band of colour, faded by where it sits.
-  function band(x, y, w, h, colour, a) {
-    ctx.fillStyle = themeColors()[colour];
-    for (let bx = x; bx < x + w; bx += 16) {
-      const bw = Math.min(16, x + w - bx);
-      const f = a * fadeAt(bx + bw / 2, y + h / 2);
-      if (f < 0.015) continue;
-      ctx.globalAlpha = f;
-      ctx.fillRect(bx, y, bw, h);
-    }
-    ctx.globalAlpha = 1;
+    ctx.globalAlpha = a * wall;
+    ctx.fillText(s, x, y);
   }
 
   function drawWindow(win) {
     const v = win.view;
+    const c = themeColors();
     const x0 = win.x + cw;
+    // the window and the divider on its left
+    const left = win.x ? win.x - 1 : 0;
+    const right = win.x + win.w;
     ctx.save();
     ctx.beginPath();
-    ctx.rect(win.x, 0, win.w, H);
+    ctx.rect(left, 0, right - left, H);
     ctx.clip();
+    ctx.clearRect(left, 0, right - left, H);
+    if (win.x) {
+      ctx.fillStyle = c.rule;
+      ctx.fillRect(win.x - 1, 0, 1, H);
+    }
 
     // the header line: the file
-    run(v.src.path, x0, LH / 2 + 3, ["dim", 0.55]);
+    text(v.src.path, x0, LH / 2 + 3, ["dim", 0.55]);
 
     // the text, with relative line numbers as in my config
     const top = bodyTop();
     const bottom = bodyBottom();
-    ctx.save();
-    ctx.beginPath();
-    ctx.rect(win.x, top, win.w, bottom - top);
-    ctx.clip();
-    const first = Math.floor(v.top);
-    const off = (v.top - first) * LH;
     const rows = bodyRows();
-    for (let row = -1; row <= rows + 1; row++) {
-      const k = first + row;
-      const y = top + row * LH - off + LH / 2;
+    for (let row = 0; row < rows; row++) {
+      const k = Math.floor(v.top) + row;
+      const y = top + row * LH + LH / 2;
+      if (y + LH / 2 > bottom) break;
       const idx = mod(k, v.len + GAP);
-      if (hover && hover.win === win && hover.k === k) {
-        ctx.fillStyle = themeColors().hl;
+      if (hover?.win === win && hover.k === k) {
+        ctx.globalAlpha = 1;
+        ctx.fillStyle = c.hl;
         ctx.fillRect(win.x, y - LH / 2, win.w, LH);
       }
       if (idx >= v.len) continue;
       const num = k === v.point ? String(v.src.start + idx) : String(Math.abs(k - v.point));
-      run(num.padStart(NUM_W - 1), x0, y, k === v.point ? ["fg", 0.55] : ["dim", 0.32]);
+      text(num.padStart(NUM_W - 1), x0, y, k === v.point ? ["fg", 0.55] : ["dim", 0.32]);
       let col = NUM_W;
       for (const [t, kind] of v.tokens[idx]) {
-        if (kind !== "space") run(t, x0 + col * cw, y, KIND[kind]);
+        if (kind !== "space") text(t, x0 + col * cw, y, KIND[kind]);
         col += t.length;
       }
       if (ghost.view === v && k === v.point) drawCursor(v, x0 + (NUM_W + v.col) * cw, y, v.text[idx]);
     }
-    ctx.restore();
-    if (bottom === H) {
-      ctx.restore();
-      return;
-    }
 
     // the window's modeline: the line pointed at, or the cursor's
-    band(win.x, H - LH, win.w, LH, "bgAlt", 0.7);
-    const y = H - LH / 2;
-    const pointed = hover?.win === win;
-    const line = v.src.start + (pointed ? hover.idx : Math.min(mod(v.point, v.len + GAP), v.len - 1));
-    const busy = ghost.view === v;
-    run(`<${busy ? v.mode : "N"}>`, x0, y, [busy && v.mode === "I" ? "yellow" : "green", 0.6]);
-    run(v.src.file, x0 + 5 * cw, y, ["fg", 0.55]);
-    run(`${line}:${busy && !pointed ? v.col : 0}`, x0 + (6 + v.src.file.length) * cw, y, ["dim", 0.5]);
-    run("C", win.x + win.w - 3 * cw, y, ["blue", 0.55]);
+    if (bottom < H) {
+      ctx.globalAlpha = 0.7;
+      ctx.fillStyle = c.bgAlt;
+      ctx.fillRect(win.x, H - LH, win.w, LH);
+      const y = H - LH / 2;
+      const pointed = hover?.win === win;
+      const line = v.src.start + (pointed ? hover.idx : Math.min(mod(v.point, v.len + GAP), v.len - 1));
+      const busy = ghost.view === v;
+      text(`<${busy ? v.mode : "N"}>`, x0, y, [busy && v.mode === "I" ? "yellow" : "green", 0.6]);
+      text(v.src.file, x0 + 5 * cw, y, ["fg", 0.55]);
+      text(`${line}:${busy && !pointed ? v.col : 0}`, x0 + (6 + v.src.file.length) * cw, y, ["dim", 0.5]);
+      text("C", win.x + win.w - 3 * cw, y, ["blue", 0.55]);
+    }
+
+    // then fade it all behind the name
+    ctx.globalAlpha = 1;
+    ctx.globalCompositeOperation = "destination-in";
+    ctx.drawImage(mask, left / MASK, 0, (right - left) / MASK, H / MASK, left, 0, right - left, H);
+    ctx.globalCompositeOperation = "source-over";
     ctx.restore();
   }
 
-  function drawCursor(v, x, y, text) {
-    const f = fadeAt(x, y);
+  function drawCursor(v, x, y, line) {
     const c = themeColors();
     ctx.fillStyle = c.fg;
     if (v.mode === "I") {
-      ctx.globalAlpha = 0.8 * f;
+      ctx.globalAlpha = 0.8;
       ctx.fillRect(x, y - LH / 2 + 2, 2, LH - 4);
-      ctx.globalAlpha = 1;
       return;
     }
-    ctx.globalAlpha = 0.75 * f;
+    ctx.globalAlpha = 0.75;
     ctx.fillRect(x, y - LH / 2 + 1, cw, LH - 2);
-    ctx.globalAlpha = 1;
-    const ch = text[v.col];
+    const ch = line[v.col];
     if (ch && ch !== " ") {
+      ctx.globalAlpha = 1;
       ctx.fillStyle = c.bg;
       ctx.fillText(ch, x, y);
     }
   }
 
   function draw() {
-    dirty = false;
+    if (!dirty.size || !mask) return;
     // Dark text on a light page reads more strongly at the same alpha.
     wall = (wins.length === 1 ? 0.5 : 0.62) * (themeColors().light ? 0.75 : 1);
-    ctx.clearRect(0, 0, W, H);
     ctx.font = FONT;
     ctx.textBaseline = "middle";
-    for (const win of wins) drawWindow(win);
-    // the dividers between windows
-    ctx.fillStyle = themeColors().rule;
-    for (const win of wins.slice(1)) {
-      for (let y = 0; y < H; y += 8) {
-        ctx.globalAlpha = fadeAt(win.x - 1, y + 4);
-        ctx.fillRect(win.x - 1, y, 1, 8);
-      }
-    }
-    ctx.globalAlpha = 1;
+    for (const win of dirty) drawWindow(win);
+    dirty.clear();
+  }
+
+  function redrawAll() {
+    for (const win of wins) dirty.add(win);
+    draw();
   }
 
   // ── the ghost: one evil cursor that edits a line and undoes it ─────────
@@ -399,14 +411,16 @@ export async function initWall() {
     v.mode = "N";
     v.col = 0;
     keepPointInView(v);
+    dirty.add(win);
 
-    // Bring the line to where it reads, if it isn't there already.
+    // Bring the line to where it reads, if it isn't there already, as Emacs
+    // does: in one jump.
     const rowNow = k - first;
     if (rowNow < 2 || rowNow > bodyRows() - 3 || fadeAt(win.x + (NUM_W + 12) * cw, bodyTop() + rowNow * LH + LH / 2) < 0.6) {
-      const to = k - row;
-      const dur = clamp(0.4 + Math.abs(to - v.top) * 0.012, 0.5, 1.2);
-      at(dur + 0.1, () => scrollTo(v, to, now, dur));
-      at(0.3, () => keepPointInView(v));
+      at(0.4, () => {
+        v.top = k - row;
+        keepPointInView(v);
+      });
     }
 
     // j and k to the line, or a jump when it's far
@@ -473,45 +487,35 @@ export async function initWall() {
     ghost.wait = 0.8;
   }
 
-  function scrollTo(v, to, t = now, dur = 0.6) {
-    v.anim = { from: v.top, to, t0: t, dur };
-  }
-
   // ── the loop ────────────────────────────────────────────────────────
 
-  let now = 0;
+  // Most frames nothing is due, and nothing is drawn.
   function tick(t, dt) {
-    now = t;
-    for (const win of wins) {
+    for (const [n, win] of wins.entries()) {
       const v = win.view;
-      if (v.anim) {
-        const p = (t - v.anim.t0) / v.anim.dur;
-        v.top = v.anim.from + (v.anim.to - v.anim.from) * ease(p);
-        if (p >= 1) {
-          v.top = v.anim.to;
-          v.anim = null;
-        }
-        if (ghost.view !== v) keepPointInView(v);
-        dirty = true;
-      } else if (ghost.view !== v && t >= v.next) {
-        scrollTo(v, Math.round(v.top) + (rand() < 0.15 ? 3 : 1), t);
+      if (!v.next) v.next = t + 1.5 + n * 0.9;
+      if (ghost.view !== v && t >= v.next) {
+        v.top += rand() < 0.15 ? 3 : 1;
+        keepPointInView(v);
         v.next = t + v.period * (0.8 + rand() * 0.4);
+        dirty.add(win);
       }
     }
     if (ghost.view || ghost.queue.length) {
       ghost.wait -= dt;
       while (ghost.wait <= 0 && ghost.queue.length) {
+        const v = ghost.view;
         const a = ghost.queue.shift();
         a.fn();
         ghost.wait += a.delay;
-        dirty = true;
+        touch(v);
       }
     } else {
       ghost.wait -= dt;
       if (ghost.wait <= -2) plan();
     }
     select();
-    if (dirty) draw();
+    draw();
   }
 
   // ── the modeline ────────────────────────────────────────────────────
@@ -533,15 +537,15 @@ export async function initWall() {
     const win = wins.find((w) => x >= w.x && x < w.x + w.w);
     if (!win || y < bodyTop() || y > bodyBottom()) return null;
     const v = win.view;
-    const first = Math.floor(v.top);
-    const off = (v.top - first) * LH;
-    const k = first + Math.floor((y - bodyTop() + off) / LH);
+    const k = Math.floor(v.top) + Math.floor((y - bodyTop()) / LH);
     const idx = mod(k, v.len + GAP);
     return idx < v.len ? { win, k, idx } : null;
   }
 
   function point(h) {
     if (h?.win === hover?.win && h?.k === hover?.k) return;
+    if (hover) dirty.add(hover.win);
+    if (h) dirty.add(h.win);
     hover = h;
     select();
     draw();
@@ -562,7 +566,7 @@ export async function initWall() {
   });
   ro.observe(canvas);
   ro.observe(id);
-  on("theme", () => draw());
+  on("theme", redrawAll);
 
   // Under reduced motion the wall holds still, and pointing still works.
   if (!reducedMotion.matches) frameWhileVisible(canvas, tick);
