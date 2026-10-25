@@ -16,6 +16,11 @@
   display: block;
   width: 100%;
   height: calc(100% - var(--top-h) - var(--frame-h));
+  /* the fade behind the name, which wall.js sets as the mask image */
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
 }
 
 /* The name hangs from the upper part of the screen in the left column, and the

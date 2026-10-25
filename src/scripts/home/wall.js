@@ -5,11 +5,15 @@
 // is only decoration: the canvas is aria-hidden, and without JavaScript the
 // landing section is the name and lede on their own.
 //
-// It's drawn only when something changes, and only the window that changed:
-// a full redraw on every frame kept slower phones busy enough to count against
-// the page's load time.
+// It has to cost almost nothing, because Lighthouse on Netlify runs without a
+// GPU, where Chrome draws canvases on the main thread and every redraw counts
+// against the page. So the fade behind the name is a CSS mask, which the browser
+// applies while compositing; a change redraws only what it touched (a line, the
+// line numbers, a window's modeline, or a whole window when it scrolls); nothing
+// runs between changes, as a timer wakes the wall when the next one is due; and
+// it isn't even built until the page has loaded and gone quiet.
 
-import { $, clamp, on, reducedMotion, themeColors, frameWhileVisible, fitCanvas, fontsReady } from "../util.js";
+import { $, clamp, on, reducedMotion, themeColors, fitCanvas, fontsReady } from "../util.js";
 import { setSegment } from "../emacs/index.js";
 import { WALL } from "../../data/wall.js";
 
@@ -132,6 +136,15 @@ const smooth = (x) => {
   return t * t * (3 - 2 * t);
 };
 
+// Resolves once the page has loaded and the browser has a moment to spare.
+function settled() {
+  return new Promise((resolve) => {
+    const idle = () => (window.requestIdleCallback ? requestIdleCallback(() => resolve(), { timeout: 2000 }) : setTimeout(resolve, 300));
+    if (document.readyState === "complete") idle();
+    else addEventListener("load", idle, { once: true });
+  });
+}
+
 export async function initWall() {
   const hero = $(".hero");
   const canvas = $(".hero-wall");
@@ -147,12 +160,14 @@ export async function initWall() {
   });
 
   await fontsReady();
+  await settled();
   const ctx = canvas.getContext("2d");
   ctx.font = FONT;
   const cw = ctx.measureText("M").width;
   const rand = Math.random;
 
-  // One view per file: its text (which the ghost edits), tokens and scroll.
+  // One view per file: its text (which the ghost edits), tokens (read when a
+  // line is first drawn) and scroll.
   const views = WALL.map((w, n) => {
     const lines = w.text.replace(/\n+$/, "").split("\n").map(untab);
     const src = {
@@ -171,11 +186,11 @@ export async function initWall() {
       src,
       edits,
       text: [...lines],
-      tokens: lines.map((l, i) => tokenize(l, src.inBlock[i])),
+      tokens: [],
       len: lines.length,
       top: w.top,
-      period: 2.3 + n * 0.65,
-      next: 0,
+      period: (2.3 + n * 0.65) * 1000,
+      next: Infinity,
       point: w.top + 4,
       col: 0,
       mode: "N",
@@ -186,10 +201,9 @@ export async function initWall() {
   let H = 0;
   let wins = [];
   let calm = { l: 0, t: 0, r: 0, b: 0 };
-  let mask = null; // how much of the wall shows at each point, MASK px apart
+  let masked = false; // nothing is drawn until the fade is in place
   let wall = 1; // how strong the wall is: fainter with one window, and in light themes
   let hover = null; // { win, k, idx }
-  const dirty = new Set(); // the windows to draw again
 
   // Each window has a modeline at the bottom, except the one window on a small
   // screen, where it would sit right on top of the page's own.
@@ -197,9 +211,10 @@ export async function initWall() {
   const bodyBottom = () => (wins.length > 1 ? H - LH - 2 : H);
   const bodyRows = () => Math.max(1, Math.floor((bodyBottom() - bodyTop()) / LH));
   const winOf = (v) => wins.find((w) => w.view === v);
-  const touch = (v) => {
-    const win = v && winOf(v);
-    if (win) dirty.add(win);
+  const rowY = (v, k) => bodyTop() + (k - Math.floor(v.top)) * LH + LH / 2;
+  const shows = (v, k) => {
+    const row = k - Math.floor(v.top);
+    return row >= 0 && row < bodyRows();
   };
 
   // How much of the wall shows at (x, y): almost none behind the name and lede.
@@ -209,21 +224,35 @@ export async function initWall() {
     return CALM + (1 - CALM) * smooth(Math.hypot(dx, dy) / FEATHER);
   }
 
-  // The fade as an image, worked out once per layout: each window is drawn at
-  // full strength and then multiplied by it, which is far cheaper than fading
-  // every piece of text by where it sits.
+  // The fade as a small image, made once per layout and stretched over the
+  // canvas as its mask.
   function makeMask() {
-    const mw = Math.ceil(W / MASK) + 1;
-    const mh = Math.ceil(H / MASK) + 1;
-    mask = document.createElement("canvas");
-    mask.width = mw;
-    mask.height = mh;
-    const m = mask.getContext("2d");
-    const img = m.createImageData(mw, mh);
+    const mw = Math.max(1, Math.ceil(W / MASK));
+    const mh = Math.max(1, Math.ceil(H / MASK));
+    const m = document.createElement("canvas");
+    m.width = mw;
+    m.height = mh;
+    const g = m.getContext("2d");
+    const img = g.createImageData(mw, mh);
     for (let y = 0; y < mh; y++) {
-      for (let x = 0; x < mw; x++) img.data[(y * mw + x) * 4 + 3] = Math.round(255 * fadeAt(x * MASK, y * MASK));
+      for (let x = 0; x < mw; x++) img.data[(y * mw + x) * 4 + 3] = Math.round(255 * fadeAt(((x + 0.5) * W) / mw, ((y + 0.5) * H) / mh));
     }
-    m.putImageData(img, 0, 0);
+    g.putImageData(img, 0, 0);
+    const src = m.toDataURL();
+    // Wait for it to decode, or the first frame shows the wall unfaded.
+    const probe = new Image();
+    probe.src = src;
+    probe.decode().catch(() => {}).then(() => {
+      canvas.style.maskImage = canvas.style.webkitMaskImage = `url("${src}")`;
+      if (masked) return;
+      masked = true;
+      // The first drawing, a window per task, so that none of them is long.
+      dirty.clear();
+      wins.forEach((win, i) => setTimeout(() => {
+        mark(win, "all");
+        draw();
+      }, i * 50));
+    });
   }
 
   function layout() {
@@ -238,7 +267,7 @@ export async function initWall() {
     wins = Array.from({ length: n }, (_, i) => ({ x: Math.round(i * (w + 1)), w: Math.round(w), view: views[i] }));
     for (const win of wins) {
       keepPointInView(win.view);
-      dirty.add(win);
+      mark(win, "all");
     }
     makeMask();
   }
@@ -246,6 +275,18 @@ export async function initWall() {
   function keepPointInView(v) {
     const first = Math.floor(v.top);
     v.point = clamp(v.point, first + 1, first + bodyRows() - 2);
+  }
+
+  // ── what to draw again ──────────────────────────────────────────────
+
+  // Per window: all of it, the line numbers, some lines (by k), the modeline.
+  const dirty = new Map();
+  function mark(win, what, k) {
+    if (!win) return;
+    let d = dirty.get(win);
+    if (!d) dirty.set(win, (d = { all: false, gutter: false, rows: new Set(), modeline: false }));
+    if (what === "row") d.rows.add(k);
+    else d[what] = true;
   }
 
   // ── drawing ─────────────────────────────────────────────────────────
@@ -256,72 +297,101 @@ export async function initWall() {
     ctx.fillText(s, x, y);
   }
 
-  function drawWindow(win) {
-    const v = win.view;
-    const c = themeColors();
-    const x0 = win.x + cw;
-    // the window and the divider on its left
-    const left = win.x ? win.x - 1 : 0;
-    const right = win.x + win.w;
+  // Clear a rectangle and draw only inside it until restore().
+  function region(x, y, w, h) {
     ctx.save();
     ctx.beginPath();
-    ctx.rect(left, 0, right - left, H);
+    ctx.rect(x, y, w, h);
     ctx.clip();
-    ctx.clearRect(left, 0, right - left, H);
+    ctx.clearRect(x, y, w, h);
+  }
+
+  function lineNumber(win, k, idx, y) {
+    const v = win.view;
+    const num = k === v.point ? String(v.src.start + idx) : String(Math.abs(k - v.point));
+    text(num.padStart(NUM_W - 1), win.x + cw, y, k === v.point ? ["fg", 0.55] : ["dim", 0.32]);
+  }
+
+  function hlLine(win, y, w) {
+    ctx.globalAlpha = 1;
+    ctx.fillStyle = themeColors().hl;
+    ctx.fillRect(win.x, y - LH / 2, w, LH);
+  }
+
+  // One line, into a cleared band: the highlight, its number, the code, the cursor.
+  function paintLine(win, k) {
+    const v = win.view;
+    const y = rowY(v, k);
+    if (hover?.win === win && hover.k === k) hlLine(win, y, win.w);
+    const idx = mod(k, v.len + GAP);
+    if (idx >= v.len) return;
+    lineNumber(win, k, idx, y);
+    const x0 = win.x + cw;
+    let col = NUM_W;
+    v.tokens[idx] ??= tokenize(v.text[idx], v.src.inBlock[idx]);
+    for (const [t, kind] of v.tokens[idx]) {
+      if (kind !== "space") text(t, x0 + col * cw, y, KIND[kind]);
+      col += t.length;
+    }
+    if (ghost.view === v && k === v.point) drawCursor(v, x0 + (NUM_W + v.col) * cw, y, v.text[idx]);
+  }
+
+  function drawLine(win, k) {
+    if (!shows(win.view, k)) return;
+    region(win.x, rowY(win.view, k) - LH / 2, win.w, LH);
+    paintLine(win, k);
+    ctx.restore();
+  }
+
+  // The line numbers alone: they're relative, so they all change when the cursor moves.
+  function drawGutter(win) {
+    const v = win.view;
+    const gw = cw * (NUM_W + 0.5);
+    region(win.x, bodyTop(), gw, bodyRows() * LH);
+    for (let row = 0; row < bodyRows(); row++) {
+      const k = Math.floor(v.top) + row;
+      const y = rowY(v, k);
+      if (hover?.win === win && hover.k === k) hlLine(win, y, gw);
+      const idx = mod(k, v.len + GAP);
+      if (idx < v.len) lineNumber(win, k, idx, y);
+    }
+    ctx.restore();
+  }
+
+  // The window's modeline: the line pointed at, or the cursor's.
+  function drawModeline(win) {
+    if (bodyBottom() === H) return;
+    const v = win.view;
+    region(win.x, H - LH, win.w, LH);
+    ctx.globalAlpha = 0.7;
+    ctx.fillStyle = themeColors().bgAlt;
+    ctx.fillRect(win.x, H - LH, win.w, LH);
+    const x0 = win.x + cw;
+    const y = H - LH / 2;
+    const pointed = hover?.win === win;
+    const line = v.src.start + (pointed ? hover.idx : Math.min(mod(v.point, v.len + GAP), v.len - 1));
+    const busy = ghost.view === v;
+    text(`<${busy ? v.mode : "N"}>`, x0, y, [busy && v.mode === "I" ? "yellow" : "green", 0.6]);
+    text(v.src.file, x0 + 5 * cw, y, ["fg", 0.55]);
+    text(`${line}:${busy && !pointed ? v.col : 0}`, x0 + (6 + v.src.file.length) * cw, y, ["dim", 0.5]);
+    text("C", win.x + win.w - 3 * cw, y, ["blue", 0.55]);
+    ctx.restore();
+  }
+
+  function drawWindow(win) {
+    const v = win.view;
+    // the window and the divider on its left
+    const left = win.x ? win.x - 1 : 0;
+    region(left, 0, win.x + win.w - left, H);
     if (win.x) {
-      ctx.fillStyle = c.rule;
+      ctx.globalAlpha = 1;
+      ctx.fillStyle = themeColors().rule;
       ctx.fillRect(win.x - 1, 0, 1, H);
     }
-
-    // the header line: the file
-    text(v.src.path, x0, LH / 2 + 3, ["dim", 0.55]);
-
-    // the text, with relative line numbers as in my config
-    const top = bodyTop();
-    const bottom = bodyBottom();
-    const rows = bodyRows();
-    for (let row = 0; row < rows; row++) {
-      const k = Math.floor(v.top) + row;
-      const y = top + row * LH + LH / 2;
-      if (y + LH / 2 > bottom) break;
-      const idx = mod(k, v.len + GAP);
-      if (hover?.win === win && hover.k === k) {
-        ctx.globalAlpha = 1;
-        ctx.fillStyle = c.hl;
-        ctx.fillRect(win.x, y - LH / 2, win.w, LH);
-      }
-      if (idx >= v.len) continue;
-      const num = k === v.point ? String(v.src.start + idx) : String(Math.abs(k - v.point));
-      text(num.padStart(NUM_W - 1), x0, y, k === v.point ? ["fg", 0.55] : ["dim", 0.32]);
-      let col = NUM_W;
-      for (const [t, kind] of v.tokens[idx]) {
-        if (kind !== "space") text(t, x0 + col * cw, y, KIND[kind]);
-        col += t.length;
-      }
-      if (ghost.view === v && k === v.point) drawCursor(v, x0 + (NUM_W + v.col) * cw, y, v.text[idx]);
-    }
-
-    // the window's modeline: the line pointed at, or the cursor's
-    if (bottom < H) {
-      ctx.globalAlpha = 0.7;
-      ctx.fillStyle = c.bgAlt;
-      ctx.fillRect(win.x, H - LH, win.w, LH);
-      const y = H - LH / 2;
-      const pointed = hover?.win === win;
-      const line = v.src.start + (pointed ? hover.idx : Math.min(mod(v.point, v.len + GAP), v.len - 1));
-      const busy = ghost.view === v;
-      text(`<${busy ? v.mode : "N"}>`, x0, y, [busy && v.mode === "I" ? "yellow" : "green", 0.6]);
-      text(v.src.file, x0 + 5 * cw, y, ["fg", 0.55]);
-      text(`${line}:${busy && !pointed ? v.col : 0}`, x0 + (6 + v.src.file.length) * cw, y, ["dim", 0.5]);
-      text("C", win.x + win.w - 3 * cw, y, ["blue", 0.55]);
-    }
-
-    // then fade it all behind the name
-    ctx.globalAlpha = 1;
-    ctx.globalCompositeOperation = "destination-in";
-    ctx.drawImage(mask, left / MASK, 0, (right - left) / MASK, H / MASK, left, 0, right - left, H);
-    ctx.globalCompositeOperation = "source-over";
+    text(v.src.path, win.x + cw, LH / 2 + 3, ["dim", 0.55]);
+    for (let row = 0; row < bodyRows(); row++) paintLine(win, Math.floor(v.top) + row);
     ctx.restore();
+    drawModeline(win);
   }
 
   function drawCursor(v, x, y, line) {
@@ -343,27 +413,50 @@ export async function initWall() {
   }
 
   function draw() {
-    if (!dirty.size || !mask) return;
+    if (!masked || !dirty.size) return;
     // Dark text on a light page reads more strongly at the same alpha.
     wall = (wins.length === 1 ? 0.5 : 0.62) * (themeColors().light ? 0.75 : 1);
     ctx.font = FONT;
     ctx.textBaseline = "middle";
-    for (const win of dirty) drawWindow(win);
+    for (const [win, d] of dirty) {
+      if (d.all) {
+        drawWindow(win);
+        continue;
+      }
+      if (d.gutter) drawGutter(win);
+      for (const k of d.rows) drawLine(win, k);
+      if (d.modeline) drawModeline(win);
+    }
     dirty.clear();
-  }
-
-  function redrawAll() {
-    for (const win of wins) dirty.add(win);
-    draw();
   }
 
   // ── the ghost: one evil cursor that edits a line and undoes it ─────────
 
-  const ghost = { view: null, queue: [], wait: 0, last: null };
+  const ghost = { view: null, queue: [], at: Infinity, last: null };
 
   const retokenize = (v, idx) => {
     v.tokens[idx] = tokenize(v.text[idx], v.src.inBlock[idx]);
   };
+
+  // Run one of the ghost's steps, and mark what it changed.
+  function act(fn) {
+    const v = ghost.view;
+    const top = v?.top;
+    const point = v?.point;
+    fn();
+    const win = v && winOf(v);
+    if (!win) return;
+    if (v.top !== top) {
+      mark(win, "all");
+      return;
+    }
+    if (v.point !== point) {
+      mark(win, "gutter");
+      mark(win, "row", point);
+    }
+    mark(win, "row", v.point);
+    mark(win, "modeline");
+  }
 
   // The visible row where the wall shows most, nearest the middle first.
   function goodRow(win) {
@@ -382,8 +475,8 @@ export async function initWall() {
   }
 
   // Queue one edit: to the line, w to the word, cw, the new word with a near
-  // miss in it, Esc, a look, and u.
-  function plan() {
+  // miss in it, Esc, a look, and u. Delays are in seconds, after each step.
+  function plan(now) {
     const scored = wins.map((win) => ({ win, ...goodRow(win) }));
     let pool = scored.filter((s) => s.score > 0.6 && s.win.view.edits.length);
     if (!pool.length) pool = scored.filter((s) => s.win.view.edits.length).sort((a, b) => b.score - a.score).slice(0, 1);
@@ -411,7 +504,7 @@ export async function initWall() {
     v.mode = "N";
     v.col = 0;
     keepPointInView(v);
-    dirty.add(win);
+    mark(win, "all");
 
     // Bring the line to where it reads, if it isn't there already, as Emacs
     // does: in one jump.
@@ -484,39 +577,63 @@ export async function initWall() {
     at(1.4, () => { v.col = 0; });
     at(2.4 + rand() * 2, () => { ghost.view = null; });
     ghost.queue = q;
-    ghost.wait = 0.8;
+    ghost.at = now + 800;
   }
 
-  // ── the loop ────────────────────────────────────────────────────────
+  // ── the clock ───────────────────────────────────────────────────────
 
-  // Most frames nothing is due, and nothing is drawn.
-  function tick(t, dt) {
-    for (const [n, win] of wins.entries()) {
+  // Nothing runs between changes: a timer wakes the wall when the next is due,
+  // and only while it's on screen.
+  let timer = 0;
+  let onScreen = false;
+  const IDLE = 2000; // ms between one edit and the next
+
+  function due() {
+    let t = ghost.queue.length ? ghost.at : ghost.at + IDLE;
+    for (const win of wins) if (ghost.view !== win.view) t = Math.min(t, win.view.next);
+    return t;
+  }
+
+  function schedule() {
+    clearTimeout(timer);
+    timer = onScreen ? setTimeout(step, clamp(due() - performance.now(), 0, 10_000)) : 0;
+  }
+
+  function step() {
+    const now = performance.now();
+    for (const win of wins) {
       const v = win.view;
-      if (!v.next) v.next = t + 1.5 + n * 0.9;
-      if (ghost.view !== v && t >= v.next) {
-        v.top += rand() < 0.15 ? 3 : 1;
-        keepPointInView(v);
-        v.next = t + v.period * (0.8 + rand() * 0.4);
-        dirty.add(win);
-      }
+      if (ghost.view === v || now < v.next) continue;
+      v.top += rand() < 0.15 ? 3 : 1;
+      keepPointInView(v);
+      v.next = now + v.period * (0.8 + rand() * 0.4);
+      mark(win, "all");
     }
-    if (ghost.view || ghost.queue.length) {
-      ghost.wait -= dt;
-      while (ghost.wait <= 0 && ghost.queue.length) {
-        const v = ghost.view;
+    if (ghost.queue.length) {
+      while (ghost.queue.length && now >= ghost.at) {
         const a = ghost.queue.shift();
-        a.fn();
-        ghost.wait += a.delay;
-        touch(v);
+        act(a.fn);
+        ghost.at += a.delay * 1000;
       }
-    } else {
-      ghost.wait -= dt;
-      if (ghost.wait <= -2) plan();
+    } else if (now >= ghost.at + IDLE) {
+      plan(now);
     }
     select();
     draw();
+    schedule();
   }
+
+  // Coming back on screen, the windows carry on from where they were rather
+  // than all scrolling at once.
+  const seen = new IntersectionObserver((entries) => {
+    onScreen = entries[entries.length - 1].isIntersecting;
+    if (onScreen) {
+      const now = performance.now();
+      views.forEach((v, n) => { v.next = Math.max(v.next === Infinity ? 0 : v.next, now + 1500 + n * 900); });
+      ghost.at = Math.max(ghost.at === Infinity ? 0 : ghost.at, now);
+    }
+    schedule();
+  });
 
   // ── the modeline ────────────────────────────────────────────────────
 
@@ -539,14 +656,18 @@ export async function initWall() {
     const v = win.view;
     const k = Math.floor(v.top) + Math.floor((y - bodyTop()) / LH);
     const idx = mod(k, v.len + GAP);
-    return idx < v.len ? { win, k, idx } : null;
+    return idx < v.len && shows(v, k) ? { win, k, idx } : null;
   }
 
   function point(h) {
     if (h?.win === hover?.win && h?.k === hover?.k) return;
-    if (hover) dirty.add(hover.win);
-    if (h) dirty.add(h.win);
+    const old = hover;
     hover = h;
+    for (const p of [old, h]) {
+      if (!p) continue;
+      mark(p.win, "row", p.k);
+      mark(p.win, "modeline");
+    }
     select();
     draw();
   }
@@ -566,8 +687,11 @@ export async function initWall() {
   });
   ro.observe(canvas);
   ro.observe(id);
-  on("theme", redrawAll);
+  on("theme", () => {
+    for (const win of wins) mark(win, "all");
+    draw();
+  });
 
   // Under reduced motion the wall holds still, and pointing still works.
-  if (!reducedMotion.matches) frameWhileVisible(canvas, tick);
+  if (!reducedMotion.matches) seen.observe(canvas);
 }
