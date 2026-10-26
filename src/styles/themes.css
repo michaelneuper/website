@@ -112,6 +112,16 @@
   --dim-mix: 70%;
 }
 
+/* doom's foreground, #839496, is only 4.1:1 on the modeline's base02, under
+   what --dim needs even unmixed. So the text is lightened a fifth towards
+   base3 (#fdf6e3), the same step solarized-light takes the other way. */
+:root[data-theme="solarized-dark"] {
+  --bg: #002b36; --bg-alt: #073642; --fg: #9ba8a5;
+  --red: #dc322f; --orange: #cb4b16; --yellow: #b58900; --green: #859900;
+  --cyan: #2aa198; --blue: #268bd2; --magenta: #d33682;
+  --dim-mix: 94%;
+}
+
 /* doom's foreground, #556b72, is only 5.2:1 on this cream, which leaves no room
    for a lighter --dim that still reads. So the text is darkened a fifth towards
    base03 (#002b36), and --dim lands about where the old text colour was. */

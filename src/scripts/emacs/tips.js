@@ -21,7 +21,7 @@ const unlocked = () => listCommands().some((c) => c.name === "butterfly" && !c.h
 const TIPS = [
   { id: "search", text: "/ searches this page, and n and N step through the matches." },
   { id: "motions", text: "j and k scroll, and gg and G go to the top and bottom, as in evil." },
-  { id: "themes", text: "SPC h t tries the 11 themes with a live preview; :colorscheme picks one by name." },
+  { id: "themes", text: "SPC h t tries the 12 themes with a live preview; :colorscheme picks one by name." },
   { id: "help", text: "? lists every key and command on this page." },
   { id: "quit", text: "Try :q, or SPC q q." },
   { id: "morse", text: "Select some text, then M-x morse-region turns it into Morse code.", when: cmd("morse-region") },

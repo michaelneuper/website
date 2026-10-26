@@ -49,7 +49,7 @@ const {
     var t = localStorage.getItem("theme");
     // Themes saved before the doom- prefix was dropped (all but doom-one).
     if (t && t !== "doom-one") t = t.replace(/^doom-/, "");
-    var known = /^(gruvbox|gruvbox-light|doom-one|atom-one-dark|modus-vivendi|modus-operandi|dracula|nord|catppuccin|tokyo-night|solarized-light)$/;
+    var known = /^(gruvbox|gruvbox-light|doom-one|atom-one-dark|modus-vivendi|modus-operandi|dracula|nord|catppuccin|tokyo-night|solarized-dark|solarized-light)$/;
     if (!known.test(t || "")) t = matchMedia("(prefers-color-scheme: light)").matches ? "gruvbox-light" : "";
     if (t) document.documentElement.dataset.theme = t;
   } catch (e) {}

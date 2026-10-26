@@ -13,6 +13,7 @@ export const THEMES = [
   { id: "nord", desc: "Nord, arctic and north-bluish" },
   { id: "catppuccin", desc: "Catppuccin, Mocha flavour" },
   { id: "tokyo-night", desc: "Tokyo Night" },
+  { id: "solarized-dark", desc: "Solarized dark" },
   { id: "solarized-light", desc: "Solarized light" },
 ];
 
