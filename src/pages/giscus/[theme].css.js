@@ -5,6 +5,8 @@
 // public/_headers allows giscus.app to fetch both.
 
 import styles from "../../styles/themes.css?raw";
+import monoFont from "../../fonts/jetbrains-mono-regular.woff2?url";
+import monoBoldFont from "../../fonts/jetbrains-mono-semibold.woff2?url";
 import { THEMES, DEFAULT_THEME } from "../../scripts/themes.js";
 
 export function getStaticPaths() {
@@ -33,14 +35,14 @@ const css = (tokens, light) => `/* giscus theme for michaelneuper.com, made from
 
 @font-face {
   font-family: "JetBrains Mono";
-  src: url("/fonts/jetbrains-mono-regular.woff2") format("woff2");
+  src: url("${monoFont}") format("woff2");
   font-weight: 400;
   font-display: swap;
 }
 
 @font-face {
   font-family: "JetBrains Mono";
-  src: url("/fonts/jetbrains-mono-semibold.woff2") format("woff2");
+  src: url("${monoBoldFont}") format("woff2");
   font-weight: 600;
   font-display: swap;
 }

@@ -9,6 +9,9 @@ import Analytics from "../components/frame/Analytics.astro";
 import "../styles/fonts.css";
 import "../styles/themes.css";
 import "../styles/base.css";
+// The same hashed URLs fonts.css gets, so the preloads and the @font-face rules fetch one file.
+import monoFont from "../fonts/jetbrains-mono-regular.woff2?url";
+import serifFont from "../fonts/cm-regular.woff2?url";
 
 interface Props {
   title?: string;
@@ -40,8 +43,8 @@ const {
 <meta name="description" content={description}>
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="alternate" type="application/rss+xml" title="Michael Neuper's posts" href="/index.xml">
-<link rel="preload" href="/fonts/jetbrains-mono-regular.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="/fonts/cm-regular.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href={monoFont} as="font" type="font/woff2" crossorigin>
+<link rel="preload" href={serifFont} as="font" type="font/woff2" crossorigin>
 {/* is:inline: Astro ships this script as written instead of bundling it, so it still runs before first paint. */}
 <script is:inline>
   // Pick the theme before first paint so there is no flash. Keep this list in sync with src/scripts/themes.js.

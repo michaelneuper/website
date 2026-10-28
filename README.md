@@ -32,7 +32,8 @@ npm run preview    # serves dist/ at http://localhost:4321
 | `src/scripts/emacs/`                   | M-x, the minibuffer, which-key, the modeline and load-theme                                                                      |
 | `src/scripts/home/`, `post/`, `demos/` | what each component and demo does in the browser                                                                                 |
 | `src/styles/`                          | the styles, laid out like the components; `themes.css` has the colours                                                           |
-| `public/`                              | files served as they are: fonts, favicon, GPG key, `robots.txt`, post videos                                                     |
+| `src/fonts/`                           | JetBrains Mono and Computer Modern, built into `/_astro/` with a hash in each name so browsers can cache them for a year         |
+| `public/`                              | files served as they are: favicon, GPG key, `robots.txt`, post videos                                                            |
 
 Each component imports its own styles and starts its own script, so a section's
 markup, CSS and JavaScript are named after it in `components/`, `styles/` and `scripts/`.
@@ -70,5 +71,5 @@ The site is static: `npm run build` writes it to `dist/`.
 - **Cloudflare**: build command `npm run build`, deploy command `npx wrangler deploy`. `wrangler.jsonc` serves `dist/`, and its `name` has to match the Worker's name in the dashboard.
 - **Netlify**: `netlify.toml` runs the build and publishes `dist/`.
 
-Both read the response headers from `public/_headers`. The `/giscus/*` and `/fonts/*` headers there let the comments load their theme, so keep them on any host.
+Both read the response headers from `public/_headers`. The `/giscus/*` and `/_astro/*` headers there let the comments load their theme and fonts, so keep them on any host.
 
