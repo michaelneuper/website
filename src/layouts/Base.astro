@@ -5,7 +5,6 @@
 import TopBar from "../components/frame/TopBar.astro";
 import Modeline from "../components/frame/Modeline.astro";
 import Help from "../components/frame/Help.astro";
-import Analytics from "../components/frame/Analytics.astro";
 import "../styles/fonts.css";
 import "../styles/themes.css";
 import "../styles/base.css";
@@ -57,7 +56,6 @@ const {
     if (t) document.documentElement.dataset.theme = t;
   } catch (e) {}
 </script>
-<Analytics />
 <slot name="head" />
 </head>
 <!-- Reading the source? Good instinct. flag{view_source_is_recon} -->
