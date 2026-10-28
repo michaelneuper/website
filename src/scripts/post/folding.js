@@ -2,7 +2,8 @@
 // heading at its level or above. Clicking its stars folds that away. With the
 // stars focused, TAB does the same and S-TAB cycles the whole buffer
 // (overview, contents, show all), as in the posts list on the home page.
-// Folding toggles a class rather than moving anything, so videos keep playing.
+// Folding toggles a class rather than moving anything, so a folded clip pauses
+// where it was and picks up from there when unfolded (src/scripts/post/videos.js).
 
 import { $, $$ } from "../util.js";
 import { defcommand, message } from "../emacs/index.js";

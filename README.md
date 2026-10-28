@@ -62,7 +62,7 @@ draft: false           # true keeps it off the site
 ---
 ```
 
-Maths goes between `$...$` or `$$...$$` and is rendered with KaTeX when the site is built. Videos and other files a post links to go in `public/posts/<slug>/`.
+Maths goes between `$...$` or `$$...$$` and is rendered with KaTeX when the site is built. Videos and other files a post links to go in `public/posts/<slug>/`. A clip that should play like a GIF is written as `<video loop muted playsinline controls preload="none" width="…" height="…">`, with the video's own size, and plays only while it's on screen.
 
 ## Deploying
 

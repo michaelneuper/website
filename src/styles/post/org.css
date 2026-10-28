@@ -301,6 +301,11 @@
   margin: 1.4em 0;
 }
 
+/* Clips load late (src/scripts/post/videos.js), so show where one will be. */
+.post-body video {
+  background: var(--hl);
+}
+
 .post-body hr {
   margin: 2em 0;
   border: 0;

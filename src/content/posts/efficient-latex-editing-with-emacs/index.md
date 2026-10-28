@@ -34,7 +34,7 @@ Since I prefer to stay inside emacs, I set my pdf viewer to `pdf-tools` by addin
 
 Here's what it looks like:
 
-<video autoplay loop muted playsinline width="100%">
+<video loop muted playsinline controls preload="none" width="2804" height="1832">
   <source src="preview.webm" type="video/webm">
   <source src="preview.mp4" type="video/mp4">
   Your browser does not support the video tag or the file format of this video.
@@ -60,7 +60,7 @@ This is also enabled by default in Doom Emacs.
 
 This is easier to show than to explain:
 
-<video autoplay loop muted playsinline width="100%">
+<video loop muted playsinline controls preload="none" width="2812" height="1832">
   <source src="tex-folding.webm" type="video/webm">
   <source src="tex-folding.mp4" type="video/mp4">
   Your browser does not support the video tag or the file format of this video.
@@ -84,7 +84,7 @@ _CDLaTeX_ also has a ton of features, but here are the ones I use the most:
 
 Abbreviation expansion is triggered with <kbd>TAB</kbd>, for example:
 
-<video autoplay loop muted playsinline width="100%">
+<video loop muted playsinline controls preload="none" width="2812" height="1832">
   <source src="abbreviations.webm" type="video/webm">
   <source src="abbreviations.mp4" type="video/mp4">
   Your browser does not support the video tag or the file format of this video.
@@ -101,7 +101,7 @@ For example, typing `` `a`` inserts `\(\alpha\)`.
 You can wait a second after pressing `` ` `` and a list of all the available macros will pop up.
 The macros can also be customised with the `cdlatex-math-symbol-alist` variable.
 
-<video autoplay loop muted playsinline width="100%">
+<video loop muted playsinline controls preload="none" width="2812" height="1832">
   <source src="math-symbols.webm" type="video/webm">
   <source src="math-symbols.mp4" type="video/mp4">
   Your browser does not support the video tag or the file format of this video.
@@ -112,7 +112,7 @@ The macros can also be customised with the `cdlatex-math-symbol-alist` variable.
 Putting accents on mathematical characters and/or changing the font of a character uses key combinations with the quote character `'` as a prefix.
 The accent or font change is applied to the character or LaTeX macro **before** point.
 
-<video autoplay loop muted playsinline width="100%">
+<video loop muted playsinline controls preload="none" width="2812" height="1832">
   <source src="accents.webm" type="video/webm">
   <source src="accents.mp4" type="video/mp4">
   Your browser does not support the video tag or the file format of this video.
@@ -138,7 +138,7 @@ So it should look something like this if you're using [cdlatex](#cdlatex) as wel
 When you build your LaTeX project for the first time using _LatexMk_, press <kbd>C-c C-c</kbd> and select the `LatexMk` option.
 After that, you can build it with `C-c C-a`.
 
-<video autoplay loop muted playsinline width="100%">
+<video loop muted playsinline controls preload="none" width="2812" height="1832">
   <source src="latexmk.webm" type="video/webm">
   <source src="latexmk.mp4" type="video/mp4">
   Your browser does not support the video tag or the file format of this video.
@@ -186,7 +186,7 @@ Here are some the notable features of Xenops:
 
 _Xenops_ replaces the `preview-latex` functionality in _AUCTeX_, which does not seem to support rendering images as SVGs.
 
-<video autoplay loop muted playsinline width="100%">
+<video loop muted playsinline controls preload="none" width="2812" height="1832">
   <source src="xenops-render.webm" type="video/webm">
   <source src="xenops-render.mp4" type="video/mp4">
   Your browser does not support the video tag or the file format of this video.
@@ -196,7 +196,7 @@ _Xenops_ replaces the `preview-latex` functionality in _AUCTeX_, which does not 
 
 Simply run `M-x xenops-image-handle-paste` to paste an image from the clipboard into your document.
 
-<video autoplay loop muted playsinline width="100%">
+<video loop muted playsinline controls preload="none" width="2940" height="1912">
   <source src="xenops-paste.webm" type="video/webm">
   <source src="xenops-paste.mp4" type="video/mp4">
   Your browser does not support the video tag or the file format of this video.
@@ -211,7 +211,7 @@ You can install _YASnippet_ by enabling `:editor snippets` in your `doom` block.
 
 Some useful snippets can be found [here](https://github.com/doomemacs/snippets).
 
-<video autoplay loop muted playsinline width="100%">
+<video loop muted playsinline controls preload="none" width="2818" height="1832">
   <source src="snippets.webm" type="video/webm">
   <source src="snippets.mp4" type="video/mp4">
   Your browser does not support the video tag or the file format of this video.
@@ -233,7 +233,7 @@ It can do symbolic differentiation, linear algebra, taylor series expansions, am
 You can start calc in embedded mode by running `M-x calc-embedded` and perform operations on LaTeX equations.
 Here's an example of me finding the taylor series expansion of _e<sup>x</sup>_ to 6 terms:
 
-<video autoplay loop muted playsinline width="100%">
+<video loop muted playsinline controls preload="none" width="2804" height="1832">
   <source src="gnu-calc.webm" type="video/webm">
   <source src="gnu-calc.mp4" type="video/mp4">
   Your browser does not support the video tag or the file format of this video.
@@ -246,7 +246,7 @@ This should also be installed by default in Doom Emacs.
 
 Here's an example of me using it:
 
-<video autoplay loop muted playsinline width="100%">
+<video loop muted playsinline controls preload="none" width="2804" height="1832">
   <source src="evil-tex.webm" type="video/webm">
   <source src="evil-tex.mp4" type="video/mp4">
   Your browser does not support the video tag or the file format of this video.

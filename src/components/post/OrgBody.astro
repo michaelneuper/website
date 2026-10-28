@@ -1,6 +1,7 @@
 ---
 // A post's text. Its headings get stars that fold them, as in Org
-// (src/scripts/post/folding.js), and M-x imenu jumps between them.
+// (src/scripts/post/folding.js), M-x imenu jumps between them, and its clips
+// play only while they're on screen (src/scripts/post/videos.js).
 import "../../styles/org.css";
 import "../../styles/post/org.css";
 ---
@@ -11,7 +12,9 @@ import "../../styles/post/org.css";
 <script>
   import { initFolding } from "../../scripts/post/folding.js";
   import { initImenu } from "../../scripts/post/imenu.js";
+  import { initVideos } from "../../scripts/post/videos.js";
 
   initFolding();
   initImenu();
+  initVideos();
 </script>
