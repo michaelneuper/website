@@ -20,7 +20,7 @@ npm run preview    # serves dist/ at http://localhost:4321
 
 | Path                                   | What it is                                                                                                                       |
 |----------------------------------------|----------------------------------------------------------------------------------------------------------------------------------|
-| `src/pages/`                           | the pages: home, `posts/[slug]` for every post, 404, the RSS feeds and the giscus themes                                         |
+| `src/pages/`                           | the pages: home, `posts/[slug]` for every post, 404, the RSS feeds, the sitemap and the giscus themes                            |
 | `src/layouts/Base.astro`               | the frame every page shares                                                                                                      |
 | `src/components/frame/`                | the Emacs around each page: top line, modeline, `*Help*`, and `Buffer`, a section with its winbar                                |
 | `src/components/home/`                 | the home page's sections: hero (my name in front of a wall of my C), about, projects, posts, contact, and the coffee             |
