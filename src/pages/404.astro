@@ -4,7 +4,7 @@ import Buffer from "../components/frame/Buffer.astro";
 import StatusBits from "../components/missing/StatusBits.astro";
 import Dungeon from "../components/missing/Dungeon.astro";
 ---
-<Base title="Not found - Michael Neuper" buf="*Messages*" mode="Messages" skip="#missing">
+<Base title="Not found - Michael Neuper" buf="*Messages*" mode="Messages" skip="#missing" canonical={false}>
   <Fragment slot="head">
     <script is:inline>
       // Hide the bits until src/scripts/missing/status-bits.js has flipped some, so 404 never shows whole first.

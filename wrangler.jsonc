@@ -4,6 +4,10 @@
   // Must match the Worker's name in the Cloudflare dashboard.
   "name": "website",
   "compatibility_date": "2026-10-01",
+  // Only michaelneuper.com serves the site. A copy at website.michaelneuper.workers.dev
+  // would compete with it in search results. Every deploy applies this, so it can't be
+  // switched back on from the dashboard by accident.
+  "workers_dev": false,
   "assets": {
     "directory": "./dist",
     "not_found_handling": "404-page"

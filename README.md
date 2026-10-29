@@ -9,7 +9,7 @@ npm install
 npm run dev
 ```
 
-To check the version Netlify will deploy:
+To check the version Cloudflare will deploy:
 
 ```sh
 npm run build      # writes the site to dist/
@@ -33,7 +33,7 @@ npm run preview    # serves dist/ at http://localhost:4321
 | `src/scripts/home/`, `post/`, `demos/` | what each component and demo does in the browser                                                                                 |
 | `src/styles/`                          | the styles, laid out like the components; `themes.css` has the colours                                                           |
 | `src/fonts/`                           | JetBrains Mono and Computer Modern, built into `/_astro/` with a hash in each name so browsers can cache them for a year         |
-| `public/`                              | files served as they are: favicon, GPG key, `robots.txt`, post videos                                                            |
+| `public/`                              | files served as they are: favicons and iPhone icons, GPG key, `robots.txt`, post videos                                          |
 
 Each component imports its own styles and starts its own script, so a section's
 markup, CSS and JavaScript are named after it in `components/`, `styles/` and `scripts/`.

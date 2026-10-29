@@ -22,6 +22,8 @@ interface Props {
   mode: string;
   /** Where "Skip to content" goes. */
   skip: string;
+  /** Whether to name this page's michaelneuper.com address as the real one. The 404 page has no address of its own. */
+  canonical?: boolean;
 }
 
 const {
@@ -31,6 +33,7 @@ const {
   buf,
   mode,
   skip,
+  canonical = true,
 } = Astro.props;
 ---
 <!doctype html>
@@ -40,7 +43,9 @@ const {
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>{title}</title>
 <meta name="description" content={description}>
+{canonical && <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site)}>}
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="alternate" type="application/rss+xml" title="Michael Neuper's posts" href="/index.xml">
 <link rel="preload" href={monoFont} as="font" type="font/woff2" crossorigin>
 <link rel="preload" href={serifFont} as="font" type="font/woff2" crossorigin>
