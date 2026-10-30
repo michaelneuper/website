@@ -1,0 +1,7 @@
+# Redirects, read by both Netlify and Cloudflare.
+
+# The Hugo site's icons. Clients that cached the old pages, such as feed readers
+# and home screen bookmarks, still ask for them, so send them to the current ones.
+/images/apple-touch-icon.png  /apple-touch-icon.png  301
+/images/favicon-32x32.png     /favicon.ico           301
+/images/favicon-16x16.png     /favicon.ico           301
